@@ -102,6 +102,6 @@ describe('Programming exercise participation', () => {
     });
 
     after('Delete course', () => {
-        courseManagementAPIRequest.deleteCourse(course, admin);
+        //courseManagementAPIRequest.deleteCourse(course, admin);
     });
 });
