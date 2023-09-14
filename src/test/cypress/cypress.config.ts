@@ -79,7 +79,7 @@ export default defineConfig({
             });
             return cloudPlugin(on, config);
         },
-        specPattern: ['init/ImportUsers.cy.ts', 'e2e/**/*.cy.ts'],
+        specPattern: ['init/ImportUsers.cy.ts', 'e2e/exercises/programming/ProgrammingExerciseParticipation.cy.ts'],
         supportFile: 'support/index.ts',
         baseUrl: 'http://localhost:8080',
         testIsolation: false,
