@@ -236,11 +236,6 @@ public class ProgrammingExerciseService {
         return savedProgrammingExercise;
     }
 
-    public void triggerBaseAndSolutionBuildPlansForNewExercise(ProgrammingExercise programmingExercise) {
-        continuousIntegrationTriggerService.orElseThrow().triggerBuild(programmingExercise.getTemplateParticipation());
-        continuousIntegrationTriggerService.orElseThrow().triggerBuild(programmingExercise.getSolutionParticipation());
-    }
-
     public void scheduleOperations(Long programmingExerciseId) {
         instanceMessageSendService.sendProgrammingExerciseSchedule(programmingExerciseId);
     }
@@ -348,7 +343,8 @@ public class ProgrammingExerciseService {
      * 3. Configure CI permissions
      *
      * @param programmingExercise Programming exercise for the build plans should be generated. The programming
-     *                                exercise should contain a fully initialized template and solution participation.
+     *                                exercise should contain a fully initialized template and solution build plan
+     *                                but has not been triggered yet.
      */
     public void setupBuildPlansForNewExercise(ProgrammingExercise programmingExercise) {
         String projectKey = programmingExercise.getProjectKey();
@@ -368,6 +364,16 @@ public class ProgrammingExerciseService {
         continuousIntegration.removeAllDefaultProjectPermissions(projectKey);
 
         giveCIProjectPermissions(programmingExercise);
+    }
+
+    /**
+     * Triggers the CI build for the template and solution build plan of the given programming exercise.
+     *
+     * @param programmingExercise The programming exercise for which the build plans should be triggered.
+     */
+    public void triggerBaseAndSolutionBuildPlansForNewExercise(ProgrammingExercise programmingExercise) {
+        continuousIntegrationTriggerService.orElseThrow().triggerBuild(programmingExercise.getTemplateParticipation());
+        continuousIntegrationTriggerService.orElseThrow().triggerBuild(programmingExercise.getSolutionParticipation());
     }
 
     /**

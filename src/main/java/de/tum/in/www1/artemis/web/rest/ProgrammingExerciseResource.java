@@ -198,6 +198,7 @@ public class ProgrammingExerciseResource {
         try {
             // Setup all repositories etc
             ProgrammingExercise newProgrammingExercise = programmingExerciseService.createProgrammingExercise(programmingExercise);
+            // This has to be outside the transactional method for creating the programming exercise.
             programmingExerciseService.triggerBaseAndSolutionBuildPlansForNewExercise(newProgrammingExercise);
 
             // Create default static code analysis categories
