@@ -80,8 +80,6 @@ public class ProgrammingExerciseImportFromFileService {
             programmingExerciseService.validateNewProgrammingExerciseSettings(programmingExerciseForImport, course);
             // TODO: creating the whole exercise (from template) is a bad solution in this case, we do not want the template content, instead we want the file content of the zip
             importedProgrammingExercise = programmingExerciseService.createProgrammingExercise(programmingExerciseForImport);
-            // This has to be outside the transactional method for creating the programming exercise.
-            programmingExerciseService.triggerBaseAndSolutionBuildPlansForNewExercise(importedProgrammingExercise);
             if (Boolean.TRUE.equals(programmingExerciseForImport.isStaticCodeAnalysisEnabled())) {
                 staticCodeAnalysisService.createDefaultCategories(importedProgrammingExercise);
             }

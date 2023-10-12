@@ -198,7 +198,9 @@ public class ProgrammingExerciseService {
      * @throws IOException     If the template files couldn't be read
      */
     public ProgrammingExercise createProgrammingExercise(ProgrammingExercise programmingExercise) throws GitAPIException, IOException {
-        return createProgrammingExerciseTransactional(programmingExercise);
+        ProgrammingExercise createdProgrammingExercise = createProgrammingExerciseTransactional(programmingExercise);
+        triggerBaseAndSolutionBuildPlansForNewExercise(createdProgrammingExercise);
+        return createdProgrammingExercise;
     }
 
     @Transactional
@@ -208,24 +210,27 @@ public class ProgrammingExerciseService {
 
         VersionControlService versionControl = versionControlService.orElseThrow();
         programmingExercise.setBranch(versionControl.getDefaultBranchOfArtemis());
-        programmingExerciseRepositoryService.createRepositoriesForNewExercise(programmingExercise);
-        initParticipations(programmingExercise);
-        setURLsAndBuildPlanIDsForNewExercise(programmingExercise);
+        ProgrammingExercise savedProgrammingExercise = programmingExerciseRepository.saveAndFlush(programmingExercise);
+        programmingExerciseRepositoryService.createRepositoriesForNewExercise(savedProgrammingExercise);
+        initParticipations(savedProgrammingExercise);
+        setURLsAndBuildPlanIDsForNewExercise(savedProgrammingExercise);
 
         // Save participations to get the ids required for the webhooks
-        connectBaseParticipationsToExerciseAndSave(programmingExercise);
+        connectBaseParticipationsToExerciseAndSave(savedProgrammingExercise);
 
-        connectAuxiliaryRepositoriesToExercise(programmingExercise);
+        connectAuxiliaryRepositoriesToExercise(savedProgrammingExercise);
 
-        programmingExerciseRepositoryService.setupExerciseTemplate(programmingExercise, exerciseCreator);
-        programmingSubmissionService.createInitialSubmissions(programmingExercise);
+        programmingExerciseRepositoryService.setupExerciseTemplate(savedProgrammingExercise, exerciseCreator);
+        programmingSubmissionService.createInitialSubmissions(savedProgrammingExercise);
 
         // Save programming exercise to prevent transient exception
-        ProgrammingExercise savedProgrammingExercise = programmingExerciseRepository.save(programmingExercise);
+        savedProgrammingExercise = programmingExerciseRepository.save(savedProgrammingExercise);
 
         channelService.createExerciseChannel(savedProgrammingExercise, Optional.ofNullable(programmingExercise.getChannelName()));
 
-        setupBuildPlansForNewExercise(savedProgrammingExercise);
+        // TODO: Why is this only possible with the programming exercise, not the saved one?
+        // Why is the participation not saved in the database?
+        setupBuildPlansForNewExercise(programmingExercise);
         // save to get the id required for the webhook
         savedProgrammingExercise = programmingExerciseRepository.saveAndFlush(savedProgrammingExercise);
 
@@ -233,10 +238,12 @@ public class ProgrammingExerciseService {
 
         // The creation of the webhooks must occur after the initial push, because the participation is
         // not yet saved in the database, so we cannot save the submission accordingly (see ProgrammingSubmissionService.processNewProgrammingSubmission)
-        versionControl.addWebHooksForExercise(savedProgrammingExercise);
+        // TODO: Why is this only possible with the programming exercise, not the saved one?
+        versionControl.addWebHooksForExercise(programmingExercise);
         scheduleOperations(savedProgrammingExercise.getId());
         groupNotificationScheduleService.checkNotificationsForNewExerciseAsync(savedProgrammingExercise);
-        return savedProgrammingExercise;
+        // TODO: Why is this only possible with the programming exercise, not the saved one?
+        return programmingExercise;
     }
 
     public void scheduleOperations(Long programmingExerciseId) {
