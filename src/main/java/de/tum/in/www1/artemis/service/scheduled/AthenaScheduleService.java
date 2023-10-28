@@ -4,7 +4,6 @@ import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.concurrent.ScheduledFuture;
 
-import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
@@ -19,6 +18,7 @@ import de.tum.in.www1.artemis.security.SecurityUtils;
 import de.tum.in.www1.artemis.service.ExerciseLifecycleService;
 import de.tum.in.www1.artemis.service.ProfileService;
 import de.tum.in.www1.artemis.service.connectors.athena.AthenaSubmissionSendingService;
+import jakarta.annotation.PostConstruct;
 
 @Service
 @Profile("athena & scheduling")

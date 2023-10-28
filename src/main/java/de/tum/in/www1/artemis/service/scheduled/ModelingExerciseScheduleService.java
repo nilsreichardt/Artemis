@@ -6,7 +6,6 @@ import static java.time.Instant.now;
 import java.time.ZonedDateTime;
 import java.util.*;
 
-import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
@@ -25,6 +24,7 @@ import de.tum.in.www1.artemis.security.SecurityUtils;
 import de.tum.in.www1.artemis.service.compass.CompassService;
 import de.tum.in.www1.artemis.service.exam.ExamDateService;
 import de.tum.in.www1.artemis.web.rest.errors.EntityNotFoundException;
+import jakarta.annotation.PostConstruct;
 import tech.jhipster.config.JHipsterConstants;
 
 @Service

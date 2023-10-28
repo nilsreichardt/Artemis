@@ -181,9 +181,8 @@ configurations {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven {
-        url "https://repo.gradle.org/gradle/libs-releases/"
-    }
+    maven { url "https://repo.gradle.org/gradle/libs-releases/" }
+    maven { url "https://build.shibboleth.net/nexus/content/repositories/releases/" }
 }
 
 ext["jackson.version"] = fasterxml_version
@@ -348,6 +347,7 @@ dependencies {
     implementation "net.lingala.zip4j:zip4j:2.11.5"
     implementation "org.jgrapht:jgrapht-core:1.5.2"
     implementation 'com.github.seancfoley:ipaddress:5.4.0'
+    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
 
 
     annotationProcessor "org.hibernate:hibernate-jpamodelgen:${hibernate_version}"

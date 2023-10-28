@@ -3,8 +3,6 @@ package de.tum.in.www1.artemis.config;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,14 +15,17 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
@@ -33,6 +34,7 @@ import de.tum.in.www1.artemis.security.Role;
 import de.tum.in.www1.artemis.security.jwt.JWTConfigurer;
 import de.tum.in.www1.artemis.security.jwt.TokenProvider;
 import de.tum.in.www1.artemis.service.user.PasswordService;
+import jakarta.annotation.PostConstruct;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -41,7 +43,7 @@ import de.tum.in.www1.artemis.service.user.PasswordService;
 // https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
 // as that would break the SAML2 login functionality. For more information, see
 // https://github.com/ls1intum/Artemis/pull/5721.
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
@@ -111,17 +113,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return roleHierarchy;
     }
 
-    @Override
-    public void configure(WebSecurity web) {
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
         // @formatter:off
-        web.ignoring()
-            .antMatchers(HttpMethod.OPTIONS, "/**")
-            .antMatchers("/app/**/*.{js,html}")
-            .antMatchers("/i18n/**")
-            .antMatchers("/content/**")
-            .antMatchers("/api-docs/**")
-            .antMatchers("/api.html")
-            .antMatchers("/test/**");
+        return webSecurity -> webSecurity.ignoring()
+            .requestMatchers(new AntPathRequestMatcher("/**", HttpMethod.OPTIONS.toString()))
+            .requestMatchers(new AntPathRequestMatcher("/app/**/*.{js,html}"))
+            .requestMatchers(new AntPathRequestMatcher("/i18n/**"))
+            .requestMatchers(new AntPathRequestMatcher("/content/**"))
+            .requestMatchers(new AntPathRequestMatcher("/api-docs/**"))
+            .requestMatchers(new AntPathRequestMatcher("/api.html"))
+            .requestMatchers(new AntPathRequestMatcher("/test/**"));
         // @formatter:on
     }
 
@@ -135,56 +137,43 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return monitoringIpAddresses.stream().map(ip -> String.format("hasIpAddress(\"%s\")", ip)).collect(Collectors.joining(" or "));
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // @formatter:off
         http
-            .csrf()
-            .disable()
-            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling().authenticationEntryPoint(problemSupport)
-                .accessDeniedHandler(problemSupport)
-        .and()
-            .headers()
-            .contentSecurityPolicy("script-src 'self' 'unsafe-inline' 'unsafe-eval'")
-            // TODO: investigate exactly whether the following works in our setup or not
-            // .contentSecurityPolicy("default-src 'self'; connect-src: 'self' 'https://sentry.io' 'ws:' 'wss:'; frame-src * data:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src * data:; font-src 'self' data:")
-        .and()
-            .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
-        .and()
-            .permissionsPolicy().policy("camera=(), fullscreen=(*), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()")
-        .and()
-            .frameOptions()
-            .deny()
-        .and()
-            .headers()
-            .httpStrictTransportSecurity()
-            .disable() // this is already configured using nginx
-        .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-            // api
-            .authorizeRequests()
-            .antMatchers("/api/admin/**").hasAuthority(Role.ADMIN.getAuthority())
-            .antMatchers("/api/public/**").permitAll()
-            // TODO: Remove the following three lines in June 2024 together with LegacyResource
-            .antMatchers(HttpMethod.POST, "/api/programming-exercises/new-result").permitAll()
-            .antMatchers(HttpMethod.POST, "/api/programming-submissions/*").permitAll()
-            .antMatchers(HttpMethod.POST, "/api/programming-exercises/test-cases-changed/*").permitAll()
-            .antMatchers("/websocket/**").permitAll()
-            .antMatchers("/.well-known/jwks.json").permitAll()
-            .antMatchers("/management/prometheus/**").access(getMonitoringAccessDefinition())
-            .antMatchers("/api/**").authenticated()
-        .and()
+            .csrf(AbstractHttpConfigurer::disable)
+            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class).exceptionHandling(handler -> handler.authenticationEntryPoint(problemSupport).accessDeniedHandler(problemSupport))
+            .headers(headers -> headers
+                .frameOptions(HeadersConfigurer.FrameOptionsConfig::deny)
+                .httpStrictTransportSecurity(HeadersConfigurer.HstsConfig::disable) // this is already configured using nginx
+                // TODO: investigate exactly whether the following works in our setup or not
+                // .contentSecurityPolicy("default-src 'self'; connect-src: 'self' 'https://sentry.io' 'ws:' 'wss:'; frame-src * data:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src * data:; font-src 'self' data:")
+                .contentSecurityPolicy((policy) -> policy.policyDirectives("script-src 'self' 'unsafe-inline' 'unsafe-eval'"))
+                .referrerPolicy(policy ->policy.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
+                .permissionsPolicy(policy -> policy.policy("camera=(), fullscreen=(*), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"))
+            )
+            .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(requests -> requests
+                .requestMatchers(new AntPathRequestMatcher("/api/admin/**")).hasAuthority(Role.ADMIN.getAuthority())
+                .requestMatchers(new AntPathRequestMatcher("/api/public/**")).permitAll()
+                // TODO: Remove the following three lines in June 2024 together with LegacyResource
+                .requestMatchers(new AntPathRequestMatcher(HttpMethod.POST.name(), "/api/programming-exercises/new-result")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher(HttpMethod.POST.name(), "/api/programming-submissions/*")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher(HttpMethod.POST.name(), "/api/programming-exercises/test-cases-changed/*")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/websocket/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/.well-known/jwks.json")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/management/prometheus/**")).access(getMonitoringAccessDefinition())
+                .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated()
+            )
             .apply(securityConfigurerAdapter());
 
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
         if (activeProfiles.contains("lti")) {
             http.apply(new CustomLti13Configurer());
         }
-
         // @formatter:on
+
+        return http.build();
     }
 
     private JWTConfigurer securityConfigurerAdapter() {

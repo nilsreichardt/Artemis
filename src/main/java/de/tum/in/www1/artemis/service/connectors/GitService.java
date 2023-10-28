@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import javax.annotation.Nullable;
-import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.io.FileUtils;
@@ -57,6 +56,7 @@ import de.tum.in.www1.artemis.service.ZipFileService;
 import de.tum.in.www1.artemis.service.connectors.localvc.LocalVCRepositoryUrl;
 import de.tum.in.www1.artemis.web.rest.dto.CommitInfoDTO;
 import de.tum.in.www1.artemis.web.rest.errors.EntityNotFoundException;
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class GitService {
