@@ -2,8 +2,9 @@ package de.tum.in.www1.artemis.service.metis.conversation.auth;
 
 import java.util.*;
 
+import jakarta.validation.constraints.NotNull;
+
 import javax.annotation.Nullable;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Service;
 

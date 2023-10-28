@@ -6,9 +6,9 @@ import java.time.ZonedDateTime;
 import java.util.*;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import javax.annotation.Nullable;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cache;

@@ -6,8 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import jakarta.persistence.*;
-
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;

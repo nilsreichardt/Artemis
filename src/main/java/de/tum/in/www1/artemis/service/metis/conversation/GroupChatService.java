@@ -2,7 +2,7 @@ package de.tum.in.www1.artemis.service.metis.conversation;
 
 import java.util.Set;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.stereotype.Service;
 

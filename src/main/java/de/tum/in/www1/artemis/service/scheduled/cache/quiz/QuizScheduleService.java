@@ -9,8 +9,9 @@ import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import jakarta.validation.constraints.NotNull;
+
 import javax.annotation.Nullable;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;

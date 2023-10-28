@@ -3,8 +3,9 @@ package de.tum.in.www1.artemis.repository.tutorialgroups;
 import java.util.Optional;
 import java.util.Set;
 
+import jakarta.validation.constraints.NotNull;
+
 import javax.transaction.Transactional;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

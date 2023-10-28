@@ -1,6 +1,6 @@
 package de.tum.in.www1.artemis.web.rest.util;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

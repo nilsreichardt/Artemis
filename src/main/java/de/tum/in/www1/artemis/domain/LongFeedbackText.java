@@ -1,8 +1,7 @@
 package de.tum.in.www1.artemis.domain;
 
 import jakarta.persistence.*;
-
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;

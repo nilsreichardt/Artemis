@@ -6,8 +6,9 @@ import java.security.SecureRandom;
 import java.time.ZonedDateTime;
 import java.util.*;
 
+import jakarta.validation.constraints.NotNull;
+
 import javax.annotation.Nullable;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;

@@ -5,8 +5,9 @@ import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Date;
 
+import jakarta.validation.Valid;
+
 import javax.crypto.KeyGenerator;
-import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

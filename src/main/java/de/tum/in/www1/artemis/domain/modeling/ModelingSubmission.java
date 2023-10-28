@@ -7,8 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.*;
-
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 import org.springframework.util.StringUtils;
 

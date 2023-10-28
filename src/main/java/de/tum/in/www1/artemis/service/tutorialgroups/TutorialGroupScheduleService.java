@@ -5,7 +5,7 @@ import static de.tum.in.www1.artemis.web.rest.tutorialgroups.TutorialGroupDateUt
 import java.time.*;
 import java.util.*;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Service;
 

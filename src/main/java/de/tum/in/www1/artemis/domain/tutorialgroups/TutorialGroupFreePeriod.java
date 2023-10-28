@@ -3,8 +3,7 @@ package de.tum.in.www1.artemis.domain.tutorialgroups;
 import java.time.ZonedDateTime;
 
 import jakarta.persistence.*;
-
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;

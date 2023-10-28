@@ -4,9 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.*;
-
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;

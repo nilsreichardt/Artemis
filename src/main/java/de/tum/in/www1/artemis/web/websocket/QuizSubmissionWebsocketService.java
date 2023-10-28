@@ -2,7 +2,7 @@ package de.tum.in.www1.artemis.web.websocket;
 
 import java.security.Principal;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;

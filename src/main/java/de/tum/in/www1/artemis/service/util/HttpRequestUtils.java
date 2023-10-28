@@ -2,8 +2,9 @@ package de.tum.in.www1.artemis.service.util;
 
 import java.util.Optional;
 
+import jakarta.validation.constraints.NotNull;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
 
 import inet.ipaddr.IPAddress;
 import inet.ipaddr.IPAddressString;

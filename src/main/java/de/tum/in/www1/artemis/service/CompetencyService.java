@@ -2,7 +2,7 @@ package de.tum.in.www1.artemis.service;
 
 import java.util.*;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;

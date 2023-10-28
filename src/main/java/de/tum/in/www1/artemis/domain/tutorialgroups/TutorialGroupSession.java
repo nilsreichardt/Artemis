@@ -5,10 +5,9 @@ import static jakarta.persistence.Persistence.getPersistenceUtil;
 import java.time.ZonedDateTime;
 
 import jakarta.persistence.*;
-
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;

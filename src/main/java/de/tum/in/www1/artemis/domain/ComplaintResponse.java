@@ -7,8 +7,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 import jakarta.persistence.*;
-
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;

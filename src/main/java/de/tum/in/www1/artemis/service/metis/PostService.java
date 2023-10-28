@@ -4,7 +4,7 @@ import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;

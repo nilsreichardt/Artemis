@@ -5,10 +5,10 @@ import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;

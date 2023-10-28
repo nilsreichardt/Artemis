@@ -4,8 +4,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.persistence.*;
-
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 

@@ -8,9 +8,9 @@ import static de.tum.in.www1.artemis.config.Constants.LONG_FEEDBACK_MAX_LENGTH;
 import java.util.*;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 import javax.annotation.Nullable;
-import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Cache;

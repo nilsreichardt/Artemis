@@ -10,8 +10,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 
+import jakarta.validation.constraints.NotNull;
+
 import javax.annotation.Nullable;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.Hibernate;
 import org.springframework.data.jpa.repository.EntityGraph;

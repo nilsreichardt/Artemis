@@ -5,7 +5,7 @@ import static de.tum.in.www1.artemis.service.notifications.NotificationSettingsC
 
 import java.util.Set;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;

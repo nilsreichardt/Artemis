@@ -3,8 +3,7 @@ package de.tum.in.www1.artemis.domain.metis;
 import java.time.ZonedDateTime;
 
 import jakarta.persistence.*;
-
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
