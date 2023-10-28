@@ -10,6 +10,8 @@ import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import jakarta.persistence.*;
+
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
@@ -32,7 +34,6 @@ import de.tum.in.www1.artemis.domain.view.QuizView;
 import de.tum.in.www1.artemis.service.ExerciseDateService;
 import de.tum.in.www1.artemis.service.listeners.ResultListener;
 import de.tum.in.www1.artemis.web.rest.dto.ResultDTO;
-import jakarta.persistence.*;
 
 /**
  * A Result.

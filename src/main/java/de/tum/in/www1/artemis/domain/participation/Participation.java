@@ -4,6 +4,8 @@ import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import jakarta.persistence.*;
+
 import javax.annotation.Nullable;
 
 import org.hibernate.annotations.Cache;
@@ -15,7 +17,6 @@ import de.tum.in.www1.artemis.domain.*;
 import de.tum.in.www1.artemis.domain.enumeration.InitializationState;
 import de.tum.in.www1.artemis.domain.enumeration.SubmissionType;
 import de.tum.in.www1.artemis.domain.view.QuizView;
-import jakarta.persistence.*;
 
 /**
  * A Participation.

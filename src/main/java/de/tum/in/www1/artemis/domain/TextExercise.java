@@ -2,12 +2,13 @@ package de.tum.in.www1.artemis.domain;
 
 import static de.tum.in.www1.artemis.domain.enumeration.ExerciseType.TEXT;
 
+import jakarta.persistence.*;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import de.tum.in.www1.artemis.domain.enumeration.AssessmentType;
 import de.tum.in.www1.artemis.domain.enumeration.ExerciseType;
-import jakarta.persistence.*;
 
 /**
  * A TextExercise.

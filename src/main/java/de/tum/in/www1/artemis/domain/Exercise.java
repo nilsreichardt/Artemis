@@ -5,6 +5,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import jakarta.persistence.*;
+
 import javax.annotation.Nullable;
 
 import org.hibernate.annotations.Cache;
@@ -30,7 +32,6 @@ import de.tum.in.www1.artemis.domain.view.QuizView;
 import de.tum.in.www1.artemis.service.ExerciseDateService;
 import de.tum.in.www1.artemis.web.rest.dto.DueDateStat;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
-import jakarta.persistence.*;
 
 /**
  * An Exercise.

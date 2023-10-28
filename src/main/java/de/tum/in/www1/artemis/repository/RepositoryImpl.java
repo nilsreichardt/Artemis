@@ -3,6 +3,10 @@ package de.tum.in.www1.artemis.repository;
 import java.io.Serializable;
 import java.util.Collections;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.*;
+
 import javax.annotation.Nullable;
 
 import org.springframework.data.jpa.domain.Specification;
@@ -10,10 +14,6 @@ import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.util.Assert;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.*;
 
 public class RepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> {
 

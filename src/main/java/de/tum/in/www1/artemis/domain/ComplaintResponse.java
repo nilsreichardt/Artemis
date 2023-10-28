@@ -6,6 +6,8 @@ import static de.tum.in.www1.artemis.config.Constants.COMPLAINT_RESPONSE_TEXT_LI
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
+import jakarta.persistence.*;
+
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
@@ -14,8 +16,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import jakarta.persistence.*;
 
 /**
  * A ComplaintResponse.

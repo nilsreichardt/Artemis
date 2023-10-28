@@ -9,6 +9,8 @@ import java.security.Principal;
 import java.util.*;
 import java.util.regex.Pattern;
 
+import jakarta.servlet.http.Cookie;
+
 import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
@@ -58,7 +60,6 @@ import de.tum.in.www1.artemis.security.jwt.TokenProvider;
 import de.tum.in.www1.artemis.service.AuthorizationCheckService;
 import de.tum.in.www1.artemis.validation.InetSocketAddressValidator;
 import de.tum.in.www1.artemis.web.rest.errors.EntityNotFoundException;
-import jakarta.servlet.http.Cookie;
 
 @Configuration
 // See https://stackoverflow.com/a/34337731/3802758

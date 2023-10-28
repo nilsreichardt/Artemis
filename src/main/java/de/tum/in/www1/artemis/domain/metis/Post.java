@@ -3,6 +3,8 @@ package de.tum.in.www1.artemis.domain.metis;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.*;
+
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
@@ -18,7 +20,6 @@ import de.tum.in.www1.artemis.domain.Lecture;
 import de.tum.in.www1.artemis.domain.enumeration.DisplayPriority;
 import de.tum.in.www1.artemis.domain.metis.conversation.Conversation;
 import de.tum.in.www1.artemis.domain.plagiarism.PlagiarismCase;
-import jakarta.persistence.*;
 
 /**
  * A Post, i.e. start of a Metis thread.

@@ -15,6 +15,8 @@ import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+import jakarta.ws.rs.BadRequestException;
+
 import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
@@ -51,7 +53,6 @@ import de.tum.in.www1.artemis.web.rest.dto.examevent.ExamWideAnnouncementEventDT
 import de.tum.in.www1.artemis.web.rest.errors.*;
 import de.tum.in.www1.artemis.web.rest.util.HeaderUtil;
 import io.swagger.annotations.ApiParam;
-import jakarta.ws.rs.BadRequestException;
 import tech.jhipster.web.util.PaginationUtil;
 
 /**

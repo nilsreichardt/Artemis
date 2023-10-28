@@ -2,6 +2,8 @@ package de.tum.in.www1.artemis.domain.tutorialgroups;
 
 import java.time.ZonedDateTime;
 
+import jakarta.persistence.*;
+
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
@@ -11,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import de.tum.in.www1.artemis.domain.DomainObject;
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tutorial_group_free_period")

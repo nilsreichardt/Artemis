@@ -2,6 +2,8 @@ package de.tum.in.www1.artemis.domain.metis;
 
 import java.time.ZonedDateTime;
 
+import jakarta.persistence.*;
+
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import de.tum.in.www1.artemis.domain.DomainObject;
 import de.tum.in.www1.artemis.domain.User;
 import de.tum.in.www1.artemis.domain.metis.conversation.Conversation;
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "conversation_participant")

@@ -3,6 +3,8 @@ package de.tum.in.www1.artemis.domain.tutorialgroups;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.*;
+
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
@@ -13,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.DomainObject;
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tutorial_groups_configuration")

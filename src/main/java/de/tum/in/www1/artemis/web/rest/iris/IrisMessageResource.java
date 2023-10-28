@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.ws.rs.BadRequestException;
+
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +20,6 @@ import de.tum.in.www1.artemis.repository.iris.IrisSessionRepository;
 import de.tum.in.www1.artemis.security.annotations.EnforceAtLeastStudent;
 import de.tum.in.www1.artemis.service.iris.*;
 import de.tum.in.www1.artemis.web.rest.errors.ConflictException;
-import jakarta.ws.rs.BadRequestException;
 
 /**
  * REST controller for managing {@link IrisMessage}.

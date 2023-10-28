@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import jakarta.persistence.*;
+
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
@@ -20,7 +22,6 @@ import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.DomainObject;
 import de.tum.in.www1.artemis.domain.User;
 import de.tum.in.www1.artemis.web.rest.util.StringUtil;
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "exam")

@@ -7,6 +7,8 @@ import static de.tum.in.www1.artemis.config.Constants.LONG_FEEDBACK_MAX_LENGTH;
 
 import java.util.*;
 
+import jakarta.persistence.*;
+
 import javax.annotation.Nullable;
 import javax.validation.constraints.Size;
 
@@ -20,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import de.tum.in.www1.artemis.domain.enumeration.FeedbackType;
 import de.tum.in.www1.artemis.domain.enumeration.Visibility;
-import jakarta.persistence.*;
 
 /**
  * A Feedback.

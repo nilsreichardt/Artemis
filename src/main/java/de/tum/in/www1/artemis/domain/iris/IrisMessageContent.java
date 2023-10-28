@@ -1,5 +1,10 @@
 package de.tum.in.www1.artemis.domain.iris;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
 import javax.annotation.Nullable;
 
 import org.hibernate.annotations.Cache;
@@ -9,10 +14,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import de.tum.in.www1.artemis.domain.DomainObject;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 /**
  * An IrisMessageContent represents a part of the content of an IrisMessage.

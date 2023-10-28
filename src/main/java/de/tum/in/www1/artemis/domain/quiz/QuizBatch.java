@@ -3,6 +3,8 @@ package de.tum.in.www1.artemis.domain.quiz;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
+import jakarta.persistence.*;
+
 import javax.annotation.Nullable;
 
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -14,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import de.tum.in.www1.artemis.config.Constants;
 import de.tum.in.www1.artemis.domain.DomainObject;
 import de.tum.in.www1.artemis.domain.view.QuizView;
-import jakarta.persistence.*;
 
 /**
  * A QuizBatch.

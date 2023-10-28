@@ -8,6 +8,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import jakarta.persistence.*;
+
 import javax.annotation.Nullable;
 import javax.validation.constraints.Size;
 
@@ -30,7 +32,6 @@ import de.tum.in.www1.artemis.service.ExerciseDateService;
 import de.tum.in.www1.artemis.service.connectors.vcs.AbstractVersionControlService;
 import de.tum.in.www1.artemis.service.programming.ProgrammingLanguageFeature;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
-import jakarta.persistence.*;
 
 /**
  * A ProgrammingExercise.

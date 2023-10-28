@@ -5,6 +5,8 @@ import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import jakarta.persistence.*;
+
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
@@ -18,7 +20,6 @@ import de.tum.in.www1.artemis.domain.modeling.ModelingSubmission;
 import de.tum.in.www1.artemis.domain.participation.Participation;
 import de.tum.in.www1.artemis.domain.quiz.QuizSubmission;
 import de.tum.in.www1.artemis.domain.view.QuizView;
-import jakarta.persistence.*;
 
 /**
  * A Submission.

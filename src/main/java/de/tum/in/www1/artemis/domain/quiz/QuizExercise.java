@@ -5,6 +5,8 @@ import static de.tum.in.www1.artemis.domain.enumeration.ExerciseType.QUIZ;
 import java.time.ZonedDateTime;
 import java.util.*;
 
+import jakarta.persistence.*;
+
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
@@ -23,7 +25,6 @@ import de.tum.in.www1.artemis.domain.participation.Participation;
 import de.tum.in.www1.artemis.domain.participation.StudentParticipation;
 import de.tum.in.www1.artemis.domain.view.QuizView;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
-import jakarta.persistence.*;
 
 /**
  * A QuizExercise contains multiple quiz quizQuestions, which can be either multiple choice, drag and drop or short answer. Artemis supports live quizzes with a start and end time

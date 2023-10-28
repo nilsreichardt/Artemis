@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import jakarta.persistence.*;
+
 import javax.validation.Valid;
 
 import org.hibernate.annotations.Cache;
@@ -14,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import de.tum.in.www1.artemis.domain.quiz.compare.SAMapping;
 import de.tum.in.www1.artemis.domain.view.QuizView;
-import jakarta.persistence.*;
 
 /**
  * A ShortAnswerSubmittedAnswer.

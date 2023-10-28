@@ -7,6 +7,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
+import jakarta.ws.rs.BadRequestException;
+
 import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -46,7 +48,6 @@ import de.tum.in.www1.artemis.service.tutorialgroups.TutorialGroupScheduleServic
 import de.tum.in.www1.artemis.service.tutorialgroups.TutorialGroupService;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
 import de.tum.in.www1.artemis.web.rest.errors.EntityNotFoundException;
-import jakarta.ws.rs.BadRequestException;
 
 @RestController
 @RequestMapping("/api")

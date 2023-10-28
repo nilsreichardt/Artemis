@@ -4,6 +4,8 @@ import static de.tum.in.www1.artemis.config.Constants.MAX_QUIZ_SHORT_ANSWER_TEXT
 
 import java.util.Objects;
 
+import jakarta.persistence.*;
+
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
@@ -15,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import de.tum.in.www1.artemis.domain.DomainObject;
 import de.tum.in.www1.artemis.domain.view.QuizView;
-import jakarta.persistence.*;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 
 /**

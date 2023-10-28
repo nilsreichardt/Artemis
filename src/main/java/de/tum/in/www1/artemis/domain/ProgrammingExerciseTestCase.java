@@ -5,6 +5,8 @@ import static de.tum.in.www1.artemis.domain.hestia.ProgrammingExerciseTestCaseTy
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.*;
+
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
@@ -17,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import de.tum.in.www1.artemis.domain.enumeration.FeedbackType;
 import de.tum.in.www1.artemis.domain.enumeration.Visibility;
 import de.tum.in.www1.artemis.domain.hestia.*;
-import jakarta.persistence.*;
 
 /**
  * A ProgrammingExerciseTestCase.

@@ -3,6 +3,10 @@ package de.tum.in.www1.artemis.domain.statistics;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+
 import javax.annotation.Nullable;
 
 import org.hibernate.annotations.Cache;
@@ -13,9 +17,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import de.tum.in.www1.artemis.domain.DomainObject;
 import de.tum.in.www1.artemis.domain.ProgrammingSubmission;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "build_log_statistics_entry")

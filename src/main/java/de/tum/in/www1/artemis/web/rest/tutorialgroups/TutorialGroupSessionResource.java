@@ -10,6 +10,8 @@ import java.time.ZoneId;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import jakarta.ws.rs.BadRequestException;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -34,7 +36,6 @@ import de.tum.in.www1.artemis.service.feature.FeatureToggle;
 import de.tum.in.www1.artemis.service.tutorialgroups.TutorialGroupService;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
 import de.tum.in.www1.artemis.web.rest.tutorialgroups.errors.SessionOverlapsWithSessionException;
-import jakarta.ws.rs.BadRequestException;
 
 @RestController
 @RequestMapping("/api")
