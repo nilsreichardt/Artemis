@@ -2,7 +2,6 @@ package de.tum.in.www1.artemis.domain.tutorialgroups;
 
 import java.util.*;
 
-import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -18,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import de.tum.in.www1.artemis.domain.*;
 import de.tum.in.www1.artemis.domain.metis.conversation.Channel;
 import de.tum.in.www1.artemis.web.rest.metis.conversation.dtos.ChannelDTO;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tutorial_group")

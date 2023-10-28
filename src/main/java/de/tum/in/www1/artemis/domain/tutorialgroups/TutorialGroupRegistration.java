@@ -1,6 +1,5 @@
 package de.tum.in.www1.artemis.domain.tutorialgroups;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
@@ -12,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import de.tum.in.www1.artemis.domain.DomainObject;
 import de.tum.in.www1.artemis.domain.User;
 import de.tum.in.www1.artemis.domain.enumeration.tutorialgroups.TutorialGroupRegistrationType;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tutorial_group_registration")

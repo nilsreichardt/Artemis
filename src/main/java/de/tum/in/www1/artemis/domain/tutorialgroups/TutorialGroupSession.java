@@ -1,10 +1,9 @@
 package de.tum.in.www1.artemis.domain.tutorialgroups;
 
-import static javax.persistence.Persistence.getPersistenceUtil;
+import static jakarta.persistence.Persistence.getPersistenceUtil;
 
 import java.time.ZonedDateTime;
 
-import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -17,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import de.tum.in.www1.artemis.domain.DomainObject;
 import de.tum.in.www1.artemis.domain.enumeration.TutorialGroupSessionStatus;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tutorial_group_session")

@@ -1,7 +1,7 @@
 package de.tum.in.www1.artemis.service.tutorialgroups;
 
 import static de.tum.in.www1.artemis.web.rest.tutorialgroups.TutorialGroupResource.TutorialGroupImportErrors.MULTIPLE_REGISTRATIONS;
-import static javax.persistence.Persistence.getPersistenceUtil;
+import static jakarta.persistence.Persistence.getPersistenceUtil;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;

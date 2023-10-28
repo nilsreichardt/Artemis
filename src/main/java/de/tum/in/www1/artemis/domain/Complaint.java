@@ -5,7 +5,6 @@ import static de.tum.in.www1.artemis.config.Constants.COMPLAINT_TEXT_LIMIT;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 
-import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
@@ -17,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import de.tum.in.www1.artemis.domain.enumeration.ComplaintType;
 import de.tum.in.www1.artemis.domain.participation.Participant;
+import jakarta.persistence.*;
 
 /**
  * A Complaint.

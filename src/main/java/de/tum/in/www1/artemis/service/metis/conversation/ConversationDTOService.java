@@ -4,7 +4,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.persistence.Persistence;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Service;
@@ -21,6 +20,7 @@ import de.tum.in.www1.artemis.repository.tutorialgroups.TutorialGroupRepository;
 import de.tum.in.www1.artemis.service.dto.UserPublicInfoDTO;
 import de.tum.in.www1.artemis.service.metis.conversation.auth.ChannelAuthorizationService;
 import de.tum.in.www1.artemis.web.rest.metis.conversation.dtos.*;
+import jakarta.persistence.Persistence;
 
 @Service
 public class ConversationDTOService {
