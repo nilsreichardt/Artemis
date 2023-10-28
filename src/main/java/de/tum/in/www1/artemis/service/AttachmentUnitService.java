@@ -1,5 +1,6 @@
 package de.tum.in.www1.artemis.service;
 
+import java.io.IOException;
 import java.net.URI;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -51,25 +52,27 @@ public class AttachmentUnitService {
      * @param attachmentUnit The attachmentUnit to create
      * @param attachment     The attachment to create the attachmentUnit for
      * @param lecture        The lecture linked to the attachmentUnit
-     * @param file           The file to upload
+     * @param bytes          The bytes of the file to upload
+     * @param filename       The name of the file to upload
      * @param keepFilename   Whether to keep the original filename or not.
      * @return The created attachment unit
      */
-    public AttachmentUnit createAttachmentUnit(AttachmentUnit attachmentUnit, Attachment attachment, Lecture lecture, MultipartFile file, boolean keepFilename) {
+    public AttachmentUnit createAttachmentUnit(AttachmentUnit attachmentUnit, Attachment attachment, Lecture lecture, byte[] bytes, String filename, boolean keepFilename)
+            throws IOException {
         // persist lecture unit before lecture to prevent "null index column for collection" error
         attachmentUnit.setLecture(null);
         AttachmentUnit savedAttachmentUnit = attachmentUnitRepository.saveAndFlush(attachmentUnit);
         attachmentUnit.setLecture(lecture);
         lecture.addLectureUnit(savedAttachmentUnit);
 
-        handleFile(file, attachment, keepFilename);
+        handleFile(bytes, filename, attachment, keepFilename);
         // Default attachment
         attachment.setVersion(1);
         attachment.setAttachmentUnit(savedAttachmentUnit);
 
         Attachment savedAttachment = attachmentRepository.saveAndFlush(attachment);
         savedAttachmentUnit.setAttachment(savedAttachment);
-        evictCache(file, savedAttachmentUnit);
+        fileService.evictCacheForPath(filePathService.actualPathForPublicPathOrThrow(URI.create(savedAttachment.getLink())));
 
         return savedAttachmentUnit;
     }
@@ -85,7 +88,7 @@ public class AttachmentUnitService {
      * @return The updated attachment unit.
      */
     public AttachmentUnit updateAttachmentUnit(AttachmentUnit existingAttachmentUnit, AttachmentUnit updateUnit, Attachment updateAttachment, MultipartFile updateFile,
-            boolean keepFilename) {
+            boolean keepFilename) throws IOException {
         existingAttachmentUnit.setDescription(updateUnit.getDescription());
         existingAttachmentUnit.setName(updateUnit.getName());
         existingAttachmentUnit.setReleaseDate(updateUnit.getReleaseDate());
@@ -98,7 +101,9 @@ public class AttachmentUnitService {
         }
 
         updateAttachment(existingAttachment, updateAttachment, savedAttachmentUnit);
-        handleFile(updateFile, existingAttachment, keepFilename);
+        if (updateFile != null) {
+            handleFile(updateFile.getBytes(), updateFile.getOriginalFilename(), existingAttachment, keepFilename);
+        }
         final int revision = existingAttachment.getVersion() == null ? 1 : existingAttachment.getVersion() + 1;
         existingAttachment.setVersion(revision);
         Attachment savedAttachment = attachmentRepository.saveAndFlush(existingAttachment);
@@ -138,13 +143,14 @@ public class AttachmentUnitService {
     /**
      * Handles the file after upload if provided.
      *
-     * @param file         Potential file to handle
+     * @param bytes        Potential file to handle in bytes
+     * @param filename     Name of the file
      * @param attachment   Attachment linked to the file.
      * @param keepFilename Whether to keep the original filename or not.
      */
-    private void handleFile(MultipartFile file, Attachment attachment, boolean keepFilename) {
-        if (file != null && !file.isEmpty()) {
-            String filePath = fileService.handleSaveFile(file, keepFilename, false).toString();
+    private void handleFile(byte[] bytes, String filename, Attachment attachment, boolean keepFilename) {
+        if (bytes != null && bytes.length > 0) {
+            String filePath = fileService.handleSaveFile(bytes, filename, keepFilename, false).toString();
             attachment.setLink(filePath);
             attachment.setUploadDate(ZonedDateTime.now());
         }

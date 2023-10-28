@@ -88,9 +88,9 @@ public class LectureUnitProcessingService {
                 attachment.setReleaseDate(lectureUnit.releaseDate());
                 attachment.setUploadDate(ZonedDateTime.now());
 
-                MultipartFile multipartFile = fileService.convertByteArrayToMultipart(lectureUnit.unitName(), ".pdf", outputStream.toByteArray());
-                AttachmentUnit savedAttachmentUnit = attachmentUnitService.createAttachmentUnit(attachmentUnit, attachment, lecture, multipartFile, true);
-                slideSplitterService.splitAttachmentUnitIntoSingleSlides(documentUnits.get(0), savedAttachmentUnit, multipartFile.getOriginalFilename());
+                String filename = lectureUnit.unitName() + ".pdf";
+                AttachmentUnit savedAttachmentUnit = attachmentUnitService.createAttachmentUnit(attachmentUnit, attachment, lecture, outputStream.toByteArray(), filename, true);
+                slideSplitterService.splitAttachmentUnitIntoSingleSlides(documentUnits.get(0), savedAttachmentUnit, filename);
                 documentUnits.get(0).close(); // make sure to close the document
                 units.add(savedAttachmentUnit);
             }

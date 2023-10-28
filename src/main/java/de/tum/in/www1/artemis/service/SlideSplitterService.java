@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import de.tum.in.www1.artemis.domain.lecture.AttachmentUnit;
 import de.tum.in.www1.artemis.domain.lecture.Slide;
@@ -81,8 +80,8 @@ public class SlideSplitterService {
             for (int page = 0; page < numPages; page++) {
                 BufferedImage bufferedImage = pdfRenderer.renderImageWithDPI(page, 72, ImageType.RGB);
                 byte[] imageInByte = bufferedImageToByteArray(bufferedImage, "png");
-                MultipartFile slideFile = fileService.convertByteArrayToMultipart(fileNameWithOutExt + "_" + attachmentUnit.getId() + "_Slide_" + (page + 1), ".png", imageInByte);
-                String filePath = fileService.handleSaveFile(slideFile, true, false).toString();
+                String filename = fileNameWithOutExt + "_" + attachmentUnit.getId() + "_Slide_" + (page + 1) + ".png";
+                String filePath = fileService.handleSaveFile(imageInByte, filename, true, false).toString();
                 Slide slideEntity = new Slide();
                 slideEntity.setSlideImagePath(filePath);
                 slideEntity.setSlideNumber(page + 1);

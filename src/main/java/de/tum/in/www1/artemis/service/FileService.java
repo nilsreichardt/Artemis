@@ -18,15 +18,12 @@ import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
@@ -35,7 +32,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibm.icu.text.CharsetDetector;
@@ -158,9 +154,23 @@ public class FileService implements DisposableBean {
      * @return The API path of the file
      */
     @NotNull
-    public URI handleSaveFile(MultipartFile file, boolean keepFilename, boolean markdown) {
+    public URI handleSaveFile(MultipartFile file, boolean keepFilename, boolean markdown) throws IOException {
+        return handleSaveFile(file.getBytes(), file.getOriginalFilename(), keepFilename, markdown);
+    }
+
+    /**
+     * Helper method which handles the file creation for both normal and for markdown file
+     *
+     * @param bytes            The bytes of the file to be saved
+     * @param originalFilename The filename of the file to be saved
+     * @param keepFilename     specifies if original file name should be kept
+     * @param markdown         true if it's a markdown file, false otherwise
+     * @return The API path of the file
+     */
+    @NotNull
+    public URI handleSaveFile(byte[] bytes, @Nullable String originalFilename, boolean keepFilename, boolean markdown) {
         // check for file type
-        String filename = checkAndSanitizeFilename(file.getOriginalFilename());
+        String filename = checkAndSanitizeFilename(originalFilename);
 
         // Check the allowed file extensions
         final String fileExtension = FilenameUtils.getExtension(filename);
@@ -181,7 +191,7 @@ public class FileService implements DisposableBean {
             filePath = generateFilePath(filenamePrefix, fileExtension, path);
         }
         try {
-            FileUtils.copyInputStreamToFile(file.getInputStream(), filePath.toFile());
+            FileUtils.writeByteArrayToFile(filePath.toFile(), bytes);
 
             return generateResponsePath(filePath, markdown);
         }
@@ -959,34 +969,6 @@ public class FileService implements DisposableBean {
             catch (Exception ex) {
                 log.warn("Could not delete file {}. Error message: {}", filePath, ex.getMessage());
             }
-        }
-    }
-
-    /**
-     * Convert byte[] to MultipartFile by using CommonsMultipartFile
-     *
-     * @param filename        file name to set file name
-     * @param extension       extension of the file (e.g .pdf or .png)
-     * @param streamByteArray byte array to save to the temp file
-     * @return multipartFile wrapper for the file stored on disk with a sanitized name
-     */
-    public MultipartFile convertByteArrayToMultipart(String filename, String extension, byte[] streamByteArray) {
-        try {
-            String cleanFilename = sanitizeFilename(filename);
-            Path tempPath = FilePathService.getTempFilePath().resolve(cleanFilename + extension);
-            FileUtils.writeByteArrayToFile(tempPath.toFile(), streamByteArray);
-            File outputFile = tempPath.toFile();
-            FileItem fileItem = new DiskFileItem(cleanFilename, Files.probeContentType(tempPath), false, outputFile.getName(), (int) outputFile.length(),
-                    outputFile.getParentFile());
-
-            try (InputStream input = new FileInputStream(outputFile); OutputStream fileItemOutputStream = fileItem.getOutputStream()) {
-                IOUtils.copy(input, fileItemOutputStream);
-            }
-            return new CommonsMultipartFile(fileItem);
-        }
-        catch (IOException e) {
-            log.error("Could not convert file {}.", filename, e);
-            throw new InternalServerErrorException("Error while converting byte[] to MultipartFile by using CommonsMultipartFile");
         }
     }
 }

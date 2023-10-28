@@ -108,9 +108,8 @@ public class ExamUserService {
                 Optional<ExamUser> examUserOptional = examUserRepository.findByExamIdAndUserId(examId, user.get().getId());
                 if (examUserOptional.isPresent()) {
                     ExamUser examUser = examUserOptional.get();
-                    MultipartFile studentImageFile = fileService.convertByteArrayToMultipart(examUserWithImageDTO.studentRegistrationNumber() + "_student_image", ".png",
-                            examUserWithImageDTO.image().imageInBytes());
-                    String responsePath = fileService.handleSaveFile(studentImageFile, false, false).toString();
+                    String filename = examUserWithImageDTO.studentRegistrationNumber() + "_student_image.png";
+                    String responsePath = fileService.handleSaveFile(examUserWithImageDTO.image.imageInBytes(), filename, false, false).toString();
                     examUser.setStudentImagePath(responsePath);
                     examUserRepository.save(examUser);
                 }
