@@ -346,7 +346,6 @@ dependencies {
     implementation "net.lingala.zip4j:zip4j:2.11.5"
     implementation "org.jgrapht:jgrapht-core:1.5.2"
     implementation "com.github.seancfoley:ipaddress:5.4.0"
-    implementation "jakarta.annotation:jakarta.annotation-api:2.1.1"
 
 
     annotationProcessor "org.hibernate:hibernate-jpamodelgen:${hibernate_version}"
