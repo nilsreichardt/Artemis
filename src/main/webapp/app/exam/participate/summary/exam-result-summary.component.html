@@ -21,6 +21,8 @@
         [isGradingKeyCollapsed]="isGradingKeyCollapsed"
         [isBonusGradingKeyCollapsed]="isBonusGradingKeyCollapsed"
         [exerciseInfos]="exerciseInfos"
+        [hasQuizExam]="studentExam.hasQuizExam"
+        [quizExamMaxPoints]="studentExam.quizQuestionTotalPoints"
     />
 </div>
 <div *ngIf="!resultsArePublished" class="mb-0">
@@ -31,6 +33,61 @@
 <h3>
     {{ 'artemisApp.exam.exercises' | artemisTranslate }}
 </h3>
+<ng-container *ngIf="studentExam.hasQuizExam">
+    <div [id]="'exercise-quiz-exam'">
+        <div class="question card">
+            <div class="question-options card-header question-card-header">
+                <h5>
+                    &nbsp;<fa-icon [icon]="getIcon(QUIZ)"></fa-icon>&nbsp;
+                    <span>Quiz Exam</span>
+                </h5>
+                <!--                <div *ngIf="resultsPublished">-->
+                <!--                    <jhi-result-->
+                <!--                        id="result"-->
+                <!--                        [isQuizExam]="true"-->
+                <!--                        [quizExamMaxPoints]="studentExam.quizQuestionTotalPoints"-->
+                <!--                        [course]="studentExam.exam!.course"-->
+                <!--                        [result]="quizExamResult"-->
+                <!--                    />-->
+                <!--                </div>-->
+                <button
+                    id="'toggleCollapseExerciseButtonQuizExam'"
+                    class="btn question-collapse"
+                    (click)="collapseQuizExam = !collapseQuizExam"
+                    [attr.aria-expanded]="!collapseQuizExam"
+                    [attr.aria-controls]="collapseQuizExam"
+                >
+                    <fa-icon size="2x" [icon]="collapseQuizExam ? faAngleRight : faAngleDown"></fa-icon>
+                </button>
+            </div>
+            <div class="card-body question-card-body" [ngbCollapse]="collapseQuizExam">
+                <div class="clearfix">
+                    <!-- prettier-ignore -->
+                    <h5 class="exercise-title">Quiz Exam
+                        [{{ studentExam.quizQuestionTotalPoints }} {{ 'artemisApp.examParticipation.points' | artemisTranslate }}]
+                    </h5>
+                </div>
+                <ng-container>
+                    <!-- Show submission of student - if no submission found -> display that student did not participate -->
+                    <ng-container>
+                        <!-- Quiz Exercise -->
+                        <ng-container>
+                            <jhi-quiz-exam-summary
+                                [quizParticipation]="studentExam"
+                                [exam]="studentExam.exam!"
+                                [submission]="studentExam.quizExamSubmission!"
+                                [resultsPublished]="resultsArePublished"
+                            ></jhi-quiz-exam-summary>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+                <ng-template #noSubmission>
+                    {{ 'artemisApp.exam.examSummary.noSubmissionFound' | artemisTranslate }}
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</ng-container>
 <div *ngFor="let exercise of studentExam?.exercises; let i = index" [id]="'exercise-' + exercise.id">
     <div class="question card">
         <jhi-result-summary-exercise-card-header [index]="i" [exercise]="exercise" [exerciseInfo]="exerciseInfos[exercise.id!]" [resultsPublished]="resultsArePublished" />

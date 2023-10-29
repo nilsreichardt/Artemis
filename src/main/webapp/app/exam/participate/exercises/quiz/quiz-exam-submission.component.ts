@@ -20,7 +20,6 @@ import { Exercise, IncludedInOverallScore } from 'app/entities/exercise.model';
 import { SubmissionVersion } from 'app/entities/submission-version.model';
 import { ExerciseType } from 'app/entities/exercise.model';
 import { QuizConfiguration } from 'app/entities/quiz/quiz-configuration.model';
-import { QuizExercise } from 'app/entities/quiz/quiz-exercise.model';
 
 @Component({
     selector: 'jhi-quiz-submission-exam',
@@ -52,7 +51,14 @@ export class QuizExamSubmissionComponent extends ExamSubmissionComponent impleme
     @Input()
     studentSubmission: AbstractQuizSubmission;
 
-    @Input() exercise: QuizExercise;
+    @Input() exerciseId: number | undefined;
+
+    @Input() title: string | undefined;
+
+    @Input() maxPoints: number | undefined;
+
+    @Input() includedInOverallScore: IncludedInOverallScore = IncludedInOverallScore.INCLUDED_COMPLETELY;
+
     @Input() examTimeline = false;
 
     @Input() quizConfiguration: QuizConfiguration;
@@ -83,7 +89,7 @@ export class QuizExamSubmissionComponent extends ExamSubmissionComponent impleme
     }
 
     getExercise(): Exercise {
-        return this.exercise;
+        return { id: this.exerciseId, type: ExerciseType.QUIZ } as Exercise;
     }
 
     /**

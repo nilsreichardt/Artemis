@@ -57,9 +57,9 @@
                         <th>{{ 'artemisApp.exam.points' | artemisTranslate }}:</th>
                         <td>{{ exam.examMaxPoints }}</td>
                     </tr>
-                    <tr *ngIf="exam.numberOfExercisesInExam">
+                    <tr *ngIf="totalExercises">
                         <th>{{ 'artemisApp.exam.exercises' | artemisTranslate }}:</th>
-                        <td>{{ exam.numberOfExercisesInExam }}</td>
+                        <td>{{ totalExercises }}</td>
                     </tr>
                 </ng-container>
 

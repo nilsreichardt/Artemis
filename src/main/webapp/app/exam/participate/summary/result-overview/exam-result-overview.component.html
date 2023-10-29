@@ -16,6 +16,19 @@
                 </tr>
             </thead>
             <tbody>
+                <tr *ngIf="hasQuizExam">
+                    <th scope="row">{{ 1 }}</th>
+                    <td>
+                        <span>Quiz Exam</span>
+                    </td>
+                    <td>{{ 'artemisApp.exercise.yes' | artemisTranslate }}</td>
+                    <td>
+                        {{ getQuizExamAchievedPointsSum() }}
+                    </td>
+                    <td>
+                        <span>{{ quizExamMaxPoints }}</span>
+                    </td>
+                </tr>
                 <tr
                     *ngFor="let exercise of studentExamWithGrade?.studentExam?.exercises; let exerciseIndex = index"
                     [ngClass]="{
@@ -25,7 +38,7 @@
                     (click)="scrollToExercise(exercise.id)"
                     [class.not-included-in-score]="exercise.includedInOverallScore === IncludedInOverallScore.NOT_INCLUDED"
                 >
-                    <th scope="row">{{ exerciseIndex + 1 }}</th>
+                    <th scope="row">{{ exerciseIndex + (hasQuizExam ? 2 : 1) }}</th>
                     <td>
                         &nbsp;
                         <div *ngIf="exercise?.type" class="icon-container">

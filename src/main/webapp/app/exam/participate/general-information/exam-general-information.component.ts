@@ -26,6 +26,7 @@ export class ExamGeneralInformationComponent implements OnChanges {
     isExamOverMultipleDays: boolean;
     isTestExam?: boolean;
     currentDate?: dayjs.Dayjs;
+    totalExercises?: number;
 
     ngOnChanges(): void {
         this.examEndDate = endTime(this.exam, this.studentExam);
@@ -33,8 +34,13 @@ export class ExamGeneralInformationComponent implements OnChanges {
         this.additionalWorkingTime = getAdditionalWorkingTime(this.exam, this.studentExam);
         this.isExamOverMultipleDays = isExamOverMultipleDays(this.exam, this.studentExam);
         this.isTestExam = this.exam?.testExam;
+        this.totalExercises = this.getTotalExercises();
         if (this.isTestExam) {
             this.currentDate = dayjs();
         }
+    }
+
+    private getTotalExercises(): number {
+        return (this.exam?.numberOfExercisesInExam ?? 0) + (this.studentExam?.hasQuizExam ? 1 : 0);
     }
 }

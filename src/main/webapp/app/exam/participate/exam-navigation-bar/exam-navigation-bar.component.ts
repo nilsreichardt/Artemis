@@ -17,6 +17,8 @@ import { faBars, faCheck, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { ProgrammingSubmission } from 'app/entities/programming-submission.model';
 import { SubmissionVersion } from 'app/entities/submission-version.model';
 import { FileUploadSubmission } from 'app/entities/file-upload-submission.model';
+import { QuizExamSubmission } from 'app/entities/quiz/quiz-exam-submission.model';
+import { StudentParticipation } from 'app/entities/participation/student-participation.model';
 
 @Component({
     selector: 'jhi-exam-navigation-bar',
@@ -25,13 +27,16 @@ import { FileUploadSubmission } from 'app/entities/file-upload-submission.model'
 })
 export class ExamNavigationBarComponent implements OnInit {
     @Input() exercises: Exercise[] = [];
+    @Input() quizExamSubmission: QuizExamSubmission | undefined;
     @Input() exerciseIndex = 0;
     @Input() endDate: dayjs.Dayjs;
-    @Input() overviewPageOpen: boolean;
+    @Input() overviewPageOpen: boolean | undefined;
+    @Input() quizExamPageOpen: boolean | undefined;
     @Input() examSessions?: ExamSession[] = [];
     @Input() examTimeLineView = false;
     @Output() onPageChanged = new EventEmitter<{
         overViewChange: boolean;
+        quizExamChange: boolean;
         exercise?: Exercise;
         forceSave: boolean;
         submission?: ProgrammingSubmission | SubmissionVersion | FileUploadSubmission;
@@ -106,7 +111,23 @@ export class ExamNavigationBarComponent implements OnInit {
             });
     }
 
+    /**
+     * Determines the button tooltip type of the given exercise
+     *
+     * @param exercise the exercise for which the button tool type to be returned
+     * @return ButtonTooltipType returns the button tooltip type
+     */
     getExerciseButtonTooltip(exercise: Exercise): ButtonTooltipType {
+        return this.examParticipationService.getExerciseButtonTooltip(exercise);
+    }
+
+    /**
+     * Determines the button tooltip type of the quiz exam
+     *
+     * @return ButtonTooltipType returns the button tooltip type
+     */
+    getQuizExamButtonTooltip(): ButtonTooltipType {
+        const exercise = { type: ExerciseType.QUIZ, studentParticipations: [{ submissions: [this.quizExamSubmission] } as StudentParticipation] } as Exercise;
         return this.examParticipationService.getExerciseButtonTooltip(exercise);
     }
 
@@ -117,11 +138,18 @@ export class ExamNavigationBarComponent implements OnInit {
 
     /**
      * @param overviewPage: user wants to switch to the overview page
+     * @param quizExamChange: user wants to switch to the quiz exam page
      * @param exerciseIndex: index of the exercise to switch to, if it should not be used, you can pass -1
      * @param forceSave: true if forceSave shall be used.
      * @param submission the submission to be viewed, used in the exam timeline
      */
-    changePage(overviewPage: boolean, exerciseIndex: number, forceSave?: boolean, submission?: SubmissionVersion | ProgrammingSubmission | FileUploadSubmission): void {
+    changePage(
+        overviewPage: boolean,
+        quizExamChange: boolean,
+        exerciseIndex: number,
+        forceSave?: boolean,
+        submission?: SubmissionVersion | ProgrammingSubmission | FileUploadSubmission,
+    ): void {
         if (!overviewPage) {
             // out of index -> do nothing
             if (exerciseIndex > this.exercises.length - 1 || exerciseIndex < 0) {
@@ -129,12 +157,15 @@ export class ExamNavigationBarComponent implements OnInit {
             }
             // set index and emit event
             this.exerciseIndex = exerciseIndex;
-            this.onPageChanged.emit({ overViewChange: false, exercise: this.exercises[this.exerciseIndex], forceSave: !!forceSave, submission: submission });
+            this.onPageChanged.emit({ overViewChange: false, quizExamChange: false, exercise: this.exercises[this.exerciseIndex], forceSave: !!forceSave, submission: submission });
+        } else if (quizExamChange) {
+            this.exerciseIndex = -1;
+            this.onPageChanged.emit({ overViewChange: false, quizExamChange: true, exercise: undefined, forceSave: !!forceSave, submission: submission });
         } else if (overviewPage) {
             // set index and emit event
             this.exerciseIndex = -1;
             // save current exercise
-            this.onPageChanged.emit({ overViewChange: true, exercise: undefined, forceSave: false });
+            this.onPageChanged.emit({ overViewChange: true, quizExamChange: false, exercise: undefined, forceSave: false });
         }
         this.setExerciseButtonStatus(this.exerciseIndex);
     }
@@ -145,7 +176,7 @@ export class ExamNavigationBarComponent implements OnInit {
      */
     changeExerciseById(exerciseId: number) {
         const foundIndex = this.exercises.findIndex((exercise) => exercise.id === exerciseId);
-        this.changePage(false, foundIndex, true);
+        this.changePage(false, false, foundIndex, true);
     }
 
     /**
@@ -162,19 +193,23 @@ export class ExamNavigationBarComponent implements OnInit {
         if (changeExercise) {
             if (newIndex > this.exercises.length - 1) {
                 // we are in the last exercise, if out of range "change" active exercise to current in order to trigger a save
-                this.changePage(false, this.exerciseIndex, true);
+                this.changePage(false, false, this.exerciseIndex, true);
             } else {
-                this.changePage(false, newIndex, true);
+                this.changePage(false, false, newIndex, true);
             }
         }
     }
 
     isProgrammingExercise() {
-        return this.exercises[this.exerciseIndex].type === ExerciseType.PROGRAMMING;
+        if (this.exerciseIndex >= 0) {
+            return this.exercises[this.exerciseIndex].type === ExerciseType.PROGRAMMING;
+        }
     }
 
     isFileUploadExercise() {
-        return this.exercises[this.exerciseIndex].type === ExerciseType.FILE_UPLOAD;
+        if (this.exerciseIndex >= 0) {
+            return this.exercises[this.exerciseIndex].type === ExerciseType.FILE_UPLOAD;
+        }
     }
 
     getOverviewStatus(): 'active' | '' {
@@ -190,7 +225,7 @@ export class ExamNavigationBarComponent implements OnInit {
      * @param exerciseIndex index of the exercise
      * @return the sync status of the exercise (whether the corresponding submission is saved on the server or not)
      */
-    setExerciseButtonStatus(exerciseIndex: number): 'synced' | 'synced active' | 'notSynced' {
+    setExerciseButtonStatus(exerciseIndex?: number): 'synced' | 'synced active' | 'notSynced' {
         this.icon = faCheck;
         // If we are in the exam timeline we do not use not synced as not synced shows
         // that the current submission is not saved which doesn't make sense in the timeline.
@@ -202,8 +237,14 @@ export class ExamNavigationBarComponent implements OnInit {
         // TODO: it's a bit weired, that it works that multiple icons (one per exercise) are hold in the same instance variable of the component
         //  we should definitely refactor this and e.g. use the same ExamExerciseOverviewItem as in exam-exercise-overview-page.component.ts !
         this.icon = faEdit;
-        const exercise = this.exercises[exerciseIndex];
-        const submission = ExamParticipationService.getSubmissionForExercise(exercise);
+        let submission;
+        let exercise;
+        if (exerciseIndex !== undefined) {
+            exercise = this.exercises[exerciseIndex];
+            submission = ExamParticipationService.getSubmissionForExercise(exercise);
+        } else {
+            submission = this.quizExamSubmission;
+        }
         if (!submission) {
             // in case no participation/submission yet exists -> display synced
             // this should only occur for programming exercises
@@ -212,7 +253,7 @@ export class ExamNavigationBarComponent implements OnInit {
         if (submission.submitted) {
             this.icon = faCheck;
         }
-        if (submission.isSynced || this.isOnlyOfflineIDE(exercise)) {
+        if (submission.isSynced || (exercise && this.isOnlyOfflineIDE(exercise))) {
             // make button blue (except for the current page)
             if (exerciseIndex === this.exerciseIndex && !this.overviewPageOpen) {
                 return 'synced active';

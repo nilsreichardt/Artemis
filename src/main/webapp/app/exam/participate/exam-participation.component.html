@@ -20,15 +20,26 @@
                 [exerciseIndex]="exerciseIndex"
                 [endDate]="individualStudentEndDate"
                 [overviewPageOpen]="activePageIndex === -1"
+                [quizExamPageOpen]="activeExamPage.isQuizExamPage"
+                [quizExamSubmission]="studentExam.quizExamSubmission"
                 [examSessions]="studentExam.examSessions"
                 (onPageChanged)="onPageChange($event)"
                 (examAboutToEnd)="examEnded()"
                 (onExamHandInEarly)="toggleHandInEarly()"
             ></jhi-exam-navigation-bar>
             <!-- exercises -->
-            <div [hidden]="activePageIndex !== -1">
-                <jhi-exam-exercise-overview-page [studentExam]="studentExam" (onPageChanged)="onPageChange($event)"></jhi-exam-exercise-overview-page>
+            <div [hidden]="!activeExamPage.isOverviewPage">
+                <jhi-exam-exercise-overview-page [studentExam]="studentExam" (onPageChanged)="onPageChange($event)">
+                    [hasQuizExam]="studentExam.hasQuizExam" [quizExamSubmission]="studentExam.quizExamSubmission!" [quizExamTotalPoints]="studentExam.quizQuestionTotalPoints!"
+                </jhi-exam-exercise-overview-page>
             </div>
+            <jhi-quiz-submission-exam
+                *ngIf="studentExam.hasQuizExam && activeExamPage.isQuizExamPage"
+                [quizConfiguration]="quizConfiguration"
+                [title]="'Quiz Exam'"
+                [maxPoints]="studentExam.quizQuestionTotalPoints"
+                [studentSubmission]="studentExam.quizExamSubmission!"
+            ></jhi-quiz-submission-exam>
             <ng-container *ngFor="let exercise of studentExam.exercises; let i = index">
                 <ng-container *ngIf="exercise && exercise.studentParticipations && exercise.studentParticipations[0]">
                     <ng-container *ngIf="pageComponentVisited[i]">

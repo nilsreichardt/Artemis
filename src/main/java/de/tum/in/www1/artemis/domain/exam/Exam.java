@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.*;
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.DomainObject;
 import de.tum.in.www1.artemis.domain.User;
+import de.tum.in.www1.artemis.domain.quiz.QuizPool;
 import de.tum.in.www1.artemis.web.rest.util.StringUtil;
 
 @Entity
@@ -140,6 +141,10 @@ public class Exam extends DomainObject {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnoreProperties("exam")
     private Set<ExamUser> examUsers = new HashSet<>();
+
+    @OneToOne(mappedBy = "exam", cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    private QuizPool quizPool;
 
     @Transient
     private Long numberOfExamUsersTransient;
@@ -412,6 +417,14 @@ public class Exam extends DomainObject {
         this.examArchivePath = examArchivePath;
     }
 
+    public QuizPool getQuizPool() {
+        return quizPool;
+    }
+
+    public void setQuizPool(QuizPool quizPool) {
+        this.quizPool = quizPool;
+    }
+
     /**
      * check if students are allowed to see this exam
      *
@@ -473,6 +486,19 @@ public class Exam extends DomainObject {
 
     public void setExampleSolutionPublicationDate(@Nullable ZonedDateTime exampleSolutionPublicationDate) {
         this.exampleSolutionPublicationDate = exampleSolutionPublicationDate;
+    }
+
+    /**
+     * Calculate max points of the quiz pool
+     *
+     * @return max points
+     */
+    public int getQuizPoolMaxPoints() {
+        int maxPoints = 0;
+        if (getQuizPool() != null) {
+            maxPoints = getQuizPool().getMaxPoints();
+        }
+        return maxPoints;
     }
 
     public String getChannelName() {

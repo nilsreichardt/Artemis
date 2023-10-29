@@ -5,16 +5,17 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.*;
 
 import de.tum.in.www1.artemis.domain.AbstractAuditingEntity;
 import de.tum.in.www1.artemis.domain.Exercise;
 import de.tum.in.www1.artemis.domain.User;
+import de.tum.in.www1.artemis.domain.quiz.QuizExamSubmission;
+import de.tum.in.www1.artemis.domain.quiz.QuizQuestion;
 
 @Entity
 @Table(name = "student_exam")
@@ -62,6 +63,19 @@ public class StudentExam extends AbstractAuditingEntity {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnoreProperties("studentExam")
     private Set<ExamSession> examSessions = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "student_exam_quiz_question", joinColumns = @JoinColumn(name = "student_exam_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "quiz_question_id", referencedColumnName = "id"))
+    private List<QuizQuestion> quizQuestions = new ArrayList<>();
+
+    @OneToOne(mappedBy = "studentExam", orphanRemoval = true)
+    private QuizExamSubmission quizExamSubmission;
+
+    @Transient
+    private Boolean hasQuizExam;
+
+    @Transient
+    private double quizQuestionTotalPoints;
 
     public Boolean isSubmitted() {
         return submitted;
@@ -142,6 +156,17 @@ public class StudentExam extends AbstractAuditingEntity {
         this.exercises = exercises;
     }
 
+    public List<QuizQuestion> getQuizQuestions() {
+        if (quizQuestions != null && Hibernate.isInitialized(quizQuestions)) {
+            return quizQuestions;
+        }
+        return Collections.emptyList();
+    }
+
+    public void setQuizQuestions(List<QuizQuestion> quizQuestions) {
+        this.quizQuestions = quizQuestions;
+    }
+
     public StudentExam addExercise(Exercise exercise) {
         this.exercises.add(exercise);
         return this;
@@ -158,6 +183,32 @@ public class StudentExam extends AbstractAuditingEntity {
 
     public void setExamSessions(Set<ExamSession> examSessions) {
         this.examSessions = examSessions;
+    }
+
+    public QuizExamSubmission getQuizExamSubmission() {
+        return quizExamSubmission;
+    }
+
+    public void setQuizExamSubmission(QuizExamSubmission quizExamSubmission) {
+        this.quizExamSubmission = quizExamSubmission;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    public Boolean getHasQuizExam() {
+        return this.hasQuizExam;
+    }
+
+    public void setHasQuizExam(Boolean hasQuizExam) {
+        this.hasQuizExam = hasQuizExam;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    public double getQuizQuestionTotalPoints() {
+        return this.quizQuestionTotalPoints;
+    }
+
+    public void setQuizQuestionTotalPoints(double quizQuestionTotalPoints) {
+        this.quizQuestionTotalPoints = quizQuestionTotalPoints;
     }
 
     /**

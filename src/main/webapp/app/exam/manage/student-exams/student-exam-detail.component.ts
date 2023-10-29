@@ -9,12 +9,14 @@ import { AlertService } from 'app/core/util/alert.service';
 import { round } from 'app/shared/util/utils';
 import dayjs from 'dayjs/esm';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { getLatestSubmissionResult, setLatestSubmissionResult } from 'app/entities/submission.model';
+import { Submission, getLatestSubmissionResult, setLatestSubmissionResult } from 'app/entities/submission.model';
 import { GradeType } from 'app/entities/grading-scale.model';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { examWorkingTime, getRelativeWorkingTimeExtension } from 'app/exam/participate/exam.utils';
-import { Exercise } from 'app/entities/exercise.model';
+import { Exercise, ExerciseType, IncludedInOverallScore } from 'app/entities/exercise.model';
 import { StudentExamWithGradeDTO } from 'app/exam/exam-scores/exam-score-dtos.model';
+import { StudentParticipation } from 'app/entities/participation/student-participation.model';
+import { Result } from 'app/entities/result.model';
 
 type WorkingTimeFormValues = {
     hours: number;
@@ -40,6 +42,7 @@ export class StudentExamDetailComponent implements OnInit {
     isTestExam: boolean;
     maxTotalPoints = 0;
     achievedTotalPoints = 0;
+    quizExamAchievedPoints?: number;
     bonusTotalPoints = 0;
     isSaving = false;
 
@@ -69,6 +72,9 @@ export class StudentExamDetailComponent implements OnInit {
 
     // Icons
     faSave = faSave;
+
+    ExerciseType = ExerciseType;
+    IncludedInOverallScore = IncludedInOverallScore;
 
     constructor(
         private route: ActivatedRoute,
@@ -146,6 +152,7 @@ export class StudentExamDetailComponent implements OnInit {
             this.studentExam.examSessions.sort((s1, s2) => s1.id! - s2.id!);
         }
         this.achievedPointsPerExercise = studentExamWithGrade.achievedPointsPerExercise;
+        this.quizExamAchievedPoints = studentExamWithGrade.studentResult.quizExamOverallPointsAchieved;
 
         this.initWorkingTimeForm();
 
@@ -317,5 +324,65 @@ export class StudentExamDetailComponent implements OnInit {
                 this.toggle();
             }
         });
+    }
+
+    /**
+     * Return the first submission of the first student participation of the given exercise
+     *
+     * @param exercise the exercise for which the submission to be returned
+     * @return Submission returns submission if exists, undefined otherwise
+     */
+    getSubmission(exercise: Exercise): Submission | undefined {
+        if (exercise.studentParticipations?.[0]) {
+            const studentParticipation = exercise.studentParticipations![0];
+            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+            if (studentParticipation.submissions?.length! > 0) {
+                return studentParticipation.submissions![0];
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Return the first result of the first student participation of the given exercise
+     *
+     * @param exercise the exercise for which the result to be returned
+     * @return Result returns result if exists, undefined otherwise
+     */
+    getResult(exercise: Exercise): Result | undefined {
+        if (exercise.studentParticipations?.[0]) {
+            const studentParticipation = exercise.studentParticipations![0];
+            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+            if (studentParticipation.results?.length! > 0) {
+                return studentParticipation.results![0];
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Return the first student participation of the given exercise
+     *
+     * @param exercise the exercise for which the student participation to be returned
+     * @return StudentParticipation returns student participation if exists, undefined otherwise
+     */
+    getStudentParticipation(exercise: Exercise): StudentParticipation | undefined {
+        if (exercise.studentParticipations?.[0]) {
+            return exercise.studentParticipations![0];
+        }
+        return undefined;
+    }
+
+    /**
+     * Return the quiz exam result of the given student exam
+     *
+     * @param studentExam the student exam of which the quiz exam result to be returned
+     * @return Result returns quiz exam result if exists, undefined otherwise
+     */
+    getQuizExamResult(studentExam: StudentExam): Result | undefined {
+        if (studentExam.quizExamSubmission && studentExam.quizExamSubmission.results && studentExam.quizExamSubmission.results.length > 0) {
+            return studentExam.quizExamSubmission.results[0];
+        }
+        return undefined;
     }
 }

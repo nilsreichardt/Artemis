@@ -1,5 +1,8 @@
 package de.tum.in.www1.artemis.domain.quiz;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 import org.hibernate.annotations.Cache;
@@ -9,6 +12,7 @@ import com.fasterxml.jackson.annotation.*;
 
 import de.tum.in.www1.artemis.domain.DomainObject;
 import de.tum.in.www1.artemis.domain.enumeration.ScoringType;
+import de.tum.in.www1.artemis.domain.exam.StudentExam;
 import de.tum.in.www1.artemis.domain.quiz.scoring.ScoringStrategy;
 import de.tum.in.www1.artemis.domain.view.QuizView;
 
@@ -77,8 +81,17 @@ public abstract class QuizQuestion extends DomainObject {
     @JsonIgnore
     private QuizExercise exercise;
 
+    @ManyToMany
+    @JoinTable(name = "student_exam_quiz_question", joinColumns = @JoinColumn(name = "quiz_question_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "student_exam_id", referencedColumnName = "id"))
+    @JsonIgnore
+    private List<StudentExam> studentExams = new ArrayList<>();
+
     @Transient
     private QuizGroup quizGroup;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private QuizPool quizPool;
 
     public String getTitle() {
         return title;

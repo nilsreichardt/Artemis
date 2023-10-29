@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.tum.in.www1.artemis.domain.*;
 import de.tum.in.www1.artemis.domain.modeling.ModelingSubmission;
-import de.tum.in.www1.artemis.domain.quiz.QuizSubmission;
+import de.tum.in.www1.artemis.domain.quiz.AbstractQuizSubmission;
 import de.tum.in.www1.artemis.repository.SubmissionVersionRepository;
 import de.tum.in.www1.artemis.repository.UserRepository;
 
@@ -78,7 +78,7 @@ public class SubmissionVersionService {
         else if (submission instanceof TextSubmission textSubmission) {
             return textSubmission.getText();
         }
-        else if (submission instanceof QuizSubmission quizSubmission) {
+        else if (submission instanceof AbstractQuizSubmission quizSubmission) {
             try {
                 // TODO: it might be nice to remove some question parameters (i.e. SubmittedAnswer -> QuizQuestion) to reduce the json size as those are not really necessary,
                 // however directly manipulating the object is dangerous because it will be returned to the client.

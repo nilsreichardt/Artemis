@@ -31,6 +31,8 @@ export class ExamResultOverviewComponent implements OnInit, OnChanges {
     @Input() isGradingKeyCollapsed: boolean = true;
     @Input() isBonusGradingKeyCollapsed: boolean = true;
     @Input() exerciseInfos: Record<number, ExerciseInfo>;
+    @Input() hasQuizExam?: boolean;
+    @Input() quizExamMaxPoints: number | undefined;
 
     gradingScaleExists = false;
     isBonus = false;
@@ -173,5 +175,9 @@ export class ExamResultOverviewComponent implements OnInit, OnChanges {
 
     toggleBonusGradingKey(): void {
         this.isBonusGradingKeyCollapsed = !this.isBonusGradingKeyCollapsed;
+    }
+
+    getQuizExamAchievedPointsSum() {
+        return this.studentExamWithGrade.studentResult.quizExamOverallPointsAchieved ?? 0;
     }
 }

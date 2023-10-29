@@ -115,12 +115,15 @@ public class ExamResource {
 
     private final ExamLiveEventsService examLiveEventsService;
 
+    private final QuizPoolService quizPoolService;
+
     public ExamResource(ProfileService profileService, UserRepository userRepository, CourseRepository courseRepository, ExamService examService,
             ExamDeletionService examDeletionService, ExamAccessService examAccessService, InstanceMessageSendService instanceMessageSendService, ExamRepository examRepository,
             SubmissionService submissionService, AuthorizationCheckService authCheckService, ExamDateService examDateService,
             TutorParticipationRepository tutorParticipationRepository, AssessmentDashboardService assessmentDashboardService, ExamRegistrationService examRegistrationService,
             StudentExamRepository studentExamRepository, ExamImportService examImportService, CustomAuditEventRepository auditEventRepository, ChannelService channelService,
-            ChannelRepository channelRepository, ExerciseRepository exerciseRepository, ExamSessionService examSessionRepository, ExamLiveEventsService examLiveEventsService) {
+            ChannelRepository channelRepository, ExerciseRepository exerciseRepository, ExamSessionService examSessionRepository, ExamLiveEventsService examLiveEventsService,
+            QuizPoolService quizPoolService) {
         this.profileService = profileService;
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
@@ -143,6 +146,7 @@ public class ExamResource {
         this.exerciseRepository = exerciseRepository;
         this.examSessionService = examSessionRepository;
         this.examLiveEventsService = examLiveEventsService;
+        this.quizPoolService = quizPoolService;
     }
 
     /**
@@ -864,7 +868,8 @@ public class ExamResource {
         // Reset existing student exams & participations in case they already exist
         examDeletionService.deleteStudentExamsAndExistingParticipationsForExam(exam.getId());
 
-        List<StudentExam> studentExams = studentExamRepository.generateStudentExams(exam);
+        StudentExamQuizQuestionsGenerator quizPoolQuizQuestionsGenerator = quizPoolService.getStudentExamQuizQuestionsGenerator(examId);
+        List<StudentExam> studentExams = studentExamRepository.generateStudentExams(exam, quizPoolQuizQuestionsGenerator);
 
         // we need to break a cycle for the serialization
         breakCyclesForSerialization(studentExams);
@@ -908,7 +913,7 @@ public class ExamResource {
         log.info("REST request to generate missing student exams for exam {}", examId);
 
         final var exam = checkAccessForStudentExamGenerationAndLogAuditEvent(courseId, examId, Constants.GENERATE_MISSING_STUDENT_EXAMS);
-        List<StudentExam> studentExams = studentExamRepository.generateMissingStudentExams(exam);
+        List<StudentExam> studentExams = studentExamRepository.generateMissingStudentExams(exam, quizPoolService.getStudentExamQuizQuestionsGenerator(examId));
 
         // we need to break a cycle for the serialization
         breakCyclesForSerialization(studentExams);

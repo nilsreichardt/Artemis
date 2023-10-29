@@ -176,6 +176,8 @@ public class StudentExamService {
             // Delay to ensure that "Building and testing" is shown in the client
             scheduler.schedule(() -> programmingTriggerService.triggerBuildForParticipations(currentStudentParticipations), Instant.now().plus(3, ChronoUnit.SECONDS));
         }
+
+        studentExamRepository.setQuizExamProperties(studentExamFromClient);
     }
 
     private void submitStudentExam(StudentExam studentExam) {
@@ -262,7 +264,7 @@ public class StudentExamService {
 
                     // load quiz submissions for existing participation to be able to compare them in saveSubmission
                     // 5. DB Call: read
-                    submittedAnswerRepository.loadQuizSubmissionsSubmittedAnswers(List.of(existingParticipationInDatabase));
+                    submittedAnswerRepository.loadQuizSubmissionsSubmittedAnswers(List.of(existingParticipationInDatabase), null);
 
                     QuizSubmission existingSubmissionInDatabase = (QuizSubmission) existingParticipationInDatabase.findLatestSubmission().orElse(null);
                     QuizSubmission quizSubmissionFromClient = (QuizSubmission) submissionFromClient;
@@ -754,14 +756,15 @@ public class StudentExamService {
     /**
      * Generates a new test exam for the student and stores it in the database
      *
-     * @param exam    the exam with loaded exercise groups and exercises for which the StudentExam should be created
-     * @param student the corresponding student
+     * @param exam                   the exam with loaded exercise groups and exercises for which the StudentExam should be created
+     * @param student                the corresponding student
+     * @param quizQuestionsGenerator the generator to generate quiz questions for the student exam
      * @return a StudentExam for the student and exam
      */
-    public StudentExam generateTestExam(Exam exam, User student) {
+    public StudentExam generateTestExam(Exam exam, User student, StudentExamQuizQuestionsGenerator quizQuestionsGenerator) {
         // To create a new StudentExam, the Exam with loaded ExerciseGroups and Exercises is needed
         long start = System.nanoTime();
-        StudentExam studentExam = generateIndividualStudentExam(exam, student);
+        StudentExam studentExam = generateIndividualStudentExam(exam, student, quizQuestionsGenerator);
         // we need to break a cycle for the serialization
         studentExam.getExam().setExerciseGroups(null);
         studentExam.getExam().setStudentExams(null);
@@ -774,14 +777,15 @@ public class StudentExamService {
     /**
      * Generates an individual StudentExam
      *
-     * @param exam    with eagerly loaded users, exerciseGroups and exercises loaded
-     * @param student the student for which the StudentExam should be created
+     * @param exam                   with eagerly loaded users, exerciseGroups and exercises loaded
+     * @param student                the student for which the StudentExam should be created
+     * @param quizQuestionsGenerator the generator to generate quiz questions for the student exam
      * @return the generated StudentExam
      */
-    private StudentExam generateIndividualStudentExam(Exam exam, User student) {
+    private StudentExam generateIndividualStudentExam(Exam exam, User student, StudentExamQuizQuestionsGenerator quizQuestionsGenerator) {
         // StudentExams are saved in the called method
         HashSet<User> userHashSet = new HashSet<>();
         userHashSet.add(student);
-        return studentExamRepository.createRandomStudentExams(exam, userHashSet).get(0);
+        return studentExamRepository.createRandomStudentExams(exam, userHashSet, quizQuestionsGenerator).get(0);
     }
 }

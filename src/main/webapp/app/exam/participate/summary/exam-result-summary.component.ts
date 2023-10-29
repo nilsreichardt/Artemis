@@ -18,10 +18,12 @@ import { getLatestResultOfStudentParticipation } from 'app/exercises/shared/part
 import { evaluateTemplateStatus, getResultIconClass, getTextColorClass } from 'app/exercises/shared/result/result.utils';
 import { Submission } from 'app/entities/submission.model';
 import { Participation } from 'app/entities/participation/participation.model';
-import { faArrowUp, faEye, faEyeSlash, faFolderOpen, faInfoCircle, faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faAngleRight, faArrowUp, faEye, faEyeSlash, faFolderOpen, faInfoCircle, faPrint } from '@fortawesome/free-solid-svg-icons';
 import { cloneDeep } from 'lodash-es';
 import { captureException } from '@sentry/angular-ivy';
 import { AlertService } from 'app/core/util/alert.service';
+import { Result } from 'app/entities/result.model';
+import { QuizExercise } from 'app/entities/quiz/quiz-exercise.model';
 
 export type ResultSummaryExerciseInfo = {
     icon: IconProp;
@@ -64,6 +66,8 @@ export class ExamResultSummaryComponent implements OnInit {
     faEye = faEye;
     faEyeSlash = faEyeSlash;
     faArrowUp = faArrowUp;
+    faAngleRight = faAngleRight;
+    faAngleDown = faAngleDown;
 
     /**
      * Current student's exam.
@@ -80,6 +84,11 @@ export class ExamResultSummaryComponent implements OnInit {
     @Input()
     set studentExam(studentExam: StudentExam) {
         this._studentExam = studentExam;
+        if (studentExam.hasQuizExam) {
+            if (studentExam.quizExamSubmission?.results && studentExam.quizExamSubmission?.results.length > 0) {
+                this.quizExamResult = studentExam.quizExamSubmission.results[0];
+            }
+        }
         if (this.studentExamGradeInfoDTO) {
             this.studentExamGradeInfoDTO.studentExam = studentExam;
         }
@@ -104,6 +113,9 @@ export class ExamResultSummaryComponent implements OnInit {
 
     testRunConduction = false;
     testExamConduction = false;
+
+    collapseQuizExam = false;
+    quizExamResult: Result | undefined;
 
     examWithOnlyIdAndStudentReviewPeriod: Exam;
 
@@ -442,6 +454,10 @@ export class ExamResultSummaryComponent implements OnInit {
             textColorClass: getTextColorClass(result, templateStatus),
             resultIconClass: getResultIconClass(result, templateStatus),
         };
+    }
+
+    asQuizExercise(exercise: Exercise): QuizExercise {
+        return exercise as QuizExercise;
     }
 
     protected readonly getIcon = getIcon;

@@ -1,9 +1,6 @@
 package de.tum.in.www1.artemis.service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -20,6 +17,8 @@ import de.tum.in.www1.artemis.repository.ExamRepository;
 import de.tum.in.www1.artemis.repository.QuizGroupRepository;
 import de.tum.in.www1.artemis.repository.QuizPoolRepository;
 import de.tum.in.www1.artemis.repository.ShortAnswerMappingRepository;
+import de.tum.in.www1.artemis.service.exam.StudentExamQuizPoolQuestionsGenerator;
+import de.tum.in.www1.artemis.service.exam.StudentExamQuizQuestionsGenerator;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
 import de.tum.in.www1.artemis.web.rest.errors.EntityNotFoundException;
 
@@ -103,6 +102,18 @@ public class QuizPoolService extends QuizService<QuizPool> {
         quizPool.setQuizGroups(quizGroups);
         reassignQuizQuestion(quizPool, quizGroups);
         return quizPool;
+    }
+
+    /**
+     * Build a generator to generate randomly quiz questions for student exams of given exam id
+     *
+     * @param examId the id of the exam of which the student exam belongs to
+     * @return StudentExamQuizQuestionsGenerator the generator to generate randomly quiz questions that are going to be assigned to student exam
+     */
+    public StudentExamQuizQuestionsGenerator getStudentExamQuizQuestionsGenerator(Long examId) {
+        Optional<QuizPool> quizPoolOptional = quizPoolRepository.findWithEagerQuizQuestionsByExamId(examId);
+        return quizPoolOptional.map(quizPool -> new StudentExamQuizPoolQuestionsGenerator(quizPool.getQuizGroups(), quizPool.getQuizQuestions()))
+                .orElseGet(StudentExamQuizPoolQuestionsGenerator::new);
     }
 
     /**
