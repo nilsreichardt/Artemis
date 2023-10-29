@@ -5,21 +5,15 @@ import java.security.GeneralSecurityException;
 import java.util.Locale;
 import java.util.Optional;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.imsglobal.lti.launch.LtiOauthVerifier;
-import org.imsglobal.lti.launch.LtiVerificationException;
-import org.imsglobal.lti.launch.LtiVerificationResult;
-import org.imsglobal.lti.launch.LtiVerifier;
-import org.imsglobal.pox.IMSPOXRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -79,7 +73,7 @@ public class Lti10Service {
             return message;
         }
 
-        LtiVerifier ltiVerifier = new LtiOauthVerifier();
+        LtiOauthVerifier ltiVerifier = new LtiOauthVerifier();
         try {
             LtiVerificationResult ltiResult = ltiVerifier.verify(request, onlineCourseConfiguration.getLtiSecret());
             if (!ltiResult.getSuccess()) {

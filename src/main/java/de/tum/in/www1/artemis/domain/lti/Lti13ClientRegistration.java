@@ -45,7 +45,7 @@ public class Lti13ClientRegistration {
     }
 
     public Lti13ClientRegistration(String serverUrl, Course course, String clientRegistrationId) {
-        this.setGrantTypes(Arrays.asList(AuthorizationGrantType.CLIENT_CREDENTIALS.getValue(), AuthorizationGrantType.IMPLICIT.getValue()));
+        this.setGrantTypes(Arrays.asList(AuthorizationGrantType.CLIENT_CREDENTIALS.getValue(), AuthorizationGrantType.AUTHORIZATION_CODE.getValue()));
         this.setResponseTypes(List.of("id_token"));
         this.setClientName("Artemis - " + course.getShortName());
         this.setTokenEndpointAuthMethod("private_key_jwt");

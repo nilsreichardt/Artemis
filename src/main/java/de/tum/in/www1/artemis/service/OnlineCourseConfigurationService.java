@@ -108,7 +108,7 @@ public class OnlineCourseConfigurationService implements ClientRegistrationRepos
                     .tokenUri(onlineCourseConfiguration.getTokenUri()) //
                     .redirectUri(artemisServerUrl + CustomLti13Configurer.LTI13_LOGIN_REDIRECT_PROXY_PATH) //
                     .scope("openid") //
-                    .authorizationGrantType(AuthorizationGrantType.IMPLICIT) //
+                    .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE) //
                     .build();
         }
         catch (IllegalArgumentException e) {

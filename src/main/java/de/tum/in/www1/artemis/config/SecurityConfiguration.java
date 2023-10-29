@@ -1,7 +1,6 @@
 package de.tum.in.www1.artemis.config;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import jakarta.annotation.PostConstruct;
 
@@ -14,6 +13,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -128,16 +128,6 @@ public class SecurityConfiguration {
         // @formatter:on
     }
 
-    /**
-     * Only allow the configured IP addresses to access the prometheus endpoint
-     *
-     * @return an access check like "hasIpAddress('127.0.0.1') or hasIpAddress('::1')" that can be used as argument for
-     *         {@link org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer.AuthorizedUrl#access(String)}}
-     */
-    private String getMonitoringAccessDefinition() {
-        return monitoringIpAddresses.stream().map(ip -> String.format("hasIpAddress(\"%s\")", ip)).collect(Collectors.joining(" or "));
-    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // @formatter:off
@@ -163,7 +153,8 @@ public class SecurityConfiguration {
                 .requestMatchers(new AntPathRequestMatcher(HttpMethod.POST.name(), "/api/programming-exercises/test-cases-changed/*")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/websocket/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/.well-known/jwks.json")).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/management/prometheus/**")).access(getMonitoringAccessDefinition())
+                .requestMatchers(new AntPathRequestMatcher("/management/prometheus/**")).access((authentication, context) ->
+                    new AuthorizationDecision(monitoringIpAddresses.contains(context.getRequest().getRemoteAddr())))
                 .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated()
             )
             .apply(securityConfigurerAdapter());

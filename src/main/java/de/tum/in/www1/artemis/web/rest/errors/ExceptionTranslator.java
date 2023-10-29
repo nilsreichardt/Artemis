@@ -3,11 +3,11 @@ package de.tum.in.www1.artemis.web.rest.errors;
 import java.io.IOException;
 import java.util.List;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.BadRequestException;
 
 import javax.annotation.Nullable;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;

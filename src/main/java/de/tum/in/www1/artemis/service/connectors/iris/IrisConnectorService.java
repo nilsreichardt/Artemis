@@ -1,5 +1,7 @@
 package de.tum.in.www1.artemis.service.connectors.iris;
 
+import static org.springframework.http.HttpStatus.*;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -88,25 +90,23 @@ public class IrisConnectorService {
                 return CompletableFuture.completedFuture(parseResponse(response.getBody(), IrisMessageResponseDTO.class));
             }
             catch (HttpStatusCodeException e) {
-                switch (e.getStatusCode()) {
-                    case BAD_REQUEST -> {
-                        var badRequestDTO = parseResponse(objectMapper.readTree(e.getResponseBodyAsString()).get("detail"), IrisErrorResponseDTO.class);
-                        return CompletableFuture.failedFuture(new IrisInvalidTemplateException(badRequestDTO.errorMessage()));
-                    }
-                    case UNAUTHORIZED, FORBIDDEN -> {
-                        return CompletableFuture.failedFuture(new IrisForbiddenException());
-                    }
-                    case NOT_FOUND -> {
-                        var notFoundDTO = parseResponse(objectMapper.readTree(e.getResponseBodyAsString()).get("detail"), IrisErrorResponseDTO.class);
-                        return CompletableFuture.failedFuture(new IrisModelNotAvailableException(request.preferredModel().toString(), notFoundDTO.errorMessage()));
-                    }
-                    case INTERNAL_SERVER_ERROR -> {
-                        var internalErrorDTO = parseResponse(objectMapper.readTree(e.getResponseBodyAsString()).get("detail"), IrisErrorResponseDTO.class);
-                        return CompletableFuture.failedFuture(new IrisInternalPyrisErrorException(internalErrorDTO.errorMessage()));
-                    }
-                    default -> {
-                        return CompletableFuture.failedFuture(new IrisInternalPyrisErrorException(e.getMessage()));
-                    }
+                if (e.getStatusCode().equals(BAD_REQUEST)) {
+                    var badRequestDTO = parseResponse(objectMapper.readTree(e.getResponseBodyAsString()).get("detail"), IrisErrorResponseDTO.class);
+                    return CompletableFuture.failedFuture(new IrisInvalidTemplateException(badRequestDTO.errorMessage()));
+                }
+                else if (e.getStatusCode().equals(UNAUTHORIZED) || e.getStatusCode().equals(FORBIDDEN)) {
+                    return CompletableFuture.failedFuture(new IrisForbiddenException());
+                }
+                else if (e.getStatusCode().equals(NOT_FOUND)) {
+                    var notFoundDTO = parseResponse(objectMapper.readTree(e.getResponseBodyAsString()).get("detail"), IrisErrorResponseDTO.class);
+                    return CompletableFuture.failedFuture(new IrisModelNotAvailableException(request.preferredModel(), notFoundDTO.errorMessage()));
+                }
+                else if (e.getStatusCode().equals(INTERNAL_SERVER_ERROR)) {
+                    var internalErrorDTO = parseResponse(objectMapper.readTree(e.getResponseBodyAsString()).get("detail"), IrisErrorResponseDTO.class);
+                    return CompletableFuture.failedFuture(new IrisInternalPyrisErrorException(internalErrorDTO.errorMessage()));
+                }
+                else {
+                    return CompletableFuture.failedFuture(new IrisInternalPyrisErrorException(e.getMessage()));
                 }
             }
         }

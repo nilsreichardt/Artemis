@@ -26,8 +26,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import de.tum.in.www1.artemis.web.filter.CachingHttpHeadersFilter;
 import tech.jhipster.config.JHipsterProperties;
-import tech.jhipster.web.filter.CachingHttpHeadersFilter;
 
 /**
  * Configuration of web application with Servlet 3.0 APIs.

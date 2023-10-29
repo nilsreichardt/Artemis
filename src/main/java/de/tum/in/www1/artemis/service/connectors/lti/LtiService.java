@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

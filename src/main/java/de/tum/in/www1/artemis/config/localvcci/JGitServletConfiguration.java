@@ -1,6 +1,7 @@
 package de.tum.in.www1.artemis.config.localvcci;
 
-import org.eclipse.jgit.http.server.GitServlet;
+import jakarta.servlet.Servlet;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -29,7 +30,7 @@ public class JGitServletConfiguration {
      * @return GitServlet (Git server implementation by JGit) configured with a repository resolver and filters for fetch and push requests.
      */
     @Bean
-    public ServletRegistrationBean<GitServlet> jgitServlet() {
+    public ServletRegistrationBean<Servlet> jgitServlet() {
         ArtemisGitServlet gitServlet = new ArtemisGitServlet(localVCServletService);
         log.info("Registering ArtemisGitServlet for handling fetch and push requests to [Artemis URL]/git/[Project Key]/[Repository Slug].git");
         return new ServletRegistrationBean<>(gitServlet, "/git/*");

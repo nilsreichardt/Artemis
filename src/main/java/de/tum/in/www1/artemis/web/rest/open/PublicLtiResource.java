@@ -3,8 +3,8 @@ package de.tum.in.www1.artemis.web.rest.open;
 import java.io.IOException;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.glassfish.jersey.uri.UriComponent;
 import org.slf4j.Logger;
