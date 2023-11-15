@@ -49,7 +49,8 @@ public abstract class AbstractContinuousIntegrationResultService implements Cont
 
         final var result = new Result();
         result.setAssessmentType(AssessmentType.AUTOMATIC);
-        result.setSuccessful(buildResult.isBuildSuccessful());
+        result.setSuccessful(buildResult.isBuildSuccessful()); // TODO: check if this can be ommitted due to setScore later on
+        result.setBuilded(buildResult.isBuildSuccessful());
         result.setCompletionDate(buildResult.getBuildRunDate());
         result.setScore(buildResult.getBuildScore(), exercise.getCourseViaExerciseGroupOrCourseMember());
         result.setParticipation((Participation) participation);

@@ -122,7 +122,7 @@ export class ResultService implements IResultService {
         let buildAndTestMessage: string;
         if (result.submission && (result.submission as ProgrammingSubmission).buildFailed) {
             buildAndTestMessage = this.translateService.instant('artemisApp.result.resultString.buildFailed');
-        } else if (!result.testCaseCount) {
+        } else if (!result.testCaseCount || (result.submission && !(result.submission as ProgrammingSubmission).buildFailed)) {
             buildAndTestMessage = this.translateService.instant('artemisApp.result.resultString.buildSuccessfulNoTests');
         } else {
             buildAndTestMessage = this.translateService.instant('artemisApp.result.resultString.buildSuccessfulTests', {

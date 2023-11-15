@@ -28,6 +28,7 @@ export class Result implements BaseEntity {
     public assessor?: User;
     public feedbacks?: Feedback[];
     public participation?: Participation;
+    public builded?: boolean;
 
     // helper attributes
     public durationInMinutes?: number;

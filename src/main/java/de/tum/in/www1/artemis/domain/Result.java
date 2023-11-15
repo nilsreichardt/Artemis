@@ -52,6 +52,9 @@ public class Result extends DomainObject implements Comparable<Result> {
     @JsonView(QuizView.After.class)
     private Boolean successful;
 
+    @Column(name = "builded")
+    private Boolean builded;
+
     /**
      * Relative score in % (typically between 0 ... 100, can also be larger if bonus points are available)
      */
@@ -558,6 +561,14 @@ public class Result extends DomainObject implements Comparable<Result> {
     @JsonIgnore
     public boolean isAutomatic() {
         return AssessmentType.AUTOMATIC == assessmentType;
+    }
+
+    public Boolean getBuilded() {
+        return builded;
+    }
+
+    public void setBuilded(Boolean builded) {
+        this.builded = builded;
     }
 
     @Override
