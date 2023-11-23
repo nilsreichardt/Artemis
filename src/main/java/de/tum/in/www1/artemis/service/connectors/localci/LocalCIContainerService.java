@@ -339,11 +339,33 @@ public class LocalCIContainerService {
 
         StringBuilder buildScript = new StringBuilder("""
                 #!/bin/bash
+                error_occured=0
+                set +e
                 cd /repositories/test-repository
                 """);
 
         if (actions != null) {
-            actions.forEach(action -> buildScript.append(action.getScript()).append("\n"));
+            actions.forEach(action -> {
+                if (action.isRunAlways()) {
+                    buildScript.append(action.getScript()).append("\n");
+                    buildScript.append("""
+                            if [ $? -ne 0 ]; then
+                                error_occured=1
+                            fi
+                            """);
+                }
+                else {
+                    buildScript.append("if [ $error_occured -eq 0 ]; then\n");
+                    buildScript.append("    ").append(action.getScript()).append("\n");
+                    buildScript.append("""
+                                fi
+                                if [ $? -ne 0 ]; then
+                                    error_occured=1
+                                fi
+                            fi
+                            """);
+                }
+            });
         }
         else {
             // Windfile actions are not defined, use default build script
