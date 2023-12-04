@@ -792,7 +792,7 @@ public class FileService implements DisposableBean {
                     Files.delete(path);
                 }
                 else {
-                    log.error("Deleting the file {} did not work because it does not exist", path);
+                    log.info("Scheduled deletion of the file '{}' not necessary because it no longer exists.", path);
                 }
 
                 futures.remove(path);
