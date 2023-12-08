@@ -134,12 +134,12 @@
                 "hidden": false,
                 "vendor": false
               },
-              "namedChunks": false,
+              "namedChunks": true,
               "aot": true,
               "extractLicenses": false,
               "serviceWorker": true,
               "ngswConfigPath": "src/main/webapp/ngsw-config.json",
-              "statsJson": false,
+              "statsJson": true,
               "budgets": [
                 {
                   "type": "initial",
