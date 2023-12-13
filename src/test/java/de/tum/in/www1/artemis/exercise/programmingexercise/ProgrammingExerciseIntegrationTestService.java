@@ -169,6 +169,8 @@ class ProgrammingExerciseIntegrationTestService {
 
     private ProgrammingExerciseStudentParticipation participation2;
 
+    private ProgrammingExerciseStudentParticipation participation3;
+
     private File downloadedFile;
 
     private File localRepoFile;
@@ -186,6 +188,14 @@ class ProgrammingExerciseIntegrationTestService {
     private File remoteRepo2File;
 
     private Git remoteGit2;
+
+    private File localRepoFile3;
+
+    private Git localGit3;
+
+    private File remoteRepo3File;
+
+    private Git remoteGit3;
 
     private MockDelegate mockDelegate;
 
@@ -212,6 +222,7 @@ class ProgrammingExerciseIntegrationTestService {
 
         participation1 = participationUtilService.addStudentParticipationForProgrammingExercise(programmingExercise, userPrefix + "student1");
         participation2 = participationUtilService.addStudentParticipationForProgrammingExercise(programmingExercise, userPrefix + "student2");
+        participation3 = participationUtilService.addStudentParticipationForProgrammingExercise(programmingExercise, userPrefix + "student3");
 
         participationUtilService.addStudentParticipationForProgrammingExercise(programmingExerciseInExam, userPrefix + "student1");
         participationUtilService.addStudentParticipationForProgrammingExercise(programmingExerciseInExam, userPrefix + "student2");
@@ -231,6 +242,14 @@ class ProgrammingExerciseIntegrationTestService {
         StoredConfig config2 = localGit2.getRepository().getConfig();
         config2.setString("remote", "origin", "url", remoteRepo2File.getAbsolutePath());
         config2.save();
+
+        localRepoFile3 = Files.createTempDirectory("repo3").toFile();
+        localGit3 = LocalRepository.initialize(localRepoFile3, defaultBranch);
+        remoteRepo3File = Files.createTempDirectory("repoOrigin").toFile();
+        remoteGit3 = LocalRepository.initialize(remoteRepo3File, defaultBranch);
+        StoredConfig config3 = localGit3.getRepository().getConfig();
+        config3.setString("remote", "origin", "url", remoteRepo3File.getAbsolutePath());
+        config3.save();
 
         // TODO use createProgrammingExercise or setupTemplateAndPush to create actual content (based on the template repos) in this repository
         // so that e.g. addStudentIdToProjectName in ProgrammingExerciseExportService is tested properly as well
@@ -322,13 +341,16 @@ class ProgrammingExerciseIntegrationTestService {
     List<Path> exportSubmissionsWithPracticeSubmissionByParticipationIds(boolean excludePracticeSubmissions) throws Exception {
         var repository1 = gitService.getExistingCheckedOutRepositoryByLocalPath(localRepoFile.toPath(), null);
         var repository2 = gitService.getExistingCheckedOutRepositoryByLocalPath(localRepoFile2.toPath(), null);
+        var repository3 = gitService.getExistingCheckedOutRepositoryByLocalPath(localRepoFile3.toPath(), null);
         doReturn(repository1).when(gitService).getOrCheckoutRepository(eq(participation1.getVcsRepositoryUrl()), anyString(), anyBoolean());
         doReturn(repository2).when(gitService).getOrCheckoutRepository(eq(participation2.getVcsRepositoryUrl()), anyString(), anyBoolean());
+        doReturn(repository3).when(gitService).getOrCheckoutRepository(eq(participation3.getVcsRepositoryUrl()), anyString(), anyBoolean());
 
         // Set one of the participations to practice mode
         participation1.setPracticeMode(false);
         participation2.setPracticeMode(true);
-        final var participations = List.of(participation1, participation2);
+        participation3.setPracticeMode(false);
+        final var participations = List.of(participation1, participation2, participation3);
         programmingExerciseStudentParticipationRepository.saveAll(participations);
 
         // Export with excludePracticeSubmissions
@@ -471,8 +493,10 @@ class ProgrammingExerciseIntegrationTestService {
 
     void testExportSubmissionAnonymizationCombining() throws Exception {
         // provide repositories
-        var repository = gitService.getExistingCheckedOutRepositoryByLocalPath(localRepoFile.toPath(), null);
-        doReturn(repository).when(gitService).getOrCheckoutRepository(eq(participation1.getVcsRepositoryUrl()), anyString(), anyBoolean());
+        var repository1 = gitService.getExistingCheckedOutRepositoryByLocalPath(localRepoFile.toPath(), null);
+        var repository2 = gitService.getExistingCheckedOutRepositoryByLocalPath(localRepoFile2.toPath(), null);
+        doReturn(repository1).when(gitService).getOrCheckoutRepository(eq(participation1.getVcsRepositoryUrl()), anyString(), anyBoolean());
+        doReturn(repository2).when(gitService).getOrCheckoutRepository(eq(participation2.getVcsRepositoryUrl()), anyString(), anyBoolean());
 
         // Mock and pretend first commit is template commit
         ObjectId head = localGit.getRepository().findRef("HEAD").getObjectId();
@@ -485,8 +509,9 @@ class ProgrammingExerciseIntegrationTestService {
         GitService.commit(localGit).setMessage("commit").setAuthor("user1", "email1").call();
 
         // Rest call
+        var participationIds = programmingExerciseStudentParticipationRepository.findAll().stream().map(participation -> participation.getId().toString()).toList();
         final var path = ROOT + EXPORT_SUBMISSIONS_BY_PARTICIPATIONS.replace("{exerciseId}", String.valueOf(programmingExercise.getId())).replace("{participationIds}",
-                String.valueOf(participation1.getId()));
+                String.join(",", participationIds));
         var exportOptions = getOptions();
         exportOptions.setAddParticipantName(false);
         downloadedFile = request.postWithResponseBodyFile(path, getOptions(), HttpStatus.OK);
@@ -569,13 +594,13 @@ class ProgrammingExerciseIntegrationTestService {
         params.add("deleteStudentReposBuildPlans", "true");
         params.add("deleteBaseReposBuildPlans", "true");
 
-        for (final var planName : List.of(userPrefix + "student1", userPrefix + "student2", TEMPLATE.getName(), SOLUTION.getName())) {
+        for (final var planName : List.of(userPrefix + "student1", userPrefix + "student2", userPrefix + "student3", TEMPLATE.getName(), SOLUTION.getName())) {
             mockDelegate.mockDeleteBuildPlan(projectKey, projectKey + "-" + planName.toUpperCase(), false);
         }
         mockDelegate.mockDeleteBuildPlanProject(projectKey, false);
 
-        for (final var repoName : List.of(userPrefix + "student1", userPrefix + "student2", RepositoryType.TEMPLATE.getName(), RepositoryType.SOLUTION.getName(),
-                RepositoryType.TESTS.getName())) {
+        for (final var repoName : List.of(userPrefix + "student1", userPrefix + "student2", userPrefix + "student3", RepositoryType.TEMPLATE.getName(),
+                RepositoryType.SOLUTION.getName(), RepositoryType.TESTS.getName())) {
             mockDelegate.mockDeleteRepository(projectKey, (projectKey + "-" + repoName).toLowerCase(), false);
         }
         mockDelegate.mockDeleteProjectInVcs(projectKey, false);
@@ -937,6 +962,7 @@ class ProgrammingExerciseIntegrationTestService {
             final var participations = programmingExerciseStudentParticipationRepository.findByExerciseId(programmingExercise.getId());
             participations.get(0).setIndividualDueDate(ZonedDateTime.now().plusHours(2));
             participations.get(1).setIndividualDueDate(individualDueDate);
+            participations.get(2).setIndividualDueDate(ZonedDateTime.now().plusHours(10));
             programmingExerciseStudentParticipationRepository.saveAll(participations);
         }
 
@@ -947,7 +973,7 @@ class ProgrammingExerciseIntegrationTestService {
         {
             final var participations = programmingExerciseStudentParticipationRepository.findByExerciseId(programmingExercise.getId());
             final var withNoIndividualDueDate = participations.stream().filter(participation -> participation.getIndividualDueDate() == null).toList();
-            assertThat(withNoIndividualDueDate).hasSize(1);
+            assertThat(withNoIndividualDueDate).hasSize(2);
 
             final var withIndividualDueDate = participations.stream().filter(participation -> participation.getIndividualDueDate() != null).toList();
             assertThat(withIndividualDueDate).hasSize(1);
@@ -960,9 +986,10 @@ class ProgrammingExerciseIntegrationTestService {
 
         {
             final var participations = programmingExerciseStudentParticipationRepository.findByExerciseId(programmingExercise.getId());
-            assertThat(participations).hasSize(2);
+            assertThat(participations).hasSize(3);
             participations.get(0).setIndividualDueDate(ZonedDateTime.now().plusHours(2));
             participations.get(1).setIndividualDueDate(ZonedDateTime.now().plusHours(20));
+            participations.get(2).setIndividualDueDate(ZonedDateTime.now().plusHours(10));
             programmingExerciseStudentParticipationRepository.saveAll(participations);
         }
 
@@ -973,7 +1000,7 @@ class ProgrammingExerciseIntegrationTestService {
         {
             final var participations = programmingExerciseStudentParticipationRepository.findByExerciseId(programmingExercise.getId());
             final var withNoIndividualDueDate = participations.stream().filter(participation -> participation.getIndividualDueDate() == null).toList();
-            assertThat(withNoIndividualDueDate).hasSize(2);
+            assertThat(withNoIndividualDueDate).hasSize(3);
         }
     }
 
@@ -1698,6 +1725,7 @@ class ProgrammingExerciseIntegrationTestService {
 
         mockDelegate.mockSetRepositoryPermissionsToReadOnly(participation1.getVcsRepositoryUrl(), programmingExercise.getProjectKey(), participation1.getStudents());
         mockDelegate.mockSetRepositoryPermissionsToReadOnly(participation2.getVcsRepositoryUrl(), programmingExercise.getProjectKey(), participation2.getStudents());
+        mockDelegate.mockSetRepositoryPermissionsToReadOnly(participation3.getVcsRepositoryUrl(), programmingExercise.getProjectKey(), participation3.getStudents());
 
         final var endpoint = ProgrammingExerciseResourceEndpoints.LOCK_ALL_REPOSITORIES.replace("{exerciseId}", String.valueOf(programmingExercise.getId()));
         request.put(ROOT + endpoint, null, HttpStatus.OK);
@@ -1706,6 +1734,8 @@ class ProgrammingExerciseIntegrationTestService {
                 participation1.getStudents());
         verify(versionControlService, timeout(300)).setRepositoryPermissionsToReadOnly(participation2.getVcsRepositoryUrl(), programmingExercise.getProjectKey(),
                 participation2.getStudents());
+        verify(versionControlService, timeout(300)).setRepositoryPermissionsToReadOnly(participation3.getVcsRepositoryUrl(), programmingExercise.getProjectKey(),
+                participation3.getStudents());
 
         await().untilAsserted(() -> {
             userUtilService.changeUser(userPrefix + "instructor1");
@@ -1743,6 +1773,8 @@ class ProgrammingExerciseIntegrationTestService {
         verify(versionControlService, timeout(300)).addMemberToRepository(participation1.getVcsRepositoryUrl(), participation1.getStudent().orElseThrow(),
                 VersionControlRepositoryPermission.REPO_WRITE);
         verify(versionControlService, timeout(300)).addMemberToRepository(participation2.getVcsRepositoryUrl(), participation2.getStudent().orElseThrow(),
+                VersionControlRepositoryPermission.REPO_WRITE);
+        verify(versionControlService, timeout(300)).addMemberToRepository(participation3.getVcsRepositoryUrl(), participation3.getStudent().orElseThrow(),
                 VersionControlRepositoryPermission.REPO_WRITE);
 
         userUtilService.changeUser(userPrefix + "instructor1");
@@ -2007,13 +2039,13 @@ class ProgrammingExerciseIntegrationTestService {
 
     void testResetOnlyDeleteBuildPlansSuccess() throws Exception {
         final var projectKey = programmingExercise.getProjectKey();
-        for (final var planName : List.of(userPrefix + "student1", userPrefix + "student2")) {
+        for (final var planName : List.of(userPrefix + "student1", userPrefix + "student2", userPrefix + "student3")) {
             mockDelegate.mockDeleteBuildPlan(projectKey, projectKey + "-" + planName.toUpperCase(), false);
         }
 
-        // Two participations exist with build plans before reset
+        // Three participations exist with build plans before reset
         var participations = programmingExerciseStudentParticipationRepository.findByExerciseId(programmingExercise.getId());
-        assertThat(participations).hasSize(2);
+        assertThat(participations).hasSize(3);
         participations.forEach(participation -> {
             assertThat(participation.getBuildPlanId()).isNotNull();
         });
@@ -2021,9 +2053,9 @@ class ProgrammingExerciseIntegrationTestService {
         var resetOptions = new ProgrammingExerciseResetOptionsDTO(true, false, false, false);
         request.put(defaultResetEndpoint(programmingExercise.getId()), resetOptions, HttpStatus.OK);
 
-        // Two participations exist with build plans removed after reset
+        // Three participations exist with build plans removed after reset
         participations = programmingExerciseStudentParticipationRepository.findByExerciseId(programmingExercise.getId());
-        assertThat(participations).hasSize(2);
+        assertThat(participations).hasSize(3);
         participations.forEach(participation -> {
             assertThat(participation.getBuildPlanId()).isNull();
         });
@@ -2031,17 +2063,17 @@ class ProgrammingExerciseIntegrationTestService {
 
     void testResetDeleteBuildPlansAndDeleteStudentRepositoriesSuccess() throws Exception {
         final var projectKey = programmingExercise.getProjectKey();
-        for (final var planName : List.of(userPrefix + "student1", userPrefix + "student2")) {
+        for (final var planName : List.of(userPrefix + "student1", userPrefix + "student2", userPrefix + "student3")) {
             mockDelegate.mockDeleteBuildPlan(projectKey, projectKey + "-" + planName.toUpperCase(), false);
         }
 
-        for (final var repoName : List.of(userPrefix + "student1", userPrefix + "student2")) {
+        for (final var repoName : List.of(userPrefix + "student1", userPrefix + "student2", userPrefix + "student3")) {
             mockDelegate.mockDeleteRepository(projectKey, (projectKey + "-" + repoName).toLowerCase(), false);
         }
 
         // Two participations exist with build plans and repositories before reset
         var participations = programmingExerciseStudentParticipationRepository.findByExerciseId(programmingExercise.getId());
-        assertThat(participations).hasSize(2);
+        assertThat(participations).hasSize(3);
         participations.forEach(participation -> {
             assertThat(participation.getRepositoryUrl()).isNotNull();
             assertThat(participation.getBuildPlanId()).isNotNull();
@@ -2050,9 +2082,9 @@ class ProgrammingExerciseIntegrationTestService {
         var resetOptions = new ProgrammingExerciseResetOptionsDTO(true, true, false, false);
         request.put(defaultResetEndpoint(programmingExercise.getId()), resetOptions, HttpStatus.OK);
 
-        // Two participations exist with build plans and repositories removed after reset
+        // Three participations exist with build plans and repositories removed after reset
         participations = programmingExerciseStudentParticipationRepository.findByExerciseId(programmingExercise.getId());
-        assertThat(participations).hasSize(2);
+        assertThat(participations).hasSize(3);
         participations.forEach(participation -> {
             assertThat(participation.getRepositoryUrl()).isNull();
             assertThat(participation.getBuildPlanId()).isNull();
@@ -2061,16 +2093,16 @@ class ProgrammingExerciseIntegrationTestService {
 
     void testResetOnlyDeleteStudentParticipationsSubmissionsAndResultsSuccess() throws Exception {
         final var projectKey = programmingExercise.getProjectKey();
-        for (final var planName : List.of(userPrefix + "student1", userPrefix + "student2")) {
+        for (final var planName : List.of(userPrefix + "student1", userPrefix + "student2", userPrefix + "student3")) {
             mockDelegate.mockDeleteBuildPlan(projectKey, projectKey + "-" + planName.toUpperCase(), false);
         }
 
-        for (final var repoName : List.of(userPrefix + "student1", userPrefix + "student2")) {
+        for (final var repoName : List.of(userPrefix + "student1", userPrefix + "student2", userPrefix + "student3")) {
             mockDelegate.mockDeleteRepository(projectKey, (projectKey + "-" + repoName).toLowerCase(), false);
         }
 
-        // Two participations exist before reset
-        assertThat(programmingExerciseStudentParticipationRepository.findByExerciseId(programmingExercise.getId())).hasSize(2);
+        // Three participations exist before reset
+        assertThat(programmingExerciseStudentParticipationRepository.findByExerciseId(programmingExercise.getId())).hasSize(3);
 
         var resetOptions = new ProgrammingExerciseResetOptionsDTO(false, false, true, false);
         request.put(defaultResetEndpoint(programmingExercise.getId()), resetOptions, HttpStatus.OK);
