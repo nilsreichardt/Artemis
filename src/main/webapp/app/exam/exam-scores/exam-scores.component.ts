@@ -58,6 +58,7 @@ import {
     USERNAME_KEY,
 } from 'app/shared/export/export-constants';
 import { BonusStrategy } from 'app/entities/bonus.model';
+import { TranslateService } from '@ngx-translate/core';
 
 export enum MedianType {
     PASSED,
@@ -141,6 +142,7 @@ export class ExamScoresComponent implements OnInit, OnDestroy {
         private participantScoresService: ParticipantScoresService,
         private gradingSystemService: GradingSystemService,
         private courseManagementService: CourseManagementService,
+        private translateService: TranslateService,
     ) {}
 
     ngOnInit() {
@@ -741,6 +743,11 @@ export class ExamScoresComponent implements OnInit, OnDestroy {
 
         rowData.setUserInformation(studentResult.name, studentResult.login, studentResult.email, studentResult.registrationNumber);
 
+        if (studentResult.quizExamResult) {
+            rowData.set(EXAM_ASSIGNED_EXERCISE, this.translateService.instant('artemisApp.quizPool.title'));
+            rowData.setPoints(EXAM_ACHIEVED_POINTS, studentResult.quizExamResult.achievedPoints);
+            rowData.setScore(EXAM_ACHIEVED_SCORE, studentResult.quizExamResult.achievedScore);
+        }
         this.exerciseGroups.forEach((exerciseGroup) => {
             const exerciseResult = studentResult.exerciseGroupIdToExerciseResult?.[exerciseGroup.id];
             if (exerciseResult) {

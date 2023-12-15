@@ -1,12 +1,13 @@
 package de.tum.in.www1.artemis.service;
 
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import de.tum.in.www1.artemis.domain.User;
-import de.tum.in.www1.artemis.domain.quiz.QuizConfiguration;
-import de.tum.in.www1.artemis.domain.quiz.QuizExamSubmission;
+import de.tum.in.www1.artemis.domain.exam.StudentExam;
+import de.tum.in.www1.artemis.domain.quiz.*;
 import de.tum.in.www1.artemis.repository.QuizExamSubmissionRepository;
 
 /**
@@ -68,5 +69,30 @@ public class QuizExamSubmissionService extends AbstractQuizSubmissionService<Qui
      */
     public QuizExamSubmission initializeNewSubmission() {
         return quizExamSubmissionRepository.save(new QuizExamSubmission());
+    }
+
+    public List<QuizExamSubmission> findAllWithStudentExamAndExamAndResultsByExamId(Long examId) {
+        return quizExamSubmissionRepository.findAllWithStudentExamAndExamAndResultsByExamId(examId);
+    }
+
+    public void fetchQuizExamSubmissionsWithResultsFor(Long examId, Set<StudentExam> studentExams) {
+        List<QuizExamSubmission> quizExamSubmissions = quizExamSubmissionRepository.findAllWithStudentExamAndExamAndResultsByExamId(examId);
+        Map<Long, QuizExamSubmission> studentExamIdQuizExamSubmissionMap = quizExamSubmissions.stream()
+                .collect(Collectors.toMap(quizExamSubmission -> quizExamSubmission.getStudentExam().getId(), quizExamSubmission -> quizExamSubmission));
+        for (StudentExam studentExam : studentExams) {
+            studentExam.setQuizExamSubmission(studentExamIdQuizExamSubmissionMap.getOrDefault(studentExam.getId(), null));
+        }
+    }
+
+    public void fetchSubmittedAnswersForStudentExams(Long examId, Set<StudentExam> studentExams) {
+        List<QuizExamSubmission> quizExamSubmissionsWithSubmittedAnswers = quizExamSubmissionRepository.findAllWithEagerSubmittedAnswersByExamId(examId);
+        Map<Long, Set<SubmittedAnswer>> quizExamSubmissionSubmittedAnswersMap = quizExamSubmissionsWithSubmittedAnswers.stream()
+                .collect(Collectors.toMap(QuizExamSubmission::getId, AbstractQuizSubmission::getSubmittedAnswers));
+        for (StudentExam studentExam : studentExams) {
+            QuizExamSubmission quizExamSubmission = studentExam.getQuizExamSubmission();
+            if (quizExamSubmission != null) {
+                quizExamSubmission.setSubmittedAnswers(quizExamSubmissionSubmittedAnswersMap.getOrDefault(quizExamSubmission.getId(), null));
+            }
+        }
     }
 }

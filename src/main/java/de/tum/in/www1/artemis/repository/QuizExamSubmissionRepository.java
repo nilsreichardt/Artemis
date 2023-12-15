@@ -40,4 +40,34 @@ public interface QuizExamSubmissionRepository extends JpaRepository<QuizExamSubm
                 WHERE qes.studentExam.exam.id = :#{#examId}
             """)
     List<QuizExamSubmission> findAllByExamId(Long examId);
+
+    /**
+     * Get the quiz exam submission with the given exam id and eagerly load its results
+     *
+     * @param examId the id of the exam
+     * @return the quiz exam submission with the given exam id and its eagerly loaded results
+     */
+    @Query("""
+                SELECT DISTINCT qes
+                FROM QuizExamSubmission qes
+                JOIN FETCH qes.studentExam se
+                JOIN FETCH se.exam e
+                LEFT JOIN FETCH qes.results
+                WHERE qes.studentExam.exam.id = :#{#examId}
+            """)
+    List<QuizExamSubmission> findAllWithStudentExamAndExamAndResultsByExamId(Long examId);
+
+    /**
+     * Get the quiz exam submission with the given exam id and eagerly load submitted answers
+     *
+     * @param examId the id of the exam
+     * @return the quiz exam submission with the given exam id and its eagerly loaded submitted answers
+     */
+    @Query("""
+                SELECT DISTINCT qes
+                FROM QuizExamSubmission qes
+                LEFT JOIN FETCH qes.submittedAnswers
+                WHERE qes.studentExam.exam.id = :#{#examId}
+            """)
+    List<QuizExamSubmission> findAllWithEagerSubmittedAnswersByExamId(Long examId);
 }

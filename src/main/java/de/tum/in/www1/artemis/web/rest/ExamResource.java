@@ -956,6 +956,7 @@ public class ExamResource {
         }
 
         Integer numOfEvaluatedExercises = examService.evaluateQuizExercises(exam);
+        examService.evaluateQuizExam(exam);
 
         log.info("Evaluated {} quiz exercises of exam {}", numOfEvaluatedExercises, examId);
 

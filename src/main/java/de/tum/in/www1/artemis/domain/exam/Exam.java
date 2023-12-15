@@ -280,7 +280,8 @@ public class Exam extends DomainObject {
     }
 
     public int getExamMaxPoints() {
-        return this.examMaxPoints == null ? 0 : this.examMaxPoints;
+        Integer examMaxPoints = this.examMaxPoints == null ? 0 : this.examMaxPoints;
+        return examMaxPoints + getQuizExamMaxPoints();
     }
 
     public void setExamMaxPoints(Integer examMaxPoints) {
@@ -491,7 +492,7 @@ public class Exam extends DomainObject {
 
     @JsonProperty(value = "quizExamMaxPoints", access = JsonProperty.Access.READ_ONLY)
     public Integer getQuizExamMaxPoints() {
-        return quizExamMaxPoints;
+        return quizExamMaxPoints == null ? 0 : quizExamMaxPoints;
     }
 
     @JsonProperty(value = "quizExamMaxPoints", access = JsonProperty.Access.WRITE_ONLY)

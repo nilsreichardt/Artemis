@@ -1933,7 +1933,20 @@ class StudentExamIntegrationTest extends AbstractSpringIntegrationBambooBitbucke
     private StudentExam createStudentExamWithResultsAndAssessments(boolean setFields, int numberOfStudents) throws Exception {
         StudentExam studentExam = prepareStudentExamsForConduction(false, setFields, numberOfStudents).get(0);
         var exam = examRepository.findById(studentExam.getExam().getId()).orElseThrow();
+
+        QuizPool quizPool = new QuizPool();
+        MultipleChoiceQuestion mcQuestion = QuizExerciseFactory.createMultipleChoiceQuestion();
+        quizPool.setQuizQuestions(List.of(mcQuestion));
+        quizPoolService.update(exam.getId(), quizPool, null);
+
         StudentExam studentExamWithSubmissions = addExamExerciseSubmissionsForUser(exam, studentExam.getUser().getLogin(), studentExam);
+        QuizExamSubmission quizExamSubmission = new QuizExamSubmission();
+        quizExamSubmission.setStudentExam(studentExamWithSubmissions);
+        MultipleChoiceSubmittedAnswer submittedAnswer = new MultipleChoiceSubmittedAnswer();
+        submittedAnswer.setQuizQuestion(mcQuestion);
+        submittedAnswer.setSelectedOptions(Set.of(mcQuestion.getAnswerOptions().get(0)));
+        quizExamSubmission.setSubmittedAnswers(Set.of(submittedAnswer));
+        studentExamWithSubmissions.setQuizExamSubmission(quizExamSubmission);
 
         // now we change to the point of time when the student exam needs to be submitted
         // IMPORTANT NOTE: this needs to be configured in a way that the individual student exam ended, but we are still in the grace period time

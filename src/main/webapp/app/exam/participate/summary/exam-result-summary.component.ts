@@ -15,7 +15,7 @@ import { PlagiarismVerdict } from 'app/exercises/shared/plagiarism/types/Plagiar
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { roundScorePercentSpecifiedByCourseSettings, scrollToTopOfPage } from 'app/shared/util/utils';
 import { getLatestResultOfStudentParticipation } from 'app/exercises/shared/participation/participation.utils';
-import { evaluateTemplateStatus, getResultIconClass, getTextColorClass } from 'app/exercises/shared/result/result.utils';
+import { evaluateTemplateStatus, getQuizExamTextColorClass, getResultIconClass, getTextColorClass } from 'app/exercises/shared/result/result.utils';
 import { Submission, SubmissionType } from 'app/entities/submission.model';
 import { Participation } from 'app/entities/participation/participation.model';
 import { faArrowUp, faEye, faEyeSlash, faFolderOpen, faInfoCircle, faPrint, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
@@ -26,6 +26,8 @@ import { ProgrammingExercise } from 'app/entities/programming-exercise.model';
 import { isExamResultPublished } from 'app/exam/participate/exam.utils';
 import { TranslateService } from '@ngx-translate/core';
 import { QuizExam } from 'app/entities/quiz-exam.model';
+import { Result } from 'app/entities/result.model';
+import { orderBy as _orderBy } from 'lodash-es';
 
 export type ResultSummaryExerciseInfo = {
     icon: IconProp;
@@ -168,9 +170,15 @@ export class ExamResultSummaryComponent implements OnInit {
             this.examParticipationService
                 .loadStudentExamGradeInfoForSummary(this.courseId, this.studentExam.exam.id, this.studentExam.user.id, this.isTestRun)
                 .subscribe((studentExamWithGrade: StudentExamWithGradeDTO) => {
+                    const quizExamSubmission = studentExamWithGrade.studentExam?.quizExamSubmission;
                     studentExamWithGrade.studentExam = this.studentExam;
                     this.studentExamGradeInfoDTO = studentExamWithGrade;
                     this.exerciseInfos = this.getExerciseInfos(studentExamWithGrade);
+                    this.quizExamInfo = {
+                        ...this.quizExamInfo,
+                        colorClass: getQuizExamTextColorClass(this.getLatestResult(quizExamSubmission?.results)),
+                        achievedPercentage: studentExamWithGrade.studentResult.quizExamResult.achievedScore,
+                    };
                 });
         }
 
@@ -462,4 +470,12 @@ export class ExamResultSummaryComponent implements OnInit {
     protected readonly getIcon = getIcon;
     protected readonly ExerciseType = ExerciseType;
     protected readonly MANUAL = SubmissionType.MANUAL;
+
+    private getLatestResult(results: Result[] | undefined) {
+        if (results) {
+            const sortedResults = _orderBy(results, 'completionDate', 'desc');
+            return sortedResults.find(({ rated }) => rated === true);
+        }
+        return undefined;
+    }
 }

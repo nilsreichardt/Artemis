@@ -227,4 +227,12 @@ public class QuizPoolService extends QuizService<QuizPool> implements ExamQuizQu
         QuizPool quizPool = quizPoolRepository.findById(quizPoolId).orElseThrow(() -> new EntityNotFoundException("QuizPool", quizPoolId));
         return quizPool.getExam().getCourse();
     }
+
+    public void fetchQuizExamMaxPoints(Exam exam) {
+        Optional<QuizPool> quizPoolOptional = findByExamId(exam.getId());
+        if (quizPoolOptional.isPresent()) {
+            QuizPool quizPool = quizPoolOptional.get();
+            exam.setQuizExamMaxPoints(quizPool.getMaxPoints());
+        }
+    }
 }

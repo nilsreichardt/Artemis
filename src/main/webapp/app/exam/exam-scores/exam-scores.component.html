@@ -489,6 +489,31 @@
                                     </th>
                                 </tr>
                             </thead>
+                            @if (examScoreDTO.quizExam) {
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{ 'artemisApp.quizPool.title' | artemisTranslate }}</td>
+                                        <td>
+                                            {{ examScoreDTO.quizExam.numberOfParticipants }}
+                                            / {{ examScoreDTO.studentResults.length }} ({{
+                                                roundAndPerformLocalConversion((examScoreDTO.quizExam.numberOfParticipants / examScoreDTO.studentResults.length) * 100)
+                                            }}
+                                            %)
+                                        </td>
+                                        <td>
+                                            {{ examScoreDTO.quizExam.averagePoints !== null ? roundAndPerformLocalConversion(examScoreDTO.quizExam.averagePoints) : '-' }}
+                                            /
+                                            {{ localize(examScoreDTO.quizExam.maxPoints) }}
+                                            ({{ examScoreDTO.quizExam.averagePercentage !== null ? roundAndPerformLocalConversion(examScoreDTO.quizExam.averagePercentage) : '-' }}
+                                            %)
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            }
                             @for (exerciseGroupResult of aggregatedExerciseGroupResults; track exerciseGroupResult; let i = $index) {
                                 <tbody>
                                     @for (exerciseResult of exerciseGroupResult.exerciseResults; track exerciseResult; let isFirst = $first) {
@@ -577,6 +602,11 @@
                                 <span jhiTranslate="artemisApp.examScores.registrationNumberColumn">Matriculation Number</span>
                                 <fa-icon [icon]="faSort"></fa-icon>
                             </th>
+                            @if (examScoreDTO.quizExam) {
+                                <th>
+                                    <span jhiTranslate="artemisApp.quizPool.title">Quiz Exam</span>
+                                </th>
+                            }
                             @for (exerciseGroup of examScoreDTO.exerciseGroups; track exerciseGroup) {
                                 <th [jhiSortBy]="'exerciseGroupIdToExerciseResult.' + exerciseGroup.id + '.achievedPoints'">
                                     <span>{{ exerciseGroup.title }}</span>
@@ -644,6 +674,18 @@
                                 <td>{{ studentResult.login }}</td>
                                 <td>{{ studentResult.email ? studentResult.email : '-' }}</td>
                                 <td>{{ studentResult.registrationNumber ? studentResult.registrationNumber : '-' }}</td>
+                                @if (studentResult.quizExamResult) {
+                                    <td>
+                                        {{ 'artemisApp.quizPool.title' | artemisTranslate }}
+                                        :
+                                        {{ roundAndPerformLocalConversion(studentResult.quizExamResult.achievedPoints) }}
+                                        (
+                                        {{ roundAndPerformLocalConversion(studentResult.quizExamResult.achievedScore) }}
+                                        %)
+                                    </td>
+                                } @else {
+                                    <td>-</td>
+                                }
                                 @for (exerciseGroup of examScoreDTO.exerciseGroups; track exerciseGroup) {
                                     @if (studentResult.exerciseGroupIdToExerciseResult && studentResult.exerciseGroupIdToExerciseResult[exerciseGroup.id]) {
                                         <td>

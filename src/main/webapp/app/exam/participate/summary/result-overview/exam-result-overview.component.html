@@ -21,6 +21,28 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if (studentExamWithGrade.studentResult.quizExamResult) {
+                        <tr>
+                            <th></th>
+                            <td>
+                                <div class="icon-container">
+                                    <fa-icon [icon]="quizExamInfo?.icon!" class="icon"></fa-icon>
+                                </div>
+                                <span>{{ 'artemisApp.quizPool.title' | artemisTranslate }}</span>
+                            </td>
+                            @if (showIncludedInScoreColumn) {
+                                <td></td>
+                            }
+                            <td>{{ studentExamWithGrade.studentResult.quizExamResult.achievedPoints }}</td>
+                            <td>{{ studentExamWithGrade?.studentExam?.exam?.quizExamMaxPoints }}</td>
+                            <td>
+                                <span [class]="quizExamInfo?.colorClass">{{ quizExamInfo?.achievedPercentage }} %</span>
+                            </td>
+                            @if (studentExamWithGrade?.maxBonusPoints) {
+                                <td></td>
+                            }
+                        </tr>
+                    }
                     @for (exercise of studentExamWithGrade?.studentExam?.exercises; track exercise; let exerciseIndex = $index) {
                         <tr
                             [ngClass]="{

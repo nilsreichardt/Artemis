@@ -19,11 +19,13 @@
 @if (studentExam && studentExam.exercises && studentExam.exam?.course && studentExamGradeInfoDTO) {
     <div class="mb-4" id="exam-summary-result-overview">
         <jhi-exam-result-overview
+            [course]="studentExam.exam!.course!"
             [studentExamWithGrade]="studentExamGradeInfoDTO!"
             [isGradingKeyCollapsed]="isGradingKeyCollapsed"
             [isBonusGradingKeyCollapsed]="isBonusGradingKeyCollapsed"
             [exerciseInfos]="exerciseInfos"
             [isTestRun]="isTestRun"
+            [quizExamInfo]="quizExamInfo"
         />
     </div>
 }
