@@ -1020,6 +1020,10 @@ public class ExamService {
                 pointsReachable += groupRepresentativeExercise.getMaxPoints();
             }
         }
+        if (exam.hasQuizExam()) {
+            pointsReachable += exam.getQuizExamMaxPoints();
+        }
+
         if (pointsReachable < exam.getExamMaxPoints()) {
             throw new BadRequestAlertException("Check that you set the exam max points correctly! The max points a student can earn in the exercise groups is too low", "Exam",
                     "artemisApp.exam.validation.tooFewMaxPoints");
@@ -1262,19 +1266,6 @@ public class ExamService {
         });
         // set transient number of registered users
         examRepository.setNumberOfExamUsersForExams(Collections.singletonList(exam));
-    }
-
-    /**
-     * Set properties for quiz exercises in exam
-     *
-     * @param exam The exam for which to set the properties
-     */
-    public void setQuizExamProperties(Exam exam) {
-        Optional<QuizPool> optionalQuizPool = quizPoolService.findByExamId(exam.getId());
-        if (optionalQuizPool.isPresent()) {
-            QuizPool quizPool = optionalQuizPool.get();
-            exam.setQuizExamMaxPoints(quizPool.getMaxPoints());
-        }
     }
 
     /**

@@ -21,7 +21,7 @@
             }
         </div>
     }
-    @if (!isLoading && studentResults && exerciseGroups) {
+    @if (!isLoading && studentResults && (exerciseGroups || examScoreDTO.quizExam)) {
         <div>
             <div class="d-flex">
                 @if (examScoreDTO.title) {
@@ -41,13 +41,15 @@
                 @if (examScoreDTO.maxPoints) {
                     <h6>{{ 'artemisApp.examScores.maxPoints' | artemisTranslate }}: {{ localize(examScoreDTO.maxPoints) }},</h6>
                 }
-                <a [routerLink]="['/course-management', course!.id, 'exams', examScoreDTO.examId, 'exercise-groups']">
-                    <h6 class="ms-2">{{ exerciseGroups.length }} {{ 'artemisApp.examScores.noExerciseGroups' | artemisTranslate }}</h6>
-                </a>
-                <h6>,</h6>
-                <a [routerLink]="['/course-management', course!.id, 'exams', examScoreDTO.examId, 'students']">
-                    <h6 class="ms-2">{{ aggregatedExamResults.noOfRegisteredUsers }} {{ 'artemisApp.examScores.registered' | artemisTranslate }}</h6>
-                </a>
+                @if (exerciseGroups) {
+                    <a [routerLink]="['/course-management', course!.id, 'exams', examScoreDTO.examId, 'exercise-groups']">
+                        <h6 class="ms-2">{{ exerciseGroups.length }} {{ 'artemisApp.examScores.noExerciseGroups' | artemisTranslate }}</h6>
+                    </a>
+                    <h6>,</h6>
+                    <a [routerLink]="['/course-management', course!.id, 'exams', examScoreDTO.examId, 'students']">
+                        <h6 class="ms-2">{{ aggregatedExamResults.noOfRegisteredUsers }} {{ 'artemisApp.examScores.registered' | artemisTranslate }}</h6>
+                    </a>
+                }
             </div>
             <div class="mb-2">
                 <h4>
@@ -607,11 +609,13 @@
                                     <span jhiTranslate="artemisApp.quizPool.title">Quiz Exam</span>
                                 </th>
                             }
-                            @for (exerciseGroup of examScoreDTO.exerciseGroups; track exerciseGroup) {
-                                <th [jhiSortBy]="'exerciseGroupIdToExerciseResult.' + exerciseGroup.id + '.achievedPoints'">
-                                    <span>{{ exerciseGroup.title }}</span>
-                                    <fa-icon [icon]="faSort"></fa-icon>
-                                </th>
+                            @if (exerciseGroups) {
+                                @for (exerciseGroup of examScoreDTO.exerciseGroups; track exerciseGroup) {
+                                    <th [jhiSortBy]="'exerciseGroupIdToExerciseResult.' + exerciseGroup.id + '.achievedPoints'">
+                                        <span>{{ exerciseGroup.title }}</span>
+                                        <fa-icon [icon]="faSort"></fa-icon>
+                                    </th>
+                                }
                             }
                             <th jhiSortBy="overallPointsAchieved">
                                 <span jhiTranslate="artemisApp.examScores.overallPointsColumn">Overall Points</span>
@@ -686,18 +690,20 @@
                                 } @else {
                                     <td>-</td>
                                 }
-                                @for (exerciseGroup of examScoreDTO.exerciseGroups; track exerciseGroup) {
-                                    @if (studentResult.exerciseGroupIdToExerciseResult && studentResult.exerciseGroupIdToExerciseResult[exerciseGroup.id]) {
-                                        <td>
-                                            {{ studentResult.exerciseGroupIdToExerciseResult[exerciseGroup.id].title }}
-                                            :
-                                            {{ roundAndPerformLocalConversion(studentResult.exerciseGroupIdToExerciseResult[exerciseGroup.id].achievedPoints) }}
-                                            (
-                                            {{ roundAndPerformLocalConversion(studentResult.exerciseGroupIdToExerciseResult[exerciseGroup.id].achievedScore) }}
-                                            %)
-                                        </td>
-                                    } @else {
-                                        <td>-</td>
+                                @if (examScoreDTO.exerciseGroups) {
+                                    @for (exerciseGroup of examScoreDTO.exerciseGroups; track exerciseGroup) {
+                                        @if (studentResult.exerciseGroupIdToExerciseResult && studentResult.exerciseGroupIdToExerciseResult[exerciseGroup.id]) {
+                                            <td>
+                                                {{ studentResult.exerciseGroupIdToExerciseResult[exerciseGroup.id].title }}
+                                                :
+                                                {{ roundAndPerformLocalConversion(studentResult.exerciseGroupIdToExerciseResult[exerciseGroup.id].achievedPoints) }}
+                                                (
+                                                {{ roundAndPerformLocalConversion(studentResult.exerciseGroupIdToExerciseResult[exerciseGroup.id].achievedScore) }}
+                                                %)
+                                            </td>
+                                        } @else {
+                                            <td>-</td>
+                                        }
                                     }
                                 }
                                 <td>{{ roundAndPerformLocalConversion(studentResult.overallPointsAchieved) }}</td>

@@ -280,8 +280,7 @@ public class Exam extends DomainObject {
     }
 
     public int getExamMaxPoints() {
-        Integer examMaxPoints = this.examMaxPoints == null ? 0 : this.examMaxPoints;
-        return examMaxPoints + getQuizExamMaxPoints();
+        return this.examMaxPoints == null ? 0 : this.examMaxPoints;
     }
 
     public void setExamMaxPoints(Integer examMaxPoints) {
@@ -289,6 +288,9 @@ public class Exam extends DomainObject {
     }
 
     public Integer getNumberOfExercisesInExam() {
+        if (numberOfExercisesInExam != null) {
+            return numberOfExercisesInExam - (hasQuizExam() ? 1 : 0);
+        }
         return numberOfExercisesInExam;
     }
 
@@ -508,6 +510,11 @@ public class Exam extends DomainObject {
     @JsonProperty(value = "randomizeQuizExamQuestionsOrder", access = JsonProperty.Access.WRITE_ONLY)
     public void setRandomizeQuizExamQuestionsOrder(Boolean randomizeQuizExamQuestionOrder) {
         this.randomizeQuizExamQuestionsOrder = randomizeQuizExamQuestionOrder;
+    }
+
+    @JsonProperty(value = "hasQuizExam", access = JsonProperty.Access.READ_ONLY)
+    public boolean hasQuizExam() {
+        return getQuizExamMaxPoints() != null && getQuizExamMaxPoints() > 0;
     }
 
     @JsonIgnore
