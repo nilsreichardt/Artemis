@@ -346,8 +346,18 @@ describe('ProgrammingExerciseConfigureGradingComponent', () => {
         comp.updateEditedField(codeAnalysisCategories1[1], EditableField.MAX_PENALTY)(15);
 
         const updatedCategories: StaticCodeAnalysisCategory[] = [
-            { ...codeAnalysisCategories1[0], state: StaticCodeAnalysisCategoryState.Feedback, penalty: 3, maxPenalty: 15 },
-            { ...codeAnalysisCategories1[1], state: StaticCodeAnalysisCategoryState.Feedback, penalty: 4, maxPenalty: 15 },
+            {
+                ...codeAnalysisCategories1[0],
+                state: StaticCodeAnalysisCategoryState.Feedback,
+                penalty: 3,
+                maxPenalty: 15,
+            },
+            {
+                ...codeAnalysisCategories1[1],
+                state: StaticCodeAnalysisCategoryState.Feedback,
+                penalty: 4,
+                maxPenalty: 15,
+            },
         ];
         updateCategoriesStub.mockReturnValue(of(updatedCategories));
 

@@ -191,8 +191,16 @@ describe('TutorParticipationGraphComponent', () => {
         calculatePercentageComplaintsProgressStub = jest.spyOn(comp, 'calculatePercentageComplaintsProgress').mockImplementation();
 
         const tutorParticipationStatus = { status: 'COMPLETED' as TutorParticipationStatus };
-        const unchangedParticipation = { id: 1, trainedExampleSubmissions: [{ id: 1, usedForTutorial: true }], tutorParticipationStatus } as TutorParticipation;
-        const changedParticipation = { id: 3, trainedExampleSubmissions: [{ id: 1, usedForTutorial: true }], tutorParticipationStatus } as TutorParticipation;
+        const unchangedParticipation = {
+            id: 1,
+            trainedExampleSubmissions: [{ id: 1, usedForTutorial: true }],
+            tutorParticipationStatus,
+        } as TutorParticipation;
+        const changedParticipation = {
+            id: 3,
+            trainedExampleSubmissions: [{ id: 1, usedForTutorial: true }],
+            tutorParticipationStatus,
+        } as TutorParticipation;
         comp.tutorParticipation = unchangedParticipation;
         comp.ngOnInit();
 

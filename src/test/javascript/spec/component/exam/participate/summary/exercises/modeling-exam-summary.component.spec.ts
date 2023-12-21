@@ -38,9 +38,17 @@ describe('ModelingExamSummaryComponent', () => {
     });
 
     it('should show modeling submission when there is submission and exercise', () => {
-        const mockSubmission = { explanationText: 'Test Explanation', model: JSON.stringify({ model: true }) } as ModelingSubmission;
+        const mockSubmission = {
+            explanationText: 'Test Explanation',
+            model: JSON.stringify({ model: true }),
+        } as ModelingSubmission;
         const course = new Course();
-        const exercise = { course: course, exerciseGroup: undefined, diagramType: UMLDiagramType.ClassDiagram, studentParticipations: [{ id: 1 }] } as ModelingExercise;
+        const exercise = {
+            course: course,
+            exerciseGroup: undefined,
+            diagramType: UMLDiagramType.ClassDiagram,
+            studentParticipations: [{ id: 1 }],
+        } as ModelingExercise;
         course.isAtLeastInstructor = true;
         component.exercise = exercise;
         component.submission = mockSubmission;

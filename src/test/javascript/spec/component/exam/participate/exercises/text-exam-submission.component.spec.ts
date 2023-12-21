@@ -133,7 +133,12 @@ describe('TextExamSubmissionComponent', () => {
     }));
 
     it('should update the answer if the submission version changes', () => {
-        const submissionVersion = { id: 1, content: 'submission version', submission: textSubmission, createdDate: dayjs('2021-01-01') };
+        const submissionVersion = {
+            id: 1,
+            content: 'submission version',
+            submission: textSubmission,
+            createdDate: dayjs('2021-01-01'),
+        };
         component.setSubmissionVersion(submissionVersion);
         expect(component.answer).toBe('submission version');
         expect(component.submissionVersion).toBe(submissionVersion);

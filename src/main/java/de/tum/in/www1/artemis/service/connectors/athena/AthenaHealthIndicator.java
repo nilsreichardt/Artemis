@@ -74,13 +74,11 @@ public class AthenaHealthIndicator implements HealthIndicator {
             if (athenaStatus != null) {
                 additionalInfo.put(ATHENA_ASSESSMENT_MODULE_MANAGER_KEY, athenaStatus);
                 additionalInfo.putAll(getAdditionalInfoForModules(response));
-            }
-            else {
+            } else {
                 additionalInfo.put(ATHENA_ASSESSMENT_MODULE_MANAGER_KEY, "not available");
             }
             health.setAdditionalInfo(additionalInfo);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             health = new ConnectorHealth(e);
             health.setAdditionalInfo(Map.of(ATHENA_URL_KEY, athenaUrl));
         }

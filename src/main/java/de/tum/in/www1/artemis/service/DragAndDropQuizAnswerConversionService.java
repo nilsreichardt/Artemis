@@ -95,7 +95,7 @@ public class DragAndDropQuizAnswerConversionService {
     }
 
     private void drawDragItem(DragAndDropSubmittedAnswer dragAndDropSubmittedAnswer, Graphics2D graphics, DropLocation dropLocation,
-            DropLocationCoordinates dropLocationCoordinates) throws IOException {
+                              DropLocationCoordinates dropLocationCoordinates) throws IOException {
         graphics.setColor(Color.BLACK);
         int dropLocationMidY = dropLocationCoordinates.y + dropLocationCoordinates.height / 2;
         Set<DragAndDropMapping> mappings = dragAndDropSubmittedAnswer.getMappings();
@@ -103,8 +103,7 @@ public class DragAndDropQuizAnswerConversionService {
             if (dropLocation.equals(mapping.getDropLocation())) {
                 if (mapping.getDragItem().getPictureFilePath() == null) {
                     drawTextDragItem(graphics, dropLocationCoordinates, dropLocationMidY, mapping);
-                }
-                else {
+                } else {
                     drawPictureDragItem(graphics, dropLocationCoordinates, mapping);
                 }
                 // if the drop location is invalid, we already marked the spot as invalid, no need to mark it twice
@@ -128,14 +127,13 @@ public class DragAndDropQuizAnswerConversionService {
     }
 
     private void drawDropLocation(DragAndDropSubmittedAnswer dragAndDropSubmittedAnswer, Graphics2D graphics, DropLocation dropLocation,
-            DropLocationCoordinates dropLocationCoordinates, boolean showResult) {
+                                  DropLocationCoordinates dropLocationCoordinates, boolean showResult) {
         graphics.setColor(Color.WHITE);
         graphics.fillRect(dropLocationCoordinates.x, dropLocationCoordinates.y, dropLocationCoordinates.width, dropLocationCoordinates.height);
 
         if (dropLocation.isDropLocationCorrect(dragAndDropSubmittedAnswer)) {
             graphics.setColor(Color.GREEN);
-        }
-        else if (dropLocation.isInvalid()) {
+        } else if (dropLocation.isInvalid()) {
             markItemAsInvalid(graphics, dropLocationCoordinates);
         }
         // incorrect solution placed on drop location

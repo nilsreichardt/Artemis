@@ -5,13 +5,13 @@
         <span class="exercise-title" left-header>{{ examTimeline ? exercise.title : exercise?.exerciseGroup?.title ?? '-' }}</span>
         <!-- prettier-ignore -->
         <span left-header>&nbsp;[{{ exercise.maxPoints }} {{ 'artemisApp.examParticipation.points' | artemisTranslate }}@if (exercise.bonusPoints) {
-      <span
-      >, {{ exercise.bonusPoints }} {{ 'artemisApp.examParticipation.bonus' | artemisTranslate }}</span>
-      }]
-      @if (exercise.includedInOverallScore !== IncludedInOverallScore.INCLUDED_COMPLETELY) {
-        <jhi-included-in-score-badge
-        [includedInOverallScore]="exercise.includedInOverallScore"></jhi-included-in-score-badge>
-      }</span>
+            <span
+            >, {{ exercise.bonusPoints }} {{ 'artemisApp.examParticipation.bonus' | artemisTranslate }}</span>
+        }]
+            @if (exercise.includedInOverallScore !== IncludedInOverallScore.INCLUDED_COMPLETELY) {
+                <jhi-included-in-score-badge
+                        [includedInOverallScore]="exercise.includedInOverallScore"></jhi-included-in-score-badge>
+            }</span>
         <!--region Left Panel-->
         <div left-body class="px-2 pb-2 w-100">
             <div class="row">
@@ -69,7 +69,7 @@
         <ng-container right-body>
             <!-- problem statement update & difference highlighter -->
             @if (exercise) {
-                <jhi-exam-exercise-update-highlighter [exercise]="exercise" (problemStatementUpdateEvent)="updateProblemStatement($event)"> </jhi-exam-exercise-update-highlighter>
+                <jhi-exam-exercise-update-highlighter [exercise]="exercise" (problemStatementUpdateEvent)="updateProblemStatement($event)"></jhi-exam-exercise-update-highlighter>
             }
             @if (exercise!.problemStatement) {
                 <p class="mb-3 markdown-preview">

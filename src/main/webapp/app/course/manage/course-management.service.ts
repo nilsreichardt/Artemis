@@ -166,20 +166,25 @@ export class CourseManagementService {
      */
     findOneForDashboard(courseId: number): Observable<EntityResponseType> {
         const params = new HttpParams();
-        return this.http.get<CourseForDashboardDTO>(`${this.resourceUrl}/${courseId}/for-dashboard`, { params, observe: 'response' }).pipe(
-            map((res: HttpResponse<CourseForDashboardDTO>) => {
-                if (res.body) {
-                    const courseForDashboardDTO: CourseForDashboardDTO = res.body;
-                    this.saveScoresInStorage(courseForDashboardDTO);
+        return this.http
+            .get<CourseForDashboardDTO>(`${this.resourceUrl}/${courseId}/for-dashboard`, {
+                params,
+                observe: 'response',
+            })
+            .pipe(
+                map((res: HttpResponse<CourseForDashboardDTO>) => {
+                    if (res.body) {
+                        const courseForDashboardDTO: CourseForDashboardDTO = res.body;
+                        this.saveScoresInStorage(courseForDashboardDTO);
 
-                    // Replace the CourseForDashboardDTO in the response body with the normal course to enable further processing.
-                    return res.clone({ body: courseForDashboardDTO.course });
-                }
-                return res;
-            }),
-            map((res: EntityResponseType) => this.processCourseEntityResponseType(res)),
-            tap((res: EntityResponseType) => this.courseStorageService.updateCourse(res.body !== null ? res.body : undefined)),
-        );
+                        // Replace the CourseForDashboardDTO in the response body with the normal course to enable further processing.
+                        return res.clone({ body: courseForDashboardDTO.course });
+                    }
+                    return res;
+                }),
+                map((res: EntityResponseType) => this.processCourseEntityResponseType(res)),
+                tap((res: EntityResponseType) => this.courseStorageService.updateCourse(res.body !== null ? res.body : undefined)),
+            );
     }
 
     saveScoresInStorage(courseForDashboardDTO: CourseForDashboardDTO) {
@@ -304,10 +309,15 @@ export class CourseManagementService {
     getWithUserStats(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         this.fetchingCoursesForNotifications = true;
-        return this.http.get<Course[]>(`${this.resourceUrl}/with-user-stats`, { params: options, observe: 'response' }).pipe(
-            map((res: EntityArrayResponseType) => this.processCourseEntityArrayResponseType(res)),
-            map((res: EntityArrayResponseType) => this.setCoursesForNotifications(res)),
-        );
+        return this.http
+            .get<Course[]>(`${this.resourceUrl}/with-user-stats`, {
+                params: options,
+                observe: 'response',
+            })
+            .pipe(
+                map((res: EntityArrayResponseType) => this.processCourseEntityArrayResponseType(res)),
+                map((res: EntityArrayResponseType) => this.setCoursesForNotifications(res)),
+            );
     }
 
     /**
@@ -317,13 +327,18 @@ export class CourseManagementService {
     getCourseOverview(req?: any): Observable<HttpResponse<Course[]>> {
         const options = createRequestOption(req);
         this.fetchingCoursesForNotifications = true;
-        return this.http.get<Course[]>(`${this.resourceUrl}/course-management-overview`, { params: options, observe: 'response' }).pipe(
-            tap((res: HttpResponse<Course[]>) => {
-                if (res.body) {
-                    res.body.forEach((course) => this.accountService.setAccessRightsForCourse(course));
-                }
-            }),
-        );
+        return this.http
+            .get<Course[]>(`${this.resourceUrl}/course-management-overview`, {
+                params: options,
+                observe: 'response',
+            })
+            .pipe(
+                tap((res: HttpResponse<Course[]>) => {
+                    if (res.body) {
+                        res.body.forEach((course) => this.accountService.setAccessRightsForCourse(course));
+                    }
+                }),
+            );
     }
 
     /**
@@ -334,7 +349,10 @@ export class CourseManagementService {
         let httpParams = new HttpParams();
         httpParams = httpParams.append('onlyActive', onlyActive.toString());
         return this.http
-            .get<Course[]>(`${this.resourceUrl}/exercises-for-management-overview`, { params: httpParams, observe: 'response' })
+            .get<Course[]>(`${this.resourceUrl}/exercises-for-management-overview`, {
+                params: httpParams,
+                observe: 'response',
+            })
             .pipe(map((res: HttpResponse<Course[]>) => this.processCourseEntityArrayResponseType(res)));
     }
 
@@ -345,7 +363,10 @@ export class CourseManagementService {
     getStatsForManagementOverview(onlyActive: boolean): Observable<HttpResponse<CourseManagementOverviewStatisticsDto[]>> {
         let httpParams = new HttpParams();
         httpParams = httpParams.append('onlyActive', onlyActive.toString());
-        return this.http.get<CourseManagementOverviewStatisticsDto[]>(`${this.resourceUrl}/stats-for-management-overview`, { params: httpParams, observe: 'response' });
+        return this.http.get<CourseManagementOverviewStatisticsDto[]>(`${this.resourceUrl}/stats-for-management-overview`, {
+            params: httpParams,
+            observe: 'response',
+        });
     }
 
     /**
@@ -373,20 +394,29 @@ export class CourseManagementService {
     searchOtherUsersInCourse(courseId: number, name: string): Observable<HttpResponse<User[]>> {
         let httpParams = new HttpParams();
         httpParams = httpParams.append('nameOfUser', name);
-        return this.http.get<User[]>(`${this.resourceUrl}/${courseId}/search-other-users`, { params: httpParams, observe: 'response' });
+        return this.http.get<User[]>(`${this.resourceUrl}/${courseId}/search-other-users`, {
+            params: httpParams,
+            observe: 'response',
+        });
     }
 
     searchUsers(courseId: number, loginOrName: string, roles: RoleGroup[]): Observable<HttpResponse<UserPublicInfoDTO[]>> {
         let httpParams = new HttpParams();
         httpParams = httpParams.append('loginOrName', loginOrName);
         httpParams = httpParams.append('roles', roles.join(','));
-        return this.http.get<User[]>(`${this.resourceUrl}/${courseId}/users/search`, { observe: 'response', params: httpParams });
+        return this.http.get<User[]>(`${this.resourceUrl}/${courseId}/users/search`, {
+            observe: 'response',
+            params: httpParams,
+        });
     }
 
     searchMembersForUserMentions(courseId: number, loginOrName: string): Observable<HttpResponse<UserNameAndLoginDTO[]>> {
         let httpParams = new HttpParams();
         httpParams = httpParams.append('loginOrName', loginOrName);
-        return this.http.get<User[]>(`${this.resourceUrl}/${courseId}/members/search`, { observe: 'response', params: httpParams });
+        return this.http.get<User[]>(`${this.resourceUrl}/${courseId}/members/search`, {
+            observe: 'response',
+            params: httpParams,
+        });
     }
 
     /**
@@ -399,8 +429,12 @@ export class CourseManagementService {
         // create loginOrName HTTP Param
         let httpParams = new HttpParams();
         httpParams = httpParams.append('loginOrName', loginOrName);
-        return this.http.get<User[]>(`${this.resourceUrl}/${courseId}/students/search`, { observe: 'response', params: httpParams });
+        return this.http.get<User[]>(`${this.resourceUrl}/${courseId}/students/search`, {
+            observe: 'response',
+            params: httpParams,
+        });
     }
+
     /**
      * Downloads the course archive of the specified courseId. Returns an error
      * if the archive does not exist.

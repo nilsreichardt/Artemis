@@ -217,7 +217,10 @@ describe('ExamScoresComponent', () => {
             gradeWithBonus: { bonusGrade: 1, finalGrade: '2.0', bonusStrategy: BonusStrategy.GRADES_DISCRETE },
             mostSeverePlagiarismVerdict: PlagiarismVerdict.WARNING,
         },
-        { ...studentResult2, gradeWithBonus: { bonusGrade: 2, finalGrade: '1.0', bonusStrategy: BonusStrategy.GRADES_DISCRETE } },
+        {
+            ...studentResult2,
+            gradeWithBonus: { bonusGrade: 2, finalGrade: '1.0', bonusStrategy: BonusStrategy.GRADES_DISCRETE },
+        },
         {
             ...studentResult3,
             gradeWithBonus: {
@@ -448,9 +451,33 @@ describe('ExamScoresComponent', () => {
                     averagePoints: 35,
                     averagePercentage: 35,
                 },
-                { noOfParticipantsWithFilter: 0, totalPoints: 0, exerciseId: 13, title: 'ex1_3', maxPoints: 100, totalParticipants: 1, exerciseType: 'programming' },
-                { noOfParticipantsWithFilter: 0, totalPoints: 0, exerciseId: 14, title: 'ex1_4', maxPoints: 100, totalParticipants: 1, exerciseType: 'file-upload' },
-                { noOfParticipantsWithFilter: 0, totalPoints: 0, exerciseId: 15, title: 'ex1_5', maxPoints: 100, totalParticipants: 1, exerciseType: 'quiz' },
+                {
+                    noOfParticipantsWithFilter: 0,
+                    totalPoints: 0,
+                    exerciseId: 13,
+                    title: 'ex1_3',
+                    maxPoints: 100,
+                    totalParticipants: 1,
+                    exerciseType: 'programming',
+                },
+                {
+                    noOfParticipantsWithFilter: 0,
+                    totalPoints: 0,
+                    exerciseId: 14,
+                    title: 'ex1_4',
+                    maxPoints: 100,
+                    totalParticipants: 1,
+                    exerciseType: 'file-upload',
+                },
+                {
+                    noOfParticipantsWithFilter: 0,
+                    totalPoints: 0,
+                    exerciseId: 15,
+                    title: 'ex1_5',
+                    maxPoints: 100,
+                    totalParticipants: 1,
+                    exerciseType: 'quiz',
+                },
             ],
             exerciseGroupId: 1,
             title: 'group',
@@ -531,9 +558,33 @@ describe('ExamScoresComponent', () => {
                     averagePoints: 20,
                     averagePercentage: 20,
                 },
-                { noOfParticipantsWithFilter: 0, totalPoints: 0, exerciseId: 13, title: 'ex1_3', maxPoints: 100, totalParticipants: 1, exerciseType: 'programming' },
-                { noOfParticipantsWithFilter: 0, totalPoints: 0, exerciseId: 14, title: 'ex1_4', maxPoints: 100, totalParticipants: 1, exerciseType: 'file-upload' },
-                { noOfParticipantsWithFilter: 0, totalPoints: 0, exerciseId: 15, title: 'ex1_5', maxPoints: 100, totalParticipants: 1, exerciseType: 'quiz' },
+                {
+                    noOfParticipantsWithFilter: 0,
+                    totalPoints: 0,
+                    exerciseId: 13,
+                    title: 'ex1_3',
+                    maxPoints: 100,
+                    totalParticipants: 1,
+                    exerciseType: 'programming',
+                },
+                {
+                    noOfParticipantsWithFilter: 0,
+                    totalPoints: 0,
+                    exerciseId: 14,
+                    title: 'ex1_4',
+                    maxPoints: 100,
+                    totalParticipants: 1,
+                    exerciseType: 'file-upload',
+                },
+                {
+                    noOfParticipantsWithFilter: 0,
+                    totalPoints: 0,
+                    exerciseId: 15,
+                    title: 'ex1_5',
+                    maxPoints: 100,
+                    totalParticipants: 1,
+                    exerciseType: 'quiz',
+                },
             ],
             exerciseGroupId: 1,
             title: 'group',
@@ -636,7 +687,14 @@ describe('ExamScoresComponent', () => {
 
     it('should initialize correctly with bonus grades and plagiarism', () => {
         jest.spyOn(examService, 'getExamScores').mockReturnValue(
-            of(new HttpResponse({ body: { ...examScoreDTO, studentResults: studentResultsWithBonusGradesAndPlagiarism } as ExamScoreDTO })),
+            of(
+                new HttpResponse({
+                    body: {
+                        ...examScoreDTO,
+                        studentResults: studentResultsWithBonusGradesAndPlagiarism,
+                    } as ExamScoreDTO,
+                }),
+            ),
         );
         fixture.detectChanges();
         const finalGrades = studentResultsWithBonusGradesAndPlagiarism.map((studentResult) => studentResult.gradeWithBonus.finalGrade);
@@ -648,7 +706,14 @@ describe('ExamScoresComponent', () => {
 
     it('should initialize correctly with bonus points', () => {
         jest.spyOn(examService, 'getExamScores').mockReturnValue(
-            of(new HttpResponse({ body: { ...examScoreDTO, studentResults: studentResultsWithBonusPoints } as ExamScoreDTO })),
+            of(
+                new HttpResponse({
+                    body: {
+                        ...examScoreDTO,
+                        studentResults: studentResultsWithBonusPoints,
+                    } as ExamScoreDTO,
+                }),
+            ),
         );
         fixture.detectChanges();
         const finalGrades = studentResultsWithBonusGradesAndPlagiarism.map((studentResult) => studentResult.gradeWithBonus.finalGrade);
@@ -661,7 +726,14 @@ describe('ExamScoresComponent', () => {
     it('should generate csv correctly with bonus grades and plagiarism', () => {
         const noOfSubmittedExercises = examScoreDTO.studentResults.length;
         jest.spyOn(examService, 'getExamScores').mockReturnValue(
-            of(new HttpResponse({ body: { ...examScoreDTO, studentResults: studentResultsWithBonusGradesAndPlagiarism } as ExamScoreDTO })),
+            of(
+                new HttpResponse({
+                    body: {
+                        ...examScoreDTO,
+                        studentResults: studentResultsWithBonusGradesAndPlagiarism,
+                    } as ExamScoreDTO,
+                }),
+            ),
         );
         fixture.detectChanges();
         comp.gradingScale = gradingScale;

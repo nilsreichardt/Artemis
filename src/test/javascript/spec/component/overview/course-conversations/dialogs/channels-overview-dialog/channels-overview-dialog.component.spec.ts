@@ -167,7 +167,10 @@ examples.forEach((exampleChannel) => {
             it('should open create channel dialog when button is pressed', fakeAsync(() => {
                 const modalService = TestBed.inject(NgbModal);
                 const mockModalRef = {
-                    componentInstance: { course: undefined, initialize: () => {} },
+                    componentInstance: {
+                        course: undefined,
+                        initialize: () => {},
+                    },
                     result: Promise.resolve(new ChannelDTO()),
                 };
                 const openDialogSpy = jest.spyOn(modalService, 'open').mockReturnValue(mockModalRef as unknown as NgbModalRef);

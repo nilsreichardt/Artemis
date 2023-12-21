@@ -36,6 +36,7 @@ export enum EditableField {
     MAX_PENALTY = 'maxPenalty',
     STATE = 'state',
 }
+
 export enum ChartFilterType {
     TEST_CASES,
     CATEGORIES,
@@ -359,7 +360,13 @@ export class ProgrammingExerciseConfigureGradingComponent implements OnInit, OnD
         this.isSaving = true;
 
         this.backupStaticCodeAnalysisCategories = this.backupStaticCodeAnalysisCategories.map((category) =>
-            category.state === StaticCodeAnalysisCategoryState.Graded ? category : { ...category, penalty: 0, maxPenalty: 0 },
+            category.state === StaticCodeAnalysisCategoryState.Graded
+                ? category
+                : {
+                      ...category,
+                      penalty: 0,
+                      maxPenalty: 0,
+                  },
         );
 
         const categoriesToUpdate = _intersectionWith(
@@ -614,6 +621,7 @@ export class ProgrammingExerciseConfigureGradingComponent implements OnInit, OnD
     }
 
     tableSorts = { testCases: [{ prop: 'testName', dir: 'asc' }], codeAnalysis: [{ prop: 'name', dir: 'asc' }] };
+
     onSort(table: Table, config: any) {
         this.tableSorts[table] = config.sorts;
     }
@@ -750,7 +758,13 @@ export class ProgrammingExerciseConfigureGradingComponent implements OnInit, OnD
      * @param displayType enum indicating which view is updated
      */
     private updateTestCases(editedTestCase: ProgrammingExerciseTestCase, field: EditableField, newValue: any, displayType: TestCaseView): void {
-        const mapFunction = (testCase: ProgrammingExerciseTestCase) => (testCase.id !== editedTestCase.id ? testCase : { ...testCase, [field]: newValue });
+        const mapFunction = (testCase: ProgrammingExerciseTestCase) =>
+            testCase.id !== editedTestCase.id
+                ? testCase
+                : {
+                      ...testCase,
+                      [field]: newValue,
+                  };
         switch (displayType) {
             case TestCaseView.TABLE:
                 this.filteredTestCasesForTable = this.filteredTestCasesForTable.map(mapFunction);
@@ -774,7 +788,13 @@ export class ProgrammingExerciseConfigureGradingComponent implements OnInit, OnD
      * @param newValue the newly inserted value
      */
     private updateStaticCodeAnalysisCategories(editedCategory: StaticCodeAnalysisCategory, field: EditableField, newValue: any): void {
-        const filterFunction = (category: StaticCodeAnalysisCategory) => (category.id !== editedCategory.id ? category : { ...category, [field]: newValue });
+        const filterFunction = (category: StaticCodeAnalysisCategory) =>
+            category.id !== editedCategory.id
+                ? category
+                : {
+                      ...category,
+                      [field]: newValue,
+                  };
 
         this.staticCodeAnalysisCategoriesForTable = this.staticCodeAnalysisCategoriesForTable.map(filterFunction);
         this.backupStaticCodeAnalysisCategories = this.backupStaticCodeAnalysisCategories.map(filterFunction);

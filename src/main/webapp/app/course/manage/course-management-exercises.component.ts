@@ -72,6 +72,7 @@ export class CourseManagementExercisesComponent implements OnInit {
     setProgrammingExerciseCount(count: number) {
         this.programmingExercisesCount = count;
     }
+
     setFilteredProgrammingExerciseCount(count: number) {
         this.filteredProgrammingExercisesCount = count;
     }
@@ -107,7 +108,11 @@ export class CourseManagementExercisesComponent implements OnInit {
 
     goBackToWizardMode() {
         this.router.navigate(['/course-management', this.course.id, 'lectures', this.lectureIdForGoingBack, 'edit'], {
-            queryParams: { shouldBeInWizardMode: 'true', shouldOpenCreateExercise: 'true', step: this.lectureWizardStepForGoingBack },
+            queryParams: {
+                shouldBeInWizardMode: 'true',
+                shouldOpenCreateExercise: 'true',
+                step: this.lectureWizardStepForGoingBack,
+            },
             queryParamsHandling: '',
         });
     }

@@ -46,15 +46,35 @@ describe('Notification Popup Component', () => {
     const quizNotification = generateQuizNotification(1);
 
     const generateNewMessageNotification = (notificationId: number) => {
-        const generatedNotification = { id: notificationId, title: NEW_MESSAGE_TITLE, text: 'New message from user. In course' } as Notification;
-        generatedNotification.target = JSON.stringify({ mainPage: 'courses', course: 1, entity: 'message', id: 20, conversation: 1 });
+        const generatedNotification = {
+            id: notificationId,
+            title: NEW_MESSAGE_TITLE,
+            text: 'New message from user. In course',
+        } as Notification;
+        generatedNotification.target = JSON.stringify({
+            mainPage: 'courses',
+            course: 1,
+            entity: 'message',
+            id: 20,
+            conversation: 1,
+        });
         return generatedNotification;
     };
     const newMessageNotification = generateNewMessageNotification(2);
 
     const generateExamExerciseUpdateNotification = () => {
-        const generatedNotification = { title: LIVE_EXAM_EXERCISE_UPDATE_NOTIFICATION_TITLE, text: 'Fixed mistake' } as Notification;
-        generatedNotification.target = JSON.stringify({ mainPage: 'courses', course: 1, entity: 'exams', exam: 1, exercise: 7, problemStatement: 'Fixed Problem Statement' });
+        const generatedNotification = {
+            title: LIVE_EXAM_EXERCISE_UPDATE_NOTIFICATION_TITLE,
+            text: 'Fixed mistake',
+        } as Notification;
+        generatedNotification.target = JSON.stringify({
+            mainPage: 'courses',
+            course: 1,
+            entity: 'exams',
+            exam: 1,
+            exercise: 7,
+            problemStatement: 'Fixed Problem Statement',
+        });
         return generatedNotification;
     };
     const examExerciseUpdateNotification = generateExamExerciseUpdateNotification();

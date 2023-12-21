@@ -43,7 +43,11 @@ export class UsersImportButtonComponent {
      */
     openUsersImportDialog(event: MouseEvent) {
         event.stopPropagation();
-        const modalRef: NgbModalRef = this.modalService.open(UsersImportDialogComponent, { keyboard: true, size: 'lg', backdrop: 'static' });
+        const modalRef: NgbModalRef = this.modalService.open(UsersImportDialogComponent, {
+            keyboard: true,
+            size: 'lg',
+            backdrop: 'static',
+        });
         modalRef.componentInstance.courseId = this.courseId;
         modalRef.componentInstance.courseGroup = this.courseGroup;
         modalRef.componentInstance.exam = this.exam;

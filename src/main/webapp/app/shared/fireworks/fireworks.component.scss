@@ -15,6 +15,7 @@ $box-shadow2: ();
         $box-shadow2,
         0 0 #fff;
 }
+
 @mixin keyframes($animationName) {
     @-webkit-keyframes #{$animationName} {
         @content;

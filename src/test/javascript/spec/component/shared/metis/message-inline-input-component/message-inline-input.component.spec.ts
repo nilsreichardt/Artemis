@@ -22,7 +22,14 @@ describe('MessageInlineInputComponent', () => {
         return TestBed.configureTestingModule({
             imports: [HttpClientTestingModule, MockModule(FormsModule), MockModule(ReactiveFormsModule)],
             declarations: [MessageInlineInputComponent, MockPipe(ArtemisTranslatePipe)],
-            providers: [FormBuilder, { provide: MetisService, useClass: MockMetisService }, { provide: LocalStorageService, useClass: MockSyncStorage }],
+            providers: [
+                FormBuilder,
+                {
+                    provide: MetisService,
+                    useClass: MockMetisService,
+                },
+                { provide: LocalStorageService, useClass: MockSyncStorage },
+            ],
         })
             .compileComponents()
             .then(() => {

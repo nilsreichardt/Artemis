@@ -136,7 +136,11 @@ export class CreateExerciseUnitComponent implements OnInit {
 
     createNewExercise() {
         this.router.navigate(['/course-management', this.courseId, 'exercises'], {
-            queryParams: { shouldHaveBackButtonToWizard: 'true', lectureId: this.lectureId, step: this.currentWizardStep },
+            queryParams: {
+                shouldHaveBackButtonToWizard: 'true',
+                lectureId: this.lectureId,
+                step: this.currentWizardStep,
+            },
             queryParamsHandling: '',
         });
     }

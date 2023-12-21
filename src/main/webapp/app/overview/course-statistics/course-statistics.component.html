@@ -82,7 +82,14 @@
                             </h5>
                             <h5 class="fw-bolder" id="reachable-course-score">
                                 <span>
-                                    {{ 'artemisApp.courseOverview.statistics.reachablePoints' | artemisTranslate: { number: reachablePoints, relative: currentRelativeScore } }}
+                                    {{
+                                        'artemisApp.courseOverview.statistics.reachablePoints'
+                                            | artemisTranslate
+                                                : {
+                                                      number: reachablePoints,
+                                                      relative: currentRelativeScore
+                                                  }
+                                    }}
                                 </span>
                                 <fa-icon
                                     id="reachable-help"
@@ -93,7 +100,14 @@
                             </h5>
                             <h5 class="mb-4 statistics-legend" id="max-course-score">
                                 <span>
-                                    {{ 'artemisApp.courseOverview.statistics.totalPoints' | artemisTranslate: { number: overallMaxPoints, relative: totalRelativeScore } }}
+                                    {{
+                                        'artemisApp.courseOverview.statistics.totalPoints'
+                                            | artemisTranslate
+                                                : {
+                                                      number: overallMaxPoints,
+                                                      relative: totalRelativeScore
+                                                  }
+                                    }}
                                 </span>
                                 <fa-icon
                                     id="total-help"
@@ -105,9 +119,9 @@
                             @if (gradingScaleExists) {
                                 <div class="mb-5">
                                     @if (!isBonus) {
-                                        <h5 class="fw-bolder">{{ 'artemisApp.courseOverview.statistics.grade' | artemisTranslate }}: {{ gradeDTO?.gradeName }}</h5>
+                                        <h5 class="fw-bolder">{{ 'artemisApp.courseOverview.statistics.grade' | artemisTranslate }} : {{ gradeDTO?.gradeName }}</h5>
                                     } @else {
-                                        <h5 class="fw-bolder">{{ 'artemisApp.courseOverview.statistics.bonus' | artemisTranslate }}: {{ gradeDTO?.gradeName }}</h5>
+                                        <h5 class="fw-bolder">{{ 'artemisApp.courseOverview.statistics.bonus' | artemisTranslate }} : {{ gradeDTO?.gradeName }}</h5>
                                     }
                                     <h6>
                                         {{ 'artemisApp.courseOverview.statistics.gradeInfo' | artemisTranslate }}
@@ -177,7 +191,14 @@
                         <div class="row mt-3 d-flex justify-content-end" id="{{ exerciseGroup.value[0].type }}-wrapper">
                             <div class="col-12 mb-1 d-flex align-items-center">
                                 <h4>
-                                    {{ 'artemisApp.courseOverview.statistics.exerciseCount' | artemisTranslate: { number: exerciseGroup.value.length, type: exerciseGroup.key } }}
+                                    {{
+                                        'artemisApp.courseOverview.statistics.exerciseCount'
+                                            | artemisTranslate
+                                                : {
+                                                      number: exerciseGroup.value.length,
+                                                      type: exerciseGroup.key
+                                                  }
+                                    }}
                                 </h4>
                             </div>
                             <div #containerRef class="col-12 col-md-8">
@@ -201,7 +222,10 @@
                                                         {{
                                                             'artemisApp.courseOverview.statistics.exerciseAchievedScore'
                                                                 | artemisTranslate
-                                                                    : { points: model.absoluteValue, percentage: roundScoreSpecifiedByCourseSettings(model.value, course) }
+                                                                    : {
+                                                                          points: model.absoluteValue,
+                                                                          percentage: roundScoreSpecifiedByCourseSettings(model.value, course)
+                                                                      }
                                                         }}
                                                     </span>
                                                 }
@@ -210,7 +234,10 @@
                                                         {{
                                                             'artemisApp.courseOverview.statistics.programmingExercisePassedTests'
                                                                 | artemisTranslate
-                                                                    : { tests: model.absoluteValue, percentage: roundScoreSpecifiedByCourseSettings(model.value, course) }
+                                                                    : {
+                                                                          tests: model.absoluteValue,
+                                                                          percentage: roundScoreSpecifiedByCourseSettings(model.value, course)
+                                                                      }
                                                         }}
                                                     </span>
                                                 }
@@ -235,7 +262,10 @@
                                                                 {{
                                                                     'artemisApp.courseOverview.statistics.exerciseMissedScore'
                                                                         | artemisTranslate
-                                                                            : { points: model.absoluteValue, percentage: roundScoreSpecifiedByCourseSettings(model.value, course) }
+                                                                            : {
+                                                                                  points: model.absoluteValue,
+                                                                                  percentage: roundScoreSpecifiedByCourseSettings(model.value, course)
+                                                                              }
                                                                 }}
                                                             </span>
                                                         }
@@ -260,7 +290,10 @@
                                                                 {{
                                                                     'artemisApp.courseOverview.statistics.programmingExerciseFailedTests'
                                                                         | artemisTranslate
-                                                                            : { tests: model.absoluteValue, percentage: roundScoreSpecifiedByCourseSettings(model.value, course) }
+                                                                            : {
+                                                                                  tests: model.absoluteValue,
+                                                                                  percentage: roundScoreSpecifiedByCourseSettings(model.value, course)
+                                                                              }
                                                                 }}
                                                             </span>
                                                         }
@@ -289,7 +322,11 @@
                                         <span>
                                             {{
                                                 'artemisApp.courseOverview.statistics.reachablePoints'
-                                                    | artemisTranslate: { number: exerciseGroup.value[0].reachablePoints, relative: exerciseGroup.value[0].currentRelativeScore }
+                                                    | artemisTranslate
+                                                        : {
+                                                              number: exerciseGroup.value[0].reachablePoints,
+                                                              relative: exerciseGroup.value[0].currentRelativeScore
+                                                          }
                                             }}
                                         </span>
                                         <fa-icon
@@ -303,7 +340,11 @@
                                         <span>
                                             {{
                                                 'artemisApp.courseOverview.statistics.totalPoints'
-                                                    | artemisTranslate: { number: exerciseGroup.value[0].overallMaxPoints, relative: exerciseGroup.value[0].relativeScore }
+                                                    | artemisTranslate
+                                                        : {
+                                                              number: exerciseGroup.value[0].overallMaxPoints,
+                                                              relative: exerciseGroup.value[0].relativeScore
+                                                          }
                                             }}
                                         </span>
                                         <fa-icon

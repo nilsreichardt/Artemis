@@ -119,7 +119,16 @@ describe('LectureAttachmentsComponent', () => {
 
     it('should load existing lecture', fakeAsync(() => {
         comp.lectureId = 42;
-        const findWithDetailsStub = jest.spyOn(lectureService, 'findWithDetails').mockReturnValue(of(new HttpResponse({ body: { ...lecture, id: 42 } })));
+        const findWithDetailsStub = jest.spyOn(lectureService, 'findWithDetails').mockReturnValue(
+            of(
+                new HttpResponse({
+                    body: {
+                        ...lecture,
+                        id: 42,
+                    },
+                }),
+            ),
+        );
         const findAllAttachmentsByLectureId = jest.spyOn(attachmentService, 'findAllByLectureId').mockReturnValue(of(new HttpResponse({ body: attachments })));
         fixture.detectChanges();
         expect(findWithDetailsStub).toHaveBeenCalledWith(42);

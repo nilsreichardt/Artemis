@@ -31,7 +31,6 @@ export class CreateTutorialGroupsConfigurationComponent implements OnInit, OnDes
         private courseManagementService: CourseManagementService,
         private alertService: AlertService,
         private courseStorageService: CourseStorageService,
-
         private cdr: ChangeDetectorRef,
     ) {}
 

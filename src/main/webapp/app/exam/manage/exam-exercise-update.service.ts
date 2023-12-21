@@ -8,7 +8,10 @@ export interface ExamExerciseUpdate {
 
 @Injectable({ providedIn: 'root' })
 export class ExamExerciseUpdateService {
-    private examExerciseIdAndProblemStatementSource = new BehaviorSubject<ExamExerciseUpdate>({ exerciseId: -1, problemStatement: 'initialProblemStatementValue' });
+    private examExerciseIdAndProblemStatementSource = new BehaviorSubject<ExamExerciseUpdate>({
+        exerciseId: -1,
+        problemStatement: 'initialProblemStatementValue',
+    });
     currentExerciseIdAndProblemStatement = this.examExerciseIdAndProblemStatementSource.asObservable();
 
     private examExerciseIdForNavigationSource = new BehaviorSubject<number>(-1);

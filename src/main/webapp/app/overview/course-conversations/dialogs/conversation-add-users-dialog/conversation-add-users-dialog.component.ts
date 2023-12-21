@@ -41,7 +41,6 @@ export class ConversationAddUsersDialogComponent extends AbstractDialogComponent
 
     constructor(
         private alertService: AlertService,
-
         activeModal: NgbActiveModal,
         public channelService: ChannelService,
         public conversationService: ConversationService,

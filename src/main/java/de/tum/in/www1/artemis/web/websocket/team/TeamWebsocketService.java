@@ -1,6 +1,9 @@
 package de.tum.in.www1.artemis.web.websocket.team;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 

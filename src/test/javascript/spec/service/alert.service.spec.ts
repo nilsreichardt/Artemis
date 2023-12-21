@@ -54,7 +54,11 @@ describe('Alert Service Test', () => {
     it('should close an alert correctly', () => {
         const alert0 = service.addAlert({ type: AlertType.INFO, message: 'Hello Jhipster info', onClose: jest.fn() });
         const alert1 = service.addAlert({ type: AlertType.INFO, message: 'Hello Jhipster info 2', onClose: jest.fn() });
-        const alert2 = service.addAlert({ type: AlertType.SUCCESS, message: 'Hello Jhipster success', onClose: jest.fn() });
+        const alert2 = service.addAlert({
+            type: AlertType.SUCCESS,
+            message: 'Hello Jhipster success',
+            onClose: jest.fn(),
+        });
         expect(alert2).toEqual(
             expect.objectContaining({
                 type: AlertType.SUCCESS,
@@ -90,7 +94,11 @@ describe('Alert Service Test', () => {
     it('should close an alert on timeout correctly', () => {
         jest.useFakeTimers();
 
-        const alert = { type: AlertType.INFO, message: 'Hello Jhipster info', onClose: jest.fn() } as AlertCreationProperties;
+        const alert = {
+            type: AlertType.INFO,
+            message: 'Hello Jhipster info',
+            onClose: jest.fn(),
+        } as AlertCreationProperties;
         service.addAlert(alert);
 
         expect(service.get()).toHaveLength(1);
@@ -154,7 +162,13 @@ describe('Alert Service Test', () => {
         translateService.setTranslation('en', {
             'hello.jhipster': 'Translated message',
         });
-        expect(service.addAlert({ type: AlertType.INFO, message: 'Hello Jhipster', translationKey: 'hello.jhipster' })).toEqual(
+        expect(
+            service.addAlert({
+                type: AlertType.INFO,
+                message: 'Hello Jhipster',
+                translationKey: 'hello.jhipster',
+            }),
+        ).toEqual(
             expect.objectContaining({
                 type: AlertType.INFO,
                 message: 'Translated message',
@@ -163,7 +177,13 @@ describe('Alert Service Test', () => {
     }));
 
     it('should produce a info message with provided message if key does not exists', () => {
-        expect(service.addAlert({ type: AlertType.INFO, message: 'Hello Jhipster', translationKey: 'hello.jhipster' })).toEqual(
+        expect(
+            service.addAlert({
+                type: AlertType.INFO,
+                message: 'Hello Jhipster',
+                translationKey: 'hello.jhipster',
+            }),
+        ).toEqual(
             expect.objectContaining({
                 type: AlertType.INFO,
                 message: 'Hello Jhipster',

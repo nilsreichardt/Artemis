@@ -55,8 +55,7 @@ public class JenkinsJobService {
 
         try {
             return jenkinsServer.getJob(folder, jobName);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             log.error(e.getMessage(), e);
             throw new JenkinsException(e.getMessage(), e);
         }
@@ -75,8 +74,7 @@ public class JenkinsJobService {
                 return null;
             }
             return jenkinsServer.getFolderJob(job).orElse(null);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             log.error(e.getMessage(), e);
             throw new JenkinsException(e.getMessage(), e);
         }
@@ -102,8 +100,7 @@ public class JenkinsJobService {
             xmlString = xmlString.replace("*/main", "**");
 
             return XmlFileUtils.readFromString(xmlString);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             log.error(e.getMessage(), e);
             throw new JenkinsException(e.getMessage(), e);
         }
@@ -147,8 +144,7 @@ public class JenkinsJobService {
 
             String configString = XmlFileUtils.writeToString(jobConfig);
             jenkinsServer.createJob(folder, jobName, configString, useCrumb);
-        }
-        catch (IOException | TransformerException e) {
+        } catch (IOException | TransformerException e) {
             log.error(e.getMessage(), e);
             throw new JenkinsException(e.getMessage(), e);
         }
@@ -190,12 +186,10 @@ public class JenkinsJobService {
                 var job = jenkinsServer.getJob(folderName);
                 var folder = jenkinsServer.getFolderJob(job);
                 jenkinsServer.updateJob(folder.orElse(null), jobName, configString, useCrumb);
-            }
-            else {
+            } else {
                 jenkinsServer.updateJob(jobName, configString, useCrumb);
             }
-        }
-        catch (TransformerException e) {
+        } catch (TransformerException e) {
             throw new IOException(e.getMessage(), e);
         }
     }
@@ -211,8 +205,7 @@ public class JenkinsJobService {
         try {
             String configString = XmlFileUtils.writeToString(folderConfig);
             jenkinsServer.updateJob(folderName, configString, useCrumb);
-        }
-        catch (TransformerException e) {
+        } catch (TransformerException e) {
             throw new IOException(e.getMessage(), e);
         }
     }
@@ -226,15 +219,13 @@ public class JenkinsJobService {
     public void deleteJob(String jobName) {
         try {
             jenkinsServer.deleteJob(jobName, useCrumb);
-        }
-        catch (HttpResponseException e) {
+        } catch (HttpResponseException e) {
             // We don't throw an exception if the project doesn't exist in Jenkins (404 status)
             if (e.getStatusCode() != org.apache.http.HttpStatus.SC_NOT_FOUND) {
                 log.error(e.getMessage(), e);
                 throw new JenkinsException("Error while trying to delete job in Jenkins for " + jobName, e);
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             log.error(e.getMessage(), e);
             throw new JenkinsException("Error while trying to delete job in Jenkins for " + jobName, e);
         }

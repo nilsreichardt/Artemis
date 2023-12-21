@@ -159,8 +159,14 @@ describe('ParticipationWebsocketService', () => {
         expect(resultSpy).toHaveBeenCalledOnce();
         expect(resultSpy).toHaveBeenCalledWith(newRatedResult);
         expect(participationSpy).toHaveBeenCalledOnce();
-        expect(participationSpy).toHaveBeenCalledWith({ ...participation, results: [...participation.results!, newRatedResult] });
-        expect(participationWebsocketService.cachedParticipations.get(participation.id!)).toEqual({ ...participation, results: [...participation.results!, newRatedResult] });
+        expect(participationSpy).toHaveBeenCalledWith({
+            ...participation,
+            results: [...participation.results!, newRatedResult],
+        });
+        expect(participationWebsocketService.cachedParticipations.get(participation.id!)).toEqual({
+            ...participation,
+            results: [...participation.results!, newRatedResult],
+        });
     });
 
     it('should emit participation update with new result when unrated result arrives through websocket', () => {
@@ -180,7 +186,10 @@ describe('ParticipationWebsocketService', () => {
         expect(resultSpy).toHaveBeenCalledOnce();
         expect(resultSpy).toHaveBeenCalledWith(newUnratedResult);
         expect(participationSpy).toHaveBeenCalledOnce();
-        expect(participationSpy).toHaveBeenCalledWith({ ...participation, results: [...participation.results!, newUnratedResult] });
+        expect(participationSpy).toHaveBeenCalledWith({
+            ...participation,
+            results: [...participation.results!, newUnratedResult],
+        });
         expect(participationWebsocketService.cachedParticipations.get(participation.id!)).toEqual({
             ...participation,
             results: [...participation.results!, newUnratedResult],
@@ -204,13 +213,19 @@ describe('ParticipationWebsocketService', () => {
         receiveResultForParticipationSubject.next(newRatedResult);
 
         expect(participationWebsocketService.cachedParticipations.size).toBe(2);
-        expect(participationWebsocketService.cachedParticipations.get(participation.id!)).toEqual({ ...participation, results: [...participation.results!, newRatedResult] });
+        expect(participationWebsocketService.cachedParticipations.get(participation.id!)).toEqual({
+            ...participation,
+            results: [...participation.results!, newRatedResult],
+        });
         expect(participationWebsocketService.cachedParticipations.get(participation2.id!)).toEqual(participation2);
 
         expect(resultSpy).toHaveBeenCalledOnce();
         expect(resultSpy).toHaveBeenCalledWith(newRatedResult);
         expect(participationSpy).toHaveBeenCalledOnce();
-        expect(participationSpy).toHaveBeenCalledWith({ ...participation, results: [...participation.results!, newRatedResult] });
+        expect(participationSpy).toHaveBeenCalledWith({
+            ...participation,
+            results: [...participation.results!, newRatedResult],
+        });
     });
 
     it('should attach the result to participation if the participation has undefined for results value', () => {
@@ -231,7 +246,10 @@ describe('ParticipationWebsocketService', () => {
         receiveResultForParticipationSubject.next(newRatedResult);
 
         expect(participationWebsocketService.cachedParticipations.size).toBe(1);
-        expect(participationWebsocketService.cachedParticipations.get(participationWithoutResult.id!)).toEqual({ ...participationWithoutResult, results: [newRatedResult] });
+        expect(participationWebsocketService.cachedParticipations.get(participationWithoutResult.id!)).toEqual({
+            ...participationWithoutResult,
+            results: [newRatedResult],
+        });
 
         expect(resultSpy).toHaveBeenCalledOnce();
         expect(resultSpy).toHaveBeenCalledWith(newRatedResult);

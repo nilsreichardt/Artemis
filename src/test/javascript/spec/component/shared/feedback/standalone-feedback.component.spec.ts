@@ -33,7 +33,14 @@ describe('StandaloneFeedbackComponent', () => {
 
         TestBed.configureTestingModule({
             declarations: [StandaloneFeedbackComponent, MockComponent(FeedbackComponent)],
-            providers: [{ provide: ActivatedRoute, useValue: activatedRouteStub }, MockProvider(ExerciseService), MockProvider(ExerciseCacheService)],
+            providers: [
+                {
+                    provide: ActivatedRoute,
+                    useValue: activatedRouteStub,
+                },
+                MockProvider(ExerciseService),
+                MockProvider(ExerciseCacheService),
+            ],
         })
             .compileComponents()
             .then(() => {

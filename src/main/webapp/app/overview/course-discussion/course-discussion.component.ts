@@ -220,6 +220,7 @@ export class CourseDiscussionComponent extends CourseDiscussionDirective impleme
     createEmptyPost(): void {
         this.createdPost = this.metisService.createEmptyPostForContext();
     }
+
     /**
      * defines a function that returns the post id as unique identifier,
      * by this means, Angular determines which post in the collection of posts has to be reloaded/destroyed on changes

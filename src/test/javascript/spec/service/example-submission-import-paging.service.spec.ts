@@ -36,7 +36,13 @@ describe('Example Submission Import Paging Service', () => {
             id: 1,
         } as Exercise;
         const searchResult = { resultsOnPage: [new TextSubmission()], numberOfPages: 4 };
-        const pageable = { pageSize: 2, page: 3, sortingOrder: SortingOrder.DESCENDING, searchTerm: 'testSearchTerm', sortedColumn: 'testSortedColumn' };
+        const pageable = {
+            pageSize: 2,
+            page: 3,
+            sortingOrder: SortingOrder.DESCENDING,
+            searchTerm: 'testSearchTerm',
+            sortedColumn: 'testSortedColumn',
+        };
         service
             .searchForSubmissions(pageable, exercise.id!)
             .pipe(take(1))

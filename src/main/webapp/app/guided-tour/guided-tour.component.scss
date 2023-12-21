@@ -212,6 +212,7 @@ jhi-guided-tour {
                     &:before {
                         transform: rotate(45deg);
                     }
+
                     &:after {
                         transform: rotate(-45deg);
                     }
@@ -348,6 +349,7 @@ jhi-guided-tour {
                 @include tour-triangle(top, var(--gt-tour-step-bg-color));
                 position: absolute;
             }
+
             .tour-block {
                 margin-top: 15px;
             }
@@ -361,6 +363,7 @@ jhi-guided-tour {
                 position: absolute;
                 bottom: 0;
             }
+
             .tour-block {
                 margin-bottom: 15px;
             }
@@ -397,6 +400,7 @@ jhi-guided-tour {
                 transform: translateX(-100%);
                 top: 15px;
             }
+
             .tour-block {
                 margin-right: 15px;
             }
@@ -409,6 +413,7 @@ jhi-guided-tour {
                 left: 0;
                 top: 15px;
             }
+
             .tour-block {
                 margin-left: 15px;
             }

@@ -47,7 +47,7 @@
             @if (dueDate) {
                 <div class="col-sm-auto mb-2 due-date" [ngClass]="getUrgentClass(dueDate) || ''" [ngbTooltip]="dueDate | artemisDate" [routerLink]="routerLink">
                     <span class="d-none d-sm-inline"> {{ 'artemisApp.exercise.dueDate' | artemisTranslate }}: </span>
-                    <span class="d-sm-none"> {{ 'artemisApp.courseOverview.exerciseList.shortDueDate' | artemisTranslate }}: </span>
+                    <span class="d-sm-none"> {{ 'artemisApp.courseOverview.exerciseList.shortDueDate' | artemisTranslate }} : </span>
                     {{ dueDate | artemisTimeAgo }}
                 </div>
             } @else {

@@ -19,6 +19,7 @@ export class ChannelsCreateDialogComponent extends AbstractDialogComponent {
     channelToCreate: ChannelDTO = new ChannelDTO();
     isPublicChannel = true;
     isAnnouncementChannel = false;
+
     onChannelTypeChanged($event: ChannelType) {
         this.isPublicChannel = $event === 'PUBLIC';
     }

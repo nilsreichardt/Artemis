@@ -108,7 +108,11 @@ describe('ProgrammingExerciseGradingComponent', () => {
     it('should create a grading summary with exceeding penalty', fakeAsync(() => {
         fixture.detectChanges();
 
-        comp.programmingExercise.submissionPolicy = { type: SubmissionPolicyType.SUBMISSION_PENALTY, exceedingPenalty: 10, submissionLimit: 5 };
+        comp.programmingExercise.submissionPolicy = {
+            type: SubmissionPolicyType.SUBMISSION_PENALTY,
+            exceedingPenalty: 10,
+            submissionLimit: 5,
+        };
         comp.programmingExercise.maxStaticCodeAnalysisPenalty = 5;
 
         fixture.whenStable().then(() => {

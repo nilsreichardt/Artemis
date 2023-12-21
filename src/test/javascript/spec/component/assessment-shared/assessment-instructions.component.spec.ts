@@ -60,7 +60,11 @@ describe('AssessmentInstructionsComponent', () => {
 
         comp.sampleSolutionExplanation = undefined;
         fixture.detectChanges();
-        const fileUploadExercise = { id: 1, exampleSolution: 'sample solution', type: ExerciseType.FILE_UPLOAD } as FileUploadExercise;
+        const fileUploadExercise = {
+            id: 1,
+            exampleSolution: 'sample solution',
+            type: ExerciseType.FILE_UPLOAD,
+        } as FileUploadExercise;
         comp.exerciseInput = fileUploadExercise;
         expect(comp.sampleSolutionExplanation).toBeDefined();
 

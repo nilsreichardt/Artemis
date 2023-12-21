@@ -152,7 +152,10 @@ describe('Modeling Assessment Service', () => {
                     .updateAssessmentAfterComplaint(feedbacks, complaintResponse, submissionId)
                     .pipe(take(1))
                     .subscribe((resp) => (httpExpectedResult = resp));
-                const req = httpMock.expectOne({ url: `api/modeling-submissions/${submissionId}/assessment-after-complaint`, method: 'PUT' });
+                const req = httpMock.expectOne({
+                    url: `api/modeling-submissions/${submissionId}/assessment-after-complaint`,
+                    method: 'PUT',
+                });
                 req.flush(returnedFromService);
                 expect(httpExpectedResult.body).toEqual(expected);
             });
@@ -160,26 +163,126 @@ describe('Modeling Assessment Service', () => {
             it('should get names for assessment', async () => {
                 const expected = new Map();
                 elemDefault.feedbacks = [
-                    { id: 0, credits: 3, referenceId: '6', referenceType: UMLElementType.ActivityActionNode } as Feedback,
-                    { id: 0, credits: 3, referenceId: '7', referenceType: UMLElementType.ActivityActionNode } as Feedback,
-                    { id: 0, credits: 3, referenceId: '8', referenceType: UMLElementType.ActivityActionNode } as Feedback,
-                    { id: 0, credits: 3, referenceId: '9', referenceType: UMLElementType.ActivityActionNode } as Feedback,
-                    { id: 0, credits: 3, referenceId: '10', referenceType: UMLElementType.ActivityActionNode } as Feedback,
-                    { id: 0, credits: 3, referenceId: '11', referenceType: UMLElementType.ActivityActionNode } as Feedback,
-                    { id: 0, credits: 3, referenceId: '12', referenceType: UMLElementType.ActivityActionNode } as Feedback,
-                    { id: 0, credits: 3, referenceId: '13', referenceType: UMLElementType.ActivityActionNode } as Feedback,
-                    { id: 0, credits: 3, referenceId: '14', referenceType: UMLElementType.ActivityActionNode } as Feedback,
-                    { id: 0, credits: 3, referenceId: '15', referenceType: UMLElementType.ActivityActionNode } as Feedback,
-                    { id: 0, credits: 3, referenceId: '16', referenceType: UMLElementType.ActivityActionNode } as Feedback,
-                    { id: 0, credits: 3, referenceId: '17', referenceType: UMLElementType.ActivityActionNode } as Feedback,
-                    { id: 0, credits: 3, referenceId: '18', referenceType: UMLElementType.ActivityActionNode } as Feedback,
-                    { id: 0, credits: 3, referenceId: '19', referenceType: UMLRelationshipType.ClassBidirectional } as Feedback,
-                    { id: 0, credits: 3, referenceId: '20', referenceType: UMLRelationshipType.ClassBidirectional } as Feedback,
-                    { id: 0, credits: 3, referenceId: '21', referenceType: UMLRelationshipType.ClassBidirectional } as Feedback,
-                    { id: 0, credits: 3, referenceId: '22', referenceType: UMLRelationshipType.ClassBidirectional } as Feedback,
-                    { id: 0, credits: 3, referenceId: '23', referenceType: UMLRelationshipType.ClassBidirectional } as Feedback,
-                    { id: 0, credits: 3, referenceId: '24', referenceType: UMLRelationshipType.ClassBidirectional } as Feedback,
-                    { id: 0, credits: 3, referenceId: '25', referenceType: UMLRelationshipType.ClassBidirectional } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '6',
+                        referenceType: UMLElementType.ActivityActionNode,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '7',
+                        referenceType: UMLElementType.ActivityActionNode,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '8',
+                        referenceType: UMLElementType.ActivityActionNode,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '9',
+                        referenceType: UMLElementType.ActivityActionNode,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '10',
+                        referenceType: UMLElementType.ActivityActionNode,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '11',
+                        referenceType: UMLElementType.ActivityActionNode,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '12',
+                        referenceType: UMLElementType.ActivityActionNode,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '13',
+                        referenceType: UMLElementType.ActivityActionNode,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '14',
+                        referenceType: UMLElementType.ActivityActionNode,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '15',
+                        referenceType: UMLElementType.ActivityActionNode,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '16',
+                        referenceType: UMLElementType.ActivityActionNode,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '17',
+                        referenceType: UMLElementType.ActivityActionNode,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '18',
+                        referenceType: UMLElementType.ActivityActionNode,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '19',
+                        referenceType: UMLRelationshipType.ClassBidirectional,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '20',
+                        referenceType: UMLRelationshipType.ClassBidirectional,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '21',
+                        referenceType: UMLRelationshipType.ClassBidirectional,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '22',
+                        referenceType: UMLRelationshipType.ClassBidirectional,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '23',
+                        referenceType: UMLRelationshipType.ClassBidirectional,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '24',
+                        referenceType: UMLRelationshipType.ClassBidirectional,
+                    } as Feedback,
+                    {
+                        id: 0,
+                        credits: 3,
+                        referenceId: '25',
+                        referenceType: UMLRelationshipType.ClassBidirectional,
+                    } as Feedback,
                 ];
                 const uml = {
                     version: '3.0.0',
@@ -199,13 +302,48 @@ describe('Modeling Assessment Service', () => {
                         '18': { id: '18', name: 'Dominik', type: UMLElementType.ActivityMergeNode },
                     },
                     relationships: {
-                        '19': { id: '19', type: UMLRelationshipType.ClassBidirectional, source: { element: '6' }, target: { element: '6' } },
-                        '20': { id: '20', type: UMLRelationshipType.ClassUnidirectional, source: { element: '6' }, target: { element: '6' } },
-                        '21': { id: '21', type: UMLRelationshipType.ClassAggregation, source: { element: '6' }, target: { element: '6' } },
-                        '22': { id: '22', type: UMLRelationshipType.ClassInheritance, source: { element: '6' }, target: { element: '6' } },
-                        '23': { id: '23', type: UMLRelationshipType.ClassDependency, source: { element: '6' }, target: { element: '6' } },
-                        '24': { id: '24', type: UMLRelationshipType.ClassComposition, source: { element: '6' }, target: { element: '6' } },
-                        '25': { id: '25', type: UMLRelationshipType.ActivityControlFlow, source: { element: '6' }, target: { element: '6' } },
+                        '19': {
+                            id: '19',
+                            type: UMLRelationshipType.ClassBidirectional,
+                            source: { element: '6' },
+                            target: { element: '6' },
+                        },
+                        '20': {
+                            id: '20',
+                            type: UMLRelationshipType.ClassUnidirectional,
+                            source: { element: '6' },
+                            target: { element: '6' },
+                        },
+                        '21': {
+                            id: '21',
+                            type: UMLRelationshipType.ClassAggregation,
+                            source: { element: '6' },
+                            target: { element: '6' },
+                        },
+                        '22': {
+                            id: '22',
+                            type: UMLRelationshipType.ClassInheritance,
+                            source: { element: '6' },
+                            target: { element: '6' },
+                        },
+                        '23': {
+                            id: '23',
+                            type: UMLRelationshipType.ClassDependency,
+                            source: { element: '6' },
+                            target: { element: '6' },
+                        },
+                        '24': {
+                            id: '24',
+                            type: UMLRelationshipType.ClassComposition,
+                            source: { element: '6' },
+                            target: { element: '6' },
+                        },
+                        '25': {
+                            id: '25',
+                            type: UMLRelationshipType.ActivityControlFlow,
+                            source: { element: '6' },
+                            target: { element: '6' },
+                        },
                     },
                 } as unknown as UMLModel;
 

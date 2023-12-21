@@ -56,7 +56,13 @@ describe('ProgrammingExerciseInstructionService', () => {
             id: 1,
             completionDate: dayjs('2018-06-06T22:15:29.203+02:00'),
             successful: false,
-            feedbacks: [{ testCase: { testName: 'testBubbleSort', id: 1 }, detailText: 'lorem ipsum', positive: false }],
+            feedbacks: [
+                {
+                    testCase: { testName: 'testBubbleSort', id: 1 },
+                    detailText: 'lorem ipsum',
+                    positive: false,
+                },
+            ],
         };
         const testCases = [1, 2];
 

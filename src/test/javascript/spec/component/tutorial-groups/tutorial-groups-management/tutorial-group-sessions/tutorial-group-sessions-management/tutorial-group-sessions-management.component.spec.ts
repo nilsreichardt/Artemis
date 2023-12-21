@@ -32,6 +32,7 @@ class TutorialGroupSessionRowButtonsStubComponent {
     @Output() tutorialGroupEdited = new EventEmitter<void>();
     @Output() cancelOrActivatePressed = new EventEmitter<void>();
 }
+
 describe('TutorialGroupSessionsManagement', () => {
     let fixture: ComponentFixture<TutorialGroupSessionsManagementComponent>;
     let component: TutorialGroupSessionsManagementComponent;
@@ -111,16 +112,26 @@ describe('TutorialGroupSessionsManagement', () => {
     });
 
     it('should open create session dialog', fakeAsync(() => {
-        const openSpy = jest
-            .spyOn(modalService, 'open')
-            .mockReturnValue({ componentInstance: { tutorialGroup: undefined, course: undefined, initialize: () => {} }, result: of() } as any);
+        const openSpy = jest.spyOn(modalService, 'open').mockReturnValue({
+            componentInstance: {
+                tutorialGroup: undefined,
+                course: undefined,
+                initialize: () => {},
+            },
+            result: of(),
+        } as any);
 
         const editButton = fixture.debugElement.nativeElement.querySelector('#create-session-button');
         editButton.click();
 
         fixture.whenStable().then(() => {
             expect(openSpy).toHaveBeenCalledOnce();
-            expect(openSpy).toHaveBeenCalledWith(CreateTutorialGroupSessionComponent, { size: 'xl', scrollable: false, backdrop: 'static', animation: false });
+            expect(openSpy).toHaveBeenCalledWith(CreateTutorialGroupSessionComponent, {
+                size: 'xl',
+                scrollable: false,
+                backdrop: 'static',
+                animation: false,
+            });
         });
     }));
 });

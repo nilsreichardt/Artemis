@@ -33,6 +33,7 @@ export class TutorialGroupSessionFormComponent implements OnInit, OnChanges {
     faCalendarAlt = faCalendarAlt;
 
     form: FormGroup;
+
     get isDateInvalid() {
         if (this.dateControl) {
             return this.dateControl.invalid && (this.dateControl.touched || this.dateControl.dirty);

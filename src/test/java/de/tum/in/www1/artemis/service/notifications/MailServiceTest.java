@@ -1,21 +1,20 @@
 package de.tum.in.www1.artemis.service.notifications;
 
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.mockito.Mockito.*;
-
-import javax.mail.internet.MimeMessage;
-
+import de.tum.in.www1.artemis.domain.User;
+import de.tum.in.www1.artemis.exception.ArtemisMailException;
+import de.tum.in.www1.artemis.service.TimeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.thymeleaf.spring5.SpringTemplateEngine;
-
-import de.tum.in.www1.artemis.domain.User;
-import de.tum.in.www1.artemis.exception.ArtemisMailException;
-import de.tum.in.www1.artemis.service.TimeService;
 import tech.jhipster.config.JHipsterProperties;
+
+import javax.mail.internet.MimeMessage;
+
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.mockito.Mockito.*;
 
 /**
  * This is a very basic testing class for the mail service

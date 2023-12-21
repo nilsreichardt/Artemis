@@ -56,6 +56,7 @@ export class ConversationSidebarEntryComponent implements OnInit, OnDestroy {
 
     faEllipsis = faEllipsis;
     faMessage = faMessage;
+
     constructor(
         public conversationService: ConversationService,
         private metisService: MetisService,
@@ -106,6 +107,7 @@ export class ConversationSidebarEntryComponent implements OnInit, OnDestroy {
                 this.settingsChanged.emit();
             });
     }
+
     ngOnInit(): void {
         this.hide$.pipe(debounceTime(100), distinctUntilChanged(), takeUntil(this.ngUnsubscribe)).subscribe((shouldHide) => {
             this.conversationService.changeHiddenStatus(this.course.id!, this.conversation.id!, shouldHide).subscribe({

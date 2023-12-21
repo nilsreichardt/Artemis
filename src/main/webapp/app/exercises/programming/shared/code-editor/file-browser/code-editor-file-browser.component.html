@@ -62,7 +62,7 @@
             ></jhi-code-editor-file-browser-create-node>
         }
         @if (!isLoadingFiles) {
-            <treeview #treeview [maxHeight]="treeViewMaxHeight" [items]="filesTreeViewItem" [itemTemplate]="itemTemplate"> </treeview>
+            <treeview #treeview [maxHeight]="treeViewMaxHeight" [items]="filesTreeViewItem" [itemTemplate]="itemTemplate"></treeview>
         }
         <!-- Loading files indicator -->
         @if (isLoadingFiles) {

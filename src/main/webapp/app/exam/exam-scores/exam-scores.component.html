@@ -39,7 +39,7 @@
             </div>
             <div class="d-flex mb-1">
                 @if (examScoreDTO.maxPoints) {
-                    <h6>{{ 'artemisApp.examScores.maxPoints' | artemisTranslate }}: {{ localize(examScoreDTO.maxPoints) }},</h6>
+                    <h6>{{ 'artemisApp.examScores.maxPoints' | artemisTranslate }} : {{ localize(examScoreDTO.maxPoints) }},</h6>
                 }
                 <a [routerLink]="['/course-management', course!.id, 'exams', examScoreDTO.examId, 'exercise-groups']">
                     <h6 class="ms-2">{{ exerciseGroups.length }} {{ 'artemisApp.examScores.noExerciseGroups' | artemisTranslate }}</h6>
@@ -532,7 +532,8 @@
                                             }
                                             <td>{{ exerciseResult.title }}</td>
                                             <td>
-                                                {{ exerciseResult.noOfParticipantsWithFilter }} / {{ exerciseResult.totalParticipants }} ({{
+                                                {{ exerciseResult.noOfParticipantsWithFilter }}
+                                                / {{ exerciseResult.totalParticipants }} ({{
                                                     roundAndPerformLocalConversion((exerciseResult.noOfParticipantsWithFilter / exerciseResult.totalParticipants) * 100)
                                                 }}
                                                 %)

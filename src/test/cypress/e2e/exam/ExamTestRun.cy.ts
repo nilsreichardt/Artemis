@@ -37,7 +37,10 @@ describe('Exam test run', () => {
                 exam = examResponse.body;
                 Promise.all([
                     examExerciseGroupCreation.addGroupWithExercise(exam, ExerciseType.TEXT, { textFixture }),
-                    examExerciseGroupCreation.addGroupWithExercise(exam, ExerciseType.PROGRAMMING, { submission: javaBuildErrorSubmission, practiceMode: true }),
+                    examExerciseGroupCreation.addGroupWithExercise(exam, ExerciseType.PROGRAMMING, {
+                        submission: javaBuildErrorSubmission,
+                        practiceMode: true,
+                    }),
                     examExerciseGroupCreation.addGroupWithExercise(exam, ExerciseType.QUIZ, { quizExerciseID: 0 }),
                     examExerciseGroupCreation.addGroupWithExercise(exam, ExerciseType.MODELING),
                 ]).then((responses) => {

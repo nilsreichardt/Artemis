@@ -20,7 +20,10 @@ describe('ManageAssessmentButtonsComponent', () => {
     let fixture: ComponentFixture<ManageAssessmentButtonsComponent>;
     let component: ManageAssessmentButtonsComponent;
 
-    const programmingExercise = { type: ExerciseType.PROGRAMMING, assessmentType: AssessmentType.SEMI_AUTOMATIC } as Exercise;
+    const programmingExercise = {
+        type: ExerciseType.PROGRAMMING,
+        assessmentType: AssessmentType.SEMI_AUTOMATIC,
+    } as Exercise;
 
     beforeEach(() => {
         TestBed.configureTestingModule({

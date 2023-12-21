@@ -84,7 +84,12 @@ describe('TutorialGroupFreePeriodRowButtonsComponent', () => {
         fixture.whenStable().then(() => {
             expect(openDialogSpy).toHaveBeenCalledOnce();
             expect(modalOpenSpy).toHaveBeenCalledOnce();
-            expect(modalOpenSpy).toHaveBeenCalledWith(EditTutorialGroupFreePeriodComponent, { backdrop: 'static', scrollable: false, size: 'lg', animation: false });
+            expect(modalOpenSpy).toHaveBeenCalledWith(EditTutorialGroupFreePeriodComponent, {
+                backdrop: 'static',
+                scrollable: false,
+                size: 'lg',
+                animation: false,
+            });
             expect(mockModalRef.componentInstance.tutorialGroupFreePeriod).toEqual(tutorialFreePeriod);
             expect(mockModalRef.componentInstance.tutorialGroupsConfiguration).toEqual(configuration);
             expect(mockModalRef.componentInstance.course).toEqual(course);

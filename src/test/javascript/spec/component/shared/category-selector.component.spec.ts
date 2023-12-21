@@ -140,7 +140,12 @@ describe('CategorySelectorComponent', () => {
 
     it('should not create duplicate item on add', () => {
         comp.categories = [category6];
-        const event = { value: 'category6', chipInput: { clear: () => {} } as MatChipInput } as MatChipInputEvent;
+        const event = {
+            value: 'category6',
+            chipInput: {
+                clear: () => {},
+            } as MatChipInput,
+        } as MatChipInputEvent;
         fixture.detectChanges();
         comp.onItemAdd(event);
 
@@ -152,7 +157,12 @@ describe('CategorySelectorComponent', () => {
     it('should save exiting category on add', () => {
         comp.categories = [category6];
         comp.existingCategories = [category7, category8];
-        const event = { value: 'category8', chipInput: { clear: () => {} } as MatChipInput } as MatChipInputEvent;
+        const event = {
+            value: 'category8',
+            chipInput: {
+                clear: () => {},
+            } as MatChipInput,
+        } as MatChipInputEvent;
         fixture.detectChanges();
         comp.onItemAdd(event);
 
@@ -164,7 +174,12 @@ describe('CategorySelectorComponent', () => {
     it('should create new item on add for existing categories', () => {
         comp.categories = [category6];
         comp.existingCategories = [];
-        const event = { value: 'category9', chipInput: { clear: () => {} } as MatChipInput } as MatChipInputEvent;
+        const event = {
+            value: 'category9',
+            chipInput: {
+                clear: () => {},
+            } as MatChipInput,
+        } as MatChipInputEvent;
         fixture.detectChanges();
         comp.onItemAdd(event);
 
@@ -176,7 +191,12 @@ describe('CategorySelectorComponent', () => {
 
     it('should create new item on add for empty categories', () => {
         comp.existingCategories = [];
-        const event = { value: 'category6', chipInput: { clear: () => {} } as MatChipInput } as MatChipInputEvent;
+        const event = {
+            value: 'category6',
+            chipInput: {
+                clear: () => {},
+            } as MatChipInput,
+        } as MatChipInputEvent;
         fixture.detectChanges();
         comp.onItemAdd(event);
 

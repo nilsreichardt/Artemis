@@ -1,12 +1,11 @@
 package de.tum.in.www1.artemis.metis.similarity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import de.tum.in.www1.artemis.domain.metis.Post;
+import de.tum.in.www1.artemis.service.metis.similarity.TitleJaccardSimilarityCompareStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import de.tum.in.www1.artemis.domain.metis.Post;
-import de.tum.in.www1.artemis.service.metis.similarity.TitleJaccardSimilarityCompareStrategy;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class TitleJaccardSimilarityCompareStrategyTest {
 

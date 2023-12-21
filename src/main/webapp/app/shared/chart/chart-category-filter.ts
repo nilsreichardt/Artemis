@@ -57,6 +57,7 @@ export class ChartCategoryFilter extends ChartFilter {
         this.areAllCategoriesSelected(!isIncluded);
         return this.applyCurrentFilter<E>(exercisesScores);
     }
+
     /**
      * Handles the selection and deselection of "exercises with no categories" filter option
      * @param exerciseScores the scores the updated filter should apply to

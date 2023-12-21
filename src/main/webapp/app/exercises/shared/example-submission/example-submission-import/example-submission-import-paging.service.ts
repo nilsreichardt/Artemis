@@ -24,7 +24,10 @@ export class ExampleSubmissionImportPagingService extends PagingService {
     searchForSubmissions(pageable: PageableSearch, exerciseId: number): Observable<EntityResponseType> {
         const params = this.createHttpParams(pageable);
         return this.http
-            .get(`${ExampleSubmissionImportPagingService.resourceUrl}/${exerciseId}/submissions-for-import`, { params, observe: 'response' })
+            .get(`${ExampleSubmissionImportPagingService.resourceUrl}/${exerciseId}/submissions-for-import`, {
+                params,
+                observe: 'response',
+            })
             .pipe(map((resp: HttpResponse<EntityResponseType>) => resp && resp.body!));
     }
 }

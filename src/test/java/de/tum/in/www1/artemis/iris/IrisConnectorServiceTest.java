@@ -1,21 +1,24 @@
 package de.tum.in.www1.artemis.iris;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import java.util.Collections;
-import java.util.stream.Stream;
-
+import de.tum.in.www1.artemis.domain.iris.IrisTemplate;
+import de.tum.in.www1.artemis.service.connectors.iris.IrisConnectorException;
+import de.tum.in.www1.artemis.service.connectors.iris.IrisConnectorService;
+import de.tum.in.www1.artemis.service.iris.exception.IrisForbiddenException;
+import de.tum.in.www1.artemis.service.iris.exception.IrisInternalPyrisErrorException;
+import de.tum.in.www1.artemis.service.iris.exception.IrisInvalidTemplateException;
+import de.tum.in.www1.artemis.service.iris.exception.IrisModelNotAvailableException;
+import de.tum.in.www1.artemis.service.iris.exception.IrisParseResponseException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import de.tum.in.www1.artemis.domain.iris.IrisTemplate;
-import de.tum.in.www1.artemis.service.connectors.iris.IrisConnectorException;
-import de.tum.in.www1.artemis.service.connectors.iris.IrisConnectorService;
-import de.tum.in.www1.artemis.service.iris.exception.*;
+import java.util.Collections;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class IrisConnectorServiceTest extends AbstractIrisIntegrationTest {
 

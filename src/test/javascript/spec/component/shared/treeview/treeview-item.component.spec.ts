@@ -86,7 +86,13 @@ describe('TreeviewItemComponent', () => {
                 checked: true,
                 collapsed: false,
                 disabled: false,
-                children: [{ text: 'Child 1', value: 11 } as TreeviewItem<number>, { text: 'Child 2', value: 12 } as TreeviewItem<number>],
+                children: [
+                    { text: 'Child 1', value: 11 } as TreeviewItem<number>,
+                    {
+                        text: 'Child 2',
+                        value: 12,
+                    } as TreeviewItem<number>,
+                ],
             });
         });
 

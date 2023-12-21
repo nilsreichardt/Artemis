@@ -38,7 +38,12 @@ describe('LearningPathGraphNodeComponent', () => {
 
     it.each([NodeType.COMPETENCY_START, NodeType.COMPETENCY_END])('should display correct icon for competency node', (type: NodeType) => {
         comp.node = { id: '1', type: type } as NgxLearningPathNode;
-        comp.competencyProgressDTO = { competencyId: 1, masteryThreshold: 0, progress: 0, confidence: 0 } as CompetencyProgressForLearningPathDTO;
+        comp.competencyProgressDTO = {
+            competencyId: 1,
+            masteryThreshold: 0,
+            progress: 0,
+            confidence: 0,
+        } as CompetencyProgressForLearningPathDTO;
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('#competency' + (type === NodeType.COMPETENCY_START ? '-start' : '-end'))).nativeElement).toBeTruthy();
     });

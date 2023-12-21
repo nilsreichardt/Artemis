@@ -130,9 +130,11 @@ describe('CourseTutorialGroupsComponent', () => {
     it('should not load tutorial groups from service if they are available in the cache', () => {
         const tutorialGroupsService = TestBed.inject(TutorialGroupsService);
         const getAllOfCourseSpy = jest.spyOn(tutorialGroupsService, 'getAllForCourse');
-        const getCourseSpy = jest
-            .spyOn(TestBed.inject(CourseStorageService), 'getCourse')
-            .mockReturnValue({ id: 1, title: 'Test Course', tutorialGroups: [tutorialGroupOne, tutorialGroupTwo] } as Course);
+        const getCourseSpy = jest.spyOn(TestBed.inject(CourseStorageService), 'getCourse').mockReturnValue({
+            id: 1,
+            title: 'Test Course',
+            tutorialGroups: [tutorialGroupOne, tutorialGroupTwo],
+        } as Course);
         const updateCourseSpy = jest.spyOn(TestBed.inject(CourseStorageService), 'updateCourse');
 
         fixture.detectChanges();

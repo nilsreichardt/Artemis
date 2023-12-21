@@ -111,8 +111,7 @@ public class ResourceLoaderService {
             final String resourceLocation = getFileResourceLocation(basePath, pattern);
             try {
                 resources = resourceLoader.getResources(resourceLocation);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 log.debug("Could not load resources '{}' from filesystem.", resourceLocation, e);
             }
         }
@@ -122,8 +121,7 @@ public class ResourceLoaderService {
             final String resourceLocation = getClassPathResourceLocation(basePath, pattern);
             try {
                 resources = resourceLoader.getResources(resourceLocation);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 log.debug("Could not load resources '{}' from classpath.", resourceLocation, e);
             }
         }
@@ -157,8 +155,7 @@ public class ResourceLoaderService {
     private String adaptPathPatternToSystem(final String pathPattern) {
         if ("/".equals(File.separator)) {
             return ensureUnixPath(pathPattern);
-        }
-        else {
+        } else {
             return pathPattern.replace("/", "\\");
         }
     }
@@ -196,8 +193,7 @@ public class ResourceLoaderService {
         if ("file".equals(resourceUrl.getProtocol())) {
             // Resource is in the file system.
             return Paths.get(resourceUrl.toURI());
-        }
-        else if ("jar".equals(resourceUrl.getProtocol())) {
+        } else if ("jar".equals(resourceUrl.getProtocol())) {
             // Resource is in a jar file.
             Path resourcePath = Files.createTempFile(UUID.randomUUID().toString(), "");
             File file = resourcePath.toFile();

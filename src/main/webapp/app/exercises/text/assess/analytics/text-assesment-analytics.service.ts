@@ -67,6 +67,7 @@ export class TextAssessmentAnalytics {
     private isExampleSubmissionRoute() {
         return !!this.location?.path().includes('example-submission');
     }
+
     /**
      * Subscribes to the route parameters and updates the respective id's accordingly.
      * Avoids having to set the id on the component's side.

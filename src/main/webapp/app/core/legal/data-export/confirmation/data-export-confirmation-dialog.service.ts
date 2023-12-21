@@ -20,7 +20,10 @@ export class DataExportConfirmationDialogService {
      */
     openConfirmationDialog(dataExportConfirmationDialogData: DataExportConfirmationDialogData): void {
         this.alertService.closeAll();
-        this.modalRef = this.modalService.open(DataExportConfirmationDialogComponent, { size: 'lg', backdrop: 'static' });
+        this.modalRef = this.modalService.open(DataExportConfirmationDialogComponent, {
+            size: 'lg',
+            backdrop: 'static',
+        });
         this.modalRef.componentInstance.expectedLogin = dataExportConfirmationDialogData.userLogin;
         this.modalRef.componentInstance.adminDialog = dataExportConfirmationDialogData.adminDialog;
         this.modalRef.componentInstance.dataExportRequest = dataExportConfirmationDialogData.dataExportRequest;

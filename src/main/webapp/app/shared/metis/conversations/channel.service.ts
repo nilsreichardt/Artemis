@@ -61,6 +61,7 @@ export class ChannelService {
             .put<ChannelDTO>(`${this.resourceUrl}${courseId}/channels/${channelId}`, channelDTO, { observe: 'response' })
             .pipe(map(this.conversationService.convertDateFromServer));
     }
+
     deregisterUsersFromChannel(courseId: number, channelId: number, logins?: string[]): Observable<HttpResponse<void>> {
         // if no explicit login is give we assume self deregistration
         const userLogins = logins ? logins : [this.accountService.userIdentity?.login];
@@ -89,7 +90,10 @@ export class ChannelService {
             params = params.set('addAllInstructors', 'true');
         }
 
-        return this.http.post<void>(`${this.resourceUrl}${courseId}/channels/${channelId}/register`, userLogins, { observe: 'response', params });
+        return this.http.post<void>(`${this.resourceUrl}${courseId}/channels/${channelId}/register`, userLogins, {
+            observe: 'response',
+            params,
+        });
     }
 
     grantChannelModeratorRole(courseId: number, channelId: number, logins?: string[]): Observable<HttpResponse<void>> {

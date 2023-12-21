@@ -150,7 +150,11 @@ describe('CodeEditorTutorAssessmentContainerComponent', () => {
     const afterComplaintResult = new Result();
     afterComplaintResult.score = 100;
 
-    const route = (): ActivatedRoute => ({ params: of({ submissionId: 123 }), queryParamMap: of(convertToParamMap({ testRun: false })) }) as any as ActivatedRoute;
+    const route = (): ActivatedRoute =>
+        ({
+            params: of({ submissionId: 123 }),
+            queryParamMap: of(convertToParamMap({ testRun: false })),
+        }) as any as ActivatedRoute;
     const fileContent = 'This is the content of a file';
     const templateFileSessionReturn: { [fileName: string]: string } = { 'folder/file1': fileContent };
 
@@ -251,18 +255,38 @@ describe('CodeEditorTutorAssessmentContainerComponent', () => {
 
     it('should not show feedback suggestions where there are already existing manual feedbacks', async () => {
         comp.unreferencedFeedback = [{ text: 'unreferenced test', detailText: 'some detail', reference: undefined }];
-        comp.referencedFeedback = [{ text: 'referenced test', detailText: 'some detail', reference: 'file:src/Test.java_line:1' }];
+        comp.referencedFeedback = [
+            {
+                text: 'referenced test',
+                detailText: 'some detail',
+                reference: 'file:src/Test.java_line:1',
+            },
+        ];
         const feedbackSuggestionsStub = jest.spyOn(comp['athenaService'], 'getProgrammingFeedbackSuggestions');
         feedbackSuggestionsStub.mockReturnValue(
             of([
                 { text: 'FeedbackSuggestion:unreferenced test', detailText: 'some detail' },
-                { text: 'FeedbackSuggestion:referenced test', detailText: 'some detail', reference: 'file:src/Test.java_line:1' },
-                { text: 'FeedbackSuggestion:suggestion to pass', detailText: 'some detail', reference: 'file:src/Test.java_line:2' },
+                {
+                    text: 'FeedbackSuggestion:referenced test',
+                    detailText: 'some detail',
+                    reference: 'file:src/Test.java_line:1',
+                },
+                {
+                    text: 'FeedbackSuggestion:suggestion to pass',
+                    detailText: 'some detail',
+                    reference: 'file:src/Test.java_line:2',
+                },
             ] as Feedback[]),
         );
         comp['submission'] = { id: undefined }; // Needed for loadFeedbackSuggestions
         await comp['loadFeedbackSuggestions']();
-        expect(comp.feedbackSuggestions).toStrictEqual([{ text: 'FeedbackSuggestion:suggestion to pass', detailText: 'some detail', reference: 'file:src/Test.java_line:2' }]);
+        expect(comp.feedbackSuggestions).toStrictEqual([
+            {
+                text: 'FeedbackSuggestion:suggestion to pass',
+                detailText: 'some detail',
+                reference: 'file:src/Test.java_line:2',
+            },
+        ]);
     });
 
     it('should show complaint for result with complaint and check assessor', fakeAsync(() => {
@@ -404,9 +428,30 @@ describe('CodeEditorTutorAssessmentContainerComponent', () => {
     it('should save and submit manual result', fakeAsync(() => {
         comp.ngOnInit();
         tick(100);
-        comp.automaticFeedback = [{ type: FeedbackType.AUTOMATIC, testCase: { testName: 'testCase1' }, detailText: 'testCase1 failed', credits: 0 }];
-        comp.referencedFeedback = [{ type: FeedbackType.MANUAL, text: 'manual feedback', detailText: 'manual feedback for a file:1', credits: 2, reference: 'file:1_line:1' }];
-        comp.unreferencedFeedback = [{ type: FeedbackType.MANUAL_UNREFERENCED, detailText: 'unreferenced feedback', credits: 1 }];
+        comp.automaticFeedback = [
+            {
+                type: FeedbackType.AUTOMATIC,
+                testCase: { testName: 'testCase1' },
+                detailText: 'testCase1 failed',
+                credits: 0,
+            },
+        ];
+        comp.referencedFeedback = [
+            {
+                type: FeedbackType.MANUAL,
+                text: 'manual feedback',
+                detailText: 'manual feedback for a file:1',
+                credits: 2,
+                reference: 'file:1_line:1',
+            },
+        ];
+        comp.unreferencedFeedback = [
+            {
+                type: FeedbackType.MANUAL_UNREFERENCED,
+                detailText: 'unreferenced feedback',
+                credits: 1,
+            },
+        ];
         comp.validateFeedback();
         comp.save();
         const alertElement = debugElement.queryAll(By.css('jhi-alert'));
@@ -561,7 +606,11 @@ describe('CodeEditorTutorAssessmentContainerComponent', () => {
                         () =>
                             new HttpErrorResponse({
                                 status: 400,
-                                error: { message: errorMessage, errorKey: errorKeyFromServer, params: errorParams },
+                                error: {
+                                    message: errorMessage,
+                                    errorKey: errorKeyFromServer,
+                                    params: errorParams,
+                                },
                             }),
                     ),
                 );
@@ -614,14 +663,86 @@ describe('CodeEditorTutorAssessmentContainerComponent', () => {
     });
 
     it.each([
-        [0, { complaintResponse: { complaint: { accepted: false } }, onSuccess: () => {}, onError: () => {} }, [], false],
-        [0, { complaintResponse: { complaint: { accepted: false } }, onSuccess: () => {}, onError: () => {} }, [{ credits: 1 }], false],
-        [1, { complaintResponse: { complaint: { accepted: false } }, onSuccess: () => {}, onError: () => {} }, [], false],
-        [1, { complaintResponse: { complaint: { accepted: false } }, onSuccess: () => {}, onError: () => {} }, [{ credits: 1 }], false],
-        [0, { complaintResponse: { complaint: { accepted: true } }, onSuccess: () => {}, onError: () => {} }, [], true],
-        [0, { complaintResponse: { complaint: { accepted: true } }, onSuccess: () => {}, onError: () => {} }, [{ credits: 1 }], false],
-        [1, { complaintResponse: { complaint: { accepted: true } }, onSuccess: () => {}, onError: () => {} }, [], true],
-        [1, { complaintResponse: { complaint: { accepted: true } }, onSuccess: () => {}, onError: () => {} }, [{ credits: 1 }], true],
+        [
+            0,
+            {
+                complaintResponse: { complaint: { accepted: false } },
+                onSuccess: () => {},
+                onError: () => {},
+            },
+            [],
+            false,
+        ],
+        [
+            0,
+            {
+                complaintResponse: { complaint: { accepted: false } },
+                onSuccess: () => {},
+                onError: () => {},
+            },
+            [{ credits: 1 }],
+            false,
+        ],
+        [
+            1,
+            {
+                complaintResponse: { complaint: { accepted: false } },
+                onSuccess: () => {},
+                onError: () => {},
+            },
+            [],
+            false,
+        ],
+        [
+            1,
+            {
+                complaintResponse: { complaint: { accepted: false } },
+                onSuccess: () => {},
+                onError: () => {},
+            },
+            [{ credits: 1 }],
+            false,
+        ],
+        [
+            0,
+            {
+                complaintResponse: { complaint: { accepted: true } },
+                onSuccess: () => {},
+                onError: () => {},
+            },
+            [],
+            true,
+        ],
+        [
+            0,
+            {
+                complaintResponse: { complaint: { accepted: true } },
+                onSuccess: () => {},
+                onError: () => {},
+            },
+            [{ credits: 1 }],
+            false,
+        ],
+        [
+            1,
+            {
+                complaintResponse: { complaint: { accepted: true } },
+                onSuccess: () => {},
+                onError: () => {},
+            },
+            [],
+            true,
+        ],
+        [
+            1,
+            {
+                complaintResponse: { complaint: { accepted: true } },
+                onSuccess: () => {},
+                onError: () => {},
+            },
+            [{ credits: 1 }],
+            true,
+        ],
     ])(
         'should get confirmation if complaint is accepted without higher score',
         (totalScoreBeforeAssessment: number, assessmentAfterComplaint: AssessmentAfterComplaint, newFeedback: Feedback[], needsConfirmation: boolean) => {

@@ -43,8 +43,20 @@ describe('LinkPreviewContainerComponent', () => {
             { type: '', value: '', href: 'https://example.com/link2' },
         ];
         const mockLinkPreviews: LinkPreview[] = [
-            { url: 'https://example.com/link1', title: 'Link 1', description: 'Description 1', image: 'image1.jpg', shouldPreviewBeShown: true },
-            { url: 'https://example.com/link2', title: 'Link 2', description: 'Description 2', image: 'image2.jpg', shouldPreviewBeShown: true },
+            {
+                url: 'https://example.com/link1',
+                title: 'Link 1',
+                description: 'Description 1',
+                image: 'image1.jpg',
+                shouldPreviewBeShown: true,
+            },
+            {
+                url: 'https://example.com/link2',
+                title: 'Link 2',
+                description: 'Description 2',
+                image: 'image2.jpg',
+                shouldPreviewBeShown: true,
+            },
         ];
 
         const linkifyServiceSpy = jest.spyOn(linkifyService, 'find').mockReturnValue(links);
@@ -72,7 +84,13 @@ describe('LinkPreviewContainerComponent', () => {
             image: 'existing.jpg',
             shouldPreviewBeShown: true,
         };
-        const newLinkPreview: LinkPreview = { url: 'https://example.com/link1', title: 'New Link', description: 'New Description', image: 'new.jpg', shouldPreviewBeShown: true };
+        const newLinkPreview: LinkPreview = {
+            url: 'https://example.com/link1',
+            title: 'New Link',
+            description: 'New Description',
+            image: 'new.jpg',
+            shouldPreviewBeShown: true,
+        };
 
         const linkifyServiceSpy = jest.spyOn(linkifyService, 'find').mockReturnValue(links);
         const linkPreviewServiceSpy = jest.spyOn(linkPreviewService, 'fetchLink').mockReturnValueOnce(of(newLinkPreview));

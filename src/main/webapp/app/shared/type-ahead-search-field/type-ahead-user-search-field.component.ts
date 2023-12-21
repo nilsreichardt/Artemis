@@ -66,6 +66,7 @@ export class TypeAheadUserSearchFieldComponent {
     }
 
     resultFormatter = (result: User) => result.name! + ' (' + result.login! + ')';
+
     inputFormatter(input: User | string) {
         // here applies the same as in onChange()
         const user = input as unknown as User;

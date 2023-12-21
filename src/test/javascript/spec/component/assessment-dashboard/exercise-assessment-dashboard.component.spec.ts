@@ -161,7 +161,11 @@ describe('ExerciseAssessmentDashboardComponent', () => {
 
     const modelingSubmission = { id: 21 } as ModelingSubmission;
     const fileUploadSubmission = { id: 22 } as FileUploadSubmission;
-    const textSubmission = { id: 23, submissionExerciseType: SubmissionExerciseType.TEXT, language: Language.ENGLISH } as TextSubmission;
+    const textSubmission = {
+        id: 23,
+        submissionExerciseType: SubmissionExerciseType.TEXT,
+        language: Language.ENGLISH,
+    } as TextSubmission;
     const programmingSubmission = { id: 24 } as ProgrammingSubmission;
 
     const modelingSubmissionAssessed = { id: 25, results: [result1, result2], participation } as ModelingSubmission;
@@ -173,7 +177,11 @@ describe('ExerciseAssessmentDashboardComponent', () => {
         results: [result1, result2],
         participation,
     } as TextSubmission;
-    const programmingSubmissionAssessed = { id: 28, results: [result1, result2], participation } as ProgrammingSubmission;
+    const programmingSubmissionAssessed = {
+        id: 28,
+        results: [result1, result2],
+        participation,
+    } as ProgrammingSubmission;
 
     const numberOfAssessmentsOfCorrectionRounds = [
         { inTime: 1, late: 1 },
@@ -285,8 +293,22 @@ describe('ExerciseAssessmentDashboardComponent', () => {
                 exerciseServiceGetForTutorsStub = jest.spyOn(exerciseService, 'getForTutors');
                 exerciseServiceGetStatsForTutorsStub = jest.spyOn(exerciseService, 'getStatsForTutors');
 
-                exerciseServiceGetForTutorsStub.mockReturnValue(of(new HttpResponse({ body: modelingExercise, headers: new HttpHeaders() })));
-                exerciseServiceGetStatsForTutorsStub.mockReturnValue(of(new HttpResponse({ body: stats, headers: new HttpHeaders() })));
+                exerciseServiceGetForTutorsStub.mockReturnValue(
+                    of(
+                        new HttpResponse({
+                            body: modelingExercise,
+                            headers: new HttpHeaders(),
+                        }),
+                    ),
+                );
+                exerciseServiceGetStatsForTutorsStub.mockReturnValue(
+                    of(
+                        new HttpResponse({
+                            body: stats,
+                            headers: new HttpHeaders(),
+                        }),
+                    ),
+                );
 
                 guidedTourService = TestBed.inject(GuidedTourService);
 
@@ -313,7 +335,14 @@ describe('ExerciseAssessmentDashboardComponent', () => {
                 programmingSubmissionStubWithAssessment.mockReturnValue(of(programmingSubmissionAssessed));
                 programmingSubmissionStubWithoutAssessment.mockReturnValue(of(programmingSubmission));
 
-                modelingSubmissionStubWithAssessment.mockReturnValue(of(new HttpResponse({ body: [modelingSubmissionAssessed], headers: new HttpHeaders() })));
+                modelingSubmissionStubWithAssessment.mockReturnValue(
+                    of(
+                        new HttpResponse({
+                            body: [modelingSubmissionAssessed],
+                            headers: new HttpHeaders(),
+                        }),
+                    ),
+                );
                 modelingSubmissionStubWithoutAssessment.mockReturnValue(of(modelingSubmission));
                 comp.submissionsWithComplaints = [submissionWithComplaintDTO];
 
@@ -363,7 +392,14 @@ describe('ExerciseAssessmentDashboardComponent', () => {
             tutorLeaderboardEntries: [tutorLeaderBoardEntry],
         } as StatsForDashboard;
 
-        exerciseServiceGetStatsForTutorsStub.mockReturnValue(of(new HttpResponse({ body: statsWithTutor, headers: new HttpHeaders() })));
+        exerciseServiceGetStatsForTutorsStub.mockReturnValue(
+            of(
+                new HttpResponse({
+                    body: statsWithTutor,
+                    headers: new HttpHeaders(),
+                }),
+            ),
+        );
 
         fixture.detectChanges();
 
@@ -382,7 +418,14 @@ describe('ExerciseAssessmentDashboardComponent', () => {
         const guidedTourMapping = {} as GuidedTourMapping;
         jest.spyOn<any, any>(guidedTourService, 'checkTourState').mockReturnValue(true);
         guidedTourService.guidedTourMapping = guidedTourMapping;
-        modelingSubmissionStubWithAssessment.mockReturnValue(of(new HttpResponse({ body: [], headers: new HttpHeaders() })));
+        modelingSubmissionStubWithAssessment.mockReturnValue(
+            of(
+                new HttpResponse({
+                    body: [],
+                    headers: new HttpHeaders(),
+                }),
+            ),
+        );
 
         comp.loadAll();
 
@@ -398,7 +441,14 @@ describe('ExerciseAssessmentDashboardComponent', () => {
 
     it('should not set unassessedSubmission if lock limit is reached', () => {
         modelingSubmissionStubWithoutAssessment.mockReturnValue(throwError(() => lockLimitErrorResponse));
-        modelingSubmissionStubWithAssessment.mockReturnValue(of(new HttpResponse({ body: [], headers: new HttpHeaders() })));
+        modelingSubmissionStubWithAssessment.mockReturnValue(
+            of(
+                new HttpResponse({
+                    body: [],
+                    headers: new HttpHeaders(),
+                }),
+            ),
+        );
 
         comp.loadAll();
 
@@ -433,7 +483,14 @@ describe('ExerciseAssessmentDashboardComponent', () => {
         const alertServiceSpy = jest.spyOn(alertService, 'error');
 
         modelingSubmissionStubWithoutAssessment.mockReturnValue(throwError(() => errorResponse));
-        modelingSubmissionStubWithAssessment.mockReturnValue(of(new HttpResponse({ body: [], headers: new HttpHeaders() })));
+        modelingSubmissionStubWithAssessment.mockReturnValue(
+            of(
+                new HttpResponse({
+                    body: [],
+                    headers: new HttpHeaders(),
+                }),
+            ),
+        );
 
         comp.loadAll();
 
@@ -443,7 +500,14 @@ describe('ExerciseAssessmentDashboardComponent', () => {
     });
 
     it('should have correct percentages calculated', () => {
-        modelingSubmissionStubWithAssessment.mockReturnValue(of(new HttpResponse({ body: [], headers: new HttpHeaders() })));
+        modelingSubmissionStubWithAssessment.mockReturnValue(
+            of(
+                new HttpResponse({
+                    body: [],
+                    headers: new HttpHeaders(),
+                }),
+            ),
+        );
 
         comp.loadAll();
 
@@ -508,9 +572,23 @@ describe('ExerciseAssessmentDashboardComponent', () => {
     describe('test calls for all exercise types', () => {
         it('fileuploadSubmission', () => {
             modelingSubmissionStubWithoutAssessment.mockReturnValue(throwError(() => lockLimitErrorResponse));
-            modelingSubmissionStubWithAssessment.mockReturnValue(of(new HttpResponse({ body: [], headers: new HttpHeaders() })));
+            modelingSubmissionStubWithAssessment.mockReturnValue(
+                of(
+                    new HttpResponse({
+                        body: [],
+                        headers: new HttpHeaders(),
+                    }),
+                ),
+            );
 
-            exerciseServiceGetForTutorsStub.mockReturnValue(of(new HttpResponse({ body: fileUploadExercise, headers: new HttpHeaders() })));
+            exerciseServiceGetForTutorsStub.mockReturnValue(
+                of(
+                    new HttpResponse({
+                        body: fileUploadExercise,
+                        headers: new HttpHeaders(),
+                    }),
+                ),
+            );
 
             comp.loadAll();
 
@@ -521,7 +599,14 @@ describe('ExerciseAssessmentDashboardComponent', () => {
         it('textSubmission', () => {
             modelingSubmissionStubWithoutAssessment.mockReturnValue(throwError(() => lockLimitErrorResponse));
 
-            exerciseServiceGetForTutorsStub.mockReturnValue(of(new HttpResponse({ body: textExercise, headers: new HttpHeaders() })));
+            exerciseServiceGetForTutorsStub.mockReturnValue(
+                of(
+                    new HttpResponse({
+                        body: textExercise,
+                        headers: new HttpHeaders(),
+                    }),
+                ),
+            );
 
             comp.loadAll();
 
@@ -538,7 +623,14 @@ describe('ExerciseAssessmentDashboardComponent', () => {
         it('programmingSubmission', () => {
             modelingSubmissionStubWithoutAssessment.mockReturnValue(throwError(() => lockLimitErrorResponse));
 
-            exerciseServiceGetForTutorsStub.mockReturnValue(of(new HttpResponse({ body: programmingExercise, headers: new HttpHeaders() })));
+            exerciseServiceGetForTutorsStub.mockReturnValue(
+                of(
+                    new HttpResponse({
+                        body: programmingExercise,
+                        headers: new HttpHeaders(),
+                    }),
+                ),
+            );
 
             comp.loadAll();
 
@@ -549,7 +641,14 @@ describe('ExerciseAssessmentDashboardComponent', () => {
         it('programmingSubmission with automatic assessment', () => {
             modelingSubmissionStubWithoutAssessment.mockReturnValue(throwError(() => lockLimitErrorResponse));
 
-            exerciseServiceGetForTutorsStub.mockReturnValue(of(new HttpResponse({ body: programmingExerciseWithAutomaticAssessment, headers: new HttpHeaders() })));
+            exerciseServiceGetForTutorsStub.mockReturnValue(
+                of(
+                    new HttpResponse({
+                        body: programmingExerciseWithAutomaticAssessment,
+                        headers: new HttpHeaders(),
+                    }),
+                ),
+            );
 
             const translateServiceSpy = jest.spyOn(translateService, 'instant');
 
@@ -697,8 +796,16 @@ describe('ExerciseAssessmentDashboardComponent', () => {
                 { assessmentType: AssessmentType.SEMI_AUTOMATIC },
                 { assessmentType: AssessmentType.AUTOMATIC },
             ];
-            const fakeDTOList: SubmissionWithComplaintDTO[] = [{ submission: { id: 1, results: fakeResults }, complaint: {} }];
-            const expectedSubmissionToView = { id: 1, results: [{ assessmentType: AssessmentType.MANUAL }, { assessmentType: AssessmentType.SEMI_AUTOMATIC }] };
+            const fakeDTOList: SubmissionWithComplaintDTO[] = [
+                {
+                    submission: { id: 1, results: fakeResults },
+                    complaint: {},
+                },
+            ];
+            const expectedSubmissionToView = {
+                id: 1,
+                results: [{ assessmentType: AssessmentType.MANUAL }, { assessmentType: AssessmentType.SEMI_AUTOMATIC }],
+            };
             const inputSubmission = { id: 1 };
             comp.submissionsWithComplaints = fakeDTOList;
             const submissionToView = comp.getSubmissionToViewFromComplaintSubmission(inputSubmission);

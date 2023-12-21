@@ -48,8 +48,7 @@ public class UMLComponentRelationship extends UMLElement {
         if (type == UMLComponentRelationshipType.DEPLOYMENT_ASSOCIATION || type == UMLComponentRelationshipType.DEPLOYMENT_INTERFACE_PROVIDED
                 || type == UMLComponentRelationshipType.COMPONENT_INTERFACE_PROVIDED) {
             similarity += Math.max(sourceTargetSimilarity, targetSourceSimilarity);
-        }
-        else {
+        } else {
             similarity += sourceTargetSimilarity;
         }
 

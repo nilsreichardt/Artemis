@@ -130,6 +130,7 @@ export class ExamScoresComponent implements OnInit, OnDestroy {
     faExclamationTriangle = faExclamationTriangle;
 
     private languageChangeSubscription?: Subscription;
+
     constructor(
         private route: ActivatedRoute,
         private examService: ExamManagementService,

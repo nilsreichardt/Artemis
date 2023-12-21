@@ -41,8 +41,7 @@ public class BambooTriggerService implements ContinuousIntegrationTriggerService
         var buildPlan = participation.getBuildPlanId();
         try {
             restTemplate.exchange(serverUrl + "/rest/api/latest/queue/" + buildPlan, HttpMethod.POST, null, Void.class);
-        }
-        catch (RestClientException e) {
+        } catch (RestClientException e) {
             log.error("HttpError while triggering build plan {} with error: {}", buildPlan, e.getMessage());
             throw new BambooException("Communication failed when trying to trigger the Bamboo build plan " + buildPlan + " with the error: " + e.getMessage());
         }

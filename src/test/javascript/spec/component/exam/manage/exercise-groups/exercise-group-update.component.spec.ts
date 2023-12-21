@@ -37,7 +37,10 @@ describe('ExerciseGroupUpdateComponent', () => {
     let alertService: AlertService;
 
     const data = of({ exam, exerciseGroup });
-    const route = { snapshot: { paramMap: convertToParamMap({ courseId: course.id, examId: exam.id }) }, data } as any as ActivatedRoute;
+    const route = {
+        snapshot: { paramMap: convertToParamMap({ courseId: course.id, examId: exam.id }) },
+        data,
+    } as any as ActivatedRoute;
     const navigateSpy = jest.spyOn(mockRouter, 'navigate');
 
     beforeEach(() => {

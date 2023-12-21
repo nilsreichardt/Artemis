@@ -19,6 +19,7 @@ export class TableEditableFieldComponent {
     @Input() set value(value: any) {
         this.inputValue = value;
     }
+
     @Input() onValueUpdate: (value: any) => any;
 
     inputValue: any;

@@ -37,7 +37,14 @@ describe('ProblemStatementComponent', () => {
 
         TestBed.configureTestingModule({
             declarations: [ProblemStatementComponent, TranslatePipeMock, HtmlForMarkdownPipe, MockComponent(ProgrammingExerciseInstructionComponent)],
-            providers: [{ provide: ActivatedRoute, useValue: mockActivatedRoute }, MockProvider(ParticipationService), MockProvider(ExerciseService)],
+            providers: [
+                {
+                    provide: ActivatedRoute,
+                    useValue: mockActivatedRoute,
+                },
+                MockProvider(ParticipationService),
+                MockProvider(ExerciseService),
+            ],
         })
             .compileComponents()
             .then(() => {

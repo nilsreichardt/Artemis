@@ -267,14 +267,20 @@ describe('DiscussionSectionComponent', () => {
     }));
 
     it('loads exercise messages if communication only', fakeAsync(() => {
-        component.course = { id: 1, courseInformationSharingConfiguration: CourseInformationSharingConfiguration.COMMUNICATION_ONLY } as Course;
+        component.course = {
+            id: 1,
+            courseInformationSharingConfiguration: CourseInformationSharingConfiguration.COMMUNICATION_ONLY,
+        } as Course;
         component.exercise = { id: 2 } as Exercise;
         component.lecture = undefined;
 
         component.setChannel(1);
 
         expect(metisServiceGetFilteredPostsSpy).toHaveBeenCalledWith(
-            { ...component.currentPostContextFilter, conversationId: metisExerciseChannelDto.id } as PostContextFilter,
+            {
+                ...component.currentPostContextFilter,
+                conversationId: metisExerciseChannelDto.id,
+            } as PostContextFilter,
             true,
             metisExerciseChannelDto,
         );
@@ -282,7 +288,10 @@ describe('DiscussionSectionComponent', () => {
     }));
 
     it('loads lecture messages if communication only', fakeAsync(() => {
-        component.course = { id: 1, courseInformationSharingConfiguration: CourseInformationSharingConfiguration.COMMUNICATION_ONLY } as Course;
+        component.course = {
+            id: 1,
+            courseInformationSharingConfiguration: CourseInformationSharingConfiguration.COMMUNICATION_ONLY,
+        } as Course;
         component.lecture = { id: 2 } as Lecture;
 
         component.setChannel(1);
@@ -296,7 +305,10 @@ describe('DiscussionSectionComponent', () => {
     }));
 
     it('collapses sidebar if no channel exists', fakeAsync(() => {
-        component.course = { id: 1, courseInformationSharingConfiguration: CourseInformationSharingConfiguration.COMMUNICATION_ONLY } as Course;
+        component.course = {
+            id: 1,
+            courseInformationSharingConfiguration: CourseInformationSharingConfiguration.COMMUNICATION_ONLY,
+        } as Course;
         component.lecture = { id: 2 } as Lecture;
         getChannelOfLectureSpy = jest.spyOn(channelService, 'getChannelOfLecture').mockReturnValue(
             of(

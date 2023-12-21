@@ -225,7 +225,12 @@ export class NotificationPopupComponent implements OnInit {
             const notificationWithLiveQuizTarget = {
                 target: JSON.stringify(target),
             } as GroupNotification;
-            const matchOptions = { paths: 'exact', queryParams: 'exact', fragment: 'ignored', matrixParams: 'ignored' } as IsActiveMatchOptions; // corresponds to exact = true
+            const matchOptions = {
+                paths: 'exact',
+                queryParams: 'exact',
+                fragment: 'ignored',
+                matrixParams: 'ignored',
+            } as IsActiveMatchOptions; // corresponds to exact = true
             if (
                 !this.router.isActive(this.notificationTargetRoute(notification), matchOptions) &&
                 !this.router.isActive(this.notificationTargetRoute(notificationWithLiveQuizTarget) + '/live', matchOptions)
@@ -250,7 +255,12 @@ export class NotificationPopupComponent implements OnInit {
             this.alertService.error(error);
         }
         // only show pop-up if explicit notification text was set and only inside exam mode
-        const matchOptions = { paths: 'exact', queryParams: 'exact', fragment: 'ignored', matrixParams: 'ignored' } as IsActiveMatchOptions; // corresponds to exact = true
+        const matchOptions = {
+            paths: 'exact',
+            queryParams: 'exact',
+            fragment: 'ignored',
+            matrixParams: 'ignored',
+        } as IsActiveMatchOptions; // corresponds to exact = true
         if (notification.text != undefined && this.router.isActive(this.notificationTargetRoute(notification), matchOptions)) {
             this.displayNotification(notification);
         }

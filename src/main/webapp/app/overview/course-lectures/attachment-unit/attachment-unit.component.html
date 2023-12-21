@@ -3,7 +3,7 @@
         <div class="card-header unit-card-header row align-content-center justify-content-between" (click)="handleCollapse($event)">
             <div class="col-auto row align-content-center flex-shrink-1">
                 <h5 class="m-0 fw-medium">
-                    <fa-icon class="me-2" [icon]="getAttachmentIcon()" [ngbTooltip]="'artemisApp.attachmentUnit.tooltip' | artemisTranslate"> </fa-icon>
+                    <fa-icon class="me-2" [icon]="getAttachmentIcon()" [ngbTooltip]="'artemisApp.attachmentUnit.tooltip' | artemisTranslate"></fa-icon>
                     {{ attachmentUnit?.attachment?.name ? attachmentUnit?.attachment?.name : '' }}
                     @if (!attachmentUnit?.visibleToStudents) {
                         <span
@@ -46,19 +46,19 @@
         <div class="card-body unit-card-body" [ngbCollapse]="isCollapsed">
             @if (attachmentUnit?.attachment?.uploadDate) {
                 <div>
-                    <span class="font-weight-bold"> {{ 'artemisApp.attachmentUnit.uploadDate' | artemisTranslate }}: </span>
+                    <span class="font-weight-bold"> {{ 'artemisApp.attachmentUnit.uploadDate' | artemisTranslate }} : </span>
                     {{ attachmentUnit?.attachment?.uploadDate | artemisDate }}
                 </div>
             }
             @if (attachmentUnit?.attachment?.version) {
                 <div>
-                    <span class="font-weight-bold"> {{ 'artemisApp.attachmentUnit.version' | artemisTranslate }}: </span>
+                    <span class="font-weight-bold"> {{ 'artemisApp.attachmentUnit.version' | artemisTranslate }} : </span>
                     {{ attachmentUnit?.attachment?.version }}
                 </div>
             }
             @if (attachmentUnit?.attachment?.link) {
                 <div>
-                    <span class="font-weight-bold"> {{ 'artemisApp.attachmentUnit.FileName' | artemisTranslate }}: </span>
+                    <span class="font-weight-bold"> {{ 'artemisApp.attachmentUnit.FileName' | artemisTranslate }} : </span>
                     {{ getFileName() }}
                 </div>
             }

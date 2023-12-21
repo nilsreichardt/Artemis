@@ -51,7 +51,10 @@ export class AttachmentService {
         const copy = this.convertAttachmentDatesFromClient(attachment);
 
         return this.http
-            .put<Attachment>(this.resourceUrl + '/' + attachmentId, this.createFormData(copy, file), { params: options, observe: 'response' })
+            .put<Attachment>(this.resourceUrl + '/' + attachmentId, this.createFormData(copy, file), {
+                params: options,
+                observe: 'response',
+            })
             .pipe(map((res: EntityResponseType) => this.convertAttachmentResponseDatesFromServer(res)));
     }
 

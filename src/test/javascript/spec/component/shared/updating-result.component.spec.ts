@@ -65,7 +65,10 @@ describe('UpdatingResultComponent', () => {
                     .spyOn(participationWebsocketService, 'subscribeForLatestResultOfParticipation')
                     .mockReturnValue(subscribeForLatestResultOfParticipationSubject);
 
-                const programmingSubmissionStateObj = { participationId: 1, submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION };
+                const programmingSubmissionStateObj = {
+                    participationId: 1,
+                    submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                };
                 getLatestPendingSubmissionStub = jest
                     .spyOn(programmingSubmissionService, 'getLatestPendingSubmissionByParticipationId')
                     .mockReturnValue(of(programmingSubmissionStateObj));
@@ -153,7 +156,13 @@ describe('UpdatingResultComponent', () => {
 
     it('should set the isBuilding attribute to true if exerciseType is PROGRAMMING and there is a latest pending submission', () => {
         comp.exercise = { id: 99, type: ExerciseType.PROGRAMMING } as Exercise;
-        getLatestPendingSubmissionStub.mockReturnValue(of({ submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission, participationId: 3 }));
+        getLatestPendingSubmissionStub.mockReturnValue(
+            of({
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission,
+                participationId: 3,
+            }),
+        );
         cleanInitializeGraded();
         expect(getLatestPendingSubmissionStub).toHaveBeenCalledOnce();
         expect(getLatestPendingSubmissionStub).toHaveBeenCalledWith(comp.participation.id, comp.exercise.id, true);
@@ -164,7 +173,13 @@ describe('UpdatingResultComponent', () => {
     it('should set the isBuilding attribute to false if exerciseType is PROGRAMMING and there is no pending submission anymore', () => {
         comp.exercise = { id: 99, type: ExerciseType.PROGRAMMING } as Exercise;
         comp.isBuilding = true;
-        getLatestPendingSubmissionStub.mockReturnValue(of({ submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId: 3 }));
+        getLatestPendingSubmissionStub.mockReturnValue(
+            of({
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId: 3,
+            }),
+        );
         cleanInitializeGraded();
         expect(getLatestPendingSubmissionStub).toHaveBeenCalledOnce();
         expect(getLatestPendingSubmissionStub).toHaveBeenCalledWith(comp.participation.id, comp.exercise.id, true);
@@ -175,7 +190,13 @@ describe('UpdatingResultComponent', () => {
     it('should set missingResultInfo attribute if the exerciseType is PROGRAMMING and the latest submission failed (offline IDE)', () => {
         comp.exercise = { id: 99, type: ExerciseType.PROGRAMMING, allowOfflineIde: true } as ProgrammingExercise;
         comp.isBuilding = true;
-        getLatestPendingSubmissionStub.mockReturnValue(of({ submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION, submission: undefined, participationId: 3 }));
+        getLatestPendingSubmissionStub.mockReturnValue(
+            of({
+                submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION,
+                submission: undefined,
+                participationId: 3,
+            }),
+        );
         cleanInitializeGraded();
         expect(getLatestPendingSubmissionStub).toHaveBeenCalledOnce();
         expect(getLatestPendingSubmissionStub).toHaveBeenCalledWith(comp.participation.id, comp.exercise.id, true);
@@ -185,7 +206,13 @@ describe('UpdatingResultComponent', () => {
 
     it('should set missingResultInfo attribute if the exerciseType is PROGRAMMING and the latest submission failed (online IDE)', () => {
         comp.exercise = { id: 99, type: ExerciseType.PROGRAMMING, allowOfflineIde: false } as ProgrammingExercise;
-        getLatestPendingSubmissionStub.mockReturnValue(of({ submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION, submission: undefined, participationId: 3 }));
+        getLatestPendingSubmissionStub.mockReturnValue(
+            of({
+                submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION,
+                submission: undefined,
+                participationId: 3,
+            }),
+        );
         cleanInitializeGraded();
         expect(getLatestPendingSubmissionStub).toHaveBeenCalledOnce();
         expect(getLatestPendingSubmissionStub).toHaveBeenCalledWith(comp.participation.id, comp.exercise.id, true);
@@ -193,7 +220,13 @@ describe('UpdatingResultComponent', () => {
     });
 
     it('should not set the isBuilding attribute to true if the exerciseType is not PROGRAMMING', () => {
-        getLatestPendingSubmissionStub.mockReturnValue(of({ submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission, participationId: 3 }));
+        getLatestPendingSubmissionStub.mockReturnValue(
+            of({
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission,
+                participationId: 3,
+            }),
+        );
         cleanInitializeGraded();
         expect(getLatestPendingSubmissionStub).not.toHaveBeenCalled();
         expect(comp.isBuilding).toBeUndefined();
@@ -202,8 +235,18 @@ describe('UpdatingResultComponent', () => {
 
     it('should update the building status if the submission was before the due date', () => {
         submission.submissionDate = dayjs();
-        comp.exercise = { id: 99, type: ExerciseType.PROGRAMMING, dueDate: submission.submissionDate.add(1, 'hour') } as Exercise;
-        getLatestPendingSubmissionStub.mockReturnValue(of({ submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission, participationId: 3 }));
+        comp.exercise = {
+            id: 99,
+            type: ExerciseType.PROGRAMMING,
+            dueDate: submission.submissionDate.add(1, 'hour'),
+        } as Exercise;
+        getLatestPendingSubmissionStub.mockReturnValue(
+            of({
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission,
+                participationId: 3,
+            }),
+        );
         cleanInitializeGraded();
         expect(comp.isBuilding).toBeTrue();
         expect(comp.missingResultInfo).toBe(MissingResultInformation.NONE);
@@ -211,8 +254,18 @@ describe('UpdatingResultComponent', () => {
 
     it('should not update the building status if the submission was after the due date', () => {
         submission.submissionDate = dayjs();
-        comp.exercise = { id: 99, type: ExerciseType.PROGRAMMING, dueDate: submission.submissionDate.subtract(1, 'minute') } as Exercise;
-        getLatestPendingSubmissionStub.mockReturnValue(of({ submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission, participationId: 3 }));
+        comp.exercise = {
+            id: 99,
+            type: ExerciseType.PROGRAMMING,
+            dueDate: submission.submissionDate.subtract(1, 'minute'),
+        } as Exercise;
+        getLatestPendingSubmissionStub.mockReturnValue(
+            of({
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission,
+                participationId: 3,
+            }),
+        );
         cleanInitializeGraded();
         expect(comp.isBuilding).toBeUndefined();
         expect(comp.missingResultInfo).toBe(MissingResultInformation.NONE);

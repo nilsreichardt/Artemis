@@ -13,12 +13,29 @@ describe('Exercise Update Warning Service', () => {
     let loadExerciseSpy: jest.SpyInstance;
     let openSpy: jest.SpyInstance;
 
-    const gradingInstruction = { id: 1, credits: 1, gradingScale: 'scale', instructionDescription: 'description', feedback: 'feedback', usageCount: 0 } as GradingInstruction;
+    const gradingInstruction = {
+        id: 1,
+        credits: 1,
+        gradingScale: 'scale',
+        instructionDescription: 'description',
+        feedback: 'feedback',
+        usageCount: 0,
+    } as GradingInstruction;
     const gradingInstructionCreditsChanged = { ...gradingInstruction, credits: 3 } as GradingInstruction;
     const gradingInstructionUsageCountChanged = { ...gradingInstruction, usageCount: 2 } as GradingInstruction;
-    const gradingCriterion = { id: 1, title: 'testCriteria', structuredGradingInstructions: [gradingInstruction] } as GradingCriterion;
-    const gradingCriterionCreditsChanged = { ...gradingCriterion, structuredGradingInstructions: [gradingInstructionCreditsChanged] } as GradingCriterion;
-    const gradingCriterionUsageCountChanged = { ...gradingCriterion, structuredGradingInstructions: [gradingInstructionUsageCountChanged] } as GradingCriterion;
+    const gradingCriterion = {
+        id: 1,
+        title: 'testCriteria',
+        structuredGradingInstructions: [gradingInstruction],
+    } as GradingCriterion;
+    const gradingCriterionCreditsChanged = {
+        ...gradingCriterion,
+        structuredGradingInstructions: [gradingInstructionCreditsChanged],
+    } as GradingCriterion;
+    const gradingCriterionUsageCountChanged = {
+        ...gradingCriterion,
+        structuredGradingInstructions: [gradingInstructionUsageCountChanged],
+    } as GradingCriterion;
     const gradingCriterionWithoutInstruction = { id: 1, title: 'testCriteria' } as GradingCriterion;
     let exercise: Exercise;
     let backupExercise: Exercise;
@@ -71,11 +88,31 @@ describe('Exercise Update Warning Service', () => {
     });
 
     it.each([
-        { newExercise: {} as ProgrammingExercise, oldExercise: {} as ProgrammingExercise, expectedMessage: 'artemisApp.exercise.noReleaseAndStartDateWarning' },
-        { newExercise: { startDate: dayjs() } as ProgrammingExercise, oldExercise: {} as ProgrammingExercise, expectedMessage: 'artemisApp.exercise.noReleaseDateWarning' },
-        { newExercise: { releaseDate: dayjs() } as ProgrammingExercise, oldExercise: {} as ProgrammingExercise, expectedMessage: '' },
-        { newExercise: { id: 1 } as ProgrammingExercise, oldExercise: { id: 1 } as ProgrammingExercise, expectedMessage: '' },
-        { newExercise: { id: 1, releaseDate: dayjs() } as ProgrammingExercise, oldExercise: { id: 1 } as ProgrammingExercise, expectedMessage: '' },
+        {
+            newExercise: {} as ProgrammingExercise,
+            oldExercise: {} as ProgrammingExercise,
+            expectedMessage: 'artemisApp.exercise.noReleaseAndStartDateWarning',
+        },
+        {
+            newExercise: { startDate: dayjs() } as ProgrammingExercise,
+            oldExercise: {} as ProgrammingExercise,
+            expectedMessage: 'artemisApp.exercise.noReleaseDateWarning',
+        },
+        {
+            newExercise: { releaseDate: dayjs() } as ProgrammingExercise,
+            oldExercise: {} as ProgrammingExercise,
+            expectedMessage: '',
+        },
+        {
+            newExercise: { id: 1 } as ProgrammingExercise,
+            oldExercise: { id: 1 } as ProgrammingExercise,
+            expectedMessage: '',
+        },
+        {
+            newExercise: { id: 1, releaseDate: dayjs() } as ProgrammingExercise,
+            oldExercise: { id: 1 } as ProgrammingExercise,
+            expectedMessage: '',
+        },
         {
             newExercise: { id: 1 } as ProgrammingExercise,
             oldExercise: { id: 1, releaseDate: dayjs() } as ProgrammingExercise,
@@ -86,7 +123,11 @@ describe('Exercise Update Warning Service', () => {
             oldExercise: { id: 1, releaseDate: dayjs() } as ProgrammingExercise,
             expectedMessage: 'artemisApp.exercise.noReleaseDateWarning',
         },
-        { newExercise: { id: 1, releaseDate: dayjs() } as ProgrammingExercise, oldExercise: { id: 1, releaseDate: dayjs() } as ProgrammingExercise, expectedMessage: '' },
+        {
+            newExercise: { id: 1, releaseDate: dayjs() } as ProgrammingExercise,
+            oldExercise: { id: 1, releaseDate: dayjs() } as ProgrammingExercise,
+            expectedMessage: '',
+        },
     ])('should correctly ask user about exercise without release date', ({ newExercise, oldExercise, expectedMessage }) => {
         updateWarningService.checkExerciseBeforeUpdate(newExercise, oldExercise, false);
 

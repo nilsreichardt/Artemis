@@ -20,7 +20,13 @@ import { UI_RELOAD_TIME } from 'app/shared/constants/exercise-exam-constants';
 const question = { id: 1, type: QuizQuestionType.MULTIPLE_CHOICE } as QuizQuestion;
 const course = { id: 2 } as Course;
 let quizExercise = { id: 42, quizStarted: true, course, quizQuestions: [question] } as QuizExercise;
-let examQuizExercise = { id: 43, quizStarted: true, course, quizQuestions: [question], exerciseGroup: { id: 11, exam: { id: 10 } } } as QuizExercise;
+let examQuizExercise = {
+    id: 43,
+    quizStarted: true,
+    course,
+    quizQuestions: [question],
+    exerciseGroup: { id: 11, exam: { id: 10 } },
+} as QuizExercise;
 const route = { params: of({ questionId: 1, exerciseId: 42 }) };
 
 describe('QuizExercise Statistic Footer Component', () => {
@@ -63,7 +69,13 @@ describe('QuizExercise Statistic Footer Component', () => {
     afterEach(() => {
         comp.ngOnDestroy();
         quizExercise = { id: 42, quizStarted: true, course, quizQuestions: [question] } as QuizExercise;
-        examQuizExercise = { id: 43, quizStarted: true, course, quizQuestions: [question], exerciseGroup: { id: 11, exam: { id: 10 } } } as QuizExercise;
+        examQuizExercise = {
+            id: 43,
+            quizStarted: true,
+            course,
+            quizQuestions: [question],
+            exerciseGroup: { id: 11, exam: { id: 10 } },
+        } as QuizExercise;
     });
 
     it('should load Quiz on Init', fakeAsync(() => {

@@ -28,7 +28,14 @@ describe('CompetencyFormComponent', () => {
         TestBed.configureTestingModule({
             imports: [ArtemisTestModule, ReactiveFormsModule, NgbDropdownModule, MockModule(NgbTooltipModule)],
             declarations: [CompetencyFormComponent, MockPipe(ArtemisTranslatePipe), MockPipe(KeysPipe), MockComponent(FormDateTimePickerComponent)],
-            providers: [MockProvider(CompetencyService), MockProvider(LectureUnitService), { provide: TranslateService, useClass: MockTranslateService }],
+            providers: [
+                MockProvider(CompetencyService),
+                MockProvider(LectureUnitService),
+                {
+                    provide: TranslateService,
+                    useClass: MockTranslateService,
+                },
+            ],
         })
             .compileComponents()
             .then(() => {

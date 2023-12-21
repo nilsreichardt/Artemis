@@ -131,7 +131,16 @@ describe('CodeEditorActionsComponent', () => {
         // receive result for save
         saveObservable.next(savedFilesResult);
         expect(comp.editorState).toEqual(EditorState.SAVING);
-        expect(updateFilesStub).toHaveBeenNthCalledWith(1, [{ fileName: 'fileName', fileContent: unsavedFiles.fileName }], false);
+        expect(updateFilesStub).toHaveBeenNthCalledWith(
+            1,
+            [
+                {
+                    fileName: 'fileName',
+                    fileContent: unsavedFiles.fileName,
+                },
+            ],
+            false,
+        );
         expect(onSavedFilesSpy).toHaveBeenCalledWith(savedFilesResult);
 
         fixture.detectChanges();
@@ -152,7 +161,16 @@ describe('CodeEditorActionsComponent', () => {
         comp.onSave();
 
         // waiting for save result
-        expect(updateFilesStub).toHaveBeenNthCalledWith(1, [{ fileName: 'fileName', fileContent: unsavedFiles.fileName }], false);
+        expect(updateFilesStub).toHaveBeenNthCalledWith(
+            1,
+            [
+                {
+                    fileName: 'fileName',
+                    fileContent: unsavedFiles.fileName,
+                },
+            ],
+            false,
+        );
         expect(comp.editorState).toEqual(EditorState.SAVING);
 
         fixture.detectChanges();

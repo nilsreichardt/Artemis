@@ -30,13 +30,37 @@ describe('OrionBuildAndTestService', () => {
     let participationSubscriptionStub: jest.SpyInstance;
 
     const feedbacks: Feedback[] = [
-        { id: 2, positive: false, detailText: 'abc', type: FeedbackType.AUTOMATIC, testCase: { testName: 'testBubbleSort', id: 1 } },
-        { id: 3, positive: true, detailText: 'cde', type: FeedbackType.AUTOMATIC, testCase: { testName: 'testMergeSort', id: 2 } },
+        {
+            id: 2,
+            positive: false,
+            detailText: 'abc',
+            type: FeedbackType.AUTOMATIC,
+            testCase: { testName: 'testBubbleSort', id: 1 },
+        },
+        {
+            id: 3,
+            positive: true,
+            detailText: 'cde',
+            type: FeedbackType.AUTOMATIC,
+            testCase: { testName: 'testMergeSort', id: 2 },
+        },
     ];
     const feedbacksWithStaticCodeAnalysis: Feedback[] = [
         ...feedbacks,
-        { id: 3, positive: false, detailText: 'fgh', type: FeedbackType.AUTOMATIC, text: STATIC_CODE_ANALYSIS_FEEDBACK_IDENTIFIER + 'a' },
-        { id: 4, positive: false, detailText: 'ijk', type: FeedbackType.AUTOMATIC, text: STATIC_CODE_ANALYSIS_FEEDBACK_IDENTIFIER + 'b' },
+        {
+            id: 3,
+            positive: false,
+            detailText: 'fgh',
+            type: FeedbackType.AUTOMATIC,
+            text: STATIC_CODE_ANALYSIS_FEEDBACK_IDENTIFIER + 'a',
+        },
+        {
+            id: 4,
+            positive: false,
+            detailText: 'ijk',
+            type: FeedbackType.AUTOMATIC,
+            text: STATIC_CODE_ANALYSIS_FEEDBACK_IDENTIFIER + 'b',
+        },
     ];
     const result = { id: 1 } as Result;
     const submissionFailed = { id: 1, buildFailed: true } as ProgrammingSubmission;

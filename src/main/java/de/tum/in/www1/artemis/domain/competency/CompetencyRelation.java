@@ -1,6 +1,13 @@
 package de.tum.in.www1.artemis.domain.competency;
 
-import javax.persistence.*;
+import javax.persistence.AttributeConverter;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Converter;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import de.tum.in.www1.artemis.domain.DomainObject;
 

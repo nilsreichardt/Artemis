@@ -3,6 +3,7 @@ export {};
 declare global {
     interface Array<T> {
         last(): T | undefined;
+
         first(): T | undefined;
 
         /**

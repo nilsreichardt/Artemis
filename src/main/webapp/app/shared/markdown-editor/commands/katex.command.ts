@@ -10,6 +10,7 @@ import { addTextAtCursor } from 'app/shared/util/markdown.util';
 export class KatexCommand extends DomainTagCommand {
     buttonIcon = faEquals as IconProp;
     buttonTranslationString = 'artemisApp.markdownEditor.commands.katex';
+
     execute(): void {
         const text = `${this.getOpeningIdentifier()}e^{\\frac{1}{4} y^2}${this.getClosingIdentifier()}`;
         addTextAtCursor(text, this.aceEditor);

@@ -21,6 +21,7 @@ export class LegalDocument {
     language: LegalDocumentLanguage;
     text: string;
     type: LegalDocumentType;
+
     constructor(type: LegalDocumentType, language: LegalDocumentLanguage) {
         this.type = type;
         this.language = language;

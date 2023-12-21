@@ -62,7 +62,9 @@
                             <td>{{ fileUploadExercise.presentationScoreEnabled }}</td>
                         }
                         <td>{{ fileUploadExercise.filePattern }}</td>
-                        <td class="d-md-table-cell"><jhi-exercise-categories [exercise]="fileUploadExercise"></jhi-exercise-categories></td>
+                        <td class="d-md-table-cell">
+                            <jhi-exercise-categories [exercise]="fileUploadExercise"></jhi-exercise-categories>
+                        </td>
                         <td class="text-end">
                             <div class="btn-group flex-btn-group-container">
                                 @if (fileUploadExercise.isAtLeastTutor) {

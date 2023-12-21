@@ -1,12 +1,5 @@
 package de.tum.in.www1.artemis.web.rest.plagiarism;
 
-import java.util.Objects;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.Exercise;
 import de.tum.in.www1.artemis.domain.User;
@@ -26,6 +19,19 @@ import de.tum.in.www1.artemis.service.plagiarism.PlagiarismService;
 import de.tum.in.www1.artemis.web.rest.dto.plagiarism.PlagiarismComparisonStatusDTO;
 import de.tum.in.www1.artemis.web.rest.errors.AccessForbiddenException;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Objects;
 
 /**
  * REST controller for managing Plagiarism Cases.
@@ -56,7 +62,7 @@ public class PlagiarismResource {
     private static final String OTHER_SUBMISSION = "Other submission";
 
     public PlagiarismResource(PlagiarismComparisonRepository plagiarismComparisonRepository, CourseRepository courseRepository, AuthorizationCheckService authCheckService,
-            UserRepository userRepository, PlagiarismService plagiarismService, PlagiarismResultRepository plagiarismResultRepository, ExerciseRepository exerciseRepository) {
+                              UserRepository userRepository, PlagiarismService plagiarismService, PlagiarismResultRepository plagiarismResultRepository, ExerciseRepository exerciseRepository) {
         this.plagiarismComparisonRepository = plagiarismComparisonRepository;
         this.courseRepository = courseRepository;
         this.authCheckService = authCheckService;
@@ -78,7 +84,7 @@ public class PlagiarismResource {
     @PutMapping("courses/{courseId}/plagiarism-comparisons/{comparisonId}/status")
     @EnforceAtLeastEditor
     public ResponseEntity<Void> updatePlagiarismComparisonStatus(@PathVariable("courseId") long courseId, @PathVariable("comparisonId") long comparisonId,
-            @RequestBody PlagiarismComparisonStatusDTO statusDTO) {
+                                                                 @RequestBody PlagiarismComparisonStatusDTO statusDTO) {
         log.info("REST request to update the status {} of the plagiarism comparison with id: {}", statusDTO.status(), comparisonId);
         Course course = courseRepository.findByIdElseThrow(courseId);
         authCheckService.checkHasAtLeastRoleInCourseElseThrow(Role.EDITOR, course, null);
@@ -146,12 +152,10 @@ public class PlagiarismResource {
         if (comparison.getSubmissionA().getStudentLogin().equals(userLogin)) {
             comparison.getSubmissionA().setStudentLogin(YOUR_SUBMISSION);
             comparison.getSubmissionB().setStudentLogin(OTHER_SUBMISSION);
-        }
-        else if (comparison.getSubmissionB().getStudentLogin().equals(userLogin)) {
+        } else if (comparison.getSubmissionB().getStudentLogin().equals(userLogin)) {
             comparison.getSubmissionA().setStudentLogin(OTHER_SUBMISSION);
             comparison.getSubmissionB().setStudentLogin(YOUR_SUBMISSION);
-        }
-        else {
+        } else {
             throw new AccessForbiddenException("This plagiarism comparison is not related to the requesting user.");
         }
     }
@@ -169,7 +173,7 @@ public class PlagiarismResource {
     @DeleteMapping("exercises/{exerciseId}/plagiarism-results/{plagiarismResultId}/plagiarism-comparisons")
     @EnforceAtLeastInstructor
     public ResponseEntity<Void> deletePlagiarismComparisons(@PathVariable("exerciseId") long exerciseId, @PathVariable("plagiarismResultId") long plagiarismResultId,
-            @RequestParam() boolean deleteAll) {
+                                                            @RequestParam() boolean deleteAll) {
         log.info("REST request to clean up plagiarism comparisons for exercise with id: {}", exerciseId);
         Exercise exercise = exerciseRepository.findByIdElseThrow(exerciseId);
         authCheckService.checkHasAtLeastRoleForExerciseElseThrow(Role.INSTRUCTOR, exercise, null);
@@ -177,8 +181,7 @@ public class PlagiarismResource {
         if (deleteAll) {
             // delete all elements for the given exercise
             plagiarismResultRepository.deletePlagiarismResultsByExerciseId(exerciseId);
-        }
-        else {
+        } else {
             // delete all plagiarism comparisons which are not approved or denied
             plagiarismComparisonRepository.deletePlagiarismComparisonsByPlagiarismResultIdAndStatus(plagiarismResultId, PlagiarismStatus.NONE);
             // also clean up any old and unused plagiarism results

@@ -53,7 +53,11 @@ describe('External Submission Dialog', () => {
         fixture.debugElement.query(By.css('.btn')).nativeElement.click();
 
         expect(openMock).toHaveBeenCalledOnce();
-        expect(openMock).toHaveBeenCalledWith(ExternalSubmissionDialogComponent, { keyboard: true, size: 'lg', backdrop: 'static' });
+        expect(openMock).toHaveBeenCalledWith(ExternalSubmissionDialogComponent, {
+            keyboard: true,
+            size: 'lg',
+            backdrop: 'static',
+        });
         expect(modalRefMock.componentInstance.exercise).toBe(exercise);
     });
 });

@@ -24,10 +24,12 @@ export class ManualTextSelectionComponent {
     @Input() public textBlockRefGroup: TextBlockRefGroup;
     @Input() submission: TextSubmission;
     @Output() public didSelectWord = new EventEmitter<wordSelection[]>();
+
     @Input() set words(textBlockRefGroup: TextBlockRefGroup) {
         // Since some words are only separated through linebreaks, the linebreaks are replaced by a linebreak with an additional space, in order to split the words by spaces.
         this.submissionWords = textBlockRefGroup.getText(this.submission).replace(LINEBREAK, '\n ').split(SPACE);
     }
+
     public submissionWords: string[] | undefined;
     public currentWordIndex: number;
     public selectedWords = new Array<wordSelection>();

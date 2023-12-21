@@ -26,6 +26,9 @@ export class AeolusService {
             sequentialRuns: !!sequentialRuns,
             testCoverage: !!coverage,
         };
-        return this.http.get<string>(`${this.resourceUrl}/templates/` + path, { responseType: 'text' as 'json', params });
+        return this.http.get<string>(`${this.resourceUrl}/templates/` + path, {
+            responseType: 'text' as 'json',
+            params,
+        });
     }
 }

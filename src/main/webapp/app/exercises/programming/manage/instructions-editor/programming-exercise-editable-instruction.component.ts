@@ -51,10 +51,12 @@ export class ProgrammingExerciseEditableInstructionComponent implements AfterVie
     @Input() showSaveButton = false;
     @Input() templateParticipation: Participation;
     @Input() forceRender: Observable<void>;
+
     @Input()
     get exercise() {
         return this.programmingExercise;
     }
+
     @Input()
     get participation() {
         return this.participationValue;
@@ -185,7 +187,12 @@ export class ProgrammingExerciseEditableInstructionComponent implements AfterVie
                     }),
                     tap((testCaseNames: string[]) => {
                         this.exerciseTestCases = testCaseNames;
-                        this.testCaseCommand.setValues(this.exerciseTestCases.map((value) => ({ value, id: value })));
+                        this.testCaseCommand.setValues(
+                            this.exerciseTestCases.map((value) => ({
+                                value,
+                                id: value,
+                            })),
+                        );
                     }),
                     catchError(() => of()),
                 )
@@ -230,7 +237,12 @@ export class ProgrammingExerciseEditableInstructionComponent implements AfterVie
     };
 
     private mapIssuesToAnnotations = (lineNumber: number, invalidTestCases?: string[]) => {
-        const mapIssues = (issues: string[]) => ({ row: lineNumber, column: 0, text: ' - ' + issues.join('\n - '), type: 'warning' });
+        const mapIssues = (issues: string[]) => ({
+            row: lineNumber,
+            column: 0,
+            text: ' - ' + issues.join('\n - '),
+            type: 'warning',
+        });
 
         const annotations = [];
         if (invalidTestCases) {

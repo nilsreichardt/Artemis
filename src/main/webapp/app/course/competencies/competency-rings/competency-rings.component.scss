@@ -16,6 +16,7 @@ svg {
     .ring {
         transform-origin: 50%;
     }
+
     .progressbar {
         animation: ring-appear 1s ease-in-out forwards;
         transition:
@@ -28,6 +29,7 @@ svg {
             opacity: 0;
         }
     }
+
     circle {
         fill: none;
     }
@@ -38,6 +40,7 @@ svg {
         .background {
             stroke: var(--competency-rings-red-bg);
         }
+
         .progressbar {
             stroke: var(--competency-rings-red);
             animation-duration: 1.6s;
@@ -51,6 +54,7 @@ svg {
         .background {
             stroke: var(--competency-rings-green-bg);
         }
+
         .progressbar {
             stroke: var(--competency-rings-green);
             animation-duration: 1.3s;
@@ -64,6 +68,7 @@ svg {
         .background {
             stroke: var(--competency-rings-blue-bg);
         }
+
         .progressbar {
             stroke: var(--competency-rings-blue);
             animation-duration: 1s;

@@ -76,7 +76,10 @@ describe('ProgrammingExerciseInstructionComponent', () => {
                 { provide: TranslateService, useClass: MockTranslateService },
                 { provide: LocalStorageService, useClass: MockSyncStorage },
                 { provide: ResultService, useClass: MockResultService },
-                { provide: ProgrammingExerciseParticipationService, useClass: MockProgrammingExerciseParticipationService },
+                {
+                    provide: ProgrammingExerciseParticipationService,
+                    useClass: MockProgrammingExerciseParticipationService,
+                },
                 { provide: ParticipationWebsocketService, useClass: MockParticipationWebsocketService },
                 { provide: RepositoryFileService, useClass: MockRepositoryFileService },
                 { provide: NgbModal, useClass: MockNgbModalService },
@@ -108,7 +111,12 @@ describe('ProgrammingExerciseInstructionComponent', () => {
     });
 
     it('should on participation change clear old subscription for participation results set up new one', () => {
-        const exercise: ProgrammingExercise = { id: 1, numberOfAssessmentsOfCorrectionRounds: [], secondCorrectionEnabled: false, studentAssignedTeamIdComputed: false };
+        const exercise: ProgrammingExercise = {
+            id: 1,
+            numberOfAssessmentsOfCorrectionRounds: [],
+            secondCorrectionEnabled: false,
+            studentAssignedTeamIdComputed: false,
+        };
         const oldParticipation: Participation = { id: 1 };
         const result: Result = { id: 1 };
         const participation: Participation = { id: 2, results: [result] };
@@ -118,7 +126,12 @@ describe('ProgrammingExerciseInstructionComponent', () => {
         comp.participation = participation;
         comp.participationSubscription = oldSubscription;
 
-        triggerChanges(comp, { property: 'participation', currentValue: participation, previousValue: oldParticipation, firstChange: false });
+        triggerChanges(comp, {
+            property: 'participation',
+            currentValue: participation,
+            previousValue: oldParticipation,
+            firstChange: false,
+        });
         fixture.detectChanges();
 
         expect(subscribeForLatestResultOfParticipationStub).toHaveBeenCalledOnce();
@@ -283,7 +296,11 @@ describe('ProgrammingExerciseInstructionComponent', () => {
         comp.exercise = { ...exercise, problemStatement: newProblemStatement };
         comp.participation = participation;
         comp.isInitial = false;
-        triggerChanges(comp, { property: 'exercise', currentValue: { ...comp.exercise, problemStatement: newProblemStatement }, firstChange: false });
+        triggerChanges(comp, {
+            property: 'exercise',
+            currentValue: { ...comp.exercise, problemStatement: newProblemStatement },
+            firstChange: false,
+        });
         expect(comp.markdownExtensions).toHaveLength(2);
         expect(updateMarkdownStub).toHaveBeenCalledOnce();
         expect(loadInitialResult).not.toHaveBeenCalled();

@@ -6,7 +6,11 @@ import static de.tum.in.www1.artemis.domain.enumeration.NotificationType.TUTORIA
 import java.time.ZonedDateTime;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

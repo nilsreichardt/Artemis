@@ -43,7 +43,12 @@ describe('ProgrammingExerciseParticipation Service', () => {
             'getLatestResultWithFeedback',
             fakeAsync((withSubmission: boolean) => {
                 const participation = { id: 21, exercise: { id: 321 } };
-                const result = { id: 42, rated: true, submission: withSubmission ? ({ id: 43 } as Submission) : undefined, participation } as Result;
+                const result = {
+                    id: 42,
+                    rated: true,
+                    submission: withSubmission ? ({ id: 43 } as Submission) : undefined,
+                    participation,
+                } as Result;
                 const expected = Object.assign({}, result);
 
                 service.getLatestResultWithFeedback(participation.id, withSubmission).subscribe((resp) => expect(resp).toEqual(expected));
@@ -63,7 +68,10 @@ describe('ProgrammingExerciseParticipation Service', () => {
 
             service.getStudentParticipationWithLatestResult(participation.id).subscribe((resp) => expect(resp).toEqual(expected));
 
-            const req = httpMock.expectOne({ method: 'GET', url: `${resourceUrl}${participation.id}/student-participation-with-latest-result-and-feedbacks` });
+            const req = httpMock.expectOne({
+                method: 'GET',
+                url: `${resourceUrl}${participation.id}/student-participation-with-latest-result-and-feedbacks`,
+            });
             req.flush(participation);
             tick();
             expect(titleSpy).toHaveBeenCalledExactlyOnceWith(participation);
@@ -97,7 +105,14 @@ describe('ProgrammingExerciseParticipation Service', () => {
 
     it('should make GET request to retrieve commits infos for participation', fakeAsync(() => {
         const participationId = 42;
-        const commitInfos = [{ hash: '123', author: 'author', timestamp: dayjs('2021-01-01'), message: 'commit message' }];
+        const commitInfos = [
+            {
+                hash: '123',
+                author: 'author',
+                timestamp: dayjs('2021-01-01'),
+                message: 'commit message',
+            },
+        ];
         service.retrieveCommitsInfoForParticipation(participationId).subscribe((resp) => {
             expect(resp).toEqual(commitInfos);
         });

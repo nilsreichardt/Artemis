@@ -101,7 +101,7 @@ public abstract class SubmissionExportService {
      * @return paths of the exported submissions
      */
     public List<Path> exportStudentSubmissions(Long exerciseId, SubmissionExportOptionsDTO submissionExportOptions, boolean zipSubmissions, Path outputDir,
-            List<String> exportErrors, List<ArchivalReportEntry> reportData) {
+                                               List<String> exportErrors, List<ArchivalReportEntry> reportData) {
 
         Optional<Exercise> exerciseOpt = exerciseRepository.findWithEagerStudentParticipationsStudentAndSubmissionsById(exerciseId);
 
@@ -116,8 +116,7 @@ public abstract class SubmissionExportService {
 
         if (submissionExportOptions.isExportAllParticipants()) {
             exportedStudentParticipations = new ArrayList<>(exercise.getStudentParticipations());
-        }
-        else {
+        } else {
             List<String> participantIds = Arrays.stream(submissionExportOptions.getParticipantIdentifierList().split(",")).map(String::trim).toList();
 
             exportedStudentParticipations = exercise.getStudentParticipations().stream().filter(participation -> participantIds.contains(participation.getParticipantIdentifier()))
@@ -129,8 +128,7 @@ public abstract class SubmissionExportService {
         if (submissionExportOptions.isFilterLateSubmissions()) {
             if (submissionExportOptions.getFilterLateSubmissionsDate() == null) {
                 enableFilterAfterDueDate = true;
-            }
-            else {
+            } else {
                 filterLateSubmissionsDate = submissionExportOptions.getFilterLateSubmissionsDate();
             }
         }
@@ -158,7 +156,7 @@ public abstract class SubmissionExportService {
      * @return paths of the exported submissions
      */
     private List<Path> exportSubmissionsFromParticipationsOptionallyZipped(Exercise exercise, List<StudentParticipation> participations, boolean enableFilterAfterDueDate,
-            @Nullable ZonedDateTime lateSubmissionFilter, boolean zipSubmissions, Path outputDir, List<String> exportErrors, List<ArchivalReportEntry> reportData) {
+                                                                           @Nullable ZonedDateTime lateSubmissionFilter, boolean zipSubmissions, Path outputDir, List<String> exportErrors, List<ArchivalReportEntry> reportData) {
 
         Course course = exercise.getCourseViaExerciseGroupOrCourseMember();
 
@@ -190,8 +188,7 @@ public abstract class SubmissionExportService {
             try {
                 this.saveSubmissionToFile(exercise, latestSubmission, submissionFilePath.toFile());
                 return Optional.of(submissionFilePath);
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 String message = "Could not create file " + submissionFilePath + "  for exporting: " + ex.getMessage();
                 log.error(message, ex);
                 exportErrors.add(message);
@@ -212,17 +209,14 @@ public abstract class SubmissionExportService {
             try {
                 zipFileService.createZipFile(zipFilePath, submissionFilePaths);
                 return List.of(zipFilePath);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 log.error("Failed to zip submissions for exercise {} to {}: {}", exercise.getId(), zipFilePath, e);
                 return List.of();
-            }
-            finally {
+            } finally {
                 log.debug("Delete all temporary files");
                 fileService.deleteFiles(submissionFilePaths);
             }
-        }
-        else {
+        } else {
             return submissionFilePaths;
         }
     }

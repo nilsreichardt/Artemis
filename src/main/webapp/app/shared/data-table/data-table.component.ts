@@ -102,7 +102,12 @@ export class DataTableComponent implements OnInit, OnChanges {
     @Input() searchEntityFilterEnabled = true;
     @Input() searchTextFromEntity: (entity: BaseEntity) => string = entityToString;
     @Input() searchResultFormatter: (entity: BaseEntity) => string = entityToString;
-    @Input() onSearchWrapper: (stream: Observable<{ text: string; entities: BaseEntity[] }>) => Observable<BaseEntity[]> = onSearchDefaultWrapper;
+    @Input() onSearchWrapper: (
+        stream: Observable<{
+            text: string;
+            entities: BaseEntity[];
+        }>,
+    ) => Observable<BaseEntity[]> = onSearchDefaultWrapper;
     @Input() onAutocompleteSelectWrapper: (entity: BaseEntity, callback: (entity: BaseEntity) => void) => void = onAutocompleteSelectDefaultWrapper;
     @Input() customFilter: (entity: BaseEntity) => boolean = () => true;
     @Input() customFilterKey: any = {};
@@ -364,7 +369,10 @@ export class DataTableComponent implements OnInit, OnChanges {
                 map((text) => {
                     const searchWords = text.split(',').map((word) => word.trim());
                     // When the entity field is cleared, we translate the resulting empty string to an empty array (otherwise no entities would be found).
-                    return { text, searchWords: searchWords.length === 1 && !searchWords[0] ? [] : searchWords };
+                    return {
+                        text,
+                        searchWords: searchWords.length === 1 && !searchWords[0] ? [] : searchWords,
+                    };
                 }),
                 // For available entities in table.
                 tap(({ searchWords }) => {
@@ -477,7 +485,12 @@ const entityToString = (entity: BaseEntity) => entity.id!.toString();
  *
  * @param stream$ stream of searches of the format {text, entities} where entities are the results
  */
-const onSearchDefaultWrapper = (stream$: Observable<{ text: string; entities: BaseEntity[] }>): Observable<BaseEntity[]> => {
+const onSearchDefaultWrapper = (
+    stream$: Observable<{
+        text: string;
+        entities: BaseEntity[];
+    }>,
+): Observable<BaseEntity[]> => {
     return stream$.pipe(
         map(({ entities }) => {
             return entities;

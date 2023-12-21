@@ -42,14 +42,25 @@ describe('ProgrammingExerciseGitDiffFilePanel Component', () => {
     });
 
     it('Should extract file path', () => {
-        comp.diffEntries = [{ filePath: 'src/a.java', previousFilePath: 'src/b.java' }] as ProgrammingExerciseGitDiffEntry[];
+        comp.diffEntries = [
+            {
+                filePath: 'src/a.java',
+                previousFilePath: 'src/b.java',
+            },
+        ] as ProgrammingExerciseGitDiffEntry[];
         comp.ngOnInit();
         expect(comp.filePath).toBe('src/a.java');
         expect(comp.previousFilePath).toBe('src/b.java');
     });
 
     it('Should set added/removed lines to 1-0', () => {
-        comp.diffEntries = [{ filePath: 'src/a.java', startLine: 1, lineCount: 1 }] as ProgrammingExerciseGitDiffEntry[];
+        comp.diffEntries = [
+            {
+                filePath: 'src/a.java',
+                startLine: 1,
+                lineCount: 1,
+            },
+        ] as ProgrammingExerciseGitDiffEntry[];
         comp.ngOnInit();
         expect(comp.addedLineCount).toBe(1);
         expect(comp.removedLineCount).toBe(0);

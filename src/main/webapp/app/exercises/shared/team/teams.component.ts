@@ -107,7 +107,12 @@ export class TeamsComponent implements OnInit, OnDestroy {
      */
     updateTeamFilter(filter: FilterProp) {
         this.teamCriteria.filterProp = filter;
-        this.router.navigate([], { relativeTo: this.route, queryParams: { filter }, queryParamsHandling: 'merge', replaceUrl: true });
+        this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { filter },
+            queryParamsHandling: 'merge',
+            replaceUrl: true,
+        });
         this.loadAll();
     }
 

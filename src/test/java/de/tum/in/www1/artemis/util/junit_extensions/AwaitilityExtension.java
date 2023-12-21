@@ -1,10 +1,10 @@
 package de.tum.in.www1.artemis.util.junit_extensions;
 
-import java.time.Duration;
-
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+
+import java.time.Duration;
 
 /**
  * A JUnit 5 extension that configures {@link Awaitility} to use a different default poll delay and interval.

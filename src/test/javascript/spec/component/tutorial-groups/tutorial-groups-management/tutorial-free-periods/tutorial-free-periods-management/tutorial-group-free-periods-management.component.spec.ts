@@ -112,7 +112,11 @@ describe('TutorialGroupFreePeriodsManagementComponent', () => {
     it('should open the create free day dialog when the respective button is clicked', fakeAsync(() => {
         const modalService = TestBed.inject(NgbModal);
         const mockModalRef = {
-            componentInstance: { course: undefined, tutorialGroupConfigurationId: undefined, initialize: () => {} },
+            componentInstance: {
+                course: undefined,
+                tutorialGroupConfigurationId: undefined,
+                initialize: () => {},
+            },
             result: of(),
         };
         const modalOpenSpy = jest.spyOn(modalService, 'open').mockReturnValue(mockModalRef as unknown as NgbModalRef);
@@ -124,7 +128,12 @@ describe('TutorialGroupFreePeriodsManagementComponent', () => {
         fixture.whenStable().then(() => {
             expect(openDialogSpy).toHaveBeenCalledOnce();
             expect(modalOpenSpy).toHaveBeenCalledOnce();
-            expect(modalOpenSpy).toHaveBeenCalledWith(CreateTutorialGroupFreePeriodComponent, { backdrop: 'static', scrollable: false, size: 'lg', animation: false });
+            expect(modalOpenSpy).toHaveBeenCalledWith(CreateTutorialGroupFreePeriodComponent, {
+                backdrop: 'static',
+                scrollable: false,
+                size: 'lg',
+                animation: false,
+            });
             expect(mockModalRef.componentInstance.tutorialGroupConfigurationId).toEqual(configuration.id);
             expect(mockModalRef.componentInstance.course).toEqual(course);
         });

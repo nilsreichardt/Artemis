@@ -111,8 +111,16 @@ describe('ProgrammingExerciseInstructorSubmissionStateComponent', () => {
 
     it('should show the result eta if there is at least one building submission', fakeAsync(() => {
         const isBuildingSubmissionState = {
-            1: { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId: 4 },
-            4: { submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission: undefined, participationId: 5 },
+            1: {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId: 4,
+            },
+            4: {
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId: 5,
+            },
         } as ExerciseSubmissionState;
         comp.exercise = exercise as ProgrammingExercise;
 
@@ -129,8 +137,16 @@ describe('ProgrammingExerciseInstructorSubmissionStateComponent', () => {
 
     it('should not show the result eta if there is no building submission', () => {
         const isNotBuildingSubmission = {
-            1: { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId: 4 },
-            4: { submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION, submission: undefined, participationId: 5 },
+            1: {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId: 4,
+            },
+            4: {
+                submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION,
+                submission: undefined,
+                participationId: 5,
+            },
         } as ExerciseSubmissionState;
         comp.exercise = exercise as ProgrammingExercise;
 
@@ -145,8 +161,16 @@ describe('ProgrammingExerciseInstructorSubmissionStateComponent', () => {
 
     it('should show & enable the trigger all button and the build state once the build summary is loaded', fakeAsync(() => {
         const noPendingSubmissionState = {
-            1: { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId: 4 },
-            4: { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId: 5 },
+            1: {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId: 4,
+            },
+            4: {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId: 5,
+            },
         } as ExerciseSubmissionState;
         const compressedSummary = { [ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION]: 2 };
         comp.exercise = exercise as ProgrammingExercise;
@@ -175,9 +199,21 @@ describe('ProgrammingExerciseInstructorSubmissionStateComponent', () => {
 
     it('should show & enable both buttons and the build state once the build summary is loaded when a failed submission exists', fakeAsync(() => {
         const noPendingSubmissionState = {
-            1: { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId: 55 },
-            4: { submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION, submission: undefined, participationId: 76 },
-            5: { submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission: undefined, participationId: 76 },
+            1: {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId: 55,
+            },
+            4: {
+                submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION,
+                submission: undefined,
+                participationId: 76,
+            },
+            5: {
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId: 76,
+            },
         } as ExerciseSubmissionState;
         const compressedSummary = {
             [ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION]: 1,
@@ -215,7 +251,10 @@ describe('ProgrammingExerciseInstructorSubmissionStateComponent', () => {
         const getFailedSubmissionParticipationsForExerciseStub = jest.spyOn(submissionService, 'getSubmissionCountByType').mockReturnValue(failedSubmissionParticipationIds);
         // Component must have at least one failed submission for the button to be enabled.
         comp.exercise = exercise as ProgrammingExercise;
-        comp.buildingSummary = { [ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION]: 1, [ProgrammingSubmissionState.HAS_FAILED_SUBMISSION]: 1 };
+        comp.buildingSummary = {
+            [ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION]: 1,
+            [ProgrammingSubmissionState.HAS_FAILED_SUBMISSION]: 1,
+        };
         comp.hasFailedSubmissions = true;
 
         fixture.detectChanges();
@@ -243,8 +282,16 @@ describe('ProgrammingExerciseInstructorSubmissionStateComponent', () => {
 
     it('should disable the trigger all button while a build is running and re-enable it when it is complete', fakeAsync(() => {
         const isBuildingSubmissionState = {
-            1: { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId: 4 },
-            4: { submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission: undefined, participationId: 5 },
+            1: {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId: 4,
+            },
+            4: {
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId: 5,
+            },
         } as ExerciseSubmissionState;
         comp.exercise = exercise as ProgrammingExercise;
 

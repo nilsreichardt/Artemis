@@ -2,8 +2,7 @@ import { Exam } from 'app/entities/exam.model';
 
 import multipleChoiceTemplate from '../../../fixtures/exercise/quiz/multiple_choice/template.json';
 import { examAPIRequests, exerciseAPIRequest } from '../../artemis';
-import { AdditionalData, BASE_API, Exercise, ExerciseType, PUT } from '../../constants';
-import { POST } from '../../constants';
+import { AdditionalData, BASE_API, Exercise, ExerciseType, POST, PUT } from '../../constants';
 import { convertModelAfterMultiPart, generateUUID } from '../../utils';
 import { QuizExercise } from 'app/entities/quiz/quiz-exercise.model';
 
@@ -65,7 +64,11 @@ export class ExamExerciseGroupCreationPage {
                     break;
                 case ExerciseType.PROGRAMMING:
                     exerciseAPIRequest
-                        .createProgrammingExercise({ exerciseGroup: groupResponse.body, title, assessmentType: additionalData.progExerciseAssessmentType })
+                        .createProgrammingExercise({
+                            exerciseGroup: groupResponse.body,
+                            title,
+                            assessmentType: additionalData.progExerciseAssessmentType,
+                        })
                         .then((response) => {
                             processResponse(response);
                         });

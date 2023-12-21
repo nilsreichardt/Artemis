@@ -192,7 +192,10 @@ export class ProgrammingExerciseService {
         const options = createRequestOption(req);
         const copy = this.convertDataFromClient(programmingExercise);
         return this.http
-            .put<ProgrammingExercise>(`${this.resourceUrl}/timeline`, copy, { params: options, observe: 'response' })
+            .put<ProgrammingExercise>(`${this.resourceUrl}/timeline`, copy, {
+                params: options,
+                observe: 'response',
+            })
             .pipe(map((res: EntityResponseType) => this.processProgrammingExerciseEntityResponse(res)));
     }
 

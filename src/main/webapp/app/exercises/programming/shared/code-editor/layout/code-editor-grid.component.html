@@ -43,7 +43,7 @@
         <ng-content select="[editorBottomArea]" class="editor-bottom-resizable"></ng-content>
         <!-- Required for resizing; don't remove empty span -->
         @if (!buildOutputIsCollapsed) {
-            <fa-icon [icon]="faGripLines" id="draggableIconForBuildOutput" class="rg-bottom-bottom text-lightgrey"><span></span></fa-icon>
+            <fa-icon [icon]="faGripLines" id="draggableIconForBuildOutput" class="rg-bottom-bottom text-lightgrey"> <span></span></fa-icon>
         }
     </div>
     @if (isTutorAssessment) {

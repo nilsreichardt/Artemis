@@ -46,6 +46,7 @@ class InfiniteScrollStubDirective {
     @Input() alwaysCallback = false;
     @Input() fromRoot = false;
 }
+
 examples.forEach((activeConversation) => {
     describe('ConversationMessagesComponent with ' + (getAsChannelDto(activeConversation)?.isAnnouncementChannel ? 'announcement ' : '') + activeConversation.type, () => {
         let component: ConversationMessagesComponent;

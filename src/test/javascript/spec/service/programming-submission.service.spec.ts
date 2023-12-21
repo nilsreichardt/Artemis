@@ -48,8 +48,16 @@ describe('ProgrammingSubmissionService', () => {
     let result2: Result;
 
     beforeEach(() => {
-        currentSubmission = { id: 11, submissionDate: dayjs().subtract(20, 'seconds'), participation: { id: participationId } } as any;
-        currentSubmission2 = { id: 12, submissionDate: dayjs().subtract(20, 'seconds'), participation: { id: participationId } } as any;
+        currentSubmission = {
+            id: 11,
+            submissionDate: dayjs().subtract(20, 'seconds'),
+            participation: { id: participationId },
+        } as any;
+        currentSubmission2 = {
+            id: 12,
+            submissionDate: dayjs().subtract(20, 'seconds'),
+            participation: { id: participationId },
+        } as any;
         result = { id: 31, submission: currentSubmission } as any;
         result2 = { id: 32, submission: currentSubmission2 } as any;
 
@@ -58,7 +66,10 @@ describe('ProgrammingSubmissionService', () => {
             providers: [
                 { provide: JhiWebsocketService, useClass: MockWebsocketService },
                 { provide: ParticipationWebsocketService, useClass: MockParticipationWebsocketService },
-                { provide: ProgrammingExerciseParticipationService, useClass: MockProgrammingExerciseParticipationService },
+                {
+                    provide: ProgrammingExerciseParticipationService,
+                    useClass: MockProgrammingExerciseParticipationService,
+                },
             ],
         })
             .compileComponents()
@@ -109,7 +120,11 @@ describe('ProgrammingSubmissionService', () => {
         httpGetStub.mockReturnValue(of(currentSubmission));
         let submission;
         submissionService.getLatestPendingSubmissionByParticipationId(participationId, 10, true).subscribe((sub) => (submission = sub));
-        expect(submission).toEqual({ submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission: currentSubmission, participationId });
+        expect(submission).toEqual({
+            submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+            submission: currentSubmission,
+            participationId,
+        });
         expect(wsSubscribeStub).toHaveBeenCalledOnce();
         expect(wsSubscribeStub).toHaveBeenCalledWith(submissionTopic);
         expect(wsReceiveStub).toHaveBeenCalledOnce();
@@ -122,13 +137,27 @@ describe('ProgrammingSubmissionService', () => {
         const returnedSubmissions: Array<ProgrammingSubmissionStateObj | undefined> = [];
         httpGetStub.mockReturnValue(of(currentSubmission));
         submissionService.getLatestPendingSubmissionByParticipationId(participationId, 10, true).subscribe((s) => returnedSubmissions.push(s));
-        expect(returnedSubmissions).toEqual([{ submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission: currentSubmission, participationId }]);
+        expect(returnedSubmissions).toEqual([
+            {
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission: currentSubmission,
+                participationId,
+            },
+        ]);
         // Result comes in for submission.
         result.submission = currentSubmission;
         wsLatestResultSubject.next(result);
         expect(returnedSubmissions).toEqual([
-            { submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission: currentSubmission, participationId },
-            { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId },
+            {
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission: currentSubmission,
+                participationId,
+            },
+            {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId,
+            },
         ]);
     });
 
@@ -136,11 +165,23 @@ describe('ProgrammingSubmissionService', () => {
         const returnedSubmissions: Array<ProgrammingSubmissionStateObj | undefined> = [];
         httpGetStub.mockReturnValue(of(currentSubmission));
         submissionService.getLatestPendingSubmissionByParticipationId(participationId, 10, true).subscribe((s) => returnedSubmissions.push(s));
-        expect(returnedSubmissions).toEqual([{ submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission: currentSubmission, participationId }]);
+        expect(returnedSubmissions).toEqual([
+            {
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission: currentSubmission,
+                participationId,
+            },
+        ]);
         // Result comes in for submission.
         result.submission = currentSubmission2;
         wsLatestResultSubject.next(result);
-        expect(returnedSubmissions).toEqual([{ submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission: currentSubmission, participationId }]);
+        expect(returnedSubmissions).toEqual([
+            {
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission: currentSubmission,
+                participationId,
+            },
+        ]);
     });
 
     it('should emit the newest submission when it was received through the websocket connection', () => {
@@ -148,20 +189,46 @@ describe('ProgrammingSubmissionService', () => {
         // No latest pending submission found.
         httpGetStub.mockReturnValue(of(undefined));
         submissionService.getLatestPendingSubmissionByParticipationId(participationId, 10, true).subscribe((s) => returnedSubmissions.push(s));
-        expect(returnedSubmissions).toEqual([{ submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId }]);
+        expect(returnedSubmissions).toEqual([
+            {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId,
+            },
+        ]);
         // New submission comes in.
         wsSubmissionSubject.next(currentSubmission2);
         expect(returnedSubmissions).toEqual([
-            { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId },
-            { submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission: currentSubmission2, participationId },
+            {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId,
+            },
+            {
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission: currentSubmission2,
+                participationId,
+            },
         ]);
         // Result comes in for submission.
         result.submission = currentSubmission2;
         wsLatestResultSubject.next(result);
         expect(returnedSubmissions).toEqual([
-            { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId },
-            { submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission: currentSubmission2, participationId },
-            { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId },
+            {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId,
+            },
+            {
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission: currentSubmission2,
+                participationId,
+            },
+            {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId,
+            },
         ]);
     });
 
@@ -175,11 +242,25 @@ describe('ProgrammingSubmissionService', () => {
         // We simulate that the latest result from the server does not belong the pending submission
         getLatestResultStub = getLatestResultStub.mockReturnValue(of(result));
 
-        expect(returnedSubmissions).toEqual([{ submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId }]);
+        expect(returnedSubmissions).toEqual([
+            {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId,
+            },
+        ]);
         wsSubmissionSubject.next(currentSubmission2);
         expect(returnedSubmissions).toEqual([
-            { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId },
-            { submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission: currentSubmission2, participationId },
+            {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId,
+            },
+            {
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission: currentSubmission2,
+                participationId,
+            },
         ]);
 
         tick(10);
@@ -190,18 +271,46 @@ describe('ProgrammingSubmissionService', () => {
 
         // HAS_FAILED_SUBMISSION is expected as the result provided by getLatestResult does not match the pending submission
         expect(returnedSubmissions).toEqual([
-            { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId },
-            { submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission: currentSubmission2, participationId },
-            { submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION, submission: currentSubmission2, participationId },
+            {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId,
+            },
+            {
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission: currentSubmission2,
+                participationId,
+            },
+            {
+                submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION,
+                submission: currentSubmission2,
+                participationId,
+            },
         ]);
 
         // Now the result for the submission in - should be accepted even though technically too late!
         wsLatestResultSubject.next(result2);
         expect(returnedSubmissions).toEqual([
-            { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId },
-            { submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission: currentSubmission2, participationId },
-            { submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION, submission: currentSubmission2, participationId },
-            { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId },
+            {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId,
+            },
+            {
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission: currentSubmission2,
+                participationId,
+            },
+            {
+                submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION,
+                submission: currentSubmission2,
+                participationId,
+            },
+            {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId,
+            },
         ]);
     }));
 
@@ -215,11 +324,25 @@ describe('ProgrammingSubmissionService', () => {
         // We simulate that the latest result from the server matches the pending submission
         getLatestResultStub = getLatestResultStub.mockReturnValue(of(result));
 
-        expect(returnedSubmissions).toEqual([{ submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId }]);
+        expect(returnedSubmissions).toEqual([
+            {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId,
+            },
+        ]);
         wsSubmissionSubject.next(currentSubmission);
         expect(returnedSubmissions).toEqual([
-            { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId },
-            { submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission: currentSubmission, participationId },
+            {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId,
+            },
+            {
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission: currentSubmission,
+                participationId,
+            },
         ]);
 
         tick(10);
@@ -228,22 +351,49 @@ describe('ProgrammingSubmissionService', () => {
         expect(getLatestResultStub).toHaveBeenCalledOnce();
         expect(getLatestResultStub).toHaveBeenCalledWith(participationId, true);
         expect(notifyAllResultSubscribersStub).toHaveBeenCalledOnce();
-        expect(notifyAllResultSubscribersStub).toHaveBeenCalledWith({ ...result, participation: { id: participationId } });
+        expect(notifyAllResultSubscribersStub).toHaveBeenCalledWith({
+            ...result,
+            participation: { id: participationId },
+        });
         wsLatestResultSubject.next(result);
 
         // HAS_NO_PENDING_SUBMISSION is expected as the result provided by getLatestResult matches the pending submission
         expect(returnedSubmissions).toEqual([
-            { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId },
-            { submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission: currentSubmission, participationId },
-            { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId },
+            {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId,
+            },
+            {
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission: currentSubmission,
+                participationId,
+            },
+            {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId,
+            },
         ]);
 
         // If the "real" websocket connection triggers now for some reason, the submission state should not change
         wsLatestResultSubject.next(result);
         expect(returnedSubmissions).toEqual([
-            { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId },
-            { submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission: currentSubmission, participationId },
-            { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId },
+            {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId,
+            },
+            {
+                submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                submission: currentSubmission,
+                participationId,
+            },
+            {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId,
+            },
         ]);
     }));
 
@@ -255,7 +405,10 @@ describe('ProgrammingSubmissionService', () => {
         const participation3 = { id: 4 } as StudentParticipation;
         let submissionState, submission;
 
-        const pendingSubmissions = { [participation1.id!]: currentSubmission, [participation2.id!]: currentSubmission2 };
+        const pendingSubmissions = {
+            [participation1.id!]: currentSubmission,
+            [participation2.id!]: currentSubmission2,
+        };
 
         // @ts-ignore
         const fetchLatestPendingSubmissionSpy = jest.spyOn(submissionService, 'fetchLatestPendingSubmissionByParticipationId');
@@ -308,10 +461,21 @@ describe('ProgrammingSubmissionService', () => {
 
     it('should correctly return the submission state based on the servers response', () => {
         const exerciseId = 10;
-        const submissionState = { 1: { id: 11, submissionDate: dayjs().subtract(2, 'hours') } as ProgrammingSubmission, 2: undefined };
+        const submissionState = {
+            1: { id: 11, submissionDate: dayjs().subtract(2, 'hours') } as ProgrammingSubmission,
+            2: undefined,
+        };
         const expectedSubmissionState = {
-            1: { submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION, submission: submissionState['1'], participationId: 1 },
-            2: { submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined, participationId: 2 },
+            1: {
+                submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION,
+                submission: submissionState['1'],
+                participationId: 1,
+            },
+            2: {
+                submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                submission: undefined,
+                participationId: 2,
+            },
         };
         // @ts-ignore
         const fetchLatestPendingSubmissionsByExerciseIdSpy = jest.spyOn(submissionService, 'fetchLatestPendingSubmissionsByExerciseId');
@@ -329,11 +493,21 @@ describe('ProgrammingSubmissionService', () => {
     it('should recalculate the result eta based on the number of open submissions', () => {
         const exerciseId = 10;
         // Simulate 340 participations with one pending submission each.
-        const submissionState = _range(340).reduce((acc, n) => ({ ...acc, [n]: { submissionDate: dayjs().subtract(1, 'minutes') } as ProgrammingSubmission }), {});
+        const submissionState = _range(340).reduce(
+            (acc, n) => ({
+                ...acc,
+                [n]: { submissionDate: dayjs().subtract(1, 'minutes') } as ProgrammingSubmission,
+            }),
+            {},
+        );
         const expectedSubmissionState = Object.entries(submissionState).reduce(
             (acc, [participationID, submission]: [string, ProgrammingSubmission]) => ({
                 ...acc,
-                [participationID]: { submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission, participationId: parseInt(participationID, 10) },
+                [participationID]: {
+                    submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                    submission,
+                    participationId: parseInt(participationID, 10),
+                },
             }),
             {},
         );

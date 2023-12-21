@@ -1,22 +1,10 @@
 package de.tum.in.www1.artemis.exam;
 
-import static de.tum.in.www1.artemis.util.SensitiveInformationUtil.assertSensitiveInformationWasFilteredFileUploadExercise;
-import static de.tum.in.www1.artemis.util.SensitiveInformationUtil.assertSensitiveInformationWasFilteredModelingExercise;
-import static de.tum.in.www1.artemis.util.SensitiveInformationUtil.assertSensitiveInformationWasFilteredProgrammingExercise;
-import static de.tum.in.www1.artemis.util.SensitiveInformationUtil.assertSensitiveInformationWasFilteredTextExercise;
+import static de.tum.in.www1.artemis.util.SensitiveInformationUtil.*;
 import static de.tum.in.www1.artemis.util.TestConstants.COMMIT_HASH_OBJECT_ID;
 import static de.tum.in.www1.artemis.util.TestConstants.COMMIT_HASH_STRING;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.assertj.core.api.Assertions.fail;
-import static org.assertj.core.api.Assertions.within;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.timeout;
-import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.net.URISyntaxException;
 import java.time.Duration;

@@ -276,7 +276,12 @@ describe('LectureUpdateComponent', () => {
         expect(lectureUpdateComponent.processUnitMode).toBeTrue();
 
         const expectedPath = ['course-management', 1, 'lectures', 3, 'unit-management', 'attachment-units', 'process'];
-        expect(navigateSpy).toHaveBeenCalledWith(expectedPath, { state: { file: lectureUpdateComponent.file, fileName: lectureUpdateComponent.fileName } });
+        expect(navigateSpy).toHaveBeenCalledWith(expectedPath, {
+            state: {
+                file: lectureUpdateComponent.file,
+                fileName: lectureUpdateComponent.fileName,
+            },
+        });
     }));
 
     it('should call onFileChange on changed file', fakeAsync(() => {

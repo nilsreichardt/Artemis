@@ -178,7 +178,14 @@ describe('ProgrammingFeedbackItemService', () => {
     });
 
     it('should handle not executed tests', () => {
-        const feedbacks: Feedback[] = [{ testCase: { testName: 'test1' }, type: FeedbackType.AUTOMATIC, credits: 0, detailText: 'Test was not executed.' }];
+        const feedbacks: Feedback[] = [
+            {
+                testCase: { testName: 'test1' },
+                type: FeedbackType.AUTOMATIC,
+                credits: 0,
+                detailText: 'Test was not executed.',
+            },
+        ];
 
         const items = service.create(feedbacks, false);
         const groups = service.group(items, exercise) as FeedbackGroup[];

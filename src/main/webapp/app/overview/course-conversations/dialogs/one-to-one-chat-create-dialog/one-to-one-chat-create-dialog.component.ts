@@ -19,6 +19,7 @@ export class OneToOneChatCreateDialogComponent extends AbstractDialogComponent {
     constructor(activeModal: NgbActiveModal) {
         super(activeModal);
     }
+
     initialize() {
         super.initialize(['course']);
     }

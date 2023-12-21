@@ -36,7 +36,14 @@ describe('TutorialGroupRowButtonsComponent', () => {
                 MockDirective(DeleteButtonDirective),
                 MockPipe(ArtemisTranslatePipe),
             ],
-            providers: [MockProvider(TutorialGroupsService), MockProvider(NgbModal), { provide: Router, useValue: router }],
+            providers: [
+                MockProvider(TutorialGroupsService),
+                MockProvider(NgbModal),
+                {
+                    provide: Router,
+                    useValue: router,
+                },
+            ],
         })
             .compileComponents()
             .then(() => {
@@ -56,7 +63,11 @@ describe('TutorialGroupRowButtonsComponent', () => {
     it('should open the session management dialog when the respective button is clicked', fakeAsync(() => {
         const modalService = TestBed.inject(NgbModal);
         const mockModalRef = {
-            componentInstance: { course: undefined, tutorialGroupId: undefined, initialize: () => {} },
+            componentInstance: {
+                course: undefined,
+                tutorialGroupId: undefined,
+                initialize: () => {},
+            },
             result: of(),
         };
         const modalOpenSpy = jest.spyOn(modalService, 'open').mockReturnValue(mockModalRef as unknown as NgbModalRef);
@@ -82,7 +93,11 @@ describe('TutorialGroupRowButtonsComponent', () => {
     it('should open the registrations dialog when the respective button is clicked', fakeAsync(() => {
         const modalService = TestBed.inject(NgbModal);
         const mockModalRef = {
-            componentInstance: { course: undefined, tutorialGroupId: undefined, initialize: () => {} },
+            componentInstance: {
+                course: undefined,
+                tutorialGroupId: undefined,
+                initialize: () => {},
+            },
             result: of(),
         };
         const modalOpenSpy = jest.spyOn(modalService, 'open').mockReturnValue(mockModalRef as unknown as NgbModalRef);
@@ -94,7 +109,12 @@ describe('TutorialGroupRowButtonsComponent', () => {
         fixture.whenStable().then(() => {
             expect(openDialogSpy).toHaveBeenCalledOnce();
             expect(modalOpenSpy).toHaveBeenCalledOnce();
-            expect(modalOpenSpy).toHaveBeenCalledWith(RegisteredStudentsComponent, { backdrop: 'static', scrollable: false, size: 'xl', animation: false });
+            expect(modalOpenSpy).toHaveBeenCalledWith(RegisteredStudentsComponent, {
+                backdrop: 'static',
+                scrollable: false,
+                size: 'xl',
+                animation: false,
+            });
             expect(mockModalRef.componentInstance.tutorialGroupId).toEqual(tutorialGroup.id);
             expect(mockModalRef.componentInstance.course).toEqual(course);
         });

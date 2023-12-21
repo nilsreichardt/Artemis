@@ -96,9 +96,21 @@ export class ProgrammingExercisePlantUmlExtensionWrapper implements ArtemisShowd
                 });
                 // custom markdown to html rendering: replace the plantUml in the markdown with a simple <div></div> container with a unique id placeholder
                 // with the global unique id so that we can find the plantUml later on, when it was rendered, and then inject the 'actual' inner html (actually a svg image)
-                const replacedText = plantUmlsIndexed.reduce((acc: string, umlIndexed: { plantUmlId: number; plantUml: string }): string => {
-                    return acc.replace(new RegExp(escapeStringForUseInRegex(umlIndexed.plantUml), 'g'), plantUmlContainer.replace(idPlaceholder, umlIndexed.plantUmlId.toString()));
-                }, text);
+                const replacedText = plantUmlsIndexed.reduce(
+                    (
+                        acc: string,
+                        umlIndexed: {
+                            plantUmlId: number;
+                            plantUml: string;
+                        },
+                    ): string => {
+                        return acc.replace(
+                            new RegExp(escapeStringForUseInRegex(umlIndexed.plantUml), 'g'),
+                            plantUmlContainer.replace(idPlaceholder, umlIndexed.plantUmlId.toString()),
+                        );
+                    },
+                    text,
+                );
                 // before we send the plantUml to the server for rendering, we need to inject the current test status so that the colors can be adapted
                 // (green == implemented, red == not yet implemented, grey == unknown)
                 const plantUmlsValidated = plantUmlsIndexed.map((plantUmlIndexed: { plantUmlId: number; plantUml: string }) => {

@@ -52,7 +52,10 @@ describe('Iris Http Code Editor Message Service', () => {
         }));
 
         it('should update component plan instruction field', fakeAsync(() => {
-            const returnedFromService = { ...mockExercisePlanStep, instructions: 'I will add a QuickSort algorithm task.' };
+            const returnedFromService = {
+                ...mockExercisePlanStep,
+                instructions: 'I will add a QuickSort algorithm task.',
+            };
             const expected = returnedFromService;
             service
                 .updateExercisePlanStepInstructions(mockPlanConversation.id, mockServerPlanMessage.id, mockExercisePlan.id!, mockExercisePlanStep.id!, returnedFromService)

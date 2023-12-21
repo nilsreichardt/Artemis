@@ -5,10 +5,12 @@ Ace Editor
 .code-editor-ace {
     flex: 1 1 auto;
     display: flex;
+
     &__content {
         padding: 0;
         display: flex;
         flex: 1 1 auto;
+
         &__editor {
             flex: 1 1 auto;
         }

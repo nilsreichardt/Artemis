@@ -1,17 +1,5 @@
 package de.tum.in.www1.artemis.iris;
 
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-import java.util.concurrent.ThreadLocalRandom;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ActiveProfiles;
-
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.ProgrammingExercise;
 import de.tum.in.www1.artemis.domain.iris.message.IrisMessage;
@@ -19,6 +7,17 @@ import de.tum.in.www1.artemis.domain.iris.message.IrisTextMessageContent;
 import de.tum.in.www1.artemis.service.WebsocketMessagingService;
 import de.tum.in.www1.artemis.service.iris.IrisSessionService;
 import de.tum.in.www1.artemis.service.iris.websocket.IrisChatWebsocketService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
+
+import java.util.concurrent.ThreadLocalRandom;
+
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ActiveProfiles("iris")
 class IrisChatWebsocketTest extends AbstractIrisIntegrationTest {
@@ -57,8 +56,8 @@ class IrisChatWebsocketTest extends AbstractIrisIntegrationTest {
     }
 
     private IrisTextMessageContent createMockContent(IrisMessage message) {
-        String[] adjectives = { "happy", "sad", "angry", "funny", "silly", "crazy", "beautiful", "smart" };
-        String[] nouns = { "dog", "cat", "house", "car", "book", "computer", "phone", "shoe" };
+        String[] adjectives = {"happy", "sad", "angry", "funny", "silly", "crazy", "beautiful", "smart"};
+        String[] nouns = {"dog", "cat", "house", "car", "book", "computer", "phone", "shoe"};
 
         var rdm = ThreadLocalRandom.current();
         String randomAdjective = adjectives[rdm.nextInt(adjectives.length)];

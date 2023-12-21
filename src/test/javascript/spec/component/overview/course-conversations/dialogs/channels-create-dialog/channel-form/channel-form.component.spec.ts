@@ -128,12 +128,14 @@ describe('ChannelFormComponent', () => {
         expect(component.isSubmitPossible).toBeFalse();
         clickSubmitButton(false);
     }
+
     function setFormValid() {
         setValidFormValues();
         fixture.detectChanges();
         expect(component.form.valid).toBeTrue();
         expect(component.isSubmitPossible).toBeTrue();
     }
+
     const clickSubmitButton = (expectSubmitEvent: boolean, expectedFormData?: ChannelFormData) => {
         const submitFormSpy = jest.spyOn(component, 'submitForm');
         const submitFormEventSpy = jest.spyOn(component.formSubmitted, 'emit');

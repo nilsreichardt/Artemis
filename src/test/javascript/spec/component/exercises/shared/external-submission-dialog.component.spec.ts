@@ -88,7 +88,10 @@ describe('External Submission Dialog', () => {
         expect(activeModal.close).toHaveBeenCalledWith(result);
         expect(component.isSaving).toBeFalse();
         expect(eventManagerSpy).toHaveBeenCalledOnce();
-        expect(eventManagerSpy).toHaveBeenCalledWith({ name: 'resultListModification', content: 'Added a manual result' });
+        expect(eventManagerSpy).toHaveBeenCalledWith({
+            name: 'resultListModification',
+            content: 'Added a manual result',
+        });
     });
 
     it('should set isSaving to false on saveError', () => {

@@ -136,7 +136,12 @@ describe('Course Exam Archive Button Component', () => {
     });
 
     describe('onInit for course that has an archive', () => {
-        const course = { id: 123, isAtLeastInstructor: true, endDate: dayjs().subtract(5, 'minutes'), courseArchivePath: 'some-path' };
+        const course = {
+            id: 123,
+            isAtLeastInstructor: true,
+            endDate: dayjs().subtract(5, 'minutes'),
+            courseArchivePath: 'some-path',
+        };
 
         beforeEach(fakeAsync(() => {
             comp.archiveMode = 'Course';
@@ -190,7 +195,14 @@ describe('Course Exam Archive Button Component', () => {
             const alertService = TestBed.inject(AlertService);
             const alertServiceSpy = jest.spyOn(alertService, 'success');
 
-            jest.spyOn(courseManagementService, 'find').mockReturnValue(of(new HttpResponse({ status: 200, body: course })));
+            jest.spyOn(courseManagementService, 'find').mockReturnValue(
+                of(
+                    new HttpResponse({
+                        status: 200,
+                        body: course,
+                    }),
+                ),
+            );
 
             const archiveState: CourseExamArchiveState = { exportState: 'COMPLETED', message: '' };
             comp.handleArchiveStateChanges(archiveState);
@@ -204,11 +216,21 @@ describe('Course Exam Archive Button Component', () => {
         it('should display warning and reload course on archive complete with warnings', fakeAsync(() => {
             const modalService = TestBed.inject(NgbModal);
 
-            jest.spyOn(courseManagementService, 'find').mockReturnValue(of(new HttpResponse({ status: 200, body: course })));
+            jest.spyOn(courseManagementService, 'find').mockReturnValue(
+                of(
+                    new HttpResponse({
+                        status: 200,
+                        body: course,
+                    }),
+                ),
+            );
             const ngModalRef: NgbModalRef = { result: Promise.resolve('') } as any;
             jest.spyOn(modalService, 'open').mockReturnValue(ngModalRef);
 
-            const archiveState: CourseExamArchiveState = { exportState: 'COMPLETED_WITH_WARNINGS', message: 'warning 1\nwarning 2' };
+            const archiveState: CourseExamArchiveState = {
+                exportState: 'COMPLETED_WITH_WARNINGS',
+                message: 'warning 1\nwarning 2',
+            };
             comp.handleArchiveStateChanges(archiveState);
 
             expect(comp.isBeingArchived).toBeFalse();
@@ -273,7 +295,14 @@ describe('Course Exam Archive Button Component', () => {
             const alertService = TestBed.inject(AlertService);
             const alertServiceSpy = jest.spyOn(alertService, 'success');
 
-            jest.spyOn(examManagementService, 'find').mockReturnValue(of(new HttpResponse({ status: 200, body: exam })));
+            jest.spyOn(examManagementService, 'find').mockReturnValue(
+                of(
+                    new HttpResponse({
+                        status: 200,
+                        body: exam,
+                    }),
+                ),
+            );
 
             const archiveState: CourseExamArchiveState = { exportState: 'COMPLETED', message: '' };
             comp.handleArchiveStateChanges(archiveState);

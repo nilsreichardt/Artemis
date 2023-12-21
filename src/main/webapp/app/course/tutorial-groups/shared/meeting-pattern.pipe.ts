@@ -16,6 +16,7 @@ export class MeetingPatternPipe implements PipeTransform {
     removeSecondsPipe = new RemoveSecondsPipe();
 
     constructor(private translateService: TranslateService) {}
+
     /**
      * Transforms a tutorial group schedule to a translated meeting pattern.
      * @param schedule The tutorial group schedule to transform.

@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { LearningPathInformationDTO } from 'app/entities/competency/learning-path.model';
 
 type EntityResponseType = SearchResult<LearningPathInformationDTO>;
+
 @Injectable({ providedIn: 'root' })
 export class LearningPathPagingService extends PagingService {
     public resourceUrl = 'api';

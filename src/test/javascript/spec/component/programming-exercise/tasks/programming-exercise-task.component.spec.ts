@@ -105,7 +105,13 @@ describe('ProgrammingExerciseTaskComponent', () => {
     });
 
     it('should not show the task if there is only one', () => {
-        taskService.currentTasks = [{ taskName: 'Not assigned to task', testCases: [], stats: undefined }] as ProgrammingExerciseTask[];
+        taskService.currentTasks = [
+            {
+                taskName: 'Not assigned to task',
+                testCases: [],
+                stats: undefined,
+            },
+        ] as ProgrammingExerciseTask[];
 
         comp.ngOnInit();
         expect(comp.onlyViewTestCases).toBeTrue();

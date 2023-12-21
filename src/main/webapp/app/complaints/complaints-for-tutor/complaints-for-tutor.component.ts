@@ -13,7 +13,11 @@ import { Submission } from 'app/entities/submission.model';
 import { isAllowedToRespondToComplaintAction } from 'app/assessment/assessment.service';
 import { Course } from 'app/entities/course.model';
 
-export type AssessmentAfterComplaint = { complaintResponse: ComplaintResponse; onSuccess: () => void; onError: () => void };
+export type AssessmentAfterComplaint = {
+    complaintResponse: ComplaintResponse;
+    onSuccess: () => void;
+    onError: () => void;
+};
 
 @Component({
     selector: 'jhi-complaints-for-tutor-form',

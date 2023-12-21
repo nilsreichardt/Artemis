@@ -25,7 +25,14 @@ describe('CourseTutorialGroupsOverviewComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [CourseTutorialGroupsOverviewComponent, TutorialGroupsTableStubComponent, MockPipe(ArtemisTranslatePipe)],
-            providers: [MockProvider(TutorialGroupsService), MockProvider(AlertService), { provide: Router, useValue: router }],
+            providers: [
+                MockProvider(TutorialGroupsService),
+                MockProvider(AlertService),
+                {
+                    provide: Router,
+                    useValue: router,
+                },
+            ],
         })
             .compileComponents()
             .then(() => {

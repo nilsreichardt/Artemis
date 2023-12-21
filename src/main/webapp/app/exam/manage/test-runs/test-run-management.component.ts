@@ -74,7 +74,10 @@ export class TestRunManagementComponent implements OnInit {
      * Open modal to configure a new test run
      */
     openCreateTestRunModal() {
-        const modalRef: NgbModalRef = this.modalService.open(CreateTestRunModalComponent as Component, { size: 'lg', backdrop: 'static' });
+        const modalRef: NgbModalRef = this.modalService.open(CreateTestRunModalComponent as Component, {
+            size: 'lg',
+            backdrop: 'static',
+        });
         modalRef.componentInstance.exam = this.exam;
         modalRef.result
             .then((testRunConfiguration: StudentExam) => {

@@ -29,7 +29,14 @@ describe('AnswerPostCreateEditModalComponent', () => {
                 MockComponent(PostingButtonComponent),
                 MockComponent(HelpIconComponent),
             ],
-            providers: [FormBuilder, { provide: MetisService, useClass: MockMetisService }, { provide: ViewContainerRef, useClass: MockViewContainerRef }],
+            providers: [
+                FormBuilder,
+                { provide: MetisService, useClass: MockMetisService },
+                {
+                    provide: ViewContainerRef,
+                    useClass: MockViewContainerRef,
+                },
+            ],
         })
             .compileComponents()
             .then(() => {

@@ -31,12 +31,15 @@
     .draganddropcolor-question {
         background-color: var(--quiz-participation-footer-dnd-background) !important;
     }
+
     .multiplechoicecolor-question {
         background-color: var(--quiz-participation-footer-mc-background) !important;
     }
+
     .shortanswercolor-question {
         background-color: var(--quiz-participation-footer-sa-background) !important;
     }
+
     .changed-question {
         background-color: var(--quiz-participation-footer-changed-background) !important;
     }
@@ -168,6 +171,7 @@
         display: none;
     }
 }
+
 .show-mobile {
     @media (min-width: 700px) {
         display: none;
@@ -234,6 +238,7 @@
         pointer-events: none;
         transition: 0.2s ease-in opacity;
     }
+
     .ng-fa-icon {
         position: fixed;
         top: 50%;
@@ -251,6 +256,7 @@
     border-radius: 15px;
     border-spacing: 5px;
     padding: 6px 0;
+
     &.btn-light {
         border-color: var(--quiz-participation-btn-circle-light-border-color);
     }
@@ -285,6 +291,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
         .fa {
             font-size: 10px;
         }

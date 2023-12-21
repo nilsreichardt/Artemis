@@ -29,6 +29,7 @@ export class ConversationAddUsersFormComponent implements OnInit, OnChanges {
     getAsChannel = getAsChannelDto;
 
     mode: 'individual' | 'group' = 'individual';
+
     constructor(private fb: FormBuilder) {}
 
     get selectedUsersControl() {

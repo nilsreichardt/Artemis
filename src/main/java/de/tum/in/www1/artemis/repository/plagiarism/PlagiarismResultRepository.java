@@ -63,7 +63,8 @@ public interface PlagiarismResultRepository extends JpaRepository<PlagiarismResu
      * @param exerciseId ID of exercise with plagiarism results that will be deleted.
      */
     @Modifying
-    @Transactional // ok because of modifying query
+    @Transactional
+    // ok because of modifying query
     void deletePlagiarismResultsByExerciseId(Long exerciseId);
 
     /**
@@ -73,6 +74,7 @@ public interface PlagiarismResultRepository extends JpaRepository<PlagiarismResu
      * @param exerciseId         ID of exercise with plagiarism results that will be deleted.
      */
     @Modifying
-    @Transactional // ok because of modifying query
+    @Transactional
+    // ok because of modifying query
     void deletePlagiarismResultsByIdNotAndExerciseId(Long plagiarismResultId, Long exerciseId);
 }

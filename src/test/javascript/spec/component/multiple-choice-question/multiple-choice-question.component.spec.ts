@@ -41,7 +41,15 @@ describe('MultipleChoiceQuestionComponent', () => {
             exportQuiz: false,
             randomizeOrder: true,
             invalid: false,
-            answerOptions: [{ id: 1, explanation: 'answer-explanation', hint: 'answer-hint', text: 'answer-text', invalid: false }],
+            answerOptions: [
+                {
+                    id: 1,
+                    explanation: 'answer-explanation',
+                    hint: 'answer-hint',
+                    text: 'answer-text',
+                    invalid: false,
+                },
+            ],
         };
 
         component.question = question;

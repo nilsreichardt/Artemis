@@ -80,8 +80,7 @@ public class Lti13TokenRetriever {
                 return null;
             }
             return JsonParser.parseString(exchange.getBody()).getAsJsonObject().get("access_token").getAsString();
-        }
-        catch (HttpClientErrorException e) {
+        } catch (HttpClientErrorException e) {
             log.error("Could not retrieve access token for client {}: {}", clientRegistration.getClientId(), e.getMessage());
             return null;
         }
@@ -122,8 +121,7 @@ public class Lti13TokenRetriever {
 
             log.debug("Created signed token: {}", signedJWT.serialize());
             return signedJWT.serialize();
-        }
-        catch (JOSEException e) {
+        } catch (JOSEException e) {
             log.error("Could not create keypair for clientRegistrationId {}", clientRegistrationId);
             return null;
         }
@@ -150,8 +148,7 @@ public class Lti13TokenRetriever {
 
             log.debug("Created signed token: {}", signedJWT.serialize());
             return signedJWT;
-        }
-        catch (JOSEException e) {
+        } catch (JOSEException e) {
             log.error("Could not create keypair for clientRegistrationId {}", clientRegistration.getRegistrationId());
             return null;
         }

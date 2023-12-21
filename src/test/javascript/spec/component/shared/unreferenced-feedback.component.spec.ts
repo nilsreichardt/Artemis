@@ -89,7 +89,14 @@ describe('UnreferencedFeedbackComponent', () => {
     });
 
     it('should add unreferenced feedback on dropping assessment instruction', () => {
-        const instruction: GradingInstruction = { id: 1, credits: 2, feedback: 'test', gradingScale: 'good', instructionDescription: 'description of instruction', usageCount: 0 };
+        const instruction: GradingInstruction = {
+            id: 1,
+            credits: 2,
+            feedback: 'test',
+            gradingScale: 'good',
+            instructionDescription: 'description of instruction',
+            usageCount: 0,
+        };
         comp.unreferencedFeedback = [];
         jest.spyOn(sgiService, 'updateFeedbackWithStructuredGradingInstructionEvent').mockImplementation(() => {
             comp.unreferencedFeedback[0].gradingInstruction = instruction;
@@ -107,7 +114,13 @@ describe('UnreferencedFeedbackComponent', () => {
         comp.feedbackSuggestions = [suggestion];
         comp.acceptSuggestion(suggestion);
         expect(comp.feedbackSuggestions).toBeEmpty();
-        expect(comp.unreferencedFeedback).toEqual([{ text: 'FeedbackSuggestion:accepted:', detailText: 'test', type: FeedbackType.MANUAL_UNREFERENCED }]);
+        expect(comp.unreferencedFeedback).toEqual([
+            {
+                text: 'FeedbackSuggestion:accepted:',
+                detailText: 'test',
+                type: FeedbackType.MANUAL_UNREFERENCED,
+            },
+        ]);
     });
 
     it('should remove discarded suggestions', () => {

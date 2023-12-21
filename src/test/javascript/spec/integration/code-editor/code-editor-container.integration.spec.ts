@@ -134,7 +134,10 @@ describe('CodeEditorContainerIntegration', () => {
                 { provide: ActivatedRoute, useClass: MockActivatedRouteWithSubjects },
                 { provide: JhiWebsocketService, useClass: MockWebsocketService },
                 { provide: ParticipationWebsocketService, useClass: MockParticipationWebsocketService },
-                { provide: ProgrammingExerciseParticipationService, useClass: MockProgrammingExerciseParticipationService },
+                {
+                    provide: ProgrammingExerciseParticipationService,
+                    useClass: MockProgrammingExerciseParticipationService,
+                },
                 { provide: SessionStorageService, useClass: MockSyncStorage },
                 { provide: ResultService, useClass: MockResultService },
                 { provide: LocalStorageService, useClass: MockSyncStorage },
@@ -215,7 +218,11 @@ describe('CodeEditorContainerIntegration', () => {
         isCleanSubject.next({ repositoryStatus: CommitState.CLEAN });
         getBuildLogsSubject.next(buildLogs);
         getRepositoryContentSubject.next({ file: FileType.FILE, folder: FileType.FOLDER, file2: FileType.FILE });
-        getLatestPendingSubmissionSubject.next({ participationId: 1, submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined });
+        getLatestPendingSubmissionSubject.next({
+            participationId: 1,
+            submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+            submission: undefined,
+        });
 
         containerFixture.detectChanges();
 
@@ -289,7 +296,11 @@ describe('CodeEditorContainerIntegration', () => {
 
         isCleanSubject.error('fatal error');
         getBuildLogsSubject.next(buildLogs);
-        getLatestPendingSubmissionSubject.next({ participationId: 1, submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION, submission: undefined });
+        getLatestPendingSubmissionSubject.next({
+            participationId: 1,
+            submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION,
+            submission: undefined,
+        });
 
         containerFixture.detectChanges();
 
@@ -428,7 +439,12 @@ describe('CodeEditorContainerIntegration', () => {
     it('should wait for build result after submission if no unsaved changes exist', () => {
         cleanInitialize();
         const successfulSubmission = { id: 1, buildFailed: false } as ProgrammingSubmission;
-        const successfulResult = { id: 4, successful: true, feedbacks: [] as Feedback[], participation: { id: 3 } } as Result;
+        const successfulResult = {
+            id: 4,
+            successful: true,
+            feedbacks: [] as Feedback[],
+            participation: { id: 3 },
+        } as Result;
         successfulResult.submission = successfulSubmission;
         const expectedBuildLog = new BuildLogEntryArray();
         expect(container.unsavedFiles).toStrictEqual({});
@@ -466,7 +482,12 @@ describe('CodeEditorContainerIntegration', () => {
     it('should first save unsaved files before triggering commit', fakeAsync(() => {
         cleanInitialize();
         const successfulSubmission = { id: 1, buildFailed: false } as ProgrammingSubmission;
-        const successfulResult = { id: 4, successful: true, feedbacks: [] as Feedback[], participation: { id: 3 } } as Result;
+        const successfulResult = {
+            id: 4,
+            successful: true,
+            feedbacks: [] as Feedback[],
+            participation: { id: 3 },
+        } as Result;
         successfulResult.submission = successfulSubmission;
         const expectedBuildLog = new BuildLogEntryArray();
         const unsavedFile = Object.keys(container.fileBrowser.repositoryFiles)[0];
@@ -569,12 +590,21 @@ describe('CodeEditorContainerIntegration', () => {
     it.each([
         ['loadingFailed', 'artemisApp.editor.errors.loadingFailed', { connectionIssue: '' }],
         ['loadingFailedInternetDisconnected', 'artemisApp.editor.errors.loadingFailed', { connectionIssue: 'artemisApp.editor.errors.InternetDisconnected' }],
-    ])('onError should handle disconnectedInternet', (error: string, errorKey: string, translationParams: { connectionIssue: string }) => {
-        const alertService = TestBed.inject(AlertService);
-        const alertServiceSpy = jest.spyOn(alertService, 'error');
-        container.onError(error);
-        expect(alertServiceSpy).toHaveBeenCalledWith(errorKey, translationParams);
-    });
+    ])(
+        'onError should handle disconnectedInternet',
+        (
+            error: string,
+            errorKey: string,
+            translationParams: {
+                connectionIssue: string;
+            },
+        ) => {
+            const alertService = TestBed.inject(AlertService);
+            const alertServiceSpy = jest.spyOn(alertService, 'error');
+            container.onError(error);
+            expect(alertServiceSpy).toHaveBeenCalledWith(errorKey, translationParams);
+        },
+    );
 
     it('should create file badges for feedback suggestions', () => {
         container.feedbackSuggestions = [

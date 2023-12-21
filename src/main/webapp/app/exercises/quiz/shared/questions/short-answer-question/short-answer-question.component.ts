@@ -37,6 +37,7 @@ export class ShortAnswerQuestionComponent {
     questionIndex: number;
     @Input()
     score: number;
+
     @Input()
     set forceSampleSolution(forceSampleSolution) {
         this._forceSampleSolution = forceSampleSolution;
@@ -48,6 +49,7 @@ export class ShortAnswerQuestionComponent {
     get forceSampleSolution() {
         return this._forceSampleSolution;
     }
+
     @Input()
     fnOnSubmittedTextUpdate: any;
 

@@ -34,7 +34,13 @@ describe('AssessmentLayoutComponent', () => {
                 MockRouterLinkDirective,
                 MockQueryParamsDirective,
             ],
-            providers: [MockProvider(TextAssessmentAnalytics), { provide: ActivatedRoute, useValue: new MockActivatedRoute() }],
+            providers: [
+                MockProvider(TextAssessmentAnalytics),
+                {
+                    provide: ActivatedRoute,
+                    useValue: new MockActivatedRoute(),
+                },
+            ],
         })
             .compileComponents()
             .then(() => {

@@ -16,9 +16,8 @@
                 <b>{{ model.name }}</b>
                 <br />
                 <span>
-                    {{ 'artemisApp.examScores.averagePointsTooltip' | artemisTranslate }}: {{ this.lookupAbsoluteValue(model.name) }} ({{
-                        roundAndPerformLocalConversion(model.value)
-                    }}%)
+                    {{ 'artemisApp.examScores.averagePointsTooltip' | artemisTranslate }}
+                    : {{ this.lookupAbsoluteValue(model.name) }} ({{ roundAndPerformLocalConversion(model.value) }}%)
                 </span>
             </ng-template>
         </ngx-charts-bar-horizontal>

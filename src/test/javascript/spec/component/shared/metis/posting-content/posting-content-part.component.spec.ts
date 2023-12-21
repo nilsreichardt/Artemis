@@ -39,7 +39,14 @@ describe('PostingContentPartComponent', () => {
                 MockRouterLinkDirective,
                 MockQueryParamsDirective,
             ],
-            providers: [{ provide: FileService, useClass: MockFileService }, { provide: Router, useClass: MockRouter }, MockProvider(AccountService)],
+            providers: [
+                { provide: FileService, useClass: MockFileService },
+                {
+                    provide: Router,
+                    useClass: MockRouter,
+                },
+                MockProvider(AccountService),
+            ],
         })
             .compileComponents()
             .then(() => {

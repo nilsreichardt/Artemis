@@ -45,9 +45,9 @@ public class AssessmentService {
     private final Optional<LtiNewResultService> ltiNewResultService;
 
     public AssessmentService(ComplaintResponseService complaintResponseService, ComplaintRepository complaintRepository, FeedbackRepository feedbackRepository,
-            ResultRepository resultRepository, StudentParticipationRepository studentParticipationRepository, ResultService resultService, SubmissionService submissionService,
-            SubmissionRepository submissionRepository, ExamDateService examDateService, GradingCriterionRepository gradingCriterionRepository, UserRepository userRepository,
-            Optional<LtiNewResultService> ltiNewResultService) {
+                             ResultRepository resultRepository, StudentParticipationRepository studentParticipationRepository, ResultService resultService, SubmissionService submissionService,
+                             SubmissionRepository submissionRepository, ExamDateService examDateService, GradingCriterionRepository gradingCriterionRepository, UserRepository userRepository,
+                             Optional<LtiNewResultService> ltiNewResultService) {
         this.complaintResponseService = complaintResponseService;
         this.complaintRepository = complaintRepository;
         this.feedbackRepository = feedbackRepository;
@@ -92,8 +92,7 @@ public class AssessmentService {
 
             Result savedResult = resultRepository.save(newResult);
             return resultRepository.findByIdWithEagerAssessor(savedResult.getId()).orElseThrow(); // to eagerly load assessor
-        }
-        else {
+        } else {
             return resultRepository.submitResult(newResult, exercise, ExerciseDateService.getDueDate(newResult.getParticipation()));
         }
     }
@@ -117,8 +116,7 @@ public class AssessmentService {
         // For exam exercises, tutors cannot override submissions when the publishing result date is in the past (assessmentDueDate)
         if (isExamMode) {
             assessmentDueDate = exercise.getExerciseGroup().getExam().getPublishResultsDate();
-        }
-        else {
+        } else {
             assessmentDueDate = exercise.getAssessmentDueDate();
         }
 
@@ -178,12 +176,10 @@ public class AssessmentService {
         if (exercise.isTeamMode()) {
             // for team exercises only the team tutor is allowed to be the assessor
             return participation.getTeam().orElseThrow().isOwner(user);
-        }
-        else if (result != null) {
+        } else if (result != null) {
             // for individual exercises a tutor can be the assessor if they already are the assessor or if there is no assessor yet
             return result.getAssessor() == null || user.equals(result.getAssessor());
-        }
-        else {
+        } else {
             return true;
         }
     }

@@ -110,7 +110,7 @@
                     <!-- Preview -->
                     <ng-container id="preview">
                         @if (showMultipleChoiceQuestionPreview) {
-                            <jhi-multiple-choice-question [question]="question" [selectedAnswerOptions]="[]" [questionIndex]="questionIndex"> </jhi-multiple-choice-question>
+                            <jhi-multiple-choice-question [question]="question" [selectedAnswerOptions]="[]" [questionIndex]="questionIndex"></jhi-multiple-choice-question>
                         }
                         <hr />
                     </ng-container>
@@ -118,7 +118,7 @@
                     <!-- Visual -->
                     <ng-container id="visual" #visual>
                         @if (showMultipleChoiceQuestionVisual) {
-                            <jhi-multiple-choice-visual-question [question]="question" (questionChanged)="changesInVisualMode()"> </jhi-multiple-choice-visual-question>
+                            <jhi-multiple-choice-visual-question [question]="question" (questionChanged)="changesInVisualMode()"></jhi-multiple-choice-visual-question>
                         }
                     </ng-container>
                     <!-- End of Visual -->

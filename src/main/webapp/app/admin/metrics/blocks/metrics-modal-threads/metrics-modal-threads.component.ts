@@ -12,9 +12,11 @@ export class MetricsModalThreadsComponent implements OnInit {
     ThreadState = ThreadState;
 
     private threadStateFilter?: ThreadState;
+
     get selectedThreadState(): ThreadState | undefined {
         return this.threadStateFilter;
     }
+
     set selectedThreadState(newValue: ThreadState | undefined) {
         this.threadStateFilter = newValue;
         this.refreshFilteredThreads();

@@ -67,6 +67,7 @@ export class ExamStudentsComponent implements OnInit, OnDestroy {
     faUpload = faUpload;
     faCheck = faCheck;
     faTimes = faTimes;
+
     constructor(
         private router: Router,
         private route: ActivatedRoute,

@@ -245,7 +245,14 @@ describe('Exercise Scores Component', () => {
         [FilterProp.UNSUCCESSFUL, { results: [{ successful: true }] } as Participation, false],
         [FilterProp.UNSUCCESSFUL, { results: [{ successful: false }, { successful: true }] } as Participation, false],
         [FilterProp.UNSUCCESSFUL, { results: [{ successful: true }, { successful: false }] } as Participation, true],
-        [FilterProp.BUILD_FAILED, { results: [{}], submissions: [{ buildFailed: true } as Submission] } as Participation, true],
+        [
+            FilterProp.BUILD_FAILED,
+            {
+                results: [{}],
+                submissions: [{ buildFailed: true } as Submission],
+            } as Participation,
+            true,
+        ],
         [FilterProp.BUILD_FAILED, { results: [{}], submissions: [{}] } as Participation, false],
         [FilterProp.MANUAL, { results: [{ assessmentType: AssessmentType.SEMI_AUTOMATIC }] } as Participation, true],
         [FilterProp.MANUAL, { results: [{ assessmentType: AssessmentType.AUTOMATIC }] } as Participation, false],
@@ -269,11 +276,43 @@ describe('Exercise Scores Component', () => {
         [FilterProp.UNSUCCESSFUL, { type: ExerciseType.TEXT }, true, true],
         [FilterProp.BUILD_FAILED, { type: ExerciseType.PROGRAMMING }, false, true],
         [FilterProp.BUILD_FAILED, { type: ExerciseType.TEXT }, true, false],
-        [FilterProp.MANUAL, { type: ExerciseType.PROGRAMMING, allowComplaintsForAutomaticAssessments: true }, false, true],
-        [FilterProp.MANUAL, { type: ExerciseType.PROGRAMMING, allowComplaintsForAutomaticAssessments: false }, false, false],
+        [
+            FilterProp.MANUAL,
+            {
+                type: ExerciseType.PROGRAMMING,
+                allowComplaintsForAutomaticAssessments: true,
+            },
+            false,
+            true,
+        ],
+        [
+            FilterProp.MANUAL,
+            {
+                type: ExerciseType.PROGRAMMING,
+                allowComplaintsForAutomaticAssessments: false,
+            },
+            false,
+            false,
+        ],
         [FilterProp.MANUAL, { type: ExerciseType.TEXT }, true, true],
-        [FilterProp.AUTOMATIC, { type: ExerciseType.PROGRAMMING, allowComplaintsForAutomaticAssessments: true }, false, true],
-        [FilterProp.AUTOMATIC, { type: ExerciseType.PROGRAMMING, allowComplaintsForAutomaticAssessments: false }, false, false],
+        [
+            FilterProp.AUTOMATIC,
+            {
+                type: ExerciseType.PROGRAMMING,
+                allowComplaintsForAutomaticAssessments: true,
+            },
+            false,
+            true,
+        ],
+        [
+            FilterProp.AUTOMATIC,
+            {
+                type: ExerciseType.PROGRAMMING,
+                allowComplaintsForAutomaticAssessments: false,
+            },
+            false,
+            false,
+        ],
         [FilterProp.AUTOMATIC, { type: ExerciseType.TEXT }, true, true],
         [FilterProp.LOCKED, { type: ExerciseType.PROGRAMMING, isAtLeastInstructor: true }, true, true],
         [FilterProp.LOCKED, { type: ExerciseType.PROGRAMMING, isAtLeastInstructor: false }, false, false],

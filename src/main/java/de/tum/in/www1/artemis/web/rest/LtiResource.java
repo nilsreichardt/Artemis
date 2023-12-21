@@ -1,15 +1,7 @@
 package de.tum.in.www1.artemis.web.rest;
 
-import java.text.ParseException;
-
-import org.springframework.context.annotation.Profile;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.core.oidc.OidcIdToken;
-import org.springframework.web.bind.annotation.*;
-
 import com.google.gson.JsonObject;
 import com.nimbusds.jwt.SignedJWT;
-
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.repository.CourseRepository;
 import de.tum.in.www1.artemis.security.Role;
@@ -18,6 +10,16 @@ import de.tum.in.www1.artemis.service.AuthorizationCheckService;
 import de.tum.in.www1.artemis.service.connectors.lti.LtiDeepLinkingService;
 import de.tum.in.www1.artemis.service.connectors.lti.LtiDynamicRegistrationService;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
+import org.springframework.context.annotation.Profile;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.core.oidc.OidcIdToken;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.text.ParseException;
 
 /**
  * REST controller to handle LTI13 launches.
@@ -38,7 +40,7 @@ public class LtiResource {
     public static final String LOGIN_REDIRECT_CLIENT_PATH = "/lti/launch";
 
     public LtiResource(LtiDynamicRegistrationService ltiDynamicRegistrationService, CourseRepository courseRepository, AuthorizationCheckService authCheckService,
-            LtiDeepLinkingService ltiDeepLinkingService) {
+                       LtiDeepLinkingService ltiDeepLinkingService) {
         this.ltiDynamicRegistrationService = ltiDynamicRegistrationService;
         this.courseRepository = courseRepository;
         this.authCheckService = authCheckService;
@@ -48,7 +50,7 @@ public class LtiResource {
     @PostMapping("/lti13/dynamic-registration/{courseId}")
     @EnforceAtLeastInstructor
     public void lti13DynamicRegistration(@PathVariable Long courseId, @RequestParam(name = "openid_configuration") String openIdConfiguration,
-            @RequestParam(name = "registration_token", required = false) String registrationToken) {
+                                         @RequestParam(name = "registration_token", required = false) String registrationToken) {
 
         Course course = courseRepository.findByIdWithEagerOnlineCourseConfigurationElseThrow(courseId);
         authCheckService.checkHasAtLeastRoleInCourseElseThrow(Role.INSTRUCTOR, course, null);
@@ -69,7 +71,7 @@ public class LtiResource {
     @PostMapping("/lti13/deep-linking/{courseId}")
     @EnforceAtLeastInstructor
     public ResponseEntity<String> lti13DeepLinking(@PathVariable Long courseId, @RequestParam(name = "exerciseId") String exerciseId,
-            @RequestParam(name = "ltiIdToken") String ltiIdToken, @RequestParam(name = "clientRegistrationId") String clientRegistrationId) throws ParseException {
+                                                   @RequestParam(name = "ltiIdToken") String ltiIdToken, @RequestParam(name = "clientRegistrationId") String clientRegistrationId) throws ParseException {
 
         Course course = courseRepository.findByIdWithEagerOnlineCourseConfigurationElseThrow(courseId);
         authCheckService.checkHasAtLeastRoleInCourseElseThrow(Role.INSTRUCTOR, course, null);

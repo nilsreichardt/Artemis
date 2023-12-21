@@ -213,10 +213,22 @@ describe('NavbarComponent', () => {
 
         expect(component.breadcrumbs).toHaveLength(3);
 
-        const systemBreadcrumb = { label: 'artemisApp.systemNotification.systemNotifications', translate: true, uri: '/admin/system-notification-management/' } as MockBreadcrumb;
+        const systemBreadcrumb = {
+            label: 'artemisApp.systemNotification.systemNotifications',
+            translate: true,
+            uri: '/admin/system-notification-management/',
+        } as MockBreadcrumb;
         expect(component.breadcrumbs[0]).toEqual(systemBreadcrumb);
-        expect(component.breadcrumbs[1]).toEqual({ label: '1', translate: false, uri: '/admin/system-notification-management/1/' } as MockBreadcrumb);
-        expect(component.breadcrumbs[2]).toEqual({ label: 'global.generic.edit', translate: true, uri: '/admin/system-notification-management/1/edit/' } as MockBreadcrumb);
+        expect(component.breadcrumbs[1]).toEqual({
+            label: '1',
+            translate: false,
+            uri: '/admin/system-notification-management/1/',
+        } as MockBreadcrumb);
+        expect(component.breadcrumbs[2]).toEqual({
+            label: 'global.generic.edit',
+            translate: true,
+            uri: '/admin/system-notification-management/1/edit/',
+        } as MockBreadcrumb);
     });
 
     it('should build breadcrumbs for user management', () => {
@@ -227,8 +239,16 @@ describe('NavbarComponent', () => {
 
         expect(component.breadcrumbs).toHaveLength(2);
 
-        expect(component.breadcrumbs[0]).toEqual({ label: 'artemisApp.userManagement.home.title', translate: true, uri: '/admin/user-management/' } as MockBreadcrumb);
-        expect(component.breadcrumbs[1]).toEqual({ label: 'test_user', translate: false, uri: '/admin/user-management/test_user/' } as MockBreadcrumb);
+        expect(component.breadcrumbs[0]).toEqual({
+            label: 'artemisApp.userManagement.home.title',
+            translate: true,
+            uri: '/admin/user-management/',
+        } as MockBreadcrumb);
+        expect(component.breadcrumbs[1]).toEqual({
+            label: 'test_user',
+            translate: false,
+            uri: '/admin/user-management/test_user/',
+        } as MockBreadcrumb);
     });
 
     it('should build breadcrumbs for organization management', () => {
@@ -241,8 +261,16 @@ describe('NavbarComponent', () => {
         expect(entityTitleServiceStub).toHaveBeenCalledWith(EntityType.ORGANIZATION, [1]);
         expect(component.breadcrumbs).toHaveLength(2);
 
-        expect(component.breadcrumbs[0]).toEqual({ label: 'artemisApp.organizationManagement.title', translate: true, uri: '/admin/organization-management/' } as MockBreadcrumb);
-        expect(component.breadcrumbs[1]).toEqual({ label: 'Test Organization', translate: false, uri: '/admin/organization-management/1/' } as MockBreadcrumb);
+        expect(component.breadcrumbs[0]).toEqual({
+            label: 'artemisApp.organizationManagement.title',
+            translate: true,
+            uri: '/admin/organization-management/',
+        } as MockBreadcrumb);
+        expect(component.breadcrumbs[1]).toEqual({
+            label: 'Test Organization',
+            translate: false,
+            uri: '/admin/organization-management/1/',
+        } as MockBreadcrumb);
     });
 
     it('should not error without translation', () => {
@@ -253,7 +281,11 @@ describe('NavbarComponent', () => {
 
         expect(component.breadcrumbs).toHaveLength(1);
 
-        expect(component.breadcrumbs[0]).toEqual({ label: 'route-without-translation', translate: false, uri: '/admin/route-without-translation/' } as MockBreadcrumb);
+        expect(component.breadcrumbs[0]).toEqual({
+            label: 'route-without-translation',
+            translate: false,
+            uri: '/admin/route-without-translation/',
+        } as MockBreadcrumb);
     });
 
     it('should have correct git info', fakeAsync(() => {
@@ -341,7 +373,11 @@ describe('NavbarComponent', () => {
             expect(component.breadcrumbs[0]).toEqual(courseManagementCrumb);
             expect(component.breadcrumbs[1]).toEqual(testCourseCrumb);
             expect(component.breadcrumbs[2]).toEqual(programmingExercisesCrumb);
-            expect(component.breadcrumbs[3]).toEqual({ label: 'Test Exercise', translate: false, uri: '/course-management/1/programming-exercises/2/' } as MockBreadcrumb);
+            expect(component.breadcrumbs[3]).toEqual({
+                label: 'Test Exercise',
+                translate: false,
+                uri: '/course-management/1/programming-exercises/2/',
+            } as MockBreadcrumb);
             expect(component.breadcrumbs[4]).toEqual(gradingCrumb);
         });
 
@@ -366,7 +402,11 @@ describe('NavbarComponent', () => {
             expect(component.breadcrumbs[0]).toEqual(courseManagementCrumb);
             expect(component.breadcrumbs[1]).toEqual(testCourseCrumb);
             expect(component.breadcrumbs[2]).toEqual(programmingExercisesCrumb);
-            expect(component.breadcrumbs[3]).toEqual({ label: 'Test Exercise', translate: false, uri: '/course-management/1/programming-exercises/2/' } as MockBreadcrumb);
+            expect(component.breadcrumbs[3]).toEqual({
+                label: 'Test Exercise',
+                translate: false,
+                uri: '/course-management/1/programming-exercises/2/',
+            } as MockBreadcrumb);
             expect(component.breadcrumbs[4]).toEqual(assessmentCrumb);
         });
 
@@ -374,9 +414,14 @@ describe('NavbarComponent', () => {
             const testUrl = '/course-management/1/exercises/2/exercise-hints/3';
             router.setUrl(testUrl);
 
-            const findStub = jest
-                .spyOn(exerciseService, 'find')
-                .mockReturnValue(of({ body: { title: 'Test Exercise', type: ExerciseType.PROGRAMMING } } as HttpResponse<Exercise>));
+            const findStub = jest.spyOn(exerciseService, 'find').mockReturnValue(
+                of({
+                    body: {
+                        title: 'Test Exercise',
+                        type: ExerciseType.PROGRAMMING,
+                    },
+                } as HttpResponse<Exercise>),
+            );
 
             fixture.detectChanges();
 
@@ -402,8 +447,16 @@ describe('NavbarComponent', () => {
 
             expect(component.breadcrumbs[0]).toEqual(courseManagementCrumb);
             expect(component.breadcrumbs[1]).toEqual(testCourseCrumb);
-            expect(component.breadcrumbs[2]).toEqual({ label: 'artemisApp.course.exercises', translate: true, uri: '/course-management/1/exercises/' } as MockBreadcrumb);
-            expect(component.breadcrumbs[3]).toEqual({ label: 'Test Exercise', translate: false, uri: '/course-management/1/programming-exercises/2/' } as MockBreadcrumb);
+            expect(component.breadcrumbs[2]).toEqual({
+                label: 'artemisApp.course.exercises',
+                translate: true,
+                uri: '/course-management/1/exercises/',
+            } as MockBreadcrumb);
+            expect(component.breadcrumbs[3]).toEqual({
+                label: 'Test Exercise',
+                translate: false,
+                uri: '/course-management/1/programming-exercises/2/',
+            } as MockBreadcrumb);
             expect(component.breadcrumbs[4]).toEqual(hintsCrumb);
             expect(component.breadcrumbs[5]).toEqual(hintCrumb);
         });
@@ -467,7 +520,11 @@ describe('NavbarComponent', () => {
                 translate: true,
                 uri: '/course-management/1/modeling-exercises/',
             } as MockBreadcrumb);
-            expect(component.breadcrumbs[3]).toEqual({ label: 'Test Exercise', translate: false, uri: '/course-management/1/modeling-exercises/2/' } as MockBreadcrumb);
+            expect(component.breadcrumbs[3]).toEqual({
+                label: 'Test Exercise',
+                translate: false,
+                uri: '/course-management/1/modeling-exercises/2/',
+            } as MockBreadcrumb);
             expect(component.breadcrumbs[4]).toEqual(submissionCrumb);
             expect(component.breadcrumbs[5]).toEqual(editorSubmissionCrumb);
         });
@@ -503,7 +560,11 @@ describe('NavbarComponent', () => {
                 translate: true,
                 uri: '/course-management/1/modeling-exercises/',
             } as MockBreadcrumb);
-            expect(component.breadcrumbs[3]).toEqual({ label: 'Test Exercise', translate: false, uri: '/course-management/1/modeling-exercises/2/' } as MockBreadcrumb);
+            expect(component.breadcrumbs[3]).toEqual({
+                label: 'Test Exercise',
+                translate: false,
+                uri: '/course-management/1/modeling-exercises/2/',
+            } as MockBreadcrumb);
             expect(component.breadcrumbs[4]).toEqual(submissionCrumb);
             expect(component.breadcrumbs[5]).toEqual(editorSubmissionCrumb);
         });
@@ -534,8 +595,16 @@ describe('NavbarComponent', () => {
 
             expect(component.breadcrumbs[0]).toEqual(courseManagementCrumb);
             expect(component.breadcrumbs[1]).toEqual(testCourseCrumb);
-            expect(component.breadcrumbs[2]).toEqual({ label: 'artemisApp.lecture.home.title', translate: true, uri: '/course-management/1/lectures/' } as MockBreadcrumb);
-            expect(component.breadcrumbs[3]).toEqual({ label: 'Test Lecture', translate: false, uri: '/course-management/1/lectures/2/' } as MockBreadcrumb);
+            expect(component.breadcrumbs[2]).toEqual({
+                label: 'artemisApp.lecture.home.title',
+                translate: true,
+                uri: '/course-management/1/lectures/',
+            } as MockBreadcrumb);
+            expect(component.breadcrumbs[3]).toEqual({
+                label: 'Test Lecture',
+                translate: false,
+                uri: '/course-management/1/lectures/2/',
+            } as MockBreadcrumb);
             expect(component.breadcrumbs[4]).toEqual(unitManagementCrumb);
             expect(component.breadcrumbs[5]).toEqual(createCrumb);
         });
@@ -559,7 +628,11 @@ describe('NavbarComponent', () => {
                 translate: true,
                 uri: '/course-management/1/apollon-diagrams/',
             } as MockBreadcrumb);
-            expect(component.breadcrumbs[3]).toEqual({ label: 'Test Diagram', translate: false, uri: '/course-management/1/apollon-diagrams/2/' } as MockBreadcrumb);
+            expect(component.breadcrumbs[3]).toEqual({
+                label: 'Test Diagram',
+                translate: false,
+                uri: '/course-management/1/apollon-diagrams/2/',
+            } as MockBreadcrumb);
         });
 
         it('exam exercise groups', () => {
@@ -587,8 +660,16 @@ describe('NavbarComponent', () => {
 
             expect(component.breadcrumbs[0]).toEqual(courseManagementCrumb);
             expect(component.breadcrumbs[1]).toEqual(testCourseCrumb);
-            expect(component.breadcrumbs[2]).toEqual({ label: 'artemisApp.examManagement.title', translate: true, uri: '/course-management/1/exams/' } as MockBreadcrumb);
-            expect(component.breadcrumbs[3]).toEqual({ label: 'Test Exam', translate: false, uri: '/course-management/1/exams/2/' } as MockBreadcrumb);
+            expect(component.breadcrumbs[2]).toEqual({
+                label: 'artemisApp.examManagement.title',
+                translate: true,
+                uri: '/course-management/1/exams/',
+            } as MockBreadcrumb);
+            expect(component.breadcrumbs[3]).toEqual({
+                label: 'Test Exam',
+                translate: false,
+                uri: '/course-management/1/exams/2/',
+            } as MockBreadcrumb);
             expect(component.breadcrumbs[4]).toEqual(exerciseGroupsCrumb);
             expect(component.breadcrumbs[5]).toEqual(createCrumb);
         });
@@ -624,8 +705,16 @@ describe('NavbarComponent', () => {
 
             expect(component.breadcrumbs[0]).toEqual(courseManagementCrumb);
             expect(component.breadcrumbs[1]).toEqual(testCourseCrumb);
-            expect(component.breadcrumbs[2]).toEqual({ label: 'artemisApp.examManagement.title', translate: true, uri: '/course-management/1/exams/' } as MockBreadcrumb);
-            expect(component.breadcrumbs[3]).toEqual({ label: 'Test Exam', translate: false, uri: '/course-management/1/exams/2/' } as MockBreadcrumb);
+            expect(component.breadcrumbs[2]).toEqual({
+                label: 'artemisApp.examManagement.title',
+                translate: true,
+                uri: '/course-management/1/exams/',
+            } as MockBreadcrumb);
+            expect(component.breadcrumbs[3]).toEqual({
+                label: 'Test Exam',
+                translate: false,
+                uri: '/course-management/1/exams/2/',
+            } as MockBreadcrumb);
             expect(component.breadcrumbs[4]).toEqual(exerciseGroupsCrumb);
             expect(component.breadcrumbs[5]).toEqual(exerciseCrumb);
             expect(component.breadcrumbs[6]).toEqual(plagiarismCrumb);
@@ -646,31 +735,120 @@ describe('NavbarComponent', () => {
                 expect(entityTitleServiceStub).toHaveBeenCalledWith(EntityType.EXERCISE, [2]);
 
                 expect(component.breadcrumbs).toHaveLength(4);
-                expect(component.breadcrumbs[0]).toMatchObject({ uri: '/courses/', label: 'artemisApp.course.home.title' });
+                expect(component.breadcrumbs[0]).toMatchObject({
+                    uri: '/courses/',
+                    label: 'artemisApp.course.home.title',
+                });
                 expect(component.breadcrumbs[1]).toMatchObject({ uri: '/courses/1/', label: 'Test Course' });
-                expect(component.breadcrumbs[2]).toMatchObject({ uri: '/courses/1/exercises/', label: 'artemisApp.courseOverview.menu.exercises' });
-                expect(component.breadcrumbs[3]).toMatchObject({ uri: '/courses/1/exercises/2/', label: 'Test Exercise' });
+                expect(component.breadcrumbs[2]).toMatchObject({
+                    uri: '/courses/1/exercises/',
+                    label: 'artemisApp.courseOverview.menu.exercises',
+                });
+                expect(component.breadcrumbs[3]).toMatchObject({
+                    uri: '/courses/1/exercises/2/',
+                    label: 'Test Exercise',
+                });
             },
         );
     });
 
     it.each([
-        { width: 1200, account: { login: 'test' }, roles: [Authority.ADMIN], expected: { isCollapsed: false, isNavbarNavVertical: false, iconsMovedToMenu: false } },
-        { width: 1100, account: { login: 'test' }, roles: [Authority.ADMIN], expected: { isCollapsed: true, isNavbarNavVertical: false, iconsMovedToMenu: false } },
-        { width: 600, account: { login: 'test' }, roles: [Authority.ADMIN], expected: { isCollapsed: true, isNavbarNavVertical: false, iconsMovedToMenu: true } },
-        { width: 550, account: { login: 'test' }, roles: [Authority.ADMIN], expected: { isCollapsed: true, isNavbarNavVertical: true, iconsMovedToMenu: true } },
-        { width: 1000, account: { login: 'test' }, roles: [Authority.INSTRUCTOR], expected: { isCollapsed: false, isNavbarNavVertical: false, iconsMovedToMenu: false } },
-        { width: 850, account: { login: 'test' }, roles: [Authority.INSTRUCTOR], expected: { isCollapsed: true, isNavbarNavVertical: false, iconsMovedToMenu: false } },
-        { width: 600, account: { login: 'test' }, roles: [Authority.INSTRUCTOR], expected: { isCollapsed: true, isNavbarNavVertical: false, iconsMovedToMenu: true } },
-        { width: 470, account: { login: 'test' }, roles: [Authority.INSTRUCTOR], expected: { isCollapsed: true, isNavbarNavVertical: true, iconsMovedToMenu: true } },
-        { width: 800, account: { login: 'test' }, roles: [Authority.USER], expected: { isCollapsed: false, isNavbarNavVertical: false, iconsMovedToMenu: false } },
-        { width: 650, account: { login: 'test' }, roles: [Authority.USER], expected: { isCollapsed: true, isNavbarNavVertical: false, iconsMovedToMenu: false } },
-        { width: 600, account: { login: 'test' }, roles: [Authority.USER], expected: { isCollapsed: true, isNavbarNavVertical: false, iconsMovedToMenu: true } },
-        { width: 470, account: { login: 'test' }, roles: [Authority.USER], expected: { isCollapsed: true, isNavbarNavVertical: true, iconsMovedToMenu: true } },
-        { width: 520, account: undefined, roles: [], expected: { isCollapsed: false, isNavbarNavVertical: false, iconsMovedToMenu: false } },
-        { width: 500, account: undefined, roles: [], expected: { isCollapsed: true, isNavbarNavVertical: false, iconsMovedToMenu: false } },
-        { width: 450, account: undefined, roles: [], expected: { isCollapsed: true, isNavbarNavVertical: true, iconsMovedToMenu: false } },
-        { width: 400, account: undefined, roles: [], expected: { isCollapsed: true, isNavbarNavVertical: true, iconsMovedToMenu: true } },
+        {
+            width: 1200,
+            account: { login: 'test' },
+            roles: [Authority.ADMIN],
+            expected: { isCollapsed: false, isNavbarNavVertical: false, iconsMovedToMenu: false },
+        },
+        {
+            width: 1100,
+            account: { login: 'test' },
+            roles: [Authority.ADMIN],
+            expected: { isCollapsed: true, isNavbarNavVertical: false, iconsMovedToMenu: false },
+        },
+        {
+            width: 600,
+            account: { login: 'test' },
+            roles: [Authority.ADMIN],
+            expected: { isCollapsed: true, isNavbarNavVertical: false, iconsMovedToMenu: true },
+        },
+        {
+            width: 550,
+            account: { login: 'test' },
+            roles: [Authority.ADMIN],
+            expected: { isCollapsed: true, isNavbarNavVertical: true, iconsMovedToMenu: true },
+        },
+        {
+            width: 1000,
+            account: { login: 'test' },
+            roles: [Authority.INSTRUCTOR],
+            expected: { isCollapsed: false, isNavbarNavVertical: false, iconsMovedToMenu: false },
+        },
+        {
+            width: 850,
+            account: { login: 'test' },
+            roles: [Authority.INSTRUCTOR],
+            expected: { isCollapsed: true, isNavbarNavVertical: false, iconsMovedToMenu: false },
+        },
+        {
+            width: 600,
+            account: { login: 'test' },
+            roles: [Authority.INSTRUCTOR],
+            expected: { isCollapsed: true, isNavbarNavVertical: false, iconsMovedToMenu: true },
+        },
+        {
+            width: 470,
+            account: { login: 'test' },
+            roles: [Authority.INSTRUCTOR],
+            expected: { isCollapsed: true, isNavbarNavVertical: true, iconsMovedToMenu: true },
+        },
+        {
+            width: 800,
+            account: { login: 'test' },
+            roles: [Authority.USER],
+            expected: { isCollapsed: false, isNavbarNavVertical: false, iconsMovedToMenu: false },
+        },
+        {
+            width: 650,
+            account: { login: 'test' },
+            roles: [Authority.USER],
+            expected: { isCollapsed: true, isNavbarNavVertical: false, iconsMovedToMenu: false },
+        },
+        {
+            width: 600,
+            account: { login: 'test' },
+            roles: [Authority.USER],
+            expected: { isCollapsed: true, isNavbarNavVertical: false, iconsMovedToMenu: true },
+        },
+        {
+            width: 470,
+            account: { login: 'test' },
+            roles: [Authority.USER],
+            expected: { isCollapsed: true, isNavbarNavVertical: true, iconsMovedToMenu: true },
+        },
+        {
+            width: 520,
+            account: undefined,
+            roles: [],
+            expected: { isCollapsed: false, isNavbarNavVertical: false, iconsMovedToMenu: false },
+        },
+        {
+            width: 500,
+            account: undefined,
+            roles: [],
+            expected: { isCollapsed: true, isNavbarNavVertical: false, iconsMovedToMenu: false },
+        },
+        {
+            width: 450,
+            account: undefined,
+            roles: [],
+            expected: { isCollapsed: true, isNavbarNavVertical: true, iconsMovedToMenu: false },
+        },
+        {
+            width: 400,
+            account: undefined,
+            roles: [],
+            expected: { isCollapsed: true, isNavbarNavVertical: true, iconsMovedToMenu: true },
+        },
     ])('should calculate correct breakpoints', ({ width, account, roles, expected }) => {
         const accountService = TestBed.inject(AccountService);
         jest.spyOn(accountService, 'hasAnyAuthorityDirect').mockImplementation((authArray) => authArray.some((auth) => (roles as string[]).includes(auth)));
@@ -680,6 +858,10 @@ describe('NavbarComponent', () => {
 
         component.onResize();
 
-        expect({ isCollapsed: component.isCollapsed, isNavbarNavVertical: component.isNavbarNavVertical, iconsMovedToMenu: component.iconsMovedToMenu }).toEqual(expected);
+        expect({
+            isCollapsed: component.isCollapsed,
+            isNavbarNavVertical: component.isNavbarNavVertical,
+            iconsMovedToMenu: component.iconsMovedToMenu,
+        }).toEqual(expected);
     });
 });

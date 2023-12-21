@@ -98,13 +98,19 @@ export class TestCaseDistributionChartComponent extends ProgrammingGradingCharts
             this.ngxWeightData = [];
             this.ngxPointsData = [];
 
-            const weight = { name: this.translateService.instant('artemisApp.programmingExercise.configureGrading.charts.testCaseWeights.weight'), series: [] as any[] };
+            const weight = {
+                name: this.translateService.instant('artemisApp.programmingExercise.configureGrading.charts.testCaseWeights.weight'),
+                series: [] as any[],
+            };
             const weightAndBonus = {
                 name: this.translateService.instant('artemisApp.programmingExercise.configureGrading.charts.testCaseWeights.weightAndBonus'),
                 series: [] as any[],
             };
 
-            const points = { name: this.translateService.instant('artemisApp.programmingExercise.configureGrading.charts.testCasePoints.points'), series: [] as any[] };
+            const points = {
+                name: this.translateService.instant('artemisApp.programmingExercise.configureGrading.charts.testCasePoints.points'),
+                series: [] as any[],
+            };
 
             for (let i = 0; i < testCaseScores.length; i++) {
                 const element = testCaseScores[i];
@@ -112,8 +118,18 @@ export class TestCaseDistributionChartComponent extends ProgrammingGradingCharts
                 const label = element.label;
                 const color = getColor(i / this.testCases.length, 50);
 
-                weight.series.push({ name: label, value: Math.max(element.relWeight, 0), bonus: Math.max(element.relScore, 0), id: element.id });
-                weightAndBonus.series.push({ name: label, value: Math.max(element.relScore, 0), weight: Math.max(element.relScore, 0), id: element.id });
+                weight.series.push({
+                    name: label,
+                    value: Math.max(element.relWeight, 0),
+                    bonus: Math.max(element.relScore, 0),
+                    id: element.id,
+                });
+                weightAndBonus.series.push({
+                    name: label,
+                    value: Math.max(element.relScore, 0),
+                    weight: Math.max(element.relScore, 0),
+                    id: element.id,
+                });
 
                 points.series.push({ name: label, value: Math.max(element.relPoints, 0) });
 

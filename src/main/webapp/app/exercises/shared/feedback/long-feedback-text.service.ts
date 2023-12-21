@@ -38,6 +38,9 @@ export class LongFeedbackTextService implements OnDestroy {
         maxAge: 30 * 60 * 1000, // 30 minutes
     })
     find(resultId: number, feedbackId: number): Observable<LongFeedbackResponse> {
-        return this.http.get(`api/results/${resultId}/feedbacks/${feedbackId}/long-feedback`, { observe: 'response', responseType: 'text' });
+        return this.http.get(`api/results/${resultId}/feedbacks/${feedbackId}/long-feedback`, {
+            observe: 'response',
+            responseType: 'text',
+        });
     }
 }

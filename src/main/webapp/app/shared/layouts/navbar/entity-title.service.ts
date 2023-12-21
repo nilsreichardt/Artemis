@@ -22,7 +22,13 @@ const FETCH_FALLBACK_TIMEOUT = 3000;
  */
 @Injectable({ providedIn: 'root' })
 export class EntityTitleService {
-    private readonly titleSubjects = new Map<string, { subject: Subject<string>; timeout?: ReturnType<typeof setTimeout> }>();
+    private readonly titleSubjects = new Map<
+        string,
+        {
+            subject: Subject<string>;
+            timeout?: ReturnType<typeof setTimeout>;
+        }
+    >();
 
     constructor(private http: HttpClient) {}
 
@@ -126,11 +132,16 @@ export class EntityTitleService {
                 break;
         }
 
-        this.http.get(`${resourceUrl}/${ids[0]}/title`, { observe: 'response', responseType: 'text' }).subscribe((response: HttpResponse<string>) => {
-            if (response.body) {
-                this.setTitle(type, ids, response.body);
-            }
-        });
+        this.http
+            .get(`${resourceUrl}/${ids[0]}/title`, {
+                observe: 'response',
+                responseType: 'text',
+            })
+            .subscribe((response: HttpResponse<string>) => {
+                if (response.body) {
+                    this.setTitle(type, ids, response.body);
+                }
+            });
     }
 
     /**

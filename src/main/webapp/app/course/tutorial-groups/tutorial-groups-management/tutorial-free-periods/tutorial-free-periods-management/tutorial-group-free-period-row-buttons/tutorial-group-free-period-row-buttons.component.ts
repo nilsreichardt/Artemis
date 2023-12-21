@@ -51,7 +51,12 @@ export class TutorialGroupFreePeriodRowButtonsComponent implements OnDestroy {
 
     openEditFreeDayDialog(event: MouseEvent) {
         event.stopPropagation();
-        const modalRef: NgbModalRef = this.modalService.open(EditTutorialGroupFreePeriodComponent, { size: 'lg', scrollable: false, backdrop: 'static', animation: false });
+        const modalRef: NgbModalRef = this.modalService.open(EditTutorialGroupFreePeriodComponent, {
+            size: 'lg',
+            scrollable: false,
+            backdrop: 'static',
+            animation: false,
+        });
         modalRef.componentInstance.course = this.course;
         modalRef.componentInstance.tutorialGroupFreePeriod = this.tutorialFreePeriod;
         modalRef.componentInstance.tutorialGroupsConfiguration = this.tutorialGroupConfiguration;

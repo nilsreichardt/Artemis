@@ -59,8 +59,8 @@ public class ContinuousPlagiarismControlService {
     private final PlagiarismResultRepository plagiarismResultRepository;
 
     public ContinuousPlagiarismControlService(ExerciseRepository exerciseRepository, PlagiarismDetectionService plagiarismDetectionService,
-            PlagiarismComparisonRepository plagiarismComparisonRepository, PlagiarismCaseService plagiarismCaseService, PlagiarismCaseRepository plagiarismCaseRepository,
-            PostService postService, PlagiarismResultRepository plagiarismResultRepository) {
+                                              PlagiarismComparisonRepository plagiarismComparisonRepository, PlagiarismCaseService plagiarismCaseService, PlagiarismCaseRepository plagiarismCaseRepository,
+                                              PostService postService, PlagiarismResultRepository plagiarismResultRepository) {
         this.exerciseRepository = exerciseRepository;
         this.plagiarismDetectionService = plagiarismDetectionService;
         this.plagiarismComparisonRepository = plagiarismComparisonRepository;
@@ -103,14 +103,12 @@ public class ContinuousPlagiarismControlService {
     private PlagiarismResult<?> executeChecksForExerciseSilencingExceptions(Exercise exercise) {
         try {
             return executeChecksForExercise(exercise);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             // Catch all exception to keep cpc going for other exercises
             if (e instanceof ExitException) {
                 log.error("Cannot check plagiarism due to a Jplag error: exerciseId={}, type={}, error={}.", exercise.getId(), exercise.getExerciseType(), e.getMessage(), e);
 
-            }
-            else {
+            } else {
                 log.error("Cannot check plagiarism due to an unknown error: exerciseId={}, type={}, error={}.", exercise.getId(), exercise.getExerciseType(), e.getMessage(), e);
             }
 
@@ -153,8 +151,7 @@ public class ContinuousPlagiarismControlService {
                 .map(ContinuousPlagiarismControlService::buildCpcPost).forEach(post -> {
                     try {
                         postService.createContinuousPlagiarismControlPlagiarismCasePost(post);
-                    }
-                    catch (ArtemisMailException e) {
+                    } catch (ArtemisMailException e) {
                         // Catch mail exceptions to so that notification for the second student will be delivered
                         log.error("Cannot send a cpc email: postId={}, plagiarismCaseId={}.", post.getId(), post.getPlagiarismCase().getId());
                     }

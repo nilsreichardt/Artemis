@@ -24,7 +24,10 @@ describe('ProgrammingExerciseInstructionAnalysisService', () => {
     it('should analyse problem statement with issues correctly', () => {
         const testCases = ['testBubbleSortNew']; // test name was changed, the new test name is missing.
         const expectedAnalysis = new Map();
-        expectedAnalysis.set(0, { lineNumber: 0, invalidTestCases: ['artemisApp.programmingExercise.testCaseAnalysis.invalidTestCase'] });
+        expectedAnalysis.set(0, {
+            lineNumber: 0,
+            invalidTestCases: ['artemisApp.programmingExercise.testCaseAnalysis.invalidTestCase'],
+        });
         expectedAnalysis.set(2, {
             lineNumber: 2,
             invalidTestCases: ['artemisApp.programmingExercise.testCaseAnalysis.invalidTestCase'],

@@ -31,7 +31,13 @@ describe('CodeEditorTutorAssessmentInlineFeedbackComponent', () => {
                 MockDirective(NgModel),
                 MockPipe(ArtemisTranslatePipe),
             ],
-            providers: [{ provide: TranslateService, useClass: MockTranslateService }, MockProvider(StructuredGradingCriterionService)],
+            providers: [
+                {
+                    provide: TranslateService,
+                    useClass: MockTranslateService,
+                },
+                MockProvider(StructuredGradingCriterionService),
+            ],
         })
             .compileComponents()
             .then(() => {
@@ -86,7 +92,14 @@ describe('CodeEditorTutorAssessmentInlineFeedbackComponent', () => {
     });
 
     it('should update feedback with SGI and emit to parent', () => {
-        const instruction: GradingInstruction = { id: 1, credits: 2, feedback: 'test', gradingScale: 'good', instructionDescription: 'description of instruction', usageCount: 0 };
+        const instruction: GradingInstruction = {
+            id: 1,
+            credits: 2,
+            feedback: 'test',
+            gradingScale: 'good',
+            instructionDescription: 'description of instruction',
+            usageCount: 0,
+        };
         // Fake call as a DragEvent cannot be created programmatically
         jest.spyOn(sgiService, 'updateFeedbackWithStructuredGradingInstructionEvent').mockImplementation(() => {
             comp.feedback.gradingInstruction = instruction;

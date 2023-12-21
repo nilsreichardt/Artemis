@@ -60,7 +60,10 @@ export class BonusService {
      */
     findBonusForExam(courseId: number, examId: number, includeSourceGradeSteps?: boolean): Observable<EntityResponseType> {
         const params = includeSourceGradeSteps != undefined ? new HttpParams().set('includeSourceGradeSteps', includeSourceGradeSteps.toString()) : undefined;
-        return this.http.get<Bonus>(`${this.resourceUrl}/courses/${courseId}/exams/${examId}/bonus`, { observe: 'response', params });
+        return this.http.get<Bonus>(`${this.resourceUrl}/courses/${courseId}/exams/${examId}/bonus`, {
+            observe: 'response',
+            params,
+        });
     }
 
     /**

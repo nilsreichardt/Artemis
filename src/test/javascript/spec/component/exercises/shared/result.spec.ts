@@ -36,7 +36,11 @@ describe('ResultComponent', () => {
         secondCorrectionEnabled: false,
         studentAssignedTeamIdComputed: false,
     };
-    const programmingParticipation: ProgrammingExerciseStudentParticipation = { id: 2, type: ParticipationType.PROGRAMMING, exercise: programmingExercise };
+    const programmingParticipation: ProgrammingExerciseStudentParticipation = {
+        id: 2,
+        type: ParticipationType.PROGRAMMING,
+        exercise: programmingExercise,
+    };
 
     const modelingExercise: ModelingExercise = {
         id: 3,
@@ -45,7 +49,11 @@ describe('ResultComponent', () => {
         secondCorrectionEnabled: false,
         studentAssignedTeamIdComputed: false,
     };
-    const modelingParticipation: StudentParticipation = { id: 4, type: ParticipationType.STUDENT, exercise: modelingExercise };
+    const modelingParticipation: StudentParticipation = {
+        id: 4,
+        type: ParticipationType.STUDENT,
+        exercise: modelingExercise,
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({

@@ -1,6 +1,5 @@
 import { BASE_API, MODELING_EDITOR_CANVAS, PUT } from '../../../constants';
 import { getExercise } from '../../../utils';
-
 import scrollBehaviorOptions = Cypress.scrollBehaviorOptions;
 
 /**
@@ -13,11 +12,11 @@ export class ModelingEditor {
     addComponentToModel(exerciseID: number, componentNumber: number, scrollBehavior: scrollBehaviorOptions = 'center', x?: number, y?: number) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore https://github.com/4teamwork/cypress-drag-drop/issues/103
-        getExercise(exerciseID)
-            .find('#modeling-editor-sidebar')
-            .children()
-            .eq(componentNumber)
-            .drag(`#exercise-${exerciseID} ${MODELING_EDITOR_CANVAS}`, { target: { x, y }, scrollBehavior, timeout: 1000 });
+        getExercise(exerciseID).find('#modeling-editor-sidebar').children().eq(componentNumber).drag(`#exercise-${exerciseID} ${MODELING_EDITOR_CANVAS}`, {
+            target: { x, y },
+            scrollBehavior,
+            timeout: 1000,
+        });
         getExercise(exerciseID).find(MODELING_EDITOR_CANVAS).trigger('pointerup');
     }
 
@@ -26,7 +25,10 @@ export class ModelingEditor {
     }
 
     addComponentToExampleSolutionModel(componentNumber: number, scrollBehavior: scrollBehaviorOptions = 'center') {
-        cy.get('#modeling-editor-sidebar').children().eq(componentNumber).drag(MODELING_EDITOR_CANVAS, { scrollBehavior, timeout: 1000 });
+        cy.get('#modeling-editor-sidebar').children().eq(componentNumber).drag(MODELING_EDITOR_CANVAS, {
+            scrollBehavior,
+            timeout: 1000,
+        });
         cy.get(MODELING_EDITOR_CANVAS).trigger('mouseup').trigger('pointerup');
     }
 

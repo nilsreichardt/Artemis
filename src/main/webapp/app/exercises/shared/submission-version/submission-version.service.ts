@@ -23,6 +23,7 @@ export class SubmissionVersionService {
     findAllSubmissionVersionsOfSubmission(submissionId: number): Observable<SubmissionVersion[]> {
         return this.http.get<SubmissionVersion[]>(`${this.resourceUrl}/${submissionId}/versions`).pipe(map((res) => this.convertCreatedDatesFromServer(res)));
     }
+
     private convertCreatedDatesFromServer(res: SubmissionVersion[]): SubmissionVersion[] {
         return res.map((version) => {
             return { ...version, createdDate: convertDateFromServer(version.createdDate)! };

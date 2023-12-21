@@ -64,16 +64,23 @@ export class TeamSubmissionSyncComponent implements OnInit {
      * Subscribes to the submission stream and sends out updated submissions based on those own changes via websockets
      */
     private setupSender() {
-        this.submissionObservable.pipe(throttleTime(this.throttleTime, undefined, { leading: true, trailing: true })).subscribe({
-            next: (submission: Submission) => {
-                if (submission.participation) {
-                    submission.participation.exercise = undefined;
-                    submission.participation.submissions = [];
-                }
-                this.teamSubmissionWebsocketService.send(this.buildWebsocketTopic('/update'), submission);
-            },
-            error: (error) => this.onError(error),
-        });
+        this.submissionObservable
+            .pipe(
+                throttleTime(this.throttleTime, undefined, {
+                    leading: true,
+                    trailing: true,
+                }),
+            )
+            .subscribe({
+                next: (submission: Submission) => {
+                    if (submission.participation) {
+                        submission.participation.exercise = undefined;
+                        submission.participation.submissions = [];
+                    }
+                    this.teamSubmissionWebsocketService.send(this.buildWebsocketTopic('/update'), submission);
+                },
+                error: (error) => this.onError(error),
+            });
     }
 
     private isSelf(user: User) {

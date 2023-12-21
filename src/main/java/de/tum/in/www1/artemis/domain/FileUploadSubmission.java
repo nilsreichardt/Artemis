@@ -3,7 +3,11 @@ package de.tum.in.www1.artemis.domain;
 import java.net.URI;
 import java.nio.file.Path;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.PostRemove;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

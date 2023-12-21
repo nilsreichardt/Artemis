@@ -21,6 +21,7 @@ export type ChannelAction = {
     action: ChannelActionType;
     channel: ChannelDTO;
 };
+
 @Component({
     selector: 'jhi-channels-overview-dialog',
     templateUrl: './channels-overview-dialog.component.html',
@@ -64,7 +65,6 @@ export class ChannelsOverviewDialogComponent extends AbstractDialogComponent imp
         private conversationService: ConversationService,
         private alertService: AlertService,
         private modalService: NgbModal,
-
         activeModal: NgbActiveModal,
     ) {
         super(activeModal);

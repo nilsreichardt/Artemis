@@ -187,7 +187,10 @@ describe('Submission Service', () => {
                 expect(submissionWithComplaint.submission.submissionDate).toEqual(dayjs(submissionDateStr));
                 expect(submissionWithComplaint.complaint.submittedTime).toEqual(dayjs(complaintSubmittedTimeStr));
             });
-        const req = httpMock.expectOne({ url: `api/exercises/${exerciseId}/submissions-with-complaints`, method: 'GET' });
+        const req = httpMock.expectOne({
+            url: `api/exercises/${exerciseId}/submissions-with-complaints`,
+            method: 'GET',
+        });
         req.flush(returnedFromService);
         tick();
     }));

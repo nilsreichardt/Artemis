@@ -61,11 +61,11 @@ public class ProgrammingTriggerService {
     private final ProgrammingMessagingService programmingMessagingService;
 
     public ProgrammingTriggerService(ProgrammingSubmissionRepository programmingSubmissionRepository, ProgrammingExerciseRepository programmingExerciseRepository,
-            Optional<ContinuousIntegrationTriggerService> continuousIntegrationTriggerService, ParticipationService participationService,
-            ProgrammingExerciseParticipationService programmingExerciseParticipationService, AuditEventRepository auditEventRepository, ResultRepository resultRepository,
-            ProgrammingExerciseStudentParticipationRepository programmingExerciseStudentParticipationRepository, ProgrammingMessagingService programmingMessagingService,
-            TemplateProgrammingExerciseParticipationRepository templateProgrammingExerciseParticipationRepository,
-            SolutionProgrammingExerciseParticipationRepository solutionProgrammingExerciseParticipationRepository) {
+                                     Optional<ContinuousIntegrationTriggerService> continuousIntegrationTriggerService, ParticipationService participationService,
+                                     ProgrammingExerciseParticipationService programmingExerciseParticipationService, AuditEventRepository auditEventRepository, ResultRepository resultRepository,
+                                     ProgrammingExerciseStudentParticipationRepository programmingExerciseStudentParticipationRepository, ProgrammingMessagingService programmingMessagingService,
+                                     TemplateProgrammingExerciseParticipationRepository templateProgrammingExerciseParticipationRepository,
+                                     SolutionProgrammingExerciseParticipationRepository solutionProgrammingExerciseParticipationRepository) {
         this.participationService = participationService;
         this.programmingSubmissionRepository = programmingSubmissionRepository;
         this.templateProgrammingExerciseParticipationRepository = templateProgrammingExerciseParticipationRepository;
@@ -94,8 +94,7 @@ public class ProgrammingTriggerService {
             ContinuousIntegrationTriggerService ciTriggerService = continuousIntegrationTriggerService.orElseThrow();
             ciTriggerService.triggerBuild(programmingExercise.getSolutionParticipation());
             ciTriggerService.triggerBuild(programmingExercise.getTemplateParticipation());
-        }
-        catch (ContinuousIntegrationException ex) {
+        } catch (ContinuousIntegrationException ex) {
             log.error("Could not trigger build for solution repository after test case update for programming exercise with id {}", programmingExerciseId);
         }
     }
@@ -179,8 +178,7 @@ public class ProgrammingTriggerService {
                 try {
                     log.info("Sleep for {}s during triggerBuild", externalSystemRequestBatchWaitingTime / 1000);
                     Thread.sleep(externalSystemRequestBatchWaitingTime);
-                }
-                catch (InterruptedException ex) {
+                } catch (InterruptedException ex) {
                     log.error("Exception encountered when pausing before executing successive build for participation {}", participation.getId(), ex);
                 }
             }
@@ -196,7 +194,7 @@ public class ProgrammingTriggerService {
     }
 
     private ProgrammingSubmission createSubmissionWithCommitHashAndSubmissionType(ProgrammingExerciseParticipation participation, String commitHash,
-            SubmissionType submissionType) {
+                                                                                  SubmissionType submissionType) {
         // Make sure that the new submission has the submission date of now
         ProgrammingSubmission newSubmission = (ProgrammingSubmission) new ProgrammingSubmission().commitHash(commitHash).submitted(true).submissionDate(ZonedDateTime.now())
                 .type(submissionType);
@@ -225,8 +223,7 @@ public class ProgrammingTriggerService {
                 continuousIntegrationTriggerService.orElseThrow().triggerBuild(participation);
                 // TODO: this is a workaround, in the future we should use the participation to notify the client and avoid using the submission
                 programmingMessagingService.notifyUserAboutSubmission(submission.get(), participation.getProgrammingExercise().getId());
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 log.error("Trigger build failed for {} with the exception {}", participation.getBuildPlanId(), e.getMessage());
                 BuildTriggerWebsocketError error = new BuildTriggerWebsocketError(e.getMessage(), participation.getId());
                 programmingMessagingService.notifyUserAboutSubmissionError(participation, error);
@@ -254,8 +251,7 @@ public class ProgrammingTriggerService {
             }
             continuousIntegrationTriggerService.orElseThrow().triggerBuild(programmingExerciseParticipation);
             programmingMessagingService.notifyUserAboutSubmission(submission, programmingExerciseParticipation.getExercise().getId());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error("Trigger build failed for {} with the exception {}", programmingExerciseParticipation.getBuildPlanId(), e.getMessage());
             BuildTriggerWebsocketError error = new BuildTriggerWebsocketError(e.getMessage(), submission.getParticipation().getId());
             programmingMessagingService.notifyUserAboutSubmissionError(submission, error);
@@ -291,8 +287,7 @@ public class ProgrammingTriggerService {
             continuousIntegrationTriggerService.orElseThrow().triggerBuild((ProgrammingExerciseParticipation) submission.getParticipation(), commitHash,
                     submissionType.equals(SubmissionType.TEST));
             programmingMessagingService.notifyUserAboutSubmission(submission, participation.getProgrammingExercise().getId());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             BuildTriggerWebsocketError error = new BuildTriggerWebsocketError(e.getMessage(), submission.getParticipation().getId());
             programmingMessagingService.notifyUserAboutSubmissionError(submission, error);
         }
@@ -320,8 +315,7 @@ public class ProgrammingTriggerService {
         final Optional<ProgrammingSubmission> submission = participation.findLatestSubmission();
         if (submission.isPresent()) {
             triggerBuildAndNotifyUser(submission.get());
-        }
-        else {
+        } else {
             continuousIntegrationTriggerService.orElseThrow().triggerBuild(participation);
         }
     }

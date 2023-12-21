@@ -25,7 +25,12 @@ export interface ICodeEditorRepositoryFileService {
     createFile: (fileName: string) => Observable<void>;
     createFolder: (folderName: string) => Observable<void>;
     updateFileContent: (fileName: string, fileContent: string) => Observable<any>;
-    updateFiles: (fileUpdates: Array<{ fileName: string; fileContent: string }>) => Observable<FileSubmission | FileSubmissionError>;
+    updateFiles: (
+        fileUpdates: Array<{
+            fileName: string;
+            fileContent: string;
+        }>,
+    ) => Observable<FileSubmission | FileSubmissionError>;
     renameFile: (filePath: string, newFileName: string) => Observable<void>;
     deleteFile: (filePath: string) => Observable<void>;
 }
@@ -139,6 +144,7 @@ export class CodeEditorBuildLogService extends DomainDependentEndpointService {
 @Injectable({ providedIn: 'root' })
 export class CodeEditorRepositoryFileService extends DomainDependentEndpointService implements ICodeEditorRepositoryFileService, OnDestroy {
     fileUpdateSubject = new Subject<FileSubmission>();
+
     constructor(
         http: HttpClient,
         jhiWebsocketService: JhiWebsocketService,
@@ -162,7 +168,10 @@ export class CodeEditorRepositoryFileService extends DomainDependentEndpointServ
      */
     downloadFile(fileName: string, downloadName: string) {
         this.http
-            .get(`${this.restResourceUrl}/file`, { params: new HttpParams().set('file', fileName), responseType: 'blob' })
+            .get(`${this.restResourceUrl}/file`, {
+                params: new HttpParams().set('file', fileName),
+                responseType: 'blob',
+            })
             .pipe(handleErrorResponse(this.conflictService))
             .subscribe((res) => {
                 downloadFile(res, downloadName);
@@ -182,7 +191,11 @@ export class CodeEditorRepositoryFileService extends DomainDependentEndpointServ
 
     getRepositoryContent = (domain?: DomainChange) => {
         const restResourceUrl = domain ? this.calculateRestResourceURL(domain) : this.restResourceUrl;
-        return this.http.get<{ [fileName: string]: FileType }>(`${restResourceUrl}/files`).pipe(handleErrorResponse<{ [fileName: string]: FileType }>(this.conflictService));
+        return this.http.get<{ [fileName: string]: FileType }>(`${restResourceUrl}/files`).pipe(
+            handleErrorResponse<{
+                [fileName: string]: FileType;
+            }>(this.conflictService),
+        );
     };
 
     /**
@@ -190,27 +203,47 @@ export class CodeEditorRepositoryFileService extends DomainDependentEndpointServ
      */
     getFilesWithInformationAboutChange = (domain?: DomainChange) => {
         const restResourceUrl = domain ? this.calculateRestResourceURL(domain) : this.restResourceUrl;
-        return this.http.get<{ [fileName: string]: boolean }>(`${restResourceUrl}/files-change`).pipe(handleErrorResponse<{ [fileName: string]: boolean }>(this.conflictService));
+        return this.http
+            .get<{
+                [fileName: string]: boolean;
+            }>(`${restResourceUrl}/files-change`)
+            .pipe(
+                handleErrorResponse<{
+                    [fileName: string]: boolean;
+                }>(this.conflictService),
+            );
     };
 
     getFile = (fileName: string, domain?: DomainChange) => {
         const restResourceUrl = domain ? this.calculateRestResourceURL(domain) : this.restResourceUrl;
-        return this.http.get(`${restResourceUrl}/file`, { params: new HttpParams().set('file', fileName), responseType: 'text' }).pipe(
-            map((data) => ({ fileContent: data })),
-            handleErrorResponse<{ fileContent: string }>(this.conflictService),
-        );
+        return this.http
+            .get(`${restResourceUrl}/file`, {
+                params: new HttpParams().set('file', fileName),
+                responseType: 'text',
+            })
+            .pipe(
+                map((data) => ({ fileContent: data })),
+                handleErrorResponse<{ fileContent: string }>(this.conflictService),
+            );
     };
 
     getFileHeaders = (fileName: string, domain?: DomainChange) => {
         const restResourceUrl = domain ? this.calculateRestResourceURL(domain) : this.restResourceUrl;
         return this.http
-            .head<Blob>(`${restResourceUrl}/file`, { observe: 'response', params: new HttpParams().set('file', fileName) })
+            .head<Blob>(`${restResourceUrl}/file`, {
+                observe: 'response',
+                params: new HttpParams().set('file', fileName),
+            })
             .pipe(handleErrorResponse(this.conflictService));
     };
 
     getFilesWithContent = (domain?: DomainChange) => {
         const restResourceUrl = domain ? this.calculateRestResourceURL(domain) : this.restResourceUrl;
-        return this.http.get(`${restResourceUrl}/files-content`).pipe(handleErrorResponse<{ [fileName: string]: string }>(this.conflictService));
+        return this.http.get(`${restResourceUrl}/files-content`).pipe(
+            handleErrorResponse<{
+                [fileName: string]: string;
+            }>(this.conflictService),
+        );
     };
 
     createFile = (fileName: string) => {
@@ -261,7 +294,12 @@ export class CodeEditorRepositoryFileService extends DomainDependentEndpointServ
     }
 
     renameFile = (currentFilePath: string, newFilename: string) => {
-        return this.http.post<void>(`${this.restResourceUrl}/rename-file`, { currentFilePath, newFilename }).pipe(handleErrorResponse(this.conflictService));
+        return this.http
+            .post<void>(`${this.restResourceUrl}/rename-file`, {
+                currentFilePath,
+                newFilename,
+            })
+            .pipe(handleErrorResponse(this.conflictService));
     };
 
     deleteFile = (fileName: string) => {

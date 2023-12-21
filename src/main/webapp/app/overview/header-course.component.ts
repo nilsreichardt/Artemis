@@ -21,6 +21,7 @@ export class HeaderCourseComponent implements OnChanges {
     public longDescriptionShown = false;
 
     faArrowDown = faArrowDown;
+
     constructor(protected router: Router) {}
 
     ngOnChanges() {

@@ -65,7 +65,15 @@ examples.forEach((conversation) => {
                     MockComponent(ChannelIconComponent),
                     MockComponent(GroupChatIconComponent),
                 ],
-                providers: [MockProvider(ConversationService), MockProvider(AlertService), MockProvider(NgbModal), { provide: MetisService, useClass: MockMetisService }],
+                providers: [
+                    MockProvider(ConversationService),
+                    MockProvider(AlertService),
+                    MockProvider(NgbModal),
+                    {
+                        provide: MetisService,
+                        useClass: MockMetisService,
+                    },
+                ],
             }).compileComponents();
         }));
 

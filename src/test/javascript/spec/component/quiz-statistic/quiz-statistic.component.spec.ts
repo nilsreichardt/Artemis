@@ -76,8 +76,20 @@ describe('QuizExercise Statistic Component', () => {
             loadQuizSuccessSpy = jest.spyOn(comp, 'loadQuizSuccess');
             loadDataSpy = jest.spyOn(comp, 'loadData');
             quizExercise.quizQuestions = [
-                { quizQuestionStatistic: quizQuestionStatOne, points: 5, invalid: false, exportQuiz: false, randomizeOrder: true },
-                { quizQuestionStatistic: quizQuestionStatTwo, points: 6, invalid: false, exportQuiz: false, randomizeOrder: true },
+                {
+                    quizQuestionStatistic: quizQuestionStatOne,
+                    points: 5,
+                    invalid: false,
+                    exportQuiz: false,
+                    randomizeOrder: true,
+                },
+                {
+                    quizQuestionStatistic: quizQuestionStatTwo,
+                    points: 6,
+                    invalid: false,
+                    exportQuiz: false,
+                    randomizeOrder: true,
+                },
             ];
             quizExercise.quizPointStatistic = { participantsRated: 42 };
             comp.quizExercise = quizExercise;
@@ -123,8 +135,20 @@ describe('QuizExercise Statistic Component', () => {
         beforeEach(() => {
             loadDataSpy = jest.spyOn(comp, 'loadData');
             quizExercise.quizQuestions = [
-                { quizQuestionStatistic: quizQuestionStatOne, points: 5, invalid: false, exportQuiz: false, randomizeOrder: true },
-                { quizQuestionStatistic: quizQuestionStatTwo, points: 6, invalid: false, exportQuiz: false, randomizeOrder: true },
+                {
+                    quizQuestionStatistic: quizQuestionStatOne,
+                    points: 5,
+                    invalid: false,
+                    exportQuiz: false,
+                    randomizeOrder: true,
+                },
+                {
+                    quizQuestionStatistic: quizQuestionStatTwo,
+                    points: 6,
+                    invalid: false,
+                    exportQuiz: false,
+                    randomizeOrder: true,
+                },
             ];
             quizExercise.quizPointStatistic = { participantsRated: 42 };
             comp.quizExercise = quizExercise;
@@ -197,8 +221,20 @@ describe('QuizExercise Statistic Component', () => {
     describe('loadData', () => {
         beforeEach(() => {
             quizExercise.quizQuestions = [
-                { quizQuestionStatistic: quizQuestionStatOne, points: 5, invalid: false, exportQuiz: false, randomizeOrder: true },
-                { quizQuestionStatistic: quizQuestionStatTwo, points: 6, invalid: false, exportQuiz: false, randomizeOrder: true },
+                {
+                    quizQuestionStatistic: quizQuestionStatOne,
+                    points: 5,
+                    invalid: false,
+                    exportQuiz: false,
+                    randomizeOrder: true,
+                },
+                {
+                    quizQuestionStatistic: quizQuestionStatTwo,
+                    points: 6,
+                    invalid: false,
+                    exportQuiz: false,
+                    randomizeOrder: true,
+                },
             ];
             quizExercise.quizPointStatistic = { participantsRated: 42 };
             comp.quizExercise = quizExercise;

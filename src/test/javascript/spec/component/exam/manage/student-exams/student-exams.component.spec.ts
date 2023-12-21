@@ -187,8 +187,22 @@ describe('StudentExamsComponent', () => {
         exam.course = course;
         exam.id = 1;
         exam.examUsers = [
-            { didCheckImage: false, didCheckLogin: false, didCheckName: false, didCheckRegistrationNumber: false, ...studentOne, user: studentOne },
-            { didCheckImage: false, didCheckLogin: false, didCheckName: false, didCheckRegistrationNumber: false, ...studentTwo, user: studentTwo },
+            {
+                didCheckImage: false,
+                didCheckLogin: false,
+                didCheckName: false,
+                didCheckRegistrationNumber: false,
+                ...studentOne,
+                user: studentOne,
+            },
+            {
+                didCheckImage: false,
+                didCheckLogin: false,
+                didCheckName: false,
+                didCheckRegistrationNumber: false,
+                ...studentTwo,
+                user: studentTwo,
+            },
         ];
         exam.endDate = dayjs();
         exam.startDate = exam.endDate.subtract(60, 'seconds');
@@ -517,11 +531,26 @@ describe('StudentExamsComponent', () => {
 
     it.each([
         { status: undefined, expected: { running: false, percentage: 0, eta: undefined } },
-        { status: { finished: 0, failed: 0, overall: 0, startedAt: referenceDateNow }, expected: { running: false, percentage: 100, eta: undefined } },
-        { status: { finished: 0, failed: 0, overall: 1000, startedAt: referenceDateNow }, expected: { running: true, percentage: 0, eta: undefined } },
-        { status: { finished: 10, failed: 0, overall: 1000, startedAt: referenceDateNow.subtract(100, 's') }, expected: { running: true, percentage: 1, eta: '2h45m0s' } },
-        { status: { finished: 90, failed: 10, overall: 1000, startedAt: referenceDateNow.subtract(100, 's') }, expected: { running: true, percentage: 10, eta: '15m0s' } },
-        { status: { finished: 990, failed: 10, overall: 1000, startedAt: referenceDateNow.subtract(100, 's') }, expected: { running: false, percentage: 100, eta: undefined } },
+        {
+            status: { finished: 0, failed: 0, overall: 0, startedAt: referenceDateNow },
+            expected: { running: false, percentage: 100, eta: undefined },
+        },
+        {
+            status: { finished: 0, failed: 0, overall: 1000, startedAt: referenceDateNow },
+            expected: { running: true, percentage: 0, eta: undefined },
+        },
+        {
+            status: { finished: 10, failed: 0, overall: 1000, startedAt: referenceDateNow.subtract(100, 's') },
+            expected: { running: true, percentage: 1, eta: '2h45m0s' },
+        },
+        {
+            status: { finished: 90, failed: 10, overall: 1000, startedAt: referenceDateNow.subtract(100, 's') },
+            expected: { running: true, percentage: 10, eta: '15m0s' },
+        },
+        {
+            status: { finished: 990, failed: 10, overall: 1000, startedAt: referenceDateNow.subtract(100, 's') },
+            expected: { running: false, percentage: 100, eta: undefined },
+        },
     ])('should correctly calculate exam preparation progress', ({ status, expected }) => {
         jest.useFakeTimers().setSystemTime(referenceDateNow.toDate());
         studentExamsComponent.setExercisePreparationStatus(status);

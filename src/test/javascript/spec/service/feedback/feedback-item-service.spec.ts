@@ -34,7 +34,12 @@ describe('FeedbackItemService', () => {
     });
 
     it('should create grading instruction feedback', () => {
-        const feedback = { id: 1, text: 'text', detailText: 'detailText', gradingInstruction: { feedback: 'GI feedback' } } as Feedback;
+        const feedback = {
+            id: 1,
+            text: 'text',
+            detailText: 'detailText',
+            gradingInstruction: { feedback: 'GI feedback' },
+        } as Feedback;
 
         const expected = {
             name: 'artemisApp.result.detail.feedback',
@@ -48,7 +53,13 @@ describe('FeedbackItemService', () => {
     });
 
     it('should propagate subsequent to feedback item type', () => {
-        const feedback = { id: 1, isSubsequent: true, text: 'text', detailText: 'detailText', gradingInstruction: { feedback: 'GI feedback' } } as Feedback;
+        const feedback = {
+            id: 1,
+            isSubsequent: true,
+            text: 'text',
+            detailText: 'detailText',
+            gradingInstruction: { feedback: 'GI feedback' },
+        } as Feedback;
 
         const expected = {
             name: 'artemisApp.result.detail.feedback',

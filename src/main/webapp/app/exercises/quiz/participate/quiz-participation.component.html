@@ -2,7 +2,8 @@
     @if (quizExercise) {
         <div class="quiz-header container">
             <h2>
-                {{ quizExercise.course?.title ? quizExercise.course?.title : quizExercise.exerciseGroup?.exam?.course?.title }} - {{ quizExercise.title }}
+                {{ quizExercise.course?.title ? quizExercise.course?.title : quizExercise.exerciseGroup?.exam?.course?.title }}
+                - {{ quizExercise.title }}
                 @switch (mode) {
                     @case ('practice') {
                         <span class="in-parentheses" jhiTranslate="artemisApp.quizExercise.practiceMode"></span>
@@ -144,8 +145,8 @@
                                             <b class="fa">SA</b>
                                         </span>
                                     }
-                                    <ng-template #tooltipExplanationTranslate>{{ 'artemisApp.quizExercise.explanationAnswered' | artemisTranslate }}</ng-template>
-                                    <ng-template #tooltipNotExplanationTranslate>{{ 'artemisApp.quizExercise.explanationNotAnswered' | artemisTranslate }}</ng-template>
+                                    <ng-template #tooltipExplanationTranslate>{{ 'artemisApp.quizExercise.explanationAnswered' | artemisTranslate }} </ng-template>
+                                    <ng-template #tooltipNotExplanationTranslate>{{ 'artemisApp.quizExercise.explanationNotAnswered' | artemisTranslate }} </ng-template>
                                 </div>
                             }
                         </div>

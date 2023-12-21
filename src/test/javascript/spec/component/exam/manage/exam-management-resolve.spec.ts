@@ -28,7 +28,14 @@ describe('Exam Resolve', () => {
     afterEach(() => jest.restoreAllMocks());
 
     it('should fetch the exam if courseId and examId are given', fakeAsync(() => {
-        const findSpy = jest.spyOn(examManagementService, 'find').mockReturnValue(of(new HttpResponse({ status: 200, body: { id: 1 } })));
+        const findSpy = jest.spyOn(examManagementService, 'find').mockReturnValue(
+            of(
+                new HttpResponse({
+                    status: 200,
+                    body: { id: 1 },
+                }),
+            ),
+        );
         const examObservable = resolve.resolve({
             params: {
                 courseId: 1,
@@ -72,7 +79,14 @@ describe('Exam Resolve', () => {
     }));
 
     it('should fetch the exam for an import', fakeAsync(() => {
-        const findSpy = jest.spyOn(examManagementService, 'findWithExercisesAndWithoutCourseId').mockReturnValue(of(new HttpResponse({ status: 200, body: { id: 1 } })));
+        const findSpy = jest.spyOn(examManagementService, 'findWithExercisesAndWithoutCourseId').mockReturnValue(
+            of(
+                new HttpResponse({
+                    status: 200,
+                    body: { id: 1 },
+                }),
+            ),
+        );
         const examObservable = resolve.resolve({
             params: {
                 examId: 2,
@@ -112,7 +126,14 @@ describe('Exam Group Resolve', () => {
     afterEach(() => jest.restoreAllMocks());
 
     it('should fetch the exercise group if courseId, examId and exerciseGroupId are given', fakeAsync(() => {
-        const findSpy = jest.spyOn(exerciseGroupService, 'find').mockReturnValue(of(new HttpResponse({ status: 200, body: { id: 1 } })));
+        const findSpy = jest.spyOn(exerciseGroupService, 'find').mockReturnValue(
+            of(
+                new HttpResponse({
+                    status: 200,
+                    body: { id: 1 },
+                }),
+            ),
+        );
         const examObservable = resolve.resolve({
             params: {
                 courseId: 1,

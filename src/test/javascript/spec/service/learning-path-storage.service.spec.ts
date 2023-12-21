@@ -23,7 +23,12 @@ describe('LearningPathStorageService', () => {
                 ngxPath1 = {
                     nodes: [
                         { id: '1', type: NodeType.COMPETENCY_START } as NgxLearningPathNode,
-                        { id: '2', type: NodeType.LECTURE_UNIT, linkedResource: 5, linkedResourceParent: 6 } as NgxLearningPathNode,
+                        {
+                            id: '2',
+                            type: NodeType.LECTURE_UNIT,
+                            linkedResource: 5,
+                            linkedResourceParent: 6,
+                        } as NgxLearningPathNode,
                         { id: '3', type: NodeType.EXERCISE, linkedResource: 7 } as NgxLearningPathNode,
                         { id: '4', type: NodeType.COMPETENCY_END } as NgxLearningPathNode,
                     ],
@@ -37,7 +42,12 @@ describe('LearningPathStorageService', () => {
                 ngxPath2 = {
                     nodes: [
                         { id: '11', type: NodeType.COMPETENCY_START } as NgxLearningPathNode,
-                        { id: '12', type: NodeType.LECTURE_UNIT, linkedResource: 15, linkedResourceParent: 16 } as NgxLearningPathNode,
+                        {
+                            id: '12',
+                            type: NodeType.LECTURE_UNIT,
+                            linkedResource: 15,
+                            linkedResourceParent: 16,
+                        } as NgxLearningPathNode,
                         { id: '13', type: NodeType.EXERCISE, linkedResource: 17 } as NgxLearningPathNode,
                         { id: '14', type: NodeType.COMPETENCY_END } as NgxLearningPathNode,
                     ],

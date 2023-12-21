@@ -19,6 +19,7 @@ export class ExerciseTitleChannelNameComponent implements OnChanges {
     @Output() onChannelNameChange = new EventEmitter<string>();
 
     hideChannelNameInput = false;
+
     ngOnChanges(changes: SimpleChanges) {
         if (changes.exercise || changes.course || changes.isExamMode || this.isImport) {
             this.hideChannelNameInput = !this.requiresChannelName(this.exercise, this.course, this.isExamMode, this.isImport);

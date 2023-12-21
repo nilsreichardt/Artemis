@@ -139,6 +139,7 @@ examples.forEach((activeConversation) => {
         function setSelectedUsers(selectedUsers?: UserPublicInfoDTO[]) {
             component!.selectedUsersControl!.setValue(selectedUsers);
         }
+
         const setValidIndividualModeFormValues = () => {
             if (component) {
                 component!.selectedUsersControl!.setValue([{ id: 1, name: 'test' } as UserPublicInfoDTO]);
@@ -157,12 +158,14 @@ examples.forEach((activeConversation) => {
             expect(component.isSubmitPossible).toBeFalse();
             clickSubmitButton(false);
         }
+
         function setFormValid() {
             setValidIndividualModeFormValues();
             fixture.detectChanges();
             expect(component.form.valid).toBeTrue();
             expect(component.isSubmitPossible).toBeTrue();
         }
+
         const clickSubmitButton = (expectSubmitEvent: boolean, expectedFormData?: AddUsersFormData) => {
             const submitFormSpy = jest.spyOn(component, 'submitForm');
             const submitFormEventSpy = jest.spyOn(component.formSubmitted, 'emit');

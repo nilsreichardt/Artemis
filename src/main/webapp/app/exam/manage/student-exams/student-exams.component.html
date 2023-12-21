@@ -78,12 +78,13 @@
                             {{ 'artemisApp.studentExams.exercisePreparationProgress.exams' | artemisTranslate }}</span
                         >
                         @if (exercisePreparationStatus.failed) {
-                            <span> ({{ exercisePreparationStatus.failed }} {{ 'artemisApp.studentExams.exercisePreparationProgress.failed' | artemisTranslate }}) </span>
+                            <span> ({{ exercisePreparationStatus.failed }} {{ 'artemisApp.studentExams.exercisePreparationProgress.failed' | artemisTranslate }} ) </span>
                         }
                         |
                         @if (exercisePreparationStatus.participationCount) {
                             <span>
-                                {{ exercisePreparationStatus.participationCount }} {{ 'artemisApp.studentExams.exercisePreparationProgress.participations' | artemisTranslate }} |
+                                {{ exercisePreparationStatus.participationCount }} {{ 'artemisApp.studentExams.exercisePreparationProgress.participations' | artemisTranslate }}
+                                |
                             </span>
                         }
                         @if (exercisePreparationEta) {

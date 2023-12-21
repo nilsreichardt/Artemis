@@ -3,7 +3,10 @@ package de.tum.in.www1.artemis.service;
 import static java.lang.Integer.compare;
 
 import java.text.BreakIterator;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 

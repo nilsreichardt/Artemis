@@ -27,7 +27,7 @@
                         <div class="card-body pt-0">
                             @if (currentPost !== undefined) {
                                 <div class="my-2">
-                                    <fa-icon [icon]="faArrowLeft" (click)="resetCurrentPost()" class="back-button me-2 clickable"> </fa-icon>
+                                    <fa-icon [icon]="faArrowLeft" (click)="resetCurrentPost()" class="back-button me-2 clickable"></fa-icon>
                                     <span class="back-instruction">{{ 'artemisApp.metis.post.showAllPosts' | artemisTranslate }}</span>
                                     <jhi-posting-thread
                                         [post]="currentPost"
@@ -160,7 +160,7 @@
                                             }
                                         </button>
                                         @if (shouldSendMessage) {
-                                            <jhi-message-inline-input class="message-input" [posting]="createdPost" (onCreate)="createEmptyPost()"> </jhi-message-inline-input>
+                                            <jhi-message-inline-input class="message-input" [posting]="createdPost" (onCreate)="createEmptyPost()"></jhi-message-inline-input>
                                         }
                                     </div>
                                 </div>

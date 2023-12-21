@@ -18,7 +18,10 @@
                     [legendPosition]="legendPosition"
                     [animations]="false"
                 >
-                    <ng-template #tooltipTemplate let-model="model"> {{ ((model.value * 100) / this.numberOfSubmissions.total).toFixed(2) }}% </ng-template>
+                    <ng-template #tooltipTemplate let-model="model">
+                        {{ ((model.value * 100) / this.numberOfSubmissions.total).toFixed(2) }}
+                        %
+                    </ng-template>
                 </ngx-charts-pie-chart>
             </div>
         }

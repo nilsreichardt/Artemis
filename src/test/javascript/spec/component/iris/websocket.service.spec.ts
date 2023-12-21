@@ -29,7 +29,15 @@ describe('IrisChatWebsocketService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [IrisChatWebsocketService, MockProvider(JhiWebsocketService), IrisStateStore, { provide: AccountService, useClass: MockAccountService }],
+            providers: [
+                IrisChatWebsocketService,
+                MockProvider(JhiWebsocketService),
+                IrisStateStore,
+                {
+                    provide: AccountService,
+                    useClass: MockAccountService,
+                },
+            ],
         });
         irisWebsocketService = TestBed.inject(IrisChatWebsocketService);
         jhiWebsocketService = TestBed.inject(JhiWebsocketService);

@@ -221,7 +221,11 @@ describe('ModelingSubmissionComponent', () => {
     it('should set correct properties on modeling exercise create when submitting', () => {
         fixture.detectChanges();
 
-        const modelSubmission = <ModelingSubmission>(<unknown>{ model: '{"elements": [{"id": 1}]}', submitted: true, participation });
+        const modelSubmission = <ModelingSubmission>(<unknown>{
+            model: '{"elements": [{"id": 1}]}',
+            submitted: true,
+            participation,
+        });
         comp.submission = modelSubmission;
         const createStub = jest.spyOn(service, 'create').mockReturnValue(of(new HttpResponse({ body: submission })));
         comp.modelingExercise = new ModelingExercise(UMLDiagramType.DeploymentDiagram, undefined, undefined);
@@ -232,7 +236,11 @@ describe('ModelingSubmissionComponent', () => {
     });
 
     it('should catch error on submit', () => {
-        const modelSubmission = <ModelingSubmission>(<unknown>{ model: '{"elements": [{"id": 1}]}', submitted: true, participation });
+        const modelSubmission = <ModelingSubmission>(<unknown>{
+            model: '{"elements": [{"id": 1}]}',
+            submitted: true,
+            participation,
+        });
         comp.submission = modelSubmission;
         jest.spyOn(service, 'create').mockReturnValue(throwError(() => ({ status: 500 })));
         const alertServiceSpy = jest.spyOn(alertService, 'error');
@@ -366,7 +374,10 @@ describe('ModelingSubmissionComponent', () => {
 
     it('should update submission with current values', () => {
         const model = <UMLModel>(<unknown>{
-            elements: [<UMLElement>(<unknown>{ owner: 'ownerId1', id: 'elementId1' }), <UMLElement>(<unknown>{ owner: 'ownerId2', id: 'elementId2' })],
+            elements: [<UMLElement>(<unknown>{
+                    owner: 'ownerId1',
+                    id: 'elementId1',
+                }), <UMLElement>(<unknown>{ owner: 'ownerId2', id: 'elementId2' })],
         });
         const currentModelStub = jest.spyOn(comp.modelingEditor, 'getCurrentModel').mockReturnValue(model as UMLModel);
         comp.explanation = 'Explanation Test';
@@ -403,7 +414,10 @@ describe('ModelingSubmissionComponent', () => {
 
     it('should deactivate return true when there are unsaved changes', () => {
         const currentModel = <UMLModel>(<unknown>{
-            elements: [<UMLElement>(<unknown>{ owner: 'ownerId1', id: 'elementId1' }), <UMLElement>(<unknown>{ owner: 'ownerId2', id: 'elementId2' })],
+            elements: [<UMLElement>(<unknown>{
+                    owner: 'ownerId1',
+                    id: 'elementId1',
+                }), <UMLElement>(<unknown>{ owner: 'ownerId2', id: 'elementId2' })],
             version: 'version',
         });
         const unsavedModel = <UMLModel>(<unknown>{

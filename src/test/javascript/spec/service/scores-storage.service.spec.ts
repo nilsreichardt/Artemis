@@ -15,7 +15,10 @@ describe('ScoresStorageService', () => {
             { score: 100, participationId: participation1.id },
             { score: 0, participationId: participation2.id },
         ]);
-        expect(scoresStorageService.getStoredParticipationResult(1)).toEqual({ score: 100, participationId: participation1.id });
+        expect(scoresStorageService.getStoredParticipationResult(1)).toEqual({
+            score: 100,
+            participationId: participation1.id,
+        });
         // Should return undefined for an unknown participation id.
         expect(scoresStorageService.getStoredParticipationResult(3)).toBeUndefined();
     });

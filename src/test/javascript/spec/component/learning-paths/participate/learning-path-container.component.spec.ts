@@ -144,7 +144,10 @@ describe('LearningPathContainerComponent', () => {
         comp.lectureId = lecture.id;
         comp.lecture = lecture;
         fixture.detectChanges();
-        const instance = { lecture: undefined, lectureUnit: undefined } as unknown as LearningPathLectureUnitViewComponent;
+        const instance = {
+            lecture: undefined,
+            lectureUnit: undefined,
+        } as unknown as LearningPathLectureUnitViewComponent;
         comp.setupLectureUnitView(instance);
         expect(instance.lecture).toEqual(lecture);
         expect(instance.lectureUnit).toEqual(lectureUnit);
@@ -154,7 +157,11 @@ describe('LearningPathContainerComponent', () => {
         comp.exercise = exercise;
         comp.learningObjectId = exercise.id!;
         fixture.detectChanges();
-        const instance = { learningPathMode: false, courseId: undefined, exerciseId: undefined } as unknown as CourseExerciseDetailsComponent;
+        const instance = {
+            learningPathMode: false,
+            courseId: undefined,
+            exerciseId: undefined,
+        } as unknown as CourseExerciseDetailsComponent;
         comp.setupExerciseView(instance);
         expect(instance.learningPathMode).toBeTruthy();
         expect(instance.courseId).toBe(1);
@@ -162,7 +169,12 @@ describe('LearningPathContainerComponent', () => {
     });
 
     it('should handle lecture unit node click', () => {
-        const node = { id: 'some-id', type: NodeType.LECTURE_UNIT, linkedResource: 2, linkedResourceParent: 3 } as NgxLearningPathNode;
+        const node = {
+            id: 'some-id',
+            type: NodeType.LECTURE_UNIT,
+            linkedResource: 2,
+            linkedResourceParent: 3,
+        } as NgxLearningPathNode;
         comp.onNodeClicked(node);
         expect(comp.learningObjectId).toBe(node.linkedResource);
         expect(comp.lectureId).toBe(node.linkedResourceParent);

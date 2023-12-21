@@ -50,9 +50,14 @@ describe('Course management', () => {
             const uid = generateUUID();
             courseData.title = 'Course ' + uid;
             courseData.shortName = 'cypress' + uid;
-            courseManagementAPIRequest.createCourse({ courseName: courseData.title, courseShortName: courseData.shortName }).then((response) => {
-                course = convertModelAfterMultiPart(response);
-            });
+            courseManagementAPIRequest
+                .createCourse({
+                    courseName: courseData.title,
+                    courseShortName: courseData.shortName,
+                })
+                .then((response) => {
+                    course = convertModelAfterMultiPart(response);
+                });
         });
 
         it('Manually adds and removes a student', () => {
@@ -198,9 +203,14 @@ describe('Course management', () => {
             const uid = generateUUID();
             courseData.title = 'Course ' + uid;
             courseData.shortName = 'cypress' + uid;
-            courseManagementAPIRequest.createCourse({ courseName: courseData.title, courseShortName: courseData.shortName }).then((response) => {
-                course = convertModelAfterMultiPart(response);
-            });
+            courseManagementAPIRequest
+                .createCourse({
+                    courseName: courseData.title,
+                    courseShortName: courseData.shortName,
+                })
+                .then((response) => {
+                    course = convertModelAfterMultiPart(response);
+                });
         });
 
         it('Edits a existing course', () => {
@@ -258,9 +268,14 @@ describe('Course management', () => {
                 cy.fixture('course/icon.png', 'base64')
                     .then(Cypress.Blob.base64StringToBlob)
                     .then((blob) => {
-                        courseManagementAPIRequest.createCourse({ iconFileName: 'icon.png', iconFile: blob }).then((response) => {
-                            course = convertModelAfterMultiPart(response);
-                        });
+                        courseManagementAPIRequest
+                            .createCourse({
+                                iconFileName: 'icon.png',
+                                iconFile: blob,
+                            })
+                            .then((response) => {
+                                course = convertModelAfterMultiPart(response);
+                            });
                     });
             });
 

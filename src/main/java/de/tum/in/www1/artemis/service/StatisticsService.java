@@ -46,8 +46,8 @@ public class StatisticsService {
     private final GradingScaleRepository gradingScaleRepository;
 
     public StatisticsService(StatisticsRepository statisticsRepository, ParticipantScoreRepository participantScoreRepository, CourseRepository courseRepository,
-            ExerciseRepository exerciseRepository, UserRepository userRepository, TeamRepository teamRepository, StudentParticipationRepository studentParticipationRepository,
-            GradingScaleRepository gradingScaleRepository) {
+                             ExerciseRepository exerciseRepository, UserRepository userRepository, TeamRepository teamRepository, StudentParticipationRepository studentParticipationRepository,
+                             GradingScaleRepository gradingScaleRepository) {
         this.statisticsRepository = statisticsRepository;
         this.participantScoreRepository = participantScoreRepository;
         this.courseRepository = courseRepository;
@@ -187,8 +187,7 @@ public class StatisticsService {
             numberOfParticipationsOfStudentsOrTeams = teamParticipations == null ? 0L : teamParticipations;
 
             numberOfStudentsOrTeams = teamRepository.getNumberOfTeamsForExercise(exercise.getId());
-        }
-        else {
+        } else {
             Long studentParticipations = exerciseRepository.getStudentParticipationCountById(exercise.getId());
             numberOfParticipationsOfStudentsOrTeams = studentParticipations == null ? 0L : studentParticipations;
 
@@ -217,8 +216,7 @@ public class StatisticsService {
             var index = (int) (score.getScore() / 10.0);
             if (index >= 10) {
                 scoreDistribution[9] += 1;
-            }
-            else {
+            } else {
                 scoreDistribution[index] += 1;
             }
         });
@@ -240,8 +238,7 @@ public class StatisticsService {
             var releaseDateB = exerciseB.getReleaseDate();
             if (releaseDateA == null || releaseDateB == null || releaseDateA.isEqual(releaseDateB)) {
                 return 0;
-            }
-            else {
+            } else {
                 // Sort the one with the earlier release date first
                 return releaseDateA.isBefore(releaseDateB) ? -1 : 1;
             }

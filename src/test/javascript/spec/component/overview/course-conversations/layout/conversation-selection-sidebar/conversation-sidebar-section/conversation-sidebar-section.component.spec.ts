@@ -51,7 +51,13 @@ examples.forEach((activeConversation) => {
             TestBed.configureTestingModule({
                 imports: [NgbCollapseMocksModule],
                 declarations: [ConversationSidebarSectionComponent, ConversationSidebarEntryStubComponent, MockComponent(FaIconComponent), MockPipe(ArtemisTranslatePipe)],
-                providers: [{ provide: LocalStorageService, useClass: MockLocalStorageService }, MockProvider(ConversationService)],
+                providers: [
+                    {
+                        provide: LocalStorageService,
+                        useClass: MockLocalStorageService,
+                    },
+                    MockProvider(ConversationService),
+                ],
             }).compileComponents();
         }));
 

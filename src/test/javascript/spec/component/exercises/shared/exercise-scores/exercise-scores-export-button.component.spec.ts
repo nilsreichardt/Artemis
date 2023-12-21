@@ -158,7 +158,14 @@ describe('ExerciseScoresExportButtonComponent', () => {
         TestBed.configureTestingModule({
             imports: [MockDirective(NgbTooltip)],
             declarations: [ExerciseScoresExportButtonComponent, MockComponent(FaIconComponent), MockDirective(TranslateDirective), MockPipe(ArtemisTranslatePipe)],
-            providers: [MockProvider(AlertService), { provide: ResultService, useClass: MockResultService }, { provide: TranslateService, useClass: MockTranslateService }],
+            providers: [
+                MockProvider(AlertService),
+                {
+                    provide: ResultService,
+                    useClass: MockResultService,
+                },
+                { provide: TranslateService, useClass: MockTranslateService },
+            ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(ExerciseScoresExportButtonComponent);

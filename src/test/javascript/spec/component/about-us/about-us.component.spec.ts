@@ -21,7 +21,14 @@ describe('AboutUsComponent', () => {
         TestBed.configureTestingModule({
             imports: [ArtemisTestModule],
             declarations: [AboutUsComponent, TranslatePipeMock, MockDirective(TranslateDirective)],
-            providers: [{ provide: ActivatedRoute, useValue: route }, MockProvider(ProfileService), MockProvider(StaticContentService)],
+            providers: [
+                {
+                    provide: ActivatedRoute,
+                    useValue: route,
+                },
+                MockProvider(ProfileService),
+                MockProvider(StaticContentService),
+            ],
         })
             .compileComponents()
             .then(() => {
@@ -40,7 +47,10 @@ describe('AboutUsComponent', () => {
         const getStaticJsonFromArtemisServerStub = jest.spyOn(staticContentService, 'getStaticJsonFromArtemisServer').mockReturnValue(of(new AboutUsModel([], [])));
         const getProfileInfoSub = jest.spyOn(profileService, 'getProfileInfo');
         getProfileInfoSub.mockReturnValue(
-            new BehaviorSubject<ProfileInfo>({ inProduction: false, sshCloneURLTemplate: 'ssh://git@testserver.com:1234/' } as ProfileInfo).asObservable(),
+            new BehaviorSubject<ProfileInfo>({
+                inProduction: false,
+                sshCloneURLTemplate: 'ssh://git@testserver.com:1234/',
+            } as ProfileInfo).asObservable(),
         );
 
         fixture.detectChanges();
@@ -62,9 +72,12 @@ describe('AboutUsComponent', () => {
         const contributors = [new ContributorModel(fullName, photoDirectory, undefined, role, website)];
 
         const getStaticJsonFromArtemisServerStub = jest.spyOn(staticContentService, 'getStaticJsonFromArtemisServer').mockReturnValue(of(new AboutUsModel([], contributors)));
-        const getProfileInfoStub = jest
-            .spyOn(profileService, 'getProfileInfo')
-            .mockReturnValue(of({ inProduction: false, sshCloneURLTemplate: 'ssh://git@testserver.com:1234/' } as ProfileInfo));
+        const getProfileInfoStub = jest.spyOn(profileService, 'getProfileInfo').mockReturnValue(
+            of({
+                inProduction: false,
+                sshCloneURLTemplate: 'ssh://git@testserver.com:1234/',
+            } as ProfileInfo),
+        );
 
         fixture.detectChanges();
         tick();

@@ -1,18 +1,5 @@
 package de.tum.in.www1.artemis.web.rest;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import de.tum.in.www1.artemis.domain.Attachment;
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.User;
@@ -27,7 +14,27 @@ import de.tum.in.www1.artemis.service.FilePathService;
 import de.tum.in.www1.artemis.service.FileService;
 import de.tum.in.www1.artemis.service.notifications.GroupNotificationService;
 import de.tum.in.www1.artemis.web.rest.util.HeaderUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import tech.jhipster.web.util.ResponseUtil;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing Attachment.
@@ -56,7 +63,7 @@ public class AttachmentResource {
     private final FilePathService filePathService;
 
     public AttachmentResource(AttachmentRepository attachmentRepository, GroupNotificationService groupNotificationService, AuthorizationCheckService authorizationCheckService,
-            UserRepository userRepository, FileService fileService, FilePathService filePathService) {
+                              UserRepository userRepository, FileService fileService, FilePathService filePathService) {
         this.attachmentRepository = attachmentRepository;
         this.groupNotificationService = groupNotificationService;
         this.authorizationCheckService = authorizationCheckService;
@@ -100,7 +107,7 @@ public class AttachmentResource {
     @PutMapping(value = "attachments/{attachmentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @EnforceAtLeastEditor
     public ResponseEntity<Attachment> updateAttachment(@PathVariable Long attachmentId, @RequestPart Attachment attachment, @RequestPart(required = false) MultipartFile file,
-            @RequestParam(value = "notificationText", required = false) String notificationText) {
+                                                       @RequestParam(value = "notificationText", required = false) String notificationText) {
         log.debug("REST request to update Attachment : {}", attachment);
         attachment.setId(attachmentId);
 
@@ -170,12 +177,10 @@ public class AttachmentResource {
             relatedEntity = "lecture " + attachment.getLecture().getTitle();
             try {
                 this.fileService.evictCacheForPath(filePathService.actualPathForPublicPath(URI.create(attachment.getLink())));
-            }
-            catch (RuntimeException exception) {
+            } catch (RuntimeException exception) {
                 // this catch is required for deleting wrongly formatted attachment database entries
             }
-        }
-        else if (attachment.getExercise() != null) {
+        } else if (attachment.getExercise() != null) {
             course = attachment.getExercise().getCourseViaExerciseGroupOrCourseMember();
             relatedEntity = "exercise " + attachment.getExercise().getTitle();
         }

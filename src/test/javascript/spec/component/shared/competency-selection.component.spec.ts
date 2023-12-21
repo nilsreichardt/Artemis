@@ -111,7 +111,14 @@ describe('CompetencySelection', () => {
     });
 
     it('should select competencies when value is written', () => {
-        jest.spyOn(courseStorageService, 'getCourse').mockReturnValue({ competencies: [{ id: 1, title: 'test' } as Competency] });
+        jest.spyOn(courseStorageService, 'getCourse').mockReturnValue({
+            competencies: [
+                {
+                    id: 1,
+                    title: 'test',
+                } as Competency,
+            ],
+        });
 
         fixture.detectChanges();
 

@@ -54,6 +54,7 @@ class EditState extends State {
     }
 
     edit() {}
+
     assess() {
         this.context.state = new NewAssessmentState(this.context);
     }
@@ -69,6 +70,7 @@ class AssessState extends State {
     constructor(context: Context) {
         super(context, UIStates.ASSESSMENT, SubmissionButtonStates.EDIT, AssessButtonStates.UPDATE);
     }
+
     assess() {}
 }
 
@@ -76,6 +78,8 @@ class CompletionState extends State {
     constructor(context: Context) {
         super(context, UIStates.ASSESSMENT, SubmissionButtonStates.NONE, AssessButtonStates.NONE);
     }
+
     edit() {}
+
     assess() {}
 }

@@ -66,9 +66,14 @@ describe('AthenaService', () => {
         const mockProfileInfo = { activeProfiles: ['athena'] } as ProfileInfo;
         jest.spyOn(profileService, 'getProfileInfo').mockReturnValue(of(mockProfileInfo));
 
-        athenaService.getTextFeedbackSuggestions(textExercise, { id: 2, text: 'Hello world, this is a test' } as TextSubmission).subscribe((suggestions: TextBlockRef[]) => {
-            textResponse = suggestions;
-        });
+        athenaService
+            .getTextFeedbackSuggestions(textExercise, {
+                id: 2,
+                text: 'Hello world, this is a test',
+            } as TextSubmission)
+            .subscribe((suggestions: TextBlockRef[]) => {
+                textResponse = suggestions;
+            });
         const requestWrapperText = httpTestingController.expectOne({ url: 'api/athena/text-exercises/1/submissions/2/feedback-suggestions' });
         requestWrapperText.flush(textFeedbackSuggestions);
 
@@ -104,9 +109,14 @@ describe('AthenaService', () => {
 
         const exerciseWithoutFeedbackSuggestions = { ...textExercise, feedbackSuggestionsEnabled: false } as Exercise;
 
-        athenaService.getTextFeedbackSuggestions(exerciseWithoutFeedbackSuggestions, { id: 2, text: '' } as TextSubmission).subscribe((suggestions: TextBlockRef[]) => {
-            response = suggestions;
-        });
+        athenaService
+            .getTextFeedbackSuggestions(exerciseWithoutFeedbackSuggestions, {
+                id: 2,
+                text: '',
+            } as TextSubmission)
+            .subscribe((suggestions: TextBlockRef[]) => {
+                response = suggestions;
+            });
 
         tick();
 
@@ -119,9 +129,14 @@ describe('AthenaService', () => {
         const mockProfileInfo = { activeProfiles: ['something'] } as ProfileInfo;
         jest.spyOn(profileService, 'getProfileInfo').mockReturnValue(of(mockProfileInfo));
 
-        athenaService.getTextFeedbackSuggestions(textExercise, { id: 2, text: '' } as TextSubmission).subscribe((suggestions: TextBlockRef[]) => {
-            response = suggestions;
-        });
+        athenaService
+            .getTextFeedbackSuggestions(textExercise, {
+                id: 2,
+                text: '',
+            } as TextSubmission)
+            .subscribe((suggestions: TextBlockRef[]) => {
+                response = suggestions;
+            });
 
         tick();
 

@@ -34,7 +34,10 @@ describe('UsersImportButtonComponent', () => {
     it('should initialize', () => {
         const componentInstance = { courseId: Number, exam: Exam };
         const result = new Promise((resolve) => resolve(true));
-        const modalServiceOpenStub = jest.spyOn(modalService, 'open').mockReturnValue(<NgbModalRef>{ componentInstance, result });
+        const modalServiceOpenStub = jest.spyOn(modalService, 'open').mockReturnValue(<NgbModalRef>{
+            componentInstance,
+            result,
+        });
 
         comp.openUsersImportDialog(new MouseEvent('click'));
         const openStudentsExamImportDialogButton = fixture.debugElement.query(By.css('jhi-button'));

@@ -48,7 +48,13 @@ describe('Course Group Membership Component', () => {
     let fixture: ComponentFixture<CourseGroupMembershipComponent>;
     let courseService: CourseManagementService;
     const courseGroup = CourseGroup.STUDENTS;
-    const course = { id: 123, title: 'Course Title', isAtLeastInstructor: true, endDate: dayjs().subtract(5, 'minutes'), courseArchivePath: 'some-path' };
+    const course = {
+        id: 123,
+        title: 'Course Title',
+        isAtLeastInstructor: true,
+        endDate: dayjs().subtract(5, 'minutes'),
+        courseArchivePath: 'some-path',
+    };
     const parentRoute = {
         data: of({ course }),
     } as any as ActivatedRoute;
@@ -59,7 +65,14 @@ describe('Course Group Membership Component', () => {
         TestBed.configureTestingModule({
             imports: [ArtemisTestModule],
             declarations: [CourseGroupMembershipComponent, CourseGroupStubComponent, MockDirective(TranslateDirective)],
-            providers: [{ provide: ActivatedRoute, useValue: route }, MockProvider(CourseManagementService), MockProvider(UserService)],
+            providers: [
+                {
+                    provide: ActivatedRoute,
+                    useValue: route,
+                },
+                MockProvider(CourseManagementService),
+                MockProvider(UserService),
+            ],
         })
             .compileComponents()
             .then(() => {

@@ -52,7 +52,13 @@ describe('TextExercise Management Detail Component', () => {
                 MockRouterLinkDirective,
                 MockPipe(ArtemisTranslatePipe),
             ],
-            providers: [{ provide: ActivatedRoute, useValue: new MockActivatedRoute() }, MockProvider(TranslateService)],
+            providers: [
+                {
+                    provide: ActivatedRoute,
+                    useValue: new MockActivatedRoute(),
+                },
+                MockProvider(TranslateService),
+            ],
         }).compileComponents();
         fixture = TestBed.createComponent(TextExerciseDetailComponent);
         comp = fixture.componentInstance;

@@ -58,6 +58,9 @@ export class AttachmentUnitService {
 
     getSlidesToRemove(lectureId: number, filename: string, keyPhrases: string) {
         const params = new HttpParams().set('commaSeparatedKeyPhrases', keyPhrases);
-        return this.httpClient.get<Array<number>>(`${this.resourceURL}/lectures/${lectureId}/attachment-units/slides-to-remove/${filename}`, { params, observe: 'response' });
+        return this.httpClient.get<Array<number>>(`${this.resourceURL}/lectures/${lectureId}/attachment-units/slides-to-remove/${filename}`, {
+            params,
+            observe: 'response',
+        });
     }
 }

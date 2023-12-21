@@ -91,8 +91,7 @@ public class PlagiarismCase extends AbstractAuditingEntity {
     public Set<User> getStudents() {
         if (student != null) {
             return Set.of(student);
-        }
-        else if (team != null) {
+        } else if (team != null) {
             return team.getStudents();
         }
         return Collections.emptySet();

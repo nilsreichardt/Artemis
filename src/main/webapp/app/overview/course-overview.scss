@@ -120,8 +120,10 @@ Course Info Bar
         .row.has-exercises {
             cursor: pointer;
             border-radius: 3px;
+
             &:hover {
                 background-color: var(--overview-light-background-color);
+
                 .icon {
                     color: var(--primary);
                 }
@@ -155,15 +157,19 @@ canvas#complete-chart {
     text-align: left;
     color: white;
     background-color: #3e8acc;
+
     &:hover {
         background-color: #0f6ab4;
     }
+
     &:active {
         box-shadow: 0 2px 0 var(--artemis-dark);
     }
+
     &:disabled {
         background-color: gray;
     }
+
     border: none;
     border-radius: 1px;
 }

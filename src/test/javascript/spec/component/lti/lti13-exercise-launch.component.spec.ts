@@ -86,7 +86,12 @@ describe('Lti13ExerciseLaunchComponent', () => {
     });
 
     it('onInit no targetLinkUri', () => {
-        const httpStub = jest.spyOn(http, 'post').mockReturnValue(of({ ltiIdToken: 'id-token', clientRegistrationId: 'client-id' }));
+        const httpStub = jest.spyOn(http, 'post').mockReturnValue(
+            of({
+                ltiIdToken: 'id-token',
+                clientRegistrationId: 'client-id',
+            }),
+        );
         const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
 
         expect(comp.isLaunching).toBeTrue();
@@ -103,7 +108,13 @@ describe('Lti13ExerciseLaunchComponent', () => {
 
     it('onInit success to call launch endpoint', () => {
         const targetLink = window.location.host + '/targetLink';
-        const httpStub = jest.spyOn(http, 'post').mockReturnValue(of({ targetLinkUri: targetLink, ltiIdToken: 'id-token', clientRegistrationId: 'client-id' }));
+        const httpStub = jest.spyOn(http, 'post').mockReturnValue(
+            of({
+                targetLinkUri: targetLink,
+                ltiIdToken: 'id-token',
+                clientRegistrationId: 'client-id',
+            }),
+        );
 
         expect(comp.isLaunching).toBeTrue();
 

@@ -38,7 +38,14 @@ describe('CourseManagementExerciseRowComponent', () => {
                 MockRouterLinkDirective,
                 MockPipe(ArtemisTimeAgoPipe),
             ],
-            providers: [{ provide: LocalStorageService, useClass: MockSyncStorage }, { provide: SessionStorageService, useClass: MockSyncStorage }, MockProvider(TranslateService)],
+            providers: [
+                { provide: LocalStorageService, useClass: MockSyncStorage },
+                {
+                    provide: SessionStorageService,
+                    useClass: MockSyncStorage,
+                },
+                MockProvider(TranslateService),
+            ],
         })
             .compileComponents()
             .then(() => {

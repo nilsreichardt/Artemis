@@ -19,6 +19,7 @@ interface SearchQuery {
     searchTerm: string;
     force: boolean;
 }
+
 @Component({
     selector: 'jhi-conversation-members',
     templateUrl: './conversation-members.component.html',

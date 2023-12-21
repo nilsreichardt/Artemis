@@ -7,6 +7,7 @@ import { ArtemisDatePipe, DateFormat, DateType } from 'app/shared/pipes/artemis-
 })
 export class ArtemisDateRangePipe implements PipeTransform {
     constructor(private artemisDatePipe: ArtemisDatePipe) {}
+
     transform(range: [DateType, DateType] | undefined | null, format: DateFormat = 'long-date', timeZone: string | undefined = undefined, weekDay = false): string {
         if (!range) {
             return '';

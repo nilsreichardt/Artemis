@@ -98,7 +98,11 @@ examples.forEach((activeConversation) => {
 
             const modalService = TestBed.inject(NgbModal);
             const mockModalRef = {
-                componentInstance: { course: undefined, activeConversation, initialize: () => {} },
+                componentInstance: {
+                    course: undefined,
+                    activeConversation,
+                    initialize: () => {},
+                },
                 result: Promise.resolve(),
             };
             const openDialogSpy = jest.spyOn(modalService, 'open').mockReturnValue(mockModalRef as unknown as NgbModalRef);

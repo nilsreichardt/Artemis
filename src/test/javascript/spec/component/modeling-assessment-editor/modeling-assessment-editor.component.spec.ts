@@ -328,7 +328,11 @@ describe('ModelingAssessmentEditorComponent', () => {
                         () =>
                             new HttpErrorResponse({
                                 status: 400,
-                                error: { message: errorMessage, errorKey: errorKeyFromServer, params: errorParams },
+                                error: {
+                                    message: errorMessage,
+                                    errorKey: errorKeyFromServer,
+                                    params: errorParams,
+                                },
                             }),
                     ),
                 );

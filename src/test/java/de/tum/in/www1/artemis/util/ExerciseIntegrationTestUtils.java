@@ -1,17 +1,17 @@
 package de.tum.in.www1.artemis.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.*;
-
+import de.tum.in.www1.artemis.domain.Exercise;
+import de.tum.in.www1.artemis.domain.ProgrammingExercise;
+import de.tum.in.www1.artemis.domain.enumeration.SortingOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 
-import de.tum.in.www1.artemis.domain.Exercise;
-import de.tum.in.www1.artemis.domain.ProgrammingExercise;
-import de.tum.in.www1.artemis.domain.enumeration.SortingOrder;
+import java.util.Comparator;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Service responsible for util methods / shared code that is helpful or common for testing all exercise types
@@ -76,8 +76,7 @@ public class ExerciseIntegrationTestUtils {
 
                 if (sort == Exercise.ExerciseSearchColumn.EXAM_TITLE) {
                     params.add("isCourseFilter", "false");
-                }
-                else if (sort == Exercise.ExerciseSearchColumn.COURSE_TITLE) {
+                } else if (sort == Exercise.ExerciseSearchColumn.COURSE_TITLE) {
                     params.add("isExamFilter", "false");
                 }
 
@@ -96,9 +95,11 @@ public class ExerciseIntegrationTestUtils {
         return switch (sort) {
             case ID -> Comparator.comparing(exercise -> exercise.getId());
             case TITLE -> Comparator.comparing(exercise -> exercise.getTitle());
-            case COURSE_TITLE -> Comparator.comparing(exercise -> exercise.getCourseViaExerciseGroupOrCourseMember().getTitle());
+            case COURSE_TITLE ->
+                    Comparator.comparing(exercise -> exercise.getCourseViaExerciseGroupOrCourseMember().getTitle());
             case EXAM_TITLE -> Comparator.comparing(exercise -> exercise.getExerciseGroup().getExam().getTitle());
-            case PROGRAMMING_LANGUAGE -> Comparator.comparing(exercise -> ((ProgrammingExercise) exercise).getProgrammingLanguage());
+            case PROGRAMMING_LANGUAGE ->
+                    Comparator.comparing(exercise -> ((ProgrammingExercise) exercise).getProgrammingLanguage());
         };
     }
 

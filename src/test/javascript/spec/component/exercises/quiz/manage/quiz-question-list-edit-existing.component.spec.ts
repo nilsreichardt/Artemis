@@ -90,7 +90,15 @@ const createValidSAQuestion = () => {
     const shortAnswerMapping2 = new ShortAnswerMapping(spot2, shortAnswerSolution2);
     question.correctMappings = [shortAnswerMapping1, shortAnswerMapping2];
     question.points = 10;
-    return { question, shortAnswerMapping1, shortAnswerMapping2, spot1, spot2, shortAnswerSolution1, shortAnswerSolution2 };
+    return {
+        question,
+        shortAnswerMapping1,
+        shortAnswerMapping2,
+        spot1,
+        spot2,
+        shortAnswerSolution1,
+        shortAnswerSolution2,
+    };
 };
 
 describe('QuizQuestionListEditExistingComponent', () => {
@@ -325,7 +333,11 @@ describe('QuizQuestionListEditExistingComponent', () => {
             // @ts-ignore
             reader = { ...reader, result: jsonContent };
             // @ts-ignore
-            generateFileReaderStub = jest.spyOn(component, 'generateFileReader').mockReturnValue({ ...reader, onload: null, readAsText });
+            generateFileReaderStub = jest.spyOn(component, 'generateFileReader').mockReturnValue({
+                ...reader,
+                onload: null,
+                readAsText,
+            });
             // @ts-ignore
             getElementStub = jest.spyOn(document, 'getElementById').mockReturnValue(control);
         });
@@ -434,8 +446,16 @@ describe('QuizQuestionListEditExistingComponent', () => {
             const dragItem2 = { id: 15, pictureFilePath: dragItemFileName2, invalid: false } as DragItem;
             question2.dragItems = [dragItem1, dragItem2];
             question2.correctMappings = [
-                { dragItem: { id: 14, pictureFilePath: dragItemFileName1 } as DragItem, dropLocation: dropLocation1, invalid: false },
-                { dragItem: { id: 15, pictureFilePath: dragItemFileName2 } as DragItem, dropLocation: dropLocation2, invalid: false },
+                {
+                    dragItem: { id: 14, pictureFilePath: dragItemFileName1 } as DragItem,
+                    dropLocation: dropLocation1,
+                    invalid: false,
+                },
+                {
+                    dragItem: { id: 15, pictureFilePath: dragItemFileName2 } as DragItem,
+                    dropLocation: dropLocation2,
+                    invalid: false,
+                },
             ];
             const onQuestionsAddedSpy = jest.spyOn(component.onQuestionsAdded, 'emit').mockImplementation();
             const onFilesAddedSpy = jest.spyOn(component.onFilesAdded, 'emit').mockImplementation();

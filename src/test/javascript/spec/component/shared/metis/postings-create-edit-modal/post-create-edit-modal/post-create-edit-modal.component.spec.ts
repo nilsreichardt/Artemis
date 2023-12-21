@@ -40,7 +40,14 @@ describe('PostCreateEditModalComponent', () => {
                 MockComponent(HelpIconComponent),
                 MockComponent(PostTagSelectorComponent),
             ],
-            providers: [FormBuilder, { provide: MetisService, useClass: MockMetisService }, { provide: NgbModal, useClass: MockNgbModalService }],
+            providers: [
+                FormBuilder,
+                { provide: MetisService, useClass: MockMetisService },
+                {
+                    provide: NgbModal,
+                    useClass: MockNgbModalService,
+                },
+            ],
         })
             .compileComponents()
             .then(() => {

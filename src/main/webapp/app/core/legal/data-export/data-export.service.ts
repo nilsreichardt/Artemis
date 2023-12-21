@@ -23,6 +23,7 @@ export class DataExportService {
     canDownloadAnyDataExport(): Observable<DataExport> {
         return this.http.get<DataExport>(`api/data-exports/can-download`);
     }
+
     canDownloadSpecificDataExport(dataExportId: number): Observable<boolean> {
         return this.http.get<boolean>(`api/data-exports/${dataExportId}/can-download`);
     }

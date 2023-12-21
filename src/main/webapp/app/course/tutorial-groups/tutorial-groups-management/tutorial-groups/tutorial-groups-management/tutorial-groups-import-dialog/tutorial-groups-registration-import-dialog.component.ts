@@ -15,10 +15,10 @@ import { takeUntil } from 'rxjs/operators';
 
 /**
  * Each row is a object with the structure
- * 	{
- * 		"Column Header 1": "foo",
- * 		"Column Header 2": "bar"
- * 	}
+ *    {
+ *        "Column Header 1": "foo",
+ *        "Column Header 2": "bar"
+ *    }
  */
 type ParsedCSVRow = object;
 
@@ -76,9 +76,11 @@ export class TutorialGroupsRegistrationImportDialogComponent implements OnInit, 
     get statusHeaderControl() {
         return this.fixedPlaceForm.get('statusHeader');
     }
+
     get fixedPlaceValueControl() {
         return this.fixedPlaceForm.get('fixedPlaceValue');
     }
+
     get specifyFixedPlaceControl() {
         return this.fixedPlaceForm.get('specifyFixedPlace');
     }
@@ -314,6 +316,7 @@ export class TutorialGroupsRegistrationImportDialogComponent implements OnInit, 
         }
         return invalidList.length === 0 ? null : this.translateService.instant('artemisApp.tutorialGroupImportDialog.errorMessages.withoutTitle') + invalidList.join(', ');
     }
+
     titleRegexValidation(csvRows: ParsedCSVRow[]): string | null {
         const invalidList: number[] = [];
         for (const [i, row] of csvRows.entries()) {

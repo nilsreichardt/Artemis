@@ -21,6 +21,7 @@ import { isChannelDto } from 'app/entities/metis/conversation/channel.model';
 import { isGroupChatDto } from 'app/entities/metis/conversation/group-chat.model';
 import { of } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
+
 @Component({
     selector: 'jhi-conversation-add-users-form',
     template: '',
@@ -33,6 +34,7 @@ class ConversationAddUsersFormStubComponent {
     @Input()
     activeConversation: ConversationDto;
 }
+
 const examples: ConversationDto[] = [generateExampleGroupChatDTO({}), generateExampleChannelDTO({})];
 examples.forEach((activeConversation) => {
     describe('ConversationAddUsersDialogComponent with ' + activeConversation.type, () => {

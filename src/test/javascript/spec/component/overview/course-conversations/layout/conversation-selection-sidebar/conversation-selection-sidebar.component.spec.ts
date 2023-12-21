@@ -53,7 +53,10 @@ examples.forEach((activeConversation) => {
             let component: ConversationSelectionSidebarComponent;
             let fixture: ComponentFixture<ConversationSelectionSidebarComponent>;
             let metisConversationService: MetisConversationService;
-            const course = { id: 1, courseInformationSharingConfiguration: CourseInformationSharingConfiguration.COMMUNICATION_AND_MESSAGING } as any;
+            const course = {
+                id: 1,
+                courseInformationSharingConfiguration: CourseInformationSharingConfiguration.COMMUNICATION_AND_MESSAGING,
+            } as any;
             const canCreateChannel = jest.fn();
             let allConversations: ConversationDto[] = [];
 
@@ -66,16 +69,40 @@ examples.forEach((activeConversation) => {
             const favoriteChannel = generateExampleChannelDTO({ id: 7, isFavorite: true });
 
             const visibleExerciseChannel = generateExampleChannelDTO({ id: 8, subType: ChannelSubType.EXERCISE });
-            const hiddenCExercisehannel = generateExampleChannelDTO({ id: 9, isHidden: true, subType: ChannelSubType.EXERCISE });
-            const favoritExerciseeChannel = generateExampleChannelDTO({ id: 10, isFavorite: true, subType: ChannelSubType.EXERCISE });
+            const hiddenCExercisehannel = generateExampleChannelDTO({
+                id: 9,
+                isHidden: true,
+                subType: ChannelSubType.EXERCISE,
+            });
+            const favoritExerciseeChannel = generateExampleChannelDTO({
+                id: 10,
+                isFavorite: true,
+                subType: ChannelSubType.EXERCISE,
+            });
 
             const visibleLectureChannel = generateExampleChannelDTO({ id: 11, subType: ChannelSubType.LECTURE });
-            const hiddenCLecturehannel = generateExampleChannelDTO({ id: 12, isHidden: true, subType: ChannelSubType.LECTURE });
-            const favoritLectureeChannel = generateExampleChannelDTO({ id: 13, isFavorite: true, subType: ChannelSubType.LECTURE });
+            const hiddenCLecturehannel = generateExampleChannelDTO({
+                id: 12,
+                isHidden: true,
+                subType: ChannelSubType.LECTURE,
+            });
+            const favoritLectureeChannel = generateExampleChannelDTO({
+                id: 13,
+                isFavorite: true,
+                subType: ChannelSubType.LECTURE,
+            });
 
             const visibleExamChannel = generateExampleChannelDTO({ id: 14, subType: ChannelSubType.EXAM });
-            const hiddenCExamhannel = generateExampleChannelDTO({ id: 15, isHidden: true, subType: ChannelSubType.EXAM });
-            const favoritExameChannel = generateExampleChannelDTO({ id: 16, isFavorite: true, subType: ChannelSubType.EXAM });
+            const hiddenCExamhannel = generateExampleChannelDTO({
+                id: 15,
+                isHidden: true,
+                subType: ChannelSubType.EXAM,
+            });
+            const favoritExameChannel = generateExampleChannelDTO({
+                id: 16,
+                isFavorite: true,
+                subType: ChannelSubType.EXAM,
+            });
 
             const visibleOneToOneChat = generateOneToOneChatDTO({ id: 17 });
             const hiddenOneToOneChat = generateOneToOneChatDTO({ id: 18, isHidden: true });
@@ -139,7 +166,9 @@ examples.forEach((activeConversation) => {
                     get: () => new BehaviorSubject(allConversations).asObservable(),
                 });
                 Object.defineProperty(metisConversationService, 'forceRefresh', { value: () => EMPTY });
-                Object.defineProperty(metisConversationService, 'setActiveConversation', { value: () => {} });
+                Object.defineProperty(metisConversationService, 'setActiveConversation', {
+                    value: () => {},
+                });
 
                 fixture = TestBed.createComponent(ConversationSelectionSidebarComponent);
                 component = fixture.componentInstance;
@@ -298,7 +327,10 @@ examples.forEach((activeConversation) => {
             it('should hide buttons if messaging disabled', fakeAsync(() => {
                 fixture.detectChanges();
                 tick(301);
-                component.course = { id: 1, courseInformationSharingConfiguration: CourseInformationSharingConfiguration.COMMUNICATION_ONLY } as any;
+                component.course = {
+                    id: 1,
+                    courseInformationSharingConfiguration: CourseInformationSharingConfiguration.COMMUNICATION_ONLY,
+                } as any;
                 component.isMessagingEnabled = false;
                 fixture.detectChanges();
                 tick(301);

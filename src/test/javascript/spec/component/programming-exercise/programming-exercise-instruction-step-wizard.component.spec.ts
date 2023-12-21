@@ -42,13 +42,25 @@ describe('ProgrammingExerciseInstructionStepWizardComponent', () => {
             feedbacks: [{ testCase: { testName: 'testBubbleSort', id: 1 }, detailText: 'lorem ipsum' }],
         };
         const tasks: Task[] = [
-            { id: 1, completeString: '[task][Implement BubbleSort](1)', taskName: 'Implement BubbleSort', testIds: [1] },
+            {
+                id: 1,
+                completeString: '[task][Implement BubbleSort](1)',
+                taskName: 'Implement BubbleSort',
+                testIds: [1],
+            },
             { id: 2, completeString: '[task][Implement MergeSort](2)', taskName: 'Implement MergeSort', testIds: [2] },
         ];
         comp.latestResult = result;
         comp.tasks = tasks;
 
-        triggerChanges(comp, { property: 'tasks', currentValue: tasks }, { property: 'latestResult', currentValue: result });
+        triggerChanges(
+            comp,
+            { property: 'tasks', currentValue: tasks },
+            {
+                property: 'latestResult',
+                currentValue: result,
+            },
+        );
         fixture.detectChanges();
 
         const steps = debugElement.queryAll(By.css(stepWizardStep));
@@ -69,7 +81,14 @@ describe('ProgrammingExerciseInstructionStepWizardComponent', () => {
         comp.latestResult = result;
         comp.tasks = [];
 
-        triggerChanges(comp, { property: 'tasks', currentValue: [] }, { property: 'latestResult', currentValue: result });
+        triggerChanges(
+            comp,
+            { property: 'tasks', currentValue: [] },
+            {
+                property: 'latestResult',
+                currentValue: result,
+            },
+        );
         fixture.detectChanges();
 
         const steps = debugElement.queryAll(By.css(stepWizardStep));

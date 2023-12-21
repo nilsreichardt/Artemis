@@ -136,14 +136,22 @@ describe('AccountService', () => {
         });
 
         it.each(authorities)('should return true if authority matches exactly', async (authority: Authority) => {
-            accountService.userIdentity = { id: authorities.indexOf(authority), groups: ['USER'], authorities: [authority] } as User;
+            accountService.userIdentity = {
+                id: authorities.indexOf(authority),
+                groups: ['USER'],
+                authorities: [authority],
+            } as User;
 
             await expect(accountService.hasAnyAuthority([authority])).resolves.toBeTrue();
         });
 
         it.each(authorities)('should return false if authority does not match', async (authority: Authority) => {
             const index = authorities.indexOf(authority);
-            accountService.userIdentity = { id: index + 1, groups: ['USER'], authorities: [authorities[(index + 1) % 5]] } as User;
+            accountService.userIdentity = {
+                id: index + 1,
+                groups: ['USER'],
+                authorities: [authorities[(index + 1) % 5]],
+            } as User;
 
             await expect(accountService.hasAnyAuthority([authority])).resolves.toBeFalse();
         });

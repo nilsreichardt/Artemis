@@ -106,7 +106,15 @@ describe('IrisChatbotWidgetComponent', () => {
             imports: [FormsModule, FontAwesomeModule, MatDialogModule],
             declarations: [IrisChatbotWidgetComponent, MockPipe(ArtemisTranslatePipe), MockPipe(HtmlForMarkdownPipe)],
             providers: [
-                { provide: MAT_DIALOG_DATA, useValue: { stateStore: stateStore, courseId: 1, exerciseId: 1, sessionService: mockCodeEditorSessionService } },
+                {
+                    provide: MAT_DIALOG_DATA,
+                    useValue: {
+                        stateStore: stateStore,
+                        courseId: 1,
+                        exerciseId: 1,
+                        sessionService: mockCodeEditorSessionService,
+                    },
+                },
                 { provide: IrisHttpMessageService, useValue: mockHttpCodeEditorMessageService },
                 { provide: NgbModal, useValue: mockModalService },
                 { provide: MatDialog, useValue: mockDialog },
@@ -162,7 +170,10 @@ describe('IrisChatbotWidgetComponent', () => {
         stateStore.dispatch(new SessionReceivedAction(123, [mockClientMessage, mockServerMessage]));
         jest.spyOn(stateStore, 'dispatchAndThen');
         component.newMessageTextContent = 'Hello';
-        const createMessage = { sender: IrisSender.USER, content: [new IrisTextMessageContent('Hello')] } as IrisUserMessage;
+        const createMessage = {
+            sender: IrisSender.USER,
+            content: [new IrisTextMessageContent('Hello')],
+        } as IrisUserMessage;
         const sessionMock = jest.spyOn(mockCodeEditorSessionService, 'sendMessage');
 
         // when

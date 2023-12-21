@@ -35,6 +35,7 @@ export class MockActivatedRoute extends ActivatedRoute {
     get firstChild(): ActivatedRoute {
         return this;
     }
+
     get parent(): ActivatedRoute {
         return this;
     }

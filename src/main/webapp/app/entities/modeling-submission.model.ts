@@ -9,6 +9,7 @@ export class ModelingSubmission extends Submission {
     public model?: string;
     public explanationText?: string;
     public similarElements?: ModelElementCount[];
+
     constructor() {
         super(SubmissionExerciseType.MODELING);
     }

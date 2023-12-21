@@ -79,9 +79,11 @@ export class StructuredGradingInstructionsAssessmentLayoutComponent implements O
         }
         return colour;
     }
+
     setScore(nr: number) {
         return nr + 'P';
     }
+
     /**
      * Connects the SGI with the Feedback of a Submission Element in assessment detail
      * @param {Event} event - The drag event
@@ -92,6 +94,7 @@ export class StructuredGradingInstructionsAssessmentLayoutComponent implements O
         // The mimetype has to be text/plain to enable dragging into an external application, e.g. Orion, Apollon
         event.dataTransfer.setData('text/plain', JSON.stringify(instruction));
     }
+
     /**
      * disables drag if on readOnly mode
      */

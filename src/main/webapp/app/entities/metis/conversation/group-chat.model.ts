@@ -8,6 +8,7 @@ export class GroupChat extends Conversation {
         super(ConversationType.GROUP_CHAT);
     }
 }
+
 export class GroupChatDto extends ConversationDto {
     public members?: ConversationUserDTO[];
     public name?: string;
@@ -16,6 +17,7 @@ export class GroupChatDto extends ConversationDto {
         super(ConversationType.GROUP_CHAT);
     }
 }
+
 export function isGroupChatDto(conversation: ConversationDto): conversation is GroupChatDto {
     return conversation.type === ConversationType.GROUP_CHAT;
 }

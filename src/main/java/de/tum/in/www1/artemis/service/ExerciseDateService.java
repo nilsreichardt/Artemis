@@ -69,12 +69,10 @@ public class ExerciseDateService {
         if (exercise.isExamExercise()) {
             if (participation instanceof StudentParticipation studentParticipation) {
                 return examDateService.isExerciseWorkingPeriodOver(exercise, studentParticipation);
-            }
-            else {
+            } else {
                 return examDateService.isExamWithGracePeriodOver(exercise.getExamViaExerciseGroupOrCourseMember());
             }
-        }
-        else {
+        } else {
             final ZonedDateTime now = ZonedDateTime.now();
             return getDueDate(participation).map(now::isAfter).orElse(false);
         }
@@ -141,8 +139,7 @@ public class ExerciseDateService {
 
         if (participation.getIndividualDueDate() != null) {
             return Optional.of(participation.getIndividualDueDate());
-        }
-        else {
+        } else {
             return Optional.ofNullable(exercise.getDueDate());
         }
     }

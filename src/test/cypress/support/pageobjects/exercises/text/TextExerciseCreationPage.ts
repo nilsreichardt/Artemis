@@ -1,7 +1,6 @@
 import { Dayjs } from 'dayjs/esm';
 
-import { BASE_API } from '../../../constants';
-import { POST } from '../../../constants';
+import { BASE_API, POST } from '../../../constants';
 import { enterDate } from '../../../utils';
 
 /**

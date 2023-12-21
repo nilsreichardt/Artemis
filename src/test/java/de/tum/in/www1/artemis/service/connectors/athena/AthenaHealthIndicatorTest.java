@@ -1,13 +1,12 @@
 package de.tum.in.www1.artemis.service.connectors.athena;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import de.tum.in.www1.artemis.AbstractAthenaTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.Status;
 
-import de.tum.in.www1.artemis.AbstractAthenaTest;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class AthenaHealthIndicatorTest extends AbstractAthenaTest {
 

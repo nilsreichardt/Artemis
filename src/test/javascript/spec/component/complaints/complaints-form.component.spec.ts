@@ -20,7 +20,11 @@ import { By } from '@angular/platform-browser';
 describe('ComplaintsFormComponent', () => {
     const teamComplaints = 42;
     const studentComplaints = 69;
-    const course: Course = { maxTeamComplaints: teamComplaints, maxComplaints: studentComplaints, maxComplaintTextLimit: 20 };
+    const course: Course = {
+        maxTeamComplaints: teamComplaints,
+        maxComplaints: studentComplaints,
+        maxComplaintTextLimit: 20,
+    };
     const exercise: Exercise = { id: 1, teamMode: false } as Exercise;
     const courseExercise: Exercise = { id: 1, teamMode: false, course } as Exercise;
     const courseTeamExercise: Exercise = { id: 1, teamMode: true, course } as Exercise;

@@ -45,10 +45,17 @@ describe('ThemeService', () => {
 
                 windowMatchMediaSpy = jest.spyOn(window, 'matchMedia').mockImplementation((query) => {
                     if (query === '(prefers-color-scheme)') {
-                        return { media: '(prefers-color-scheme)', addEventListener: jest.fn() } as any as MediaQueryList;
+                        return {
+                            media: '(prefers-color-scheme)',
+                            addEventListener: jest.fn(),
+                        } as any as MediaQueryList;
                     }
                     if (query === '(prefers-color-scheme: dark)') {
-                        return { media: '(prefers-color-scheme: dark)', matches: false, addEventListener: jest.fn() } as any as MediaQueryList;
+                        return {
+                            media: '(prefers-color-scheme: dark)',
+                            matches: false,
+                            addEventListener: jest.fn(),
+                        } as any as MediaQueryList;
                     }
                     throw new Error('Should not happen');
                 });
@@ -114,7 +121,11 @@ describe('ThemeService', () => {
                 return { media: '(prefers-color-scheme)', addEventListener: jest.fn() } as any as MediaQueryList;
             }
             if (query === '(prefers-color-scheme: dark)') {
-                return { media: '(prefers-color-scheme: dark)', matches: true, addEventListener: jest.fn() } as any as MediaQueryList;
+                return {
+                    media: '(prefers-color-scheme: dark)',
+                    matches: true,
+                    addEventListener: jest.fn(),
+                } as any as MediaQueryList;
             }
             throw new Error('Shouldnt happen');
         });

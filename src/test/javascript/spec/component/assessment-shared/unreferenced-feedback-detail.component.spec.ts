@@ -32,7 +32,13 @@ describe('Unreferenced Feedback Detail Component', () => {
                 MockDirective(DeleteButtonDirective),
                 MockComponent(AssessmentCorrectionRoundBadgeComponent),
             ],
-            providers: [{ provide: TranslateService, useClass: MockTranslateService }, MockProvider(StructuredGradingCriterionService)],
+            providers: [
+                {
+                    provide: TranslateService,
+                    useClass: MockTranslateService,
+                },
+                MockProvider(StructuredGradingCriterionService),
+            ],
         })
             .compileComponents()
             .then(() => {
@@ -43,7 +49,14 @@ describe('Unreferenced Feedback Detail Component', () => {
     });
 
     it('should update feedback with SGI and emit to parent', () => {
-        const instruction: GradingInstruction = { id: 1, credits: 2, feedback: 'test', gradingScale: 'good', instructionDescription: 'description of instruction', usageCount: 0 };
+        const instruction: GradingInstruction = {
+            id: 1,
+            credits: 2,
+            feedback: 'test',
+            gradingScale: 'good',
+            instructionDescription: 'description of instruction',
+            usageCount: 0,
+        };
         comp.feedback = {
             id: 1,
             detailText: 'feedback1',

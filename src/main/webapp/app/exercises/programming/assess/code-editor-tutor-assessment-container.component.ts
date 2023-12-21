@@ -350,7 +350,11 @@ export class CodeEditorTutorAssessmentContainerComponent implements OnInit, OnDe
      */
     async discardPendingSubmissionsWithConfirmation(): Promise<boolean> {
         if (this.feedbackSuggestions.length > 0) {
-            const modalRef = this.modalService.open(FeedbackSuggestionsPendingConfirmationDialogComponent, { size: 'lg', backdrop: 'static', animation: true });
+            const modalRef = this.modalService.open(FeedbackSuggestionsPendingConfirmationDialogComponent, {
+                size: 'lg',
+                backdrop: 'static',
+                animation: true,
+            });
             const suggestionsDiscardConfirmed: boolean = await firstValueFrom(modalRef.closed);
             if (!suggestionsDiscardConfirmed) {
                 return false;

@@ -1,4 +1,3 @@
-
 package de.tum.in.www1.artemis.domain;
 
 import static de.tum.in.www1.artemis.service.util.RoundingUtil.roundScoreSpecifiedByCourseSettings;

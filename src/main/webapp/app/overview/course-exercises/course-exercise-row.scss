@@ -11,14 +11,17 @@
         background-color: var(--overview-light-background-color);
         border-radius: 3px;
         transition: transform 0.2s linear;
+
         .row {
             min-height: 35px;
             align-items: center;
         }
+
         &:hover {
             transform: scale(1.012);
             background-color: var(--hover-slightly-darker-body-bg);
         }
+
         .exercise-link {
             color: #212529;
         }

@@ -52,6 +52,7 @@ export const enum Language {
     ENGLISH = 'ENGLISH',
     GERMAN = 'GERMAN',
 }
+
 export class Course implements BaseEntity {
     public id?: number;
     public title?: string;

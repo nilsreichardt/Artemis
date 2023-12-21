@@ -115,7 +115,16 @@ describe('OrionConnectorService', () => {
     });
 
     it('should forward onBuildFailed with error', () => {
-        serviceUnderTest.onBuildFailed([{ fileName: 'file', row: 5, column: 4, text: 'error', type: 'error', timestamp: 0 } as Annotation]);
+        serviceUnderTest.onBuildFailed([
+            {
+                fileName: 'file',
+                row: 5,
+                column: 4,
+                text: 'error',
+                type: 'error',
+                timestamp: 0,
+            } as Annotation,
+        ]);
 
         expect((window as any).orionBuildConnector.onBuildFailed).toHaveBeenCalledOnce();
         expect((window as any).orionBuildConnector.onBuildFailed).toHaveBeenCalledWith(
@@ -227,7 +236,14 @@ describe('OrionConnectorService', () => {
     });
 
     it('should forward initializeAssessment', () => {
-        const feedbacks = [{ id: 2, positive: false, detailText: 'abc' } as Feedback, { id: 3, positive: true, detailText: 'cde' } as Feedback];
+        const feedbacks = [
+            { id: 2, positive: false, detailText: 'abc' } as Feedback,
+            {
+                id: 3,
+                positive: true,
+                detailText: 'cde',
+            } as Feedback,
+        ];
         serviceUnderTest.initializeAssessment(5, feedbacks);
 
         expect((window as any).orionExerciseConnector.initializeAssessment).toHaveBeenCalledOnce();

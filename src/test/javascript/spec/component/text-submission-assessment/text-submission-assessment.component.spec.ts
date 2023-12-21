@@ -472,7 +472,12 @@ describe('TextSubmissionAssessmentComponent', () => {
         expect(component.textBlockRefs).toEqual(
             // Checking if sortAndSetTextBlockRefs selected the right TextBlockRef (the one having a feedback)
             // Performing partial match for { block: { text: ...}, feedback: { id: ... } }
-            expect.arrayContaining([expect.objectContaining({ block: expect.objectContaining({ text: 'text.' }), feedback: expect.objectContaining({ id: 3 }) })]),
+            expect.arrayContaining([
+                expect.objectContaining({
+                    block: expect.objectContaining({ text: 'text.' }),
+                    feedback: expect.objectContaining({ id: 3 }),
+                }),
+            ]),
         );
 
         // Checking if a new block was added to compensate for the loss of submitted text due to the overlap between blocks

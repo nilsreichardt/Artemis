@@ -1,10 +1,12 @@
 @if (criteria) {
     <div class="mb-2">
         <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="button" (click)="expandAll()">
-            <fa-icon [icon]="faExpand"></fa-icon> <span>{{ 'artemisApp.assessmentInstructions.expandAll' | artemisTranslate }}</span>
+            <fa-icon [icon]="faExpand"></fa-icon>
+            <span>{{ 'artemisApp.assessmentInstructions.expandAll' | artemisTranslate }}</span>
         </button>
         <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="button" (click)="collapseAll()">
-            <fa-icon [icon]="faCompress"></fa-icon> <span>{{ 'artemisApp.assessmentInstructions.collapseAll' | artemisTranslate }}</span>
+            <fa-icon [icon]="faCompress"></fa-icon>
+            <span>{{ 'artemisApp.assessmentInstructions.collapseAll' | artemisTranslate }}</span>
         </button>
     </div>
 }

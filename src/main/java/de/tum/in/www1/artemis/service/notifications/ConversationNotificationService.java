@@ -34,7 +34,7 @@ public class ConversationNotificationService {
     private final SingleUserNotificationRepository singleUserNotificationRepository;
 
     public ConversationNotificationService(ConversationNotificationRepository conversationNotificationRepository,
-            GeneralInstantNotificationService generalInstantNotificationService, SingleUserNotificationRepository singleUserNotificationRepository) {
+                                           GeneralInstantNotificationService generalInstantNotificationService, SingleUserNotificationRepository singleUserNotificationRepository) {
         this.conversationNotificationRepository = conversationNotificationRepository;
         this.generalInstantNotificationService = generalInstantNotificationService;
         this.singleUserNotificationRepository = singleUserNotificationRepository;
@@ -58,19 +58,17 @@ public class ConversationNotificationService {
         // add channel/groupChat/oneToOneChat string to placeholders for notification to distinguish in mobile client
         if (conversation instanceof Channel channel) {
             notificationText = NEW_MESSAGE_CHANNEL_TEXT;
-            placeholders = new String[] { course.getTitle(), createdMessage.getContent(), createdMessage.getCreationDate().toString(), channel.getName(),
-                    createdMessage.getAuthor().getName(), "channel" };
+            placeholders = new String[]{course.getTitle(), createdMessage.getContent(), createdMessage.getCreationDate().toString(), channel.getName(),
+                    createdMessage.getAuthor().getName(), "channel"};
             notificationType = getNotificationTypeForChannel(channel);
-        }
-        else if (conversation instanceof GroupChat) {
+        } else if (conversation instanceof GroupChat) {
             notificationText = NEW_MESSAGE_GROUP_CHAT_TEXT;
-            placeholders = new String[] { course.getTitle(), createdMessage.getContent(), createdMessage.getCreationDate().toString(), createdMessage.getAuthor().getName(),
-                    conversationName, "groupChat" };
-        }
-        else {
+            placeholders = new String[]{course.getTitle(), createdMessage.getContent(), createdMessage.getCreationDate().toString(), createdMessage.getAuthor().getName(),
+                    conversationName, "groupChat"};
+        } else {
             notificationText = NEW_MESSAGE_DIRECT_TEXT;
-            placeholders = new String[] { course.getTitle(), createdMessage.getContent(), createdMessage.getCreationDate().toString(), createdMessage.getAuthor().getName(),
-                    conversationName, "oneToOneChat" };
+            placeholders = new String[]{course.getTitle(), createdMessage.getContent(), createdMessage.getCreationDate().toString(), createdMessage.getAuthor().getName(),
+                    conversationName, "oneToOneChat"};
         }
         ConversationNotification notification = createConversationMessageNotification(course.getId(), createdMessage, notificationType, notificationText, true, placeholders);
         save(notification, mentionedUsers, placeholders);
@@ -81,7 +79,7 @@ public class ConversationNotificationService {
         conversationNotificationRepository.save(notification);
 
         Set<SingleUserNotification> mentionedUserNotifications = mentionedUsers.stream().map(mentionedUser -> SingleUserNotificationFactory
-                .createNotification(notification.getMessage(), NotificationType.CONVERSATION_USER_MENTIONED, notification.getText(), placeHolders, mentionedUser))
+                        .createNotification(notification.getMessage(), NotificationType.CONVERSATION_USER_MENTIONED, notification.getText(), placeHolders, mentionedUser))
                 .collect(Collectors.toSet());
         singleUserNotificationRepository.saveAll(mentionedUserNotifications);
     }
@@ -112,17 +110,13 @@ public class ConversationNotificationService {
     private static NotificationType getNotificationTypeForChannel(Channel channel) {
         if (channel.getIsAnnouncementChannel()) {
             return NotificationType.NEW_ANNOUNCEMENT_POST;
-        }
-        else if (channel.getLecture() != null) {
+        } else if (channel.getLecture() != null) {
             return NotificationType.NEW_LECTURE_POST;
-        }
-        else if (channel.getExercise() != null) {
+        } else if (channel.getExercise() != null) {
             return NotificationType.NEW_EXERCISE_POST;
-        }
-        else if (channel.getExam() != null) {
+        } else if (channel.getExam() != null) {
             return NotificationType.NEW_EXAM_POST;
-        }
-        else if (channel.getIsCourseWide()) {
+        } else if (channel.getIsCourseWide()) {
             return NotificationType.NEW_COURSE_POST;
         }
         return NotificationType.CONVERSATION_NEW_MESSAGE;

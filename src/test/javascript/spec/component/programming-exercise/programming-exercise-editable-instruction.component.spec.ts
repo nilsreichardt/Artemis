@@ -229,15 +229,28 @@ describe('ProgrammingExerciseEditableInstructionComponent', () => {
         comp.markdownEditor = { aceEditorContainer };
 
         const analysis = new Map();
-        analysis.set(0, { lineNumber: 0, invalidTestCases: ['artemisApp.programmingExercise.testCaseAnalysis.invalidTestCase'] });
+        analysis.set(0, {
+            lineNumber: 0,
+            invalidTestCases: ['artemisApp.programmingExercise.testCaseAnalysis.invalidTestCase'],
+        });
         analysis.set(2, {
             lineNumber: 2,
             invalidTestCases: ['artemisApp.programmingExercise.testCaseAnalysis.invalidTestCase'],
         });
 
         const expectedWarnings = [
-            { column: 0, row: 0, text: ' - artemisApp.programmingExercise.testCaseAnalysis.invalidTestCase', type: 'warning' },
-            { column: 0, row: 2, text: ' - artemisApp.programmingExercise.testCaseAnalysis.invalidTestCase', type: 'warning' },
+            {
+                column: 0,
+                row: 0,
+                text: ' - artemisApp.programmingExercise.testCaseAnalysis.invalidTestCase',
+                type: 'warning',
+            },
+            {
+                column: 0,
+                row: 2,
+                text: ' - artemisApp.programmingExercise.testCaseAnalysis.invalidTestCase',
+                type: 'warning',
+            },
         ];
 
         comp.onAnalysisUpdate(analysis);
@@ -258,7 +271,9 @@ describe('ProgrammingExerciseEditableInstructionComponent', () => {
         const updateProblemStatement = jest.spyOn(programmingExerciseService, 'updateProblemStatement');
 
         comp.updateProblemStatement('new problem statement');
-        comp.saveInstructions({ stopPropagation: () => {} } as Event);
+        comp.saveInstructions({
+            stopPropagation: () => {},
+        } as Event);
 
         expect(updateProblemStatement).toHaveBeenCalledExactlyOnceWith(exercise.id, 'new problem statement');
     });

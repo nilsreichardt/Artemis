@@ -69,7 +69,13 @@ describe('Notification Service', () => {
     course.id = 42;
     course.isAtLeastTutor = true;
 
-    const quizExercise: QuizExercise = { course, title: 'test quiz', quizStarted: true, visibleToStudents: true, id: 27 } as QuizExercise;
+    const quizExercise: QuizExercise = {
+        course,
+        title: 'test quiz',
+        quizStarted: true,
+        visibleToStudents: true,
+        id: 27,
+    } as QuizExercise;
 
     const generateQuizNotification = () => {
         const generatedNotification = {
@@ -77,27 +83,41 @@ describe('Notification Service', () => {
             text: 'Quiz "' + quizExercise.title + '" just started.',
             notificationDate: dayjs(),
         } as Notification;
-        generatedNotification.target = JSON.stringify({ course: course.id, mainPage: 'courses', entity: 'exercises', id: quizExercise.id });
+        generatedNotification.target = JSON.stringify({
+            course: course.id,
+            mainPage: 'courses',
+            entity: 'exercises',
+            id: quizExercise.id,
+        });
         return generatedNotification;
     };
     const quizNotification = generateQuizNotification();
 
     const generateSingleUserNotification = () => {
-        const generatedNotification = { title: 'Single user notification', text: 'This is a notification for a single user' } as Notification;
+        const generatedNotification = {
+            title: 'Single user notification',
+            text: 'This is a notification for a single user',
+        } as Notification;
         generatedNotification.notificationDate = dayjs().subtract(3, 'days');
         return generatedNotification;
     };
     const singleUserNotification = generateSingleUserNotification();
 
     const generateGroupNotification = () => {
-        const generatedNotification = { title: 'simple group notification', text: 'This is a  simple group notification' } as Notification;
+        const generatedNotification = {
+            title: 'simple group notification',
+            text: 'This is a  simple group notification',
+        } as Notification;
         generatedNotification.notificationDate = dayjs();
         return generatedNotification;
     };
     const groupNotification = generateGroupNotification();
 
     const generateTutorialGroupNotification = () => {
-        const generatedNotification = { title: 'tutorial group notification', text: 'This is a simple tutorial group notification' } as Notification;
+        const generatedNotification = {
+            title: 'tutorial group notification',
+            text: 'This is a simple tutorial group notification',
+        } as Notification;
         generatedNotification.notificationDate = dayjs();
         return generatedNotification;
     };
@@ -105,27 +125,53 @@ describe('Notification Service', () => {
     const tutorialGroupNotification = generateTutorialGroupNotification();
 
     const generateConversationsNotification = () => {
-        const generatedNotification = { title: NEW_MESSAGE_TITLE, text: 'This is a simple new message notification' } as Notification;
-        generatedNotification.target = JSON.stringify({ message: 'new-message', entity: 'message', mainPage: 'courses', id: 10, course: course.id, conversation: conversation.id });
+        const generatedNotification = {
+            title: NEW_MESSAGE_TITLE,
+            text: 'This is a simple new message notification',
+        } as Notification;
+        generatedNotification.target = JSON.stringify({
+            message: 'new-message',
+            entity: 'message',
+            mainPage: 'courses',
+            id: 10,
+            course: course.id,
+            conversation: conversation.id,
+        });
         generatedNotification.notificationDate = dayjs();
         return generatedNotification;
     };
 
     const generateConversationReplyNotification = () => {
-        const generatedNotification = { title: NEW_REPLY_FOR_EXAM_POST_TITLE, text: 'This is a simple new reply message notification' } as Notification;
-        generatedNotification.target = JSON.stringify({ message: 'new-message', entity: 'message', mainPage: 'courses', id: 10, course: course.id, conversation: conversation.id });
+        const generatedNotification = {
+            title: NEW_REPLY_FOR_EXAM_POST_TITLE,
+            text: 'This is a simple new reply message notification',
+        } as Notification;
+        generatedNotification.target = JSON.stringify({
+            message: 'new-message',
+            entity: 'message',
+            mainPage: 'courses',
+            id: 10,
+            course: course.id,
+            conversation: conversation.id,
+        });
         generatedNotification.notificationDate = dayjs();
         return generatedNotification;
     };
 
     const generateDataExportCreationSuccessNotification = () => {
-        const generatedNotification = { title: DATA_EXPORT_CREATED_TITLE, text: 'Data export successfully created' } as Notification;
+        const generatedNotification = {
+            title: DATA_EXPORT_CREATED_TITLE,
+            text: 'Data export successfully created',
+        } as Notification;
         generatedNotification.target = JSON.stringify({ entity: 'data-exports', mainPage: 'privacy', id: 1 });
         generatedNotification.notificationDate = dayjs();
         return generatedNotification;
     };
     const generateDataExportCreationFailureNotification = () => {
-        const generatedNotification = { title: DATA_EXPORT_FAILED_TITLE, text: 'Data export creation failed' } as Notification;
+        const generatedNotification = {
+            title: DATA_EXPORT_FAILED_TITLE,
+            text: 'Data export creation failed',
+        } as Notification;
         generatedNotification.target = JSON.stringify({ entity: 'data-exports', mainPage: 'privacy' });
         generatedNotification.notificationDate = dayjs();
         return generatedNotification;
@@ -134,7 +180,10 @@ describe('Notification Service', () => {
     const conversationNotification = generateConversationsNotification();
 
     const generateConversationsCreationNotification = () => {
-        const generatedNotification = { title: CONVERSATION_CREATE_GROUP_CHAT_TITLE, text: 'This is a simple new group chat notification' } as Notification;
+        const generatedNotification = {
+            title: CONVERSATION_CREATE_GROUP_CHAT_TITLE,
+            text: 'This is a simple new group chat notification',
+        } as Notification;
         generatedNotification.target = JSON.stringify({
             message: 'conversation-creation',
             entity: 'conversation',
@@ -508,7 +557,11 @@ describe('Notification Service', () => {
         });
 
         it('should add notification about reply if current user is involved', () => {
-            jest.spyOn(accountService, 'userIdentity', 'get').mockReturnValue({ id: 1, login: 'test', name: 'A B' } as User);
+            jest.spyOn(accountService, 'userIdentity', 'get').mockReturnValue({
+                id: 1,
+                login: 'test',
+                name: 'A B',
+            } as User);
             const notification = { author: { id: 2 }, target: 'target', notificationDate: dayjs() } as Notification;
             const postDTO: MetisPostDTO = {
                 post: {
@@ -525,7 +578,11 @@ describe('Notification Service', () => {
         });
 
         it('should not add notification if it is from the current user', () => {
-            jest.spyOn(accountService, 'userIdentity', 'get').mockReturnValue({ id: 1, login: 'test', name: 'A B' } as User);
+            jest.spyOn(accountService, 'userIdentity', 'get').mockReturnValue({
+                id: 1,
+                login: 'test',
+                name: 'A B',
+            } as User);
             const postDTO: MetisPostDTO = {
                 post: { author: { id: 1 }, content: 'Content' } as Post,
                 action: MetisPostAction.CREATE,
@@ -538,7 +595,11 @@ describe('Notification Service', () => {
         });
 
         it('should add notification if it is from another author', () => {
-            jest.spyOn(accountService, 'userIdentity', 'get').mockReturnValue({ id: 1, login: 'test', name: 'A B' } as User);
+            jest.spyOn(accountService, 'userIdentity', 'get').mockReturnValue({
+                id: 1,
+                login: 'test',
+                name: 'A B',
+            } as User);
             const postDTO: MetisPostDTO = {
                 post: { author: { id: 1 }, content: 'Content' } as Post,
                 action: MetisPostAction.CREATE,
@@ -551,9 +612,17 @@ describe('Notification Service', () => {
         });
 
         it('should change notification title if the current user is mentioned in message', () => {
-            jest.spyOn(accountService, 'userIdentity', 'get').mockReturnValue({ id: 1, login: 'test', name: 'A B' } as User);
+            jest.spyOn(accountService, 'userIdentity', 'get').mockReturnValue({
+                id: 1,
+                login: 'test',
+                name: 'A B',
+            } as User);
             const postDTO: MetisPostDTO = {
-                post: { author: { id: 2 }, content: '[user]A B(test)[/user]', answers: [{ id: 5, content: 'test' }] } as Post,
+                post: {
+                    author: { id: 2 },
+                    content: '[user]A B(test)[/user]',
+                    answers: [{ id: 5, content: 'test' }],
+                } as Post,
                 notification: { author: { id: 2 }, target: 'target', title: NEW_MESSAGE_TITLE } as Notification,
                 action: MetisPostAction.CREATE,
             };
@@ -564,9 +633,17 @@ describe('Notification Service', () => {
         });
 
         it('should change notification title if the current user is mentioned in reply', () => {
-            jest.spyOn(accountService, 'userIdentity', 'get').mockReturnValue({ id: 1, login: 'test', name: 'A B' } as User);
+            jest.spyOn(accountService, 'userIdentity', 'get').mockReturnValue({
+                id: 1,
+                login: 'test',
+                name: 'A B',
+            } as User);
             const postDTO: MetisPostDTO = {
-                post: { author: { id: 2 }, content: 'test', answers: [{ id: 5, content: '[user]A B(test)[/user]' }] } as Post,
+                post: {
+                    author: { id: 2 },
+                    content: 'test',
+                    answers: [{ id: 5, content: '[user]A B(test)[/user]' }],
+                } as Post,
                 notification: { author: { id: 2 }, target: 'target', title: NEW_MESSAGE_TITLE } as Notification,
                 action: MetisPostAction.UPDATE,
             };

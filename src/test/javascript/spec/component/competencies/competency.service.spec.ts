@@ -43,7 +43,12 @@ describe('CompetencyService', () => {
 
         defaultCompetencies = [{ id: 0, title: 'title', description: 'description' } as Competency];
         defaultCompetencyProgress = { progress: 20, confidence: 50 } as CompetencyProgress;
-        defaultCompetencyCourseProgress = { competencyId: 0, numberOfStudents: 8, numberOfMasteredStudents: 5, averageStudentScore: 90 } as CourseCompetencyProgress;
+        defaultCompetencyCourseProgress = {
+            competencyId: 0,
+            numberOfStudents: 8,
+            numberOfMasteredStudents: 5,
+            averageStudentScore: 90,
+        } as CourseCompetencyProgress;
     });
 
     afterEach(() => {

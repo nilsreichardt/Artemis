@@ -110,7 +110,15 @@ describe('ExamAssessmentButtons', () => {
         exam = new Exam();
         exam.course = course;
         exam.id = 1;
-        exam.examUsers = [{ didCheckImage: false, didCheckLogin: false, didCheckName: false, didCheckRegistrationNumber: false, ...studentOne }];
+        exam.examUsers = [
+            {
+                didCheckImage: false,
+                didCheckLogin: false,
+                didCheckName: false,
+                didCheckRegistrationNumber: false,
+                ...studentOne,
+            },
+        ];
         exam.endDate = dayjs();
         exam.startDate = exam.endDate.subtract(60, 'seconds');
 

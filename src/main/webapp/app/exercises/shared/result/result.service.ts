@@ -295,11 +295,19 @@ export class ResultService implements IResultService {
     public static evaluateBadge(participation: Participation, result: Result): Badge {
         if (participation.type === ParticipationType.STUDENT || participation.type === ParticipationType.PROGRAMMING) {
             if (isPracticeMode(participation)) {
-                return { class: 'bg-secondary', text: 'artemisApp.result.practice', tooltip: 'artemisApp.result.practiceTooltip' };
+                return {
+                    class: 'bg-secondary',
+                    text: 'artemisApp.result.practice',
+                    tooltip: 'artemisApp.result.practiceTooltip',
+                };
             }
         }
         return result.rated
             ? { class: 'bg-success', text: 'artemisApp.result.graded', tooltip: 'artemisApp.result.gradedTooltip' }
-            : { class: 'bg-info', text: 'artemisApp.result.notGraded', tooltip: 'artemisApp.result.notGradedTooltip' };
+            : {
+                  class: 'bg-info',
+                  text: 'artemisApp.result.notGraded',
+                  tooltip: 'artemisApp.result.notGradedTooltip',
+              };
     }
 }

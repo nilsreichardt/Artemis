@@ -7,13 +7,21 @@ import { ArtemisSharedModule } from 'app/shared/shared.module';
 import { ArtemisSharedComponentModule } from 'app/shared/components/shared-component.module';
 
 export const MY_NATIVE_FORMATS = {
-    fullPickerInput: { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' },
+    fullPickerInput: {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+    },
     datePickerInput: { year: 'numeric', month: 'numeric', day: 'numeric' },
     timePickerInput: { hour: 'numeric', minute: 'numeric' },
     monthYearLabel: { year: 'numeric', month: 'short' },
     dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
     monthYearA11yLabel: { year: 'numeric', month: 'long' },
 };
+
 @NgModule({
     imports: [CommonModule, FormsModule, OwlDateTimeModule, OwlNativeDateTimeModule, ReactiveFormsModule, ArtemisSharedModule, ArtemisSharedComponentModule],
     exports: [FormDateTimePickerComponent],

@@ -58,7 +58,12 @@ describe('Example Solution Component', () => {
 
     it('should initialize', () => {
         const exerciseServiceSpy = jest.spyOn(exerciseService, 'getExerciseForExampleSolution').mockReturnValue(of({ body: exercise } as HttpResponse<Exercise>));
-        const exampleSolutionInfo = { programmingExercise: { id: 1, exampleSolutionPublicationDate: dayjs().subtract(1, 'm') } } as ExampleSolutionInfo;
+        const exampleSolutionInfo = {
+            programmingExercise: {
+                id: 1,
+                exampleSolutionPublicationDate: dayjs().subtract(1, 'm'),
+            },
+        } as ExampleSolutionInfo;
 
         const extractExampleSolutionInfoSpy = jest.spyOn(ExerciseService, 'extractExampleSolutionInfo').mockReturnValue(exampleSolutionInfo);
         fixture.detectChanges();

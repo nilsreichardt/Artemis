@@ -175,12 +175,22 @@ export class TeamsImportFromFileFormComponent {
             newStudent.name = `${newStudent.firstName} ${newStudent.lastName}`.trim();
 
             if (typeof student.teamName !== 'string' || !student.teamName.trim()) {
-                throw new Error(this.translateService.instant('artemisApp.team.teamName.missingTeamName', { entryNr, studentName: newStudent.name }));
+                throw new Error(
+                    this.translateService.instant('artemisApp.team.teamName.missingTeamName', {
+                        entryNr,
+                        studentName: newStudent.name,
+                    }),
+                );
             }
 
             const shortName = student.teamName.replace(/[^0-9a-z]/gi, '').toLowerCase();
             if (!shortName.match(SHORT_NAME_PATTERN)) {
-                throw new Error(this.translateService.instant('artemisApp.team.teamName.pattern', { entryNr, teamName: shortName }));
+                throw new Error(
+                    this.translateService.instant('artemisApp.team.teamName.pattern', {
+                        entryNr,
+                        teamName: shortName,
+                    }),
+                );
             }
 
             const teamIndex = teams.findIndex((team) => team.name === student.teamName);

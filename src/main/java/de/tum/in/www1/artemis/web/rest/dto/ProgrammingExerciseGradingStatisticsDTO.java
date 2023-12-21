@@ -1,12 +1,11 @@
 package de.tum.in.www1.artemis.web.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import de.tum.in.www1.artemis.domain.Feedback;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-import de.tum.in.www1.artemis.domain.Feedback;
 
 /**
  * This is a dto for providing statistics for the programming exercise test cases & sca categories.
@@ -75,8 +74,7 @@ public class ProgrammingExerciseGradingStatisticsDTO {
         public void updateWithFeedback(final Feedback feedback) {
             if (Boolean.TRUE.equals(feedback.isPositive())) {
                 numPassed++;
-            }
-            else {
+            } else {
                 numFailed++;
             }
         }

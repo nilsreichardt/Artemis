@@ -62,8 +62,16 @@ describe('JhiStartPracticeModeButtonComponent', () => {
             dueDate: dayjs().subtract(5, 'minutes'),
             studentParticipations: [] as StudentParticipation[],
         } as ProgrammingExercise;
-        const inactivePart = { id: 2, initializationState: InitializationState.UNINITIALIZED, testRun: true } as StudentParticipation;
-        const initPart = { id: 2, initializationState: InitializationState.INITIALIZED, testRun: true } as StudentParticipation;
+        const inactivePart = {
+            id: 2,
+            initializationState: InitializationState.UNINITIALIZED,
+            testRun: true,
+        } as StudentParticipation;
+        const initPart = {
+            id: 2,
+            initializationState: InitializationState.INITIALIZED,
+            testRun: true,
+        } as StudentParticipation;
         const participationSubject = new Subject<StudentParticipation>();
 
         comp.exercise = exercise;
@@ -103,9 +111,21 @@ describe('JhiStartPracticeModeButtonComponent', () => {
             allowOfflineIde: true,
             studentParticipations: [] as StudentParticipation[],
         } as ProgrammingExercise;
-        const gradedPart = { id: 1, initializationState: InitializationState.FINISHED, testRun: false } as StudentParticipation;
-        const inactivePart = { id: 2, initializationState: InitializationState.UNINITIALIZED, testRun: true } as StudentParticipation;
-        const initPart = { id: 2, initializationState: InitializationState.INITIALIZED, testRun: true } as StudentParticipation;
+        const gradedPart = {
+            id: 1,
+            initializationState: InitializationState.FINISHED,
+            testRun: false,
+        } as StudentParticipation;
+        const inactivePart = {
+            id: 2,
+            initializationState: InitializationState.UNINITIALIZED,
+            testRun: true,
+        } as StudentParticipation;
+        const initPart = {
+            id: 2,
+            initializationState: InitializationState.INITIALIZED,
+            testRun: true,
+        } as StudentParticipation;
         const participationSubject = new Subject<StudentParticipation>();
 
         comp.exercise = exercise;

@@ -24,6 +24,7 @@ export class StructuredGradingCriterionService {
             }
         }
     }
+
     computeTotalScore(assessments: Feedback[]) {
         let score = 0;
         const gradingInstructions = {}; // { instructionId: noOfEncounters }

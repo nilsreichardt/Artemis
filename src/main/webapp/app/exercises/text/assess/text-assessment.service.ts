@@ -139,7 +139,10 @@ export class TextAssessmentService {
             params = params.set('correction-round', correctionRound.toString());
         }
         return this.http
-            .get<StudentParticipation>(`${this.resourceUrl}/text-submissions/${submissionId}/for-assessment`, { observe: 'response', params })
+            .get<StudentParticipation>(`${this.resourceUrl}/text-submissions/${submissionId}/for-assessment`, {
+                observe: 'response',
+                params,
+            })
             .pipe<HttpResponse<StudentParticipation>, StudentParticipation>(
                 // Wire up Result and Submission
                 tap((response: HttpResponse<StudentParticipation>) => {

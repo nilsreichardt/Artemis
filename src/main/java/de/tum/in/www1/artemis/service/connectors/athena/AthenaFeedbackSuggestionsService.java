@@ -37,7 +37,7 @@ public class AthenaFeedbackSuggestionsService {
      * Creates a new AthenaFeedbackSuggestionsService to receive feedback suggestions from the Athena service.
      */
     public AthenaFeedbackSuggestionsService(@Qualifier("athenaRestTemplate") RestTemplate athenaRestTemplate, AthenaModuleUrlHelper athenaModuleUrlHelper,
-            AthenaDTOConverter athenaDTOConverter) {
+                                            AthenaDTOConverter athenaDTOConverter) {
         textAthenaConnector = new AthenaConnector<>(athenaRestTemplate, ResponseDTOText.class);
         programmingAthenaConnector = new AthenaConnector<>(athenaRestTemplate, ResponseDTOProgramming.class);
         this.athenaDTOConverter = athenaDTOConverter;

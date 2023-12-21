@@ -24,7 +24,12 @@ describe('CourseManagementStatisticsComponent', () => {
     const returnValue = {
         averageScoreOfCourse: 75,
         averageScoresOfExercises: [
-            { exerciseId: 1, exerciseName: 'PatternsExercise', averageScore: 50, exerciseType: ExerciseType.PROGRAMMING },
+            {
+                exerciseId: 1,
+                exerciseName: 'PatternsExercise',
+                averageScore: 50,
+                exerciseType: ExerciseType.PROGRAMMING,
+            },
             { exerciseId: 2, exerciseName: 'MorePatterns', averageScore: 50, exerciseType: ExerciseType.MODELING },
         ],
     };

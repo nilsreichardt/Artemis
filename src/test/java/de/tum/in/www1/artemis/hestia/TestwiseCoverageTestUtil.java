@@ -1,13 +1,17 @@
 package de.tum.in.www1.artemis.hestia;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 import de.tum.in.www1.artemis.domain.hestia.CoverageFileReport;
 import de.tum.in.www1.artemis.domain.hestia.TestwiseCoverageReportEntry;
 import de.tum.in.www1.artemis.exercise.programmingexercise.ProgrammingExerciseFactory;
 import de.tum.in.www1.artemis.service.connectors.bamboo.dto.BambooBuildResultNotificationDTO;
 import de.tum.in.www1.artemis.service.connectors.bamboo.dto.TestwiseCoverageReportDTO;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class TestwiseCoverageTestUtil {
 
@@ -90,7 +94,7 @@ public class TestwiseCoverageTestUtil {
     }
 
     private static TestwiseCoverageReportDTO generateTestReport(String uniformPath, String content, double duration,
-            List<TestwiseCoverageReportDTO.CoveredPathsPerTestDTO> pathEntries) {
+                                                                List<TestwiseCoverageReportDTO.CoveredPathsPerTestDTO> pathEntries) {
         var result = new TestwiseCoverageReportDTO();
         result.setUniformPath(uniformPath);
         result.setContent(content);

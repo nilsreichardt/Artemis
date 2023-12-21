@@ -1,14 +1,22 @@
 package de.tum.in.www1.artemis.domain;
 
-import static de.tum.in.www1.artemis.config.Constants.FEEDBACK_DETAIL_TEXT_DATABASE_MAX_LENGTH;
-import static de.tum.in.www1.artemis.config.Constants.FEEDBACK_DETAIL_TEXT_SOFT_MAX_LENGTH;
-import static de.tum.in.www1.artemis.config.Constants.FEEDBACK_PREVIEW_TEXT_MAX_LENGTH;
-import static de.tum.in.www1.artemis.config.Constants.LONG_FEEDBACK_MAX_LENGTH;
+import static de.tum.in.www1.artemis.config.Constants.*;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import javax.annotation.Nullable;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
@@ -43,7 +51,8 @@ public class Feedback extends DomainObject {
     @Column(name = "text", length = 500)
     private String text;
 
-    @Size(max = FEEDBACK_DETAIL_TEXT_DATABASE_MAX_LENGTH)   // this ensures that the detail_text can be stored, even for long feedback
+    @Size(max = FEEDBACK_DETAIL_TEXT_DATABASE_MAX_LENGTH)
+    // this ensures that the detail_text can be stored, even for long feedback
     @Column(name = "detail_text", length = FEEDBACK_DETAIL_TEXT_DATABASE_MAX_LENGTH)
     private String detailText;
 

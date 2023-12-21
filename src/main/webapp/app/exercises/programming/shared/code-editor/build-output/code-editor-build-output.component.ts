@@ -31,7 +31,13 @@ export class CodeEditorBuildOutputComponent implements AfterViewInit, OnInit, On
     @Output()
     onAnnotations = new EventEmitter<Array<Annotation>>();
     @Output()
-    onToggleCollapse = new EventEmitter<{ event: any; horizontal: boolean; interactable: Interactable; resizableMinWidth?: number; resizableMinHeight: number }>();
+    onToggleCollapse = new EventEmitter<{
+        event: any;
+        horizontal: boolean;
+        interactable: Interactable;
+        resizableMinWidth?: number;
+        resizableMinHeight: number;
+    }>();
     @Output()
     onError = new EventEmitter<string>();
 

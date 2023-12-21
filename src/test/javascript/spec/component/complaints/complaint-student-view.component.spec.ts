@@ -33,7 +33,12 @@ describe('ComplaintsStudentViewComponent', () => {
         requestMoreFeedbackEnabled: true,
         maxRequestMoreFeedbackTimeDays: complaintTimeLimitDays,
     };
-    const courseWithoutFeedback: Course = { id: 1, complaintsEnabled: true, maxComplaintTimeDays: 7, requestMoreFeedbackEnabled: false };
+    const courseWithoutFeedback: Course = {
+        id: 1,
+        complaintsEnabled: true,
+        maxComplaintTimeDays: 7,
+        requestMoreFeedbackEnabled: false,
+    };
     const examExercise: Exercise = { id: 1, teamMode: false, course } as Exercise;
     const courseExercise: Exercise = {
         id: 1,
@@ -44,10 +49,20 @@ describe('ComplaintsStudentViewComponent', () => {
         assessmentType: AssessmentType.MANUAL,
     } as Exercise;
     const submission: Submission = {} as Submission;
-    const result: Result = { id: 1, completionDate: dayjs().subtract(complaintTimeLimitDays - 1, 'day'), assessmentType: AssessmentType.MANUAL, rated: true } as Result;
+    const result: Result = {
+        id: 1,
+        completionDate: dayjs().subtract(complaintTimeLimitDays - 1, 'day'),
+        assessmentType: AssessmentType.MANUAL,
+        rated: true,
+    } as Result;
     const resultWithoutCompletionDate: Result = { id: 1 } as Result;
     const user: User = { id: 1337 } as User;
-    const participation: Participation = { id: 2, results: [result], submissions: [submission], student: user } as Participation;
+    const participation: Participation = {
+        id: 2,
+        results: [result],
+        submissions: [submission],
+        student: user,
+    } as Participation;
     const defaultExam: Exam = {
         examStudentReviewStart: dayjs().subtract(complaintTimeLimitDays, 'day'),
         examStudentReviewEnd: dayjs().add(complaintTimeLimitDays, 'day'),
@@ -140,7 +155,10 @@ describe('ComplaintsStudentViewComponent', () => {
 
         it('should be visible on test run', fakeAsync(() => {
             const now = dayjs();
-            const examWithFutureReview: Exam = { examStudentReviewStart: dayjs(now).add(1, 'day'), examStudentReviewEnd: dayjs(now).add(2, 'day') } as Exam;
+            const examWithFutureReview: Exam = {
+                examStudentReviewStart: dayjs(now).add(1, 'day'),
+                examStudentReviewEnd: dayjs(now).add(2, 'day'),
+            } as Exam;
             const serverDateStub = jest.spyOn(serverDateService, 'now').mockReturnValue(dayjs());
             component.exercise = examExercise;
             component.result = result;
@@ -211,7 +229,10 @@ describe('ComplaintsStudentViewComponent', () => {
 
         it('should not be available if assessment due date not set and completion date is out of period', fakeAsync(() => {
             const exercise: Exercise = { id: 1, teamMode: false, course } as Exercise;
-            const resultDateOutOfLimits: Result = { ...result, completionDate: dayjs().subtract(complaintTimeLimitDays + 1, 'day') } as Result;
+            const resultDateOutOfLimits: Result = {
+                ...result,
+                completionDate: dayjs().subtract(complaintTimeLimitDays + 1, 'day'),
+            } as Result;
             component.exercise = exercise;
             component.result = resultDateOutOfLimits;
 
@@ -229,7 +250,10 @@ describe('ComplaintsStudentViewComponent', () => {
                 course,
                 assessmentDueDate: dayjs().subtract(complaintTimeLimitDays + 2, 'day'),
             } as Exercise;
-            const resultMatchingDate: Result = { ...result, completionDate: dayjs(exercise.assessmentDueDate!).add(1, 'day') } as Result;
+            const resultMatchingDate: Result = {
+                ...result,
+                completionDate: dayjs(exercise.assessmentDueDate!).add(1, 'day'),
+            } as Result;
             component.exercise = exercise;
             component.result = resultMatchingDate;
 
@@ -241,8 +265,17 @@ describe('ComplaintsStudentViewComponent', () => {
         }));
 
         it('should be available if result was before due date', fakeAsync(() => {
-            const exercise: Exercise = { id: 1, teamMode: false, course, dueDate: dayjs().subtract(1, 'minute'), assessmentType: AssessmentType.MANUAL } as Exercise;
-            const resultDateOutOfLimits: Result = { ...result, completionDate: dayjs().subtract(complaintTimeLimitDays + 1, 'days') } as Result;
+            const exercise: Exercise = {
+                id: 1,
+                teamMode: false,
+                course,
+                dueDate: dayjs().subtract(1, 'minute'),
+                assessmentType: AssessmentType.MANUAL,
+            } as Exercise;
+            const resultDateOutOfLimits: Result = {
+                ...result,
+                completionDate: dayjs().subtract(complaintTimeLimitDays + 1, 'days'),
+            } as Result;
             component.exercise = exercise;
             component.result = resultDateOutOfLimits;
 
@@ -262,7 +295,10 @@ describe('ComplaintsStudentViewComponent', () => {
                 assessmentDueDate: dayjs().subtract(1, 'minute'),
                 assessmentType: AssessmentType.MANUAL,
             } as Exercise;
-            const resultDateOutOfLimits: Result = { ...result, completionDate: dayjs().subtract(complaintTimeLimitDays + 2, 'days') } as Result;
+            const resultDateOutOfLimits: Result = {
+                ...result,
+                completionDate: dayjs().subtract(complaintTimeLimitDays + 2, 'days'),
+            } as Result;
             component.exercise = exercise;
             component.result = resultDateOutOfLimits;
 
@@ -358,7 +394,12 @@ describe('ComplaintsStudentViewComponent', () => {
     }
 
     it('should set time of complaint invalid without completion date', fakeAsync(() => {
-        const participationWithoutCompletionDate: Participation = { id: 2, results: [resultWithoutCompletionDate], submissions: [submission], student: user } as Participation;
+        const participationWithoutCompletionDate: Participation = {
+            id: 2,
+            results: [resultWithoutCompletionDate],
+            submissions: [submission],
+            student: user,
+        } as Participation;
         component.exercise = courseExercise;
         component.participation = participationWithoutCompletionDate;
         component.result = resultWithoutCompletionDate;

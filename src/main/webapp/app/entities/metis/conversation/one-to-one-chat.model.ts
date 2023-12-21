@@ -6,12 +6,15 @@ export class OneToOneChat extends Conversation {
         super(ConversationType.ONE_TO_ONE);
     }
 }
+
 export class OneToOneChatDTO extends ConversationDto {
     constructor() {
         super(ConversationType.ONE_TO_ONE);
     }
+
     public members?: ConversationUserDTO[];
 }
+
 export function isOneToOneChatDto(conversation: ConversationDto): conversation is OneToOneChatDTO {
     return conversation.type === ConversationType.ONE_TO_ONE;
 }

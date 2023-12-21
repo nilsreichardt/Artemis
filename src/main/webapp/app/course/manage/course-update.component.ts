@@ -233,6 +233,7 @@ export class CourseUpdateComponent implements OnInit {
 
         this.isAdmin = this.accountService.isAdmin();
     }
+
     tzResultFormatter = (timeZone: string) => timeZone;
     tzInputFormatter = (timeZone: string) => timeZone;
 
@@ -392,6 +393,7 @@ export class CourseUpdateComponent implements OnInit {
         }
         this.courseForm.controls['onlineCourse'].setValue(this.course.onlineCourse);
     }
+
     /**
      * Enable or disable student course registration
      */

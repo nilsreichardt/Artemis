@@ -26,6 +26,7 @@ export class ExerciseNodeDetailsComponent implements OnInit {
             this.loadData();
         }
     }
+
     private loadData() {
         this.isLoading = true;
         this.exerciseService.find(this.exerciseId).subscribe({

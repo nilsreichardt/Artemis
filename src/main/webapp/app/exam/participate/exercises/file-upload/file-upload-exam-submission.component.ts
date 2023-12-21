@@ -116,6 +116,7 @@ export class FileUploadExamSubmissionComponent extends ExamSubmissionComponent i
     getExerciseId(): number | undefined {
         return this.exercise.id;
     }
+
     getExercise(): Exercise {
         return this.exercise;
     }

@@ -6,6 +6,7 @@ import { GlobalCacheConfig, ICachePair, IStorageStrategy } from 'ts-cacheable';
  */
 export class SessionStorageStrategy extends IStorageStrategy {
     private mainCacheKey: string = GlobalCacheConfig.globalCacheKey;
+
     constructor() {
         super();
         if (sessionStorage == undefined) {

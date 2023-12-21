@@ -14,6 +14,10 @@ export class LearningPathLegendComponent {
     protected readonly matchStart = { id: '', type: NodeType.MATCH_START } as NgxLearningPathNode;
     protected readonly matchEnd = { id: '', type: NodeType.MATCH_END } as NgxLearningPathNode;
     protected readonly learningObject = { id: '', type: NodeType.LECTURE_UNIT } as NgxLearningPathNode;
-    protected readonly completedLearningObject = { id: '', type: NodeType.LECTURE_UNIT, completed: true } as NgxLearningPathNode;
+    protected readonly completedLearningObject = {
+        id: '',
+        type: NodeType.LECTURE_UNIT,
+        completed: true,
+    } as NgxLearningPathNode;
     protected readonly NodeType = NodeType;
 }

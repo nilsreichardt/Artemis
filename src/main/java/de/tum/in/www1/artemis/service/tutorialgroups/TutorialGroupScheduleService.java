@@ -30,7 +30,7 @@ public class TutorialGroupScheduleService {
     private final TutorialGroupFreePeriodService tutorialGroupFreePeriodService;
 
     public TutorialGroupScheduleService(TutorialGroupSessionRepository tutorialGroupSessionRepository, TutorialGroupScheduleRepository tutorialGroupScheduleRepository,
-            TutorialGroupFreePeriodService tutorialGroupFreePeriodService) {
+                                        TutorialGroupFreePeriodService tutorialGroupFreePeriodService) {
         this.tutorialGroupSessionRepository = tutorialGroupSessionRepository;
         this.tutorialGroupScheduleRepository = tutorialGroupScheduleRepository;
         this.tutorialGroupFreePeriodService = tutorialGroupFreePeriodService;
@@ -44,7 +44,7 @@ public class TutorialGroupScheduleService {
      * @param tutorialGroupSchedule       the schedule to create
      */
     public void saveScheduleAndGenerateScheduledSessions(TutorialGroupsConfiguration tutorialGroupsConfiguration, TutorialGroup tutorialGroup,
-            TutorialGroupSchedule tutorialGroupSchedule) {
+                                                         TutorialGroupSchedule tutorialGroupSchedule) {
         // Generate Sessions
         var individualSessions = generateSessions(tutorialGroupsConfiguration, tutorialGroupSchedule);
         // check for overlap with existing individual sessions
@@ -130,8 +130,7 @@ public class TutorialGroupScheduleService {
             session.setStatus(TutorialGroupSessionStatus.CANCELLED);
             session.setStatusExplanation(null);
             session.setTutorialGroupFreePeriod(overlappingPeriod.get());
-        }
-        else {
+        } else {
             session.setStatus(TutorialGroupSessionStatus.ACTIVE);
             session.setStatusExplanation(null);
             session.setTutorialGroupFreePeriod(null);
@@ -149,7 +148,7 @@ public class TutorialGroupScheduleService {
      * @param newSchedule                 the new schedule of the tutorial group
      */
     public void updateScheduleIfChanged(TutorialGroupsConfiguration tutorialGroupsConfiguration, TutorialGroup tutorialGroup, Optional<TutorialGroupSchedule> oldSchedule,
-            Optional<TutorialGroupSchedule> newSchedule) {
+                                        Optional<TutorialGroupSchedule> newSchedule) {
         if (oldSchedule.isPresent() && newSchedule.isPresent()) {
             var oldS = oldSchedule.get();
             var newS = newSchedule.get();
@@ -158,16 +157,13 @@ public class TutorialGroupScheduleService {
                     updateAllSessionsToNewLocation(oldS, newS.getLocation());
                     oldS.setLocation(newS.getLocation());
                     tutorialGroupScheduleRepository.save(oldS);
-                }
-                else {
+                } else {
                     updateAllSessionsToNewSchedule(tutorialGroupsConfiguration, tutorialGroup, oldS, newS);
                 }
             }
-        }
-        else if (oldSchedule.isPresent()) { // old schedule present but not new schedule -> delete old schedule
+        } else if (oldSchedule.isPresent()) { // old schedule present but not new schedule -> delete old schedule
             tutorialGroupScheduleRepository.delete(oldSchedule.get());
-        }
-        else if (newSchedule.isPresent()) { // new schedule present but not old schedule -> create new schedule
+        } else if (newSchedule.isPresent()) { // new schedule present but not old schedule -> create new schedule
             saveScheduleAndGenerateScheduledSessions(tutorialGroupsConfiguration, tutorialGroup, newSchedule.get());
         }
     }
@@ -179,7 +175,7 @@ public class TutorialGroupScheduleService {
     }
 
     private void updateAllSessionsToNewSchedule(TutorialGroupsConfiguration tutorialGroupsConfiguration, TutorialGroup tutorialGroup, TutorialGroupSchedule oldSchedule,
-            TutorialGroupSchedule newSchedule) {
+                                                TutorialGroupSchedule newSchedule) {
         overrideScheduleProperties(newSchedule, oldSchedule);
         saveScheduleAndGenerateScheduledSessions(tutorialGroupsConfiguration, tutorialGroup, oldSchedule);
     }

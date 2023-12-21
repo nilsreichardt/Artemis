@@ -39,7 +39,11 @@ export class TeamsImportButtonComponent {
      */
     openTeamsImportDialog(event: MouseEvent) {
         event.stopPropagation();
-        const modalRef: NgbModalRef = this.modalService.open(TeamsImportDialogComponent, { keyboard: true, size: 'lg', backdrop: 'static' });
+        const modalRef: NgbModalRef = this.modalService.open(TeamsImportDialogComponent, {
+            keyboard: true,
+            size: 'lg',
+            backdrop: 'static',
+        });
         modalRef.componentInstance.exercise = this.exercise;
         modalRef.componentInstance.teams = this.teams;
 

@@ -68,7 +68,7 @@ public class LearningPathNgxService {
      * @param edges        set of edges to store the new edges
      */
     private void generateNgxGraphRepresentationForCompetency(LearningPath learningPath, Competency competency, Set<NgxLearningPathDTO.Node> nodes,
-            Set<NgxLearningPathDTO.Edge> edges) {
+                                                             Set<NgxLearningPathDTO.Edge> edges) {
         Set<NgxLearningPathDTO.Node> currentCluster = new HashSet<>();
         // generates start and end node
         final var startNodeId = getCompetencyStartNodeId(competency.getId());
@@ -174,21 +174,19 @@ public class LearningPathNgxService {
      * @param edges                    set of edges to store the new edges
      */
     private void generateNgxGraphRepresentationForRelation(CompetencyRelation relation, Map<Long, Integer> competencyToMatchCluster, Set<String> createdRelations,
-            Set<NgxLearningPathDTO.Edge> edges) {
+                                                           Set<NgxLearningPathDTO.Edge> edges) {
         final var sourceId = relation.getHeadCompetency().getId();
         String sourceNodeId;
         if (competencyToMatchCluster.containsKey(sourceId)) {
             sourceNodeId = getMatchingClusterEndNodeId(competencyToMatchCluster.get(sourceId));
-        }
-        else {
+        } else {
             sourceNodeId = getCompetencyEndNodeId(sourceId);
         }
         final var targetId = relation.getTailCompetency().getId();
         String targetNodeId;
         if (competencyToMatchCluster.containsKey(targetId)) {
             targetNodeId = getMatchingClusterStartNodeId(competencyToMatchCluster.get(targetId));
-        }
-        else {
+        } else {
             targetNodeId = getCompetencyStartNodeId(targetId);
         }
         final String relationEdgeId = getEdgeFromToId(sourceNodeId, targetNodeId);
@@ -245,7 +243,7 @@ public class LearningPathNgxService {
      * @param edges        set of edges to store the new edges
      */
     private void generateNgxPathRepresentationForCompetency(LearningPath learningPath, Competency competency, Set<NgxLearningPathDTO.Node> nodes,
-            Set<NgxLearningPathDTO.Edge> edges, LearningPathRecommendationService.RecommendationState state) {
+                                                            Set<NgxLearningPathDTO.Edge> edges, LearningPathRecommendationService.RecommendationState state) {
         Set<NgxLearningPathDTO.Node> currentCluster = new HashSet<>();
         // generates start and end node
         final var startNodeId = getCompetencyStartNodeId(competency.getId());
@@ -268,8 +266,7 @@ public class LearningPathNgxService {
         // if no linked learning units exist directly link start to end (can't happen for valid recommendations)
         if (currentCluster.size() == 2) {
             edges.add(new NgxLearningPathDTO.Edge(getDirectEdgeId(competency.getId()), startNodeId, endNodeId));
-        }
-        else {
+        } else {
             // add edge from competency start to first learning object
             addEdgeFromCompetencyStartToLearningObject(competency, recommendedLearningObjects.get(0), edges);
 
@@ -284,8 +281,7 @@ public class LearningPathNgxService {
         if (learningObject instanceof LectureUnit lectureUnit) {
             nodes.add(new NgxLearningPathDTO.Node(getLectureUnitNodeId(competency.getId(), lectureUnit.getId()), NgxLearningPathDTO.NodeType.LECTURE_UNIT, lectureUnit.getId(),
                     lectureUnit.getLecture().getId(), false, lectureUnit.getName()));
-        }
-        else if (learningObject instanceof Exercise exercise) {
+        } else if (learningObject instanceof Exercise exercise) {
             nodes.add(new NgxLearningPathDTO.Node(getExerciseNodeId(competency.getId(), exercise.getId()), NgxLearningPathDTO.NodeType.EXERCISE, exercise.getId(), false,
                     exercise.getTitle()));
         }
@@ -375,8 +371,7 @@ public class LearningPathNgxService {
     public static String getLearningObjectNodeId(long competencyId, LearningObject learningObject) {
         if (learningObject instanceof LectureUnit) {
             return getLectureUnitNodeId(competencyId, learningObject.getId());
-        }
-        else if (learningObject instanceof Exercise) {
+        } else if (learningObject instanceof Exercise) {
             return getExerciseNodeId(competencyId, learningObject.getId());
         }
         return null;

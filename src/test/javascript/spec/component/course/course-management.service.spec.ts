@@ -90,7 +90,12 @@ describe('Course Management Service', () => {
 
         courseForDashboard = new CourseForDashboardDTO();
         courseForDashboard.course = course;
-        courseScores = new CourseScores(0, 0, 0, { absoluteScore: 0, relativeScore: 0, currentRelativeScore: 0, presentationScore: 0 });
+        courseScores = new CourseScores(0, 0, 0, {
+            absoluteScore: 0,
+            relativeScore: 0,
+            currentRelativeScore: 0,
+            presentationScore: 0,
+        });
         courseForDashboard.totalScores = courseScores;
         courseForDashboard.programmingScores = courseScores;
         courseForDashboard.modelingScores = courseScores;
@@ -310,7 +315,10 @@ describe('Course Management Service', () => {
             .getStatsForTutors(course.id!)
             .pipe(take(1))
             .subscribe((res) => expect(res.body).toEqual(stats));
-        const req = httpMock.expectOne({ method: 'GET', url: `${resourceUrl}/${course.id}/stats-for-assessment-dashboard` });
+        const req = httpMock.expectOne({
+            method: 'GET',
+            url: `${resourceUrl}/${course.id}/stats-for-assessment-dashboard`,
+        });
         req.flush(returnedFromService);
         tick();
     }));
@@ -367,7 +375,10 @@ describe('Course Management Service', () => {
             .getCourseOverview(params)
             .pipe(take(1))
             .subscribe((res) => expect(res.body).toEqual([{ ...course }]));
-        const req = httpMock.expectOne({ method: 'GET', url: `${resourceUrl}/course-management-overview?testParam=testParamValue` });
+        const req = httpMock.expectOne({
+            method: 'GET',
+            url: `${resourceUrl}/course-management-overview?testParam=testParamValue`,
+        });
         req.flush(returnedFromService);
         expectAccessRightsToBeCalled(1, 1, 1);
         tick();
@@ -390,7 +401,10 @@ describe('Course Management Service', () => {
             .getStatsForManagementOverview(true)
             .pipe(take(1))
             .subscribe((res) => expect(res.body).toEqual(stats));
-        const req = httpMock.expectOne({ method: 'GET', url: `${resourceUrl}/stats-for-management-overview?onlyActive=true` });
+        const req = httpMock.expectOne({
+            method: 'GET',
+            url: `${resourceUrl}/stats-for-management-overview?onlyActive=true`,
+        });
         req.flush(returnedFromService);
         tick();
     }));
@@ -457,7 +471,10 @@ describe('Course Management Service', () => {
             .addUserToCourseGroup(course.id!, courseGroup, user.login!)
             .pipe(take(1))
             .subscribe((res) => expect(res.body).toEqual({}));
-        const req = httpMock.expectOne({ method: 'POST', url: `${resourceUrl}/${course.id}/${courseGroup}/${user.login}` });
+        const req = httpMock.expectOne({
+            method: 'POST',
+            url: `${resourceUrl}/${course.id}/${courseGroup}/${user.login}`,
+        });
         req.flush({});
         tick();
     }));
@@ -469,7 +486,10 @@ describe('Course Management Service', () => {
             .removeUserFromCourseGroup(course.id!, courseGroup, user.login!)
             .pipe(take(1))
             .subscribe((res) => expect(res.body).toEqual({}));
-        const req = httpMock.expectOne({ method: 'DELETE', url: `${resourceUrl}/${course.id}/${courseGroup}/${user.login}` });
+        const req = httpMock.expectOne({
+            method: 'DELETE',
+            url: `${resourceUrl}/${course.id}/${courseGroup}/${user.login}`,
+        });
         req.flush({});
         tick();
     }));
@@ -480,7 +500,10 @@ describe('Course Management Service', () => {
             .getStatisticsForLifetimeOverview(course.id!)
             .pipe(take(1))
             .subscribe((res) => expect(res).toEqual(stats));
-        const req = httpMock.expectOne({ method: 'GET', url: `${resourceUrl}/${course.id}/statistics-lifetime-overview` });
+        const req = httpMock.expectOne({
+            method: 'GET',
+            url: `${resourceUrl}/${course.id}/statistics-lifetime-overview`,
+        });
         req.flush(stats);
         tick();
     }));
@@ -492,7 +515,10 @@ describe('Course Management Service', () => {
             .searchOtherUsersInCourse(course.id!, 'user1')
             .pipe(take(1))
             .subscribe((res) => expect(res.body).toEqual(users));
-        const req = httpMock.expectOne({ method: 'GET', url: `${resourceUrl}/${course.id}/search-other-users?nameOfUser=user1` });
+        const req = httpMock.expectOne({
+            method: 'GET',
+            url: `${resourceUrl}/${course.id}/search-other-users?nameOfUser=user1`,
+        });
         req.flush(returnedFromService);
         tick();
     }));

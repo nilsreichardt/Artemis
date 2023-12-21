@@ -1,15 +1,5 @@
 package de.tum.in.www1.artemis.lecture;
 
-import static org.assertj.core.api.Assertions.fail;
-
-import java.io.IOException;
-import java.nio.file.Path;
-import java.time.ZonedDateTime;
-import java.util.UUID;
-
-import org.apache.commons.io.FileUtils;
-import org.springframework.util.ResourceUtils;
-
 import de.tum.in.www1.artemis.domain.Attachment;
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.Lecture;
@@ -17,6 +7,15 @@ import de.tum.in.www1.artemis.domain.enumeration.AttachmentType;
 import de.tum.in.www1.artemis.domain.lecture.AttachmentUnit;
 import de.tum.in.www1.artemis.service.FilePathService;
 import de.tum.in.www1.artemis.service.FileService;
+import org.apache.commons.io.FileUtils;
+import org.springframework.util.ResourceUtils;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.time.ZonedDateTime;
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * Factory for creating Lectures and related objects.
@@ -87,8 +86,7 @@ public class LectureFactory {
         String testFileName = "test_" + UUID.randomUUID().toString().substring(0, 8) + ".jpg";
         try {
             FileUtils.copyFile(ResourceUtils.getFile("classpath:test-data/attachment/placeholder.jpg"), FilePathService.getTempFilePath().resolve(testFileName).toFile());
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             fail("Failed while copying test attachment files", ex);
         }
         // Path.toString() uses platform dependant path separators. Since we want to use this as a URL later, we need to replace \ with /.

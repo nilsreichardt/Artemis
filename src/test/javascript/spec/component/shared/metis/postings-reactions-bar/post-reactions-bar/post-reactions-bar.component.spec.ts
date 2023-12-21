@@ -166,7 +166,10 @@ describe('PostReactionsBarComponent', () => {
     });
 
     it('should invoke metis service method when pin icon is toggled', () => {
-        jest.spyOn(metisService, 'getCurrentConversation').mockReturnValue({ type: ConversationType.CHANNEL, hasChannelModerationRights: true } as ChannelDTO);
+        jest.spyOn(metisService, 'getCurrentConversation').mockReturnValue({
+            type: ConversationType.CHANNEL,
+            hasChannelModerationRights: true,
+        } as ChannelDTO);
         component.ngOnInit();
         fixture.detectChanges();
         const pinEmoji = getElement(debugElement, '.pin');

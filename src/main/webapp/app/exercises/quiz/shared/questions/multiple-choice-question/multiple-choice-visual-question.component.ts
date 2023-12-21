@@ -17,6 +17,7 @@ export class MultipleChoiceVisualQuestionComponent {
     set question(question: MultipleChoiceQuestion) {
         this._question = question;
     }
+
     get question(): MultipleChoiceQuestion {
         return this._question;
     }

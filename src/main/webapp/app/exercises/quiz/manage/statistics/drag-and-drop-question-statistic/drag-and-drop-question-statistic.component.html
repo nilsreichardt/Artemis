@@ -148,7 +148,7 @@
                                     @if (question.dragItems && question.dragItems.length) {
                                         <div class="drag-items">
                                             @for (dragItem of question.dragItems; track dragItem) {
-                                                <jhi-drag-item [dragItem]="dragItem" [invalid]="!!dragItem.invalid" [clickDisabled]="true" [minWidth]="'100%'"> </jhi-drag-item>
+                                                <jhi-drag-item [dragItem]="dragItem" [invalid]="!!dragItem.invalid" [clickDisabled]="true" [minWidth]="'100%'"></jhi-drag-item>
                                             }
                                         </div>
                                     }

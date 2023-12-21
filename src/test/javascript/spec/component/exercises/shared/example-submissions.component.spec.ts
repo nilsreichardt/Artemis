@@ -42,7 +42,14 @@ describe('Example Submission Component', () => {
         TestBed.configureTestingModule({
             imports: [ArtemisTestModule, MockModule(RouterModule)],
             declarations: [ExampleSubmissionsComponent, MockPipe(ArtemisTranslatePipe), MockDirective(TranslateDirective), MockComponent(ResultComponent)],
-            providers: [{ provide: ActivatedRoute, useValue: route }, { provide: TranslateService, useClass: MockTranslateService }, MockProvider(NgbModal)],
+            providers: [
+                { provide: ActivatedRoute, useValue: route },
+                {
+                    provide: TranslateService,
+                    useClass: MockTranslateService,
+                },
+                MockProvider(NgbModal),
+            ],
         })
             .compileComponents()
             .then(() => {
@@ -111,7 +118,10 @@ describe('Example Submission Component', () => {
         component.exercise = exercise;
         const componentInstance = { exercise: Exercise };
         const result = new Promise((resolve) => resolve(true));
-        const modalServiceStub = jest.spyOn(modalService, 'open').mockReturnValue(<NgbModalRef>{ componentInstance, result });
+        const modalServiceStub = jest.spyOn(modalService, 'open').mockReturnValue(<NgbModalRef>{
+            componentInstance,
+            result,
+        });
         const importStub = jest.spyOn(exampleSubmissionService, 'import').mockReturnValue(throwError(() => ({ status: 500 })));
 
         component.openImportModal();

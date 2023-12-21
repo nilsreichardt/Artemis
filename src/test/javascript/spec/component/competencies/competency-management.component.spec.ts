@@ -120,7 +120,14 @@ describe('CompetencyManagementComponent', () => {
                         }),
                     ),
                 );
-                getCompetencyRelationsSpy = jest.spyOn(competencyService, 'getCompetencyRelations').mockReturnValue(of(new HttpResponse({ body: [], status: 200 })));
+                getCompetencyRelationsSpy = jest.spyOn(competencyService, 'getCompetencyRelations').mockReturnValue(
+                    of(
+                        new HttpResponse({
+                            body: [],
+                            status: 200,
+                        }),
+                    ),
+                );
             });
     });
 
@@ -145,7 +152,14 @@ describe('CompetencyManagementComponent', () => {
     });
 
     it('should delete competency', () => {
-        const deleteSpy = jest.spyOn(competencyService, 'delete').mockReturnValue(of(new HttpResponse({ body: {}, status: 200 })));
+        const deleteSpy = jest.spyOn(competencyService, 'delete').mockReturnValue(
+            of(
+                new HttpResponse({
+                    body: {},
+                    status: 200,
+                }),
+            ),
+        );
 
         fixture.detectChanges();
 
@@ -156,7 +170,14 @@ describe('CompetencyManagementComponent', () => {
     });
 
     it('should remove prerequisite', () => {
-        const removePrerequisiteSpy = jest.spyOn(competencyService, 'removePrerequisite').mockReturnValue(of(new HttpResponse({ body: {}, status: 200 })));
+        const removePrerequisiteSpy = jest.spyOn(competencyService, 'removePrerequisite').mockReturnValue(
+            of(
+                new HttpResponse({
+                    body: {},
+                    status: 200,
+                }),
+            ),
+        );
 
         fixture.detectChanges();
 
@@ -287,7 +308,14 @@ describe('CompetencyManagementComponent', () => {
     });
 
     it('should remove competency relation', () => {
-        const removeCompetencyRelationSpy = jest.spyOn(competencyService, 'removeCompetencyRelation').mockReturnValue(of(new HttpResponse({ body: {}, status: 200 })));
+        const removeCompetencyRelationSpy = jest.spyOn(competencyService, 'removeCompetencyRelation').mockReturnValue(
+            of(
+                new HttpResponse({
+                    body: {},
+                    status: 200,
+                }),
+            ),
+        );
 
         fixture.detectChanges();
 

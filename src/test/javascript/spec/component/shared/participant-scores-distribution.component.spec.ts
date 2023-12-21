@@ -84,7 +84,13 @@ describe('ParticipantScoresDistributionComponent', () => {
         return TestBed.configureTestingModule({
             imports: [ArtemisTestModule, MockModule(BarChartModule)],
             declarations: [ParticipantScoresDistributionComponent, MockPipe(ArtemisTranslatePipe), MockComponent(HelpIconComponent)],
-            providers: [MockProvider(GradingSystemService), { provide: TranslateService, useClass: MockTranslateService }],
+            providers: [
+                MockProvider(GradingSystemService),
+                {
+                    provide: TranslateService,
+                    useClass: MockTranslateService,
+                },
+            ],
         })
             .compileComponents()
             .then(() => {

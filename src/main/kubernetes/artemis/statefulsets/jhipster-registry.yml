@@ -18,7 +18,7 @@ metadata:
   name: jhipster-registry
 spec:
   # added to circumvent kustomize bug
-  volumeClaimTemplates: []
+  volumeClaimTemplates: [ ]
   serviceName: jhipster-registry
   replicas: 2
   selector:
@@ -38,11 +38,11 @@ spec:
           ports:
             - containerPort: 8761
           envFrom:
-          - configMapRef:
-              name: jhipster-registry
-              optional: false
-          - secretRef:
-              name: registry-secret
+            - configMapRef:
+                name: jhipster-registry
+                optional: false
+            - secretRef:
+                name: registry-secret
           volumeMounts:
             - name: config-volume
               mountPath: /central-config

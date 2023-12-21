@@ -22,7 +22,14 @@ import { DocumentationButtonComponent } from 'app/shared/components/documentatio
 describe('SuspiciousBehaviorComponent', () => {
     let component: SuspiciousBehaviorComponent;
     let fixture: ComponentFixture<SuspiciousBehaviorComponent>;
-    const route = { snapshot: { paramMap: convertToParamMap({ courseId: 1, examId: 2 }) } } as unknown as ActivatedRoute;
+    const route = {
+        snapshot: {
+            paramMap: convertToParamMap({
+                courseId: 1,
+                examId: 2,
+            }),
+        },
+    } as unknown as ActivatedRoute;
     let suspiciousSessionService: SuspiciousSessionsService;
     let plagiarismCasesService: PlagiarismCasesService;
     let plagiarismResultsService: PlagiarismResultsService;

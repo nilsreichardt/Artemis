@@ -1,8 +1,7 @@
 package de.tum.in.www1.artemis.util;
 
-import org.springframework.http.HttpStatus;
-
 import de.tum.in.www1.artemis.domain.Exercise;
+import org.springframework.http.HttpStatus;
 
 /**
  * Represents an invalid exercise configuration that can be {@linkplain #applyTo(Exercise) applied} to any given exercise of type <code>E</code>.

@@ -51,7 +51,11 @@ describe('Exercise Lecture Attachment Reference Commands', () => {
     it('should initialize exercise reference command correctly', () => {
         exerciseReferenceCommand = new ExerciseReferenceCommand(metisService);
         expect(exerciseReferenceCommand.getValues()).toEqual(
-            metisService.getCourse().exercises!.map((exercise) => ({ id: exercise.id!.toString(), value: exercise.title!, type: exercise.type })),
+            metisService.getCourse().exercises!.map((exercise) => ({
+                id: exercise.id!.toString(),
+                value: exercise.title!,
+                type: exercise.type,
+            })),
         );
     });
 

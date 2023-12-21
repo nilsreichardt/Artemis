@@ -44,20 +44,64 @@ describe('Student Exam Timeline Component', () => {
     const courseValue = { id: 1 } as Course;
     const examValue = { course: courseValue, id: 2 } as Exam;
     const participation = { id: 1, exercise: { id: 1 } } as unknown as StudentParticipation;
-    let programmingSubmission1 = { id: 1, submissionDate: dayjs('2023-02-07'), participation } as unknown as ProgrammingSubmission;
-    const programmingSubmission2 = { id: 2, submissionDate: dayjs('2023-03-07'), participation } as unknown as ProgrammingSubmission;
-    const programmingSubmission3 = { id: 3, submissionDate: dayjs('2023-04-07'), participation } as unknown as ProgrammingSubmission;
-    let fileUploadSubmission1 = { id: 5, submissionDate: dayjs('2023-05-07'), filePath: 'abc' } as unknown as FileUploadSubmission;
+    let programmingSubmission1 = {
+        id: 1,
+        submissionDate: dayjs('2023-02-07'),
+        participation,
+    } as unknown as ProgrammingSubmission;
+    const programmingSubmission2 = {
+        id: 2,
+        submissionDate: dayjs('2023-03-07'),
+        participation,
+    } as unknown as ProgrammingSubmission;
+    const programmingSubmission3 = {
+        id: 3,
+        submissionDate: dayjs('2023-04-07'),
+        participation,
+    } as unknown as ProgrammingSubmission;
+    let fileUploadSubmission1 = {
+        id: 5,
+        submissionDate: dayjs('2023-05-07'),
+        filePath: 'abc',
+    } as unknown as FileUploadSubmission;
 
     let textSubmission = { id: 2, submissionDate: dayjs('2023-01-07'), text: 'abc' } as unknown as TextSubmission;
-    const programmingExercise = { id: 1, type: 'programming', studentParticipations: [{ id: 1, submissions: [programmingSubmission1] }] } as ProgrammingExercise;
-    const textExercise = { id: 2, type: 'text', studentParticipations: [{ id: 2, submissions: [textSubmission] }] } as TextExercise;
-    const fileUploadExercise = { id: 3, type: 'file-upload', studentParticipations: [{ id: 3, submissions: [fileUploadSubmission1] }] } as FileUploadExercise;
-    const studentExamValue = { exam: examValue, id: 3, exercises: [textExercise, programmingExercise, fileUploadExercise], user: { login: 'abc' } } as unknown as StudentExam;
-    programmingSubmission1 = { ...programmingSubmission1, participation: { exercise: programmingExercise } } as unknown as ProgrammingSubmission;
-    fileUploadSubmission1 = { ...fileUploadSubmission1, participation: { exercise: fileUploadExercise } } as unknown as FileUploadSubmission;
+    const programmingExercise = {
+        id: 1,
+        type: 'programming',
+        studentParticipations: [{ id: 1, submissions: [programmingSubmission1] }],
+    } as ProgrammingExercise;
+    const textExercise = {
+        id: 2,
+        type: 'text',
+        studentParticipations: [{ id: 2, submissions: [textSubmission] }],
+    } as TextExercise;
+    const fileUploadExercise = {
+        id: 3,
+        type: 'file-upload',
+        studentParticipations: [{ id: 3, submissions: [fileUploadSubmission1] }],
+    } as FileUploadExercise;
+    const studentExamValue = {
+        exam: examValue,
+        id: 3,
+        exercises: [textExercise, programmingExercise, fileUploadExercise],
+        user: { login: 'abc' },
+    } as unknown as StudentExam;
+    programmingSubmission1 = {
+        ...programmingSubmission1,
+        participation: { exercise: programmingExercise },
+    } as unknown as ProgrammingSubmission;
+    fileUploadSubmission1 = {
+        ...fileUploadSubmission1,
+        participation: { exercise: fileUploadExercise },
+    } as unknown as FileUploadSubmission;
     textSubmission = { ...textSubmission, participation: { exercise: textExercise } } as unknown as TextSubmission;
-    const submissionVersion = { id: 1, createdDate: dayjs('2023-01-07'), content: 'abc', submission: textSubmission } as unknown as SubmissionVersion;
+    const submissionVersion = {
+        id: 1,
+        createdDate: dayjs('2023-01-07'),
+        content: 'abc',
+        submission: textSubmission,
+    } as unknown as SubmissionVersion;
 
     beforeEach(() => {
         return TestBed.configureTestingModule({

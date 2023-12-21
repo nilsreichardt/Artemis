@@ -3,7 +3,7 @@
         <jhi-programming-exercise-instructions-step-wizard [exercise]="exercise" [latestResult]="latestResult" [tasks]="tasks"></jhi-programming-exercise-instructions-step-wizard>
         <!-- problem statement update & difference highlighter -->
         @if (exercise && exercise.exerciseGroup) {
-            <jhi-exam-exercise-update-highlighter [exercise]="exercise" (problemStatementUpdateEvent)="renderUpdatedProblemStatement()"> </jhi-exam-exercise-update-highlighter>
+            <jhi-exam-exercise-update-highlighter [exercise]="exercise" (problemStatementUpdateEvent)="renderUpdatedProblemStatement()"></jhi-exam-exercise-update-highlighter>
         }
         <!-- Rendered markdown will be inserted in this div -->
         <div

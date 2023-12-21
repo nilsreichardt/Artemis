@@ -29,9 +29,14 @@ describe('Programming exercise participation', () => {
 
         before('Setup java programming exercise', () => {
             cy.login(admin);
-            exerciseAPIRequest.createProgrammingExercise({ course, programmingLanguage: ProgrammingLanguage.JAVA }).then((exerciseResponse) => {
-                exercise = exerciseResponse.body;
-            });
+            exerciseAPIRequest
+                .createProgrammingExercise({
+                    course,
+                    programmingLanguage: ProgrammingLanguage.JAVA,
+                })
+                .then((exerciseResponse) => {
+                    exercise = exerciseResponse.body;
+                });
         });
 
         it('Makes a failing submission', () => {
@@ -67,9 +72,14 @@ describe('Programming exercise participation', () => {
 
             before('Setup c programming exercise', () => {
                 cy.login(admin);
-                exerciseAPIRequest.createProgrammingExercise({ course, programmingLanguage: ProgrammingLanguage.C }).then((exerciseResponse) => {
-                    exercise = exerciseResponse.body;
-                });
+                exerciseAPIRequest
+                    .createProgrammingExercise({
+                        course,
+                        programmingLanguage: ProgrammingLanguage.C,
+                    })
+                    .then((exerciseResponse) => {
+                        exercise = exerciseResponse.body;
+                    });
             });
 
             it('Makes a submission', () => {
@@ -87,9 +97,14 @@ describe('Programming exercise participation', () => {
 
         before('Setup python programming exercise', () => {
             cy.login(admin);
-            exerciseAPIRequest.createProgrammingExercise({ course, programmingLanguage: ProgrammingLanguage.PYTHON }).then((exerciseResponse) => {
-                exercise = exerciseResponse.body;
-            });
+            exerciseAPIRequest
+                .createProgrammingExercise({
+                    course,
+                    programmingLanguage: ProgrammingLanguage.PYTHON,
+                })
+                .then((exerciseResponse) => {
+                    exercise = exerciseResponse.body;
+                });
         });
 
         it('Makes a submission', () => {

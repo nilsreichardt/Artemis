@@ -723,7 +723,10 @@ describe('Course Management Update Component', () => {
     });
 
     it('should open organizations modal', () => {
-        jest.spyOn(modalService, 'open').mockReturnValue({ closed: of(new Organization()), componentInstance: {} } as NgbModalRef);
+        jest.spyOn(modalService, 'open').mockReturnValue({
+            closed: of(new Organization()),
+            componentInstance: {},
+        } as NgbModalRef);
         comp.openOrganizationsModal();
         expect(comp.courseOrganizations).toHaveLength(1);
     });

@@ -57,6 +57,7 @@ export class TutorialGroupSessionsManagementComponent implements OnDestroy {
     }
 
     getDayTranslationKey = getDayTranslationKey;
+
     loadAll() {
         this.isLoading = true;
         return this.tutorialGroupService
@@ -87,7 +88,12 @@ export class TutorialGroupSessionsManagementComponent implements OnDestroy {
 
     openCreateSessionDialog(event: MouseEvent) {
         event.stopPropagation();
-        const modalRef: NgbModalRef = this.modalService.open(CreateTutorialGroupSessionComponent, { size: 'xl', scrollable: false, backdrop: 'static', animation: false });
+        const modalRef: NgbModalRef = this.modalService.open(CreateTutorialGroupSessionComponent, {
+            size: 'xl',
+            scrollable: false,
+            backdrop: 'static',
+            animation: false,
+        });
         modalRef.componentInstance.course = this.course;
         modalRef.componentInstance.tutorialGroup = this.tutorialGroup;
         modalRef.componentInstance.initialize();

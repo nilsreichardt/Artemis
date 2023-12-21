@@ -31,7 +31,6 @@ export class EditTutorialGroupsConfigurationComponent implements OnInit, OnDestr
         private tutorialGroupsConfigurationService: TutorialGroupsConfigurationService,
         private courseStorageService: CourseStorageService,
         private alertService: AlertService,
-
         private cdr: ChangeDetectorRef,
     ) {}
 

@@ -1,16 +1,5 @@
 package de.tum.in.www1.artemis.web.rest.hestia;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import de.tum.in.www1.artemis.domain.ProgrammingExercise;
 import de.tum.in.www1.artemis.domain.ProgrammingExerciseTestCase;
 import de.tum.in.www1.artemis.domain.hestia.CodeHint;
@@ -30,7 +19,24 @@ import de.tum.in.www1.artemis.service.hestia.structural.StructuralSolutionEntryG
 import de.tum.in.www1.artemis.service.hestia.structural.StructuralTestCaseService;
 import de.tum.in.www1.artemis.web.rest.errors.ConflictException;
 import de.tum.in.www1.artemis.web.rest.errors.InternalServerErrorException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import tech.jhipster.web.util.HeaderUtil;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Set;
 
 /**
  * REST controller for managing {@link de.tum.in.www1.artemis.domain.hestia.ProgrammingExerciseSolutionEntry}.
@@ -61,9 +67,9 @@ public class ProgrammingExerciseSolutionEntryResource {
     private final BehavioralTestCaseService behavioralTestCaseService;
 
     public ProgrammingExerciseSolutionEntryResource(ProgrammingExerciseSolutionEntryRepository programmingExerciseSolutionEntryRepository,
-            ProgrammingExerciseRepository programmingExerciseRepository, CodeHintRepository codeHintRepository,
-            ProgrammingExerciseTestCaseRepository programmingExerciseTestCaseRepository, AuthorizationCheckService authCheckService,
-            StructuralTestCaseService structuralTestCaseService, BehavioralTestCaseService behavioralTestCaseService) {
+                                                    ProgrammingExerciseRepository programmingExerciseRepository, CodeHintRepository codeHintRepository,
+                                                    ProgrammingExerciseTestCaseRepository programmingExerciseTestCaseRepository, AuthorizationCheckService authCheckService,
+                                                    StructuralTestCaseService structuralTestCaseService, BehavioralTestCaseService behavioralTestCaseService) {
         this.programmingExerciseSolutionEntryRepository = programmingExerciseSolutionEntryRepository;
         this.programmingExerciseRepository = programmingExerciseRepository;
         this.codeHintRepository = codeHintRepository;
@@ -175,7 +181,7 @@ public class ProgrammingExerciseSolutionEntryResource {
     @PostMapping("programming-exercises/{exerciseId}/test-cases/{testCaseId}/solution-entries")
     @EnforceAtLeastEditor
     public ResponseEntity<ProgrammingExerciseSolutionEntry> createSolutionEntryForTestCase(@PathVariable Long exerciseId, @PathVariable Long testCaseId,
-            @RequestBody ProgrammingExerciseSolutionEntry programmingExerciseSolutionEntry) throws URISyntaxException {
+                                                                                           @RequestBody ProgrammingExerciseSolutionEntry programmingExerciseSolutionEntry) throws URISyntaxException {
         log.debug("REST request to create SolutionEntry : {}", programmingExerciseSolutionEntry);
         ProgrammingExercise exercise = programmingExerciseRepository.findByIdElseThrow(exerciseId);
         authCheckService.checkHasAtLeastRoleForExerciseElseThrow(Role.EDITOR, exercise, null);
@@ -201,7 +207,7 @@ public class ProgrammingExerciseSolutionEntryResource {
     @PutMapping("programming-exercises/{exerciseId}/test-cases/{testCaseId}/solution-entries/{solutionEntryId}")
     @EnforceAtLeastEditor
     public ResponseEntity<ProgrammingExerciseSolutionEntry> updateSolutionEntry(@PathVariable Long exerciseId, @PathVariable Long testCaseId, @PathVariable Long solutionEntryId,
-            @RequestBody ProgrammingExerciseSolutionEntry solutionEntry) {
+                                                                                @RequestBody ProgrammingExerciseSolutionEntry solutionEntry) {
         log.debug("REST request to update SolutionEntry : {}", solutionEntry);
         ProgrammingExercise exercise = programmingExerciseRepository.findByIdElseThrow(exerciseId);
         authCheckService.checkHasAtLeastRoleForExerciseElseThrow(Role.EDITOR, exercise, null);
@@ -282,8 +288,7 @@ public class ProgrammingExerciseSolutionEntryResource {
         try {
             var solutionEntries = structuralTestCaseService.generateStructuralSolutionEntries(exercise);
             return ResponseEntity.ok(solutionEntries);
-        }
-        catch (StructuralSolutionEntryGenerationException e) {
+        } catch (StructuralSolutionEntryGenerationException e) {
             log.error("Unable to create structural solution entries", e);
             throw new InternalServerErrorException(e.getMessage());
         }
@@ -305,8 +310,7 @@ public class ProgrammingExerciseSolutionEntryResource {
         try {
             var solutionEntries = behavioralTestCaseService.generateBehavioralSolutionEntries(exercise);
             return ResponseEntity.ok(solutionEntries);
-        }
-        catch (BehavioralSolutionEntryGenerationException e) {
+        } catch (BehavioralSolutionEntryGenerationException e) {
             log.error("Unable to create behavioral solution entries", e);
             throw new InternalServerErrorException(e.getMessage());
         }

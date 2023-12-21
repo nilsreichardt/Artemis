@@ -15,6 +15,7 @@ type Options = {
 @Injectable({ providedIn: 'root' })
 export class FileUploaderService {
     readonly acceptedMarkdownFileExtensions = MARKDOWN_FILE_EXTENSIONS;
+
     constructor(private http: HttpClient) {}
 
     /**

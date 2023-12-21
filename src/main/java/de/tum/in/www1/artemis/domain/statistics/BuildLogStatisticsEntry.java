@@ -47,7 +47,7 @@ public class BuildLogStatisticsEntry extends DomainObject {
     }
 
     public BuildLogStatisticsEntry(ProgrammingSubmission programmingSubmission, @Nullable Integer agentSetupDuration, @Nullable Integer testDuration, @Nullable Integer scaDuration,
-            @Nullable Integer totalJobDuration, @Nullable Integer dependenciesDownloadedCount) {
+                                   @Nullable Integer totalJobDuration, @Nullable Integer dependenciesDownloadedCount) {
         this.programmingSubmission = programmingSubmission;
         this.agentSetupDuration = agentSetupDuration;
         this.testDuration = testDuration;
@@ -119,8 +119,7 @@ public class BuildLogStatisticsEntry extends DomainObject {
         public Integer durationInSeconds() {
             if (from == null || to == null) {
                 return null;
-            }
-            else {
+            } else {
                 int durationInSecond = Math.toIntExact(ChronoUnit.SECONDS.between(from, to));
                 // limit the data type to avoid database exceptions
                 return limitSmallInt(durationInSecond);

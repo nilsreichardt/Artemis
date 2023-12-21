@@ -102,7 +102,12 @@ describe('ListOfComplaintsComponent', () => {
 
     describe('loadComplaints', () => {
         it('find for tutor by exercise', () => {
-            activatedRoute.setParameters({ tutorId: 12, courseId: 34, exerciseId: 56, complaintType: ComplaintType.MORE_FEEDBACK });
+            activatedRoute.setParameters({
+                tutorId: 12,
+                courseId: 34,
+                exerciseId: 56,
+                complaintType: ComplaintType.MORE_FEEDBACK,
+            });
             comp.ngOnInit();
 
             expect(findAllByTutorIdForExerciseIdStub).toHaveBeenCalledOnce();
@@ -111,7 +116,12 @@ describe('ListOfComplaintsComponent', () => {
         });
 
         it('find for tutor by exam', () => {
-            activatedRoute.setParameters({ tutorId: 12, courseId: 34, examId: 56, complaintType: ComplaintType.MORE_FEEDBACK });
+            activatedRoute.setParameters({
+                tutorId: 12,
+                courseId: 34,
+                examId: 56,
+                complaintType: ComplaintType.MORE_FEEDBACK,
+            });
             comp.ngOnInit();
 
             expect(findAllByTutorIdForCourseIdStub).toHaveBeenCalledOnce();
@@ -243,7 +253,10 @@ describe('ListOfComplaintsComponent', () => {
             comp.calculateComplaintLockStatus(complaint);
 
             expect(translateService.instant).toHaveBeenCalledOnce();
-            expect(translateService.instant).toHaveBeenCalledWith('artemisApp.locks.lockInformation', { endDate: `${endDate.valueOf()}`, user: reviewLogin });
+            expect(translateService.instant).toHaveBeenCalledWith('artemisApp.locks.lockInformation', {
+                endDate: `${endDate.valueOf()}`,
+                user: reviewLogin,
+            });
         });
     });
 

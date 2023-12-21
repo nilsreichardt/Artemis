@@ -29,6 +29,7 @@ export class Lti13DeepLinkingComponent implements OnInit {
     faSort = faSort;
     faExclamationTriangle = faExclamationTriangle;
     faWrench = faWrench;
+
     constructor(
         public route: ActivatedRoute,
         private sortService: SortService,
@@ -127,23 +128,28 @@ export class Lti13DeepLinkingComponent implements OnInit {
 
             const httpParams = new HttpParams().set('exerciseId', this.selectedExercise.id!).set('ltiIdToken', ltiIdToken!).set('clientRegistrationId', clientRegistrationId!);
 
-            this.http.post(`api/lti13/deep-linking/${this.courseId}`, null, { observe: 'response', params: httpParams }).subscribe({
-                next: (response) => {
-                    if (response.status === 200) {
-                        if (response.body) {
-                            const targetLink = response.body['targetLinkUri'];
-                            window.location.replace(targetLink);
+            this.http
+                .post(`api/lti13/deep-linking/${this.courseId}`, null, {
+                    observe: 'response',
+                    params: httpParams,
+                })
+                .subscribe({
+                    next: (response) => {
+                        if (response.status === 200) {
+                            if (response.body) {
+                                const targetLink = response.body['targetLinkUri'];
+                                window.location.replace(targetLink);
+                            }
+                        } else {
+                            this.isLinking = false;
+                            this.alertService.error('artemisApp.lti13.deepLinking.unknownError');
                         }
-                    } else {
+                    },
+                    error: (error) => {
                         this.isLinking = false;
-                        this.alertService.error('artemisApp.lti13.deepLinking.unknownError');
-                    }
-                },
-                error: (error) => {
-                    this.isLinking = false;
-                    onError(this.alertService, error);
-                },
-            });
+                        onError(this.alertService, error);
+                    },
+                });
         }
     }
 }

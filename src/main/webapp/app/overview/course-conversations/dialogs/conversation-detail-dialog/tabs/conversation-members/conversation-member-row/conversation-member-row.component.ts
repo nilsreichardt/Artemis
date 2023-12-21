@@ -68,6 +68,7 @@ export class ConversationMemberRowComponent implements OnInit, OnDestroy {
     canGrantChannelModeratorRole = canGrantChannelModeratorRole;
     canRevokeChannelModeratorRole = canRevokeChannelModeratorRole;
     canRemoveUsersFromConversation = canRemoveUsersFromConversation;
+
     constructor(
         private accountService: AccountService,
         private modalService: NgbModal,
@@ -155,7 +156,12 @@ export class ConversationMemberRowComponent implements OnInit, OnDestroy {
         if (!channel) {
             return;
         }
-        let translationKeys: { titleKey: string; questionKey: string; descriptionKey: string; confirmButtonKey: string };
+        let translationKeys: {
+            titleKey: string;
+            questionKey: string;
+            descriptionKey: string;
+            confirmButtonKey: string;
+        };
         if (channel.isPublic) {
             translationKeys = {
                 titleKey: 'artemisApp.dialogs.removeUserPublicChannel.title',
@@ -200,7 +206,12 @@ export class ConversationMemberRowComponent implements OnInit, OnDestroy {
     }
 
     private openConfirmationDialog(
-        translationKeys: { titleKey: string; questionKey: string; descriptionKey: string; confirmButtonKey: string },
+        translationKeys: {
+            titleKey: string;
+            questionKey: string;
+            descriptionKey: string;
+            confirmButtonKey: string;
+        },
         translationParams: { [key: string]: string },
         confirmedCallback: () => Observable<HttpResponse<void>>,
     ) {

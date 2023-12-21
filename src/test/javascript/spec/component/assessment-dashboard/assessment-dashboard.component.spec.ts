@@ -108,13 +108,22 @@ describe('AssessmentDashboardInformationComponent', () => {
         includedInOverallScore: IncludedInOverallScore.INCLUDED_AS_BONUS,
     } as FileUploadExercise;
 
-    const course = { id: 10, exercises: [programmingExercise, programmingExerciseComplaintsOnAutomaticAssessment, modelingExercise, textExercise, modelingExercise] } as Course;
+    const course = {
+        id: 10,
+        exercises: [programmingExercise, programmingExerciseComplaintsOnAutomaticAssessment, modelingExercise, textExercise, modelingExercise],
+    } as Course;
     const exercises = [programmingExercise, programmingExerciseComplaintsOnAutomaticAssessment, fileUploadExercise, modelingExercise, textExercise];
     const exerciseGroup1 = { id: 141, exercises: [programmingExercise, modelingExercise] } as ExerciseGroup;
     const exerciseGroup2 = { id: 142, exercises: [textExercise, fileUploadExercise] } as ExerciseGroup;
     const exam = { id: 20, exerciseGroups: [exerciseGroup1, exerciseGroup2], course: { id: 10 } } as Exam;
 
-    const numberOfAssessmentsOfCorrectionRounds = [{ inTime: 1, late: 1 } as DueDateStat, { inTime: 8, late: 0 } as DueDateStat];
+    const numberOfAssessmentsOfCorrectionRounds = [
+        { inTime: 1, late: 1 } as DueDateStat,
+        {
+            inTime: 8,
+            late: 0,
+        } as DueDateStat,
+    ];
     const tutorLeaderboardEntries = [] as TutorLeaderboardElement[];
     const courseTutorStats = {
         numberOfSubmissions: { inTime: 5, late: 0 } as DueDateStat,
@@ -221,7 +230,11 @@ describe('AssessmentDashboardInformationComponent', () => {
         const newRoute = {
             snapshot: {
                 paramMap: convertToParamMap({ courseId: course.id }),
-                url: { path: '/course-management/10/assessment-dashboard', parameterMap: {}, parameters: {} } as UrlSegment,
+                url: {
+                    path: '/course-management/10/assessment-dashboard',
+                    parameterMap: {},
+                    parameters: {},
+                } as UrlSegment,
             },
         } as any as ActivatedRoute;
         const activatedRoute: ActivatedRoute = fixture.debugElement.injector.get(ActivatedRoute);
@@ -315,7 +328,11 @@ describe('AssessmentDashboardInformationComponent', () => {
                 const newRoute = {
                     snapshot: {
                         paramMap: convertToParamMap({ courseId: course.id }),
-                        url: { path: '/course-management/10/assessment-dashboard', parameterMap: {}, parameters: {} } as UrlSegment,
+                        url: {
+                            path: '/course-management/10/assessment-dashboard',
+                            parameterMap: {},
+                            parameters: {},
+                        } as UrlSegment,
                     },
                 } as any as ActivatedRoute;
                 const activatedRoute: ActivatedRoute = fixture.debugElement.injector.get(ActivatedRoute);

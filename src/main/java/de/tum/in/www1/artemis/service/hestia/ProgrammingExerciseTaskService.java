@@ -74,7 +74,7 @@ public class ProgrammingExerciseTaskService {
     private static final Pattern TESTID_PATTERN = Pattern.compile(TESTID_START + "(\\d+)" + TESTID_END);
 
     public ProgrammingExerciseTaskService(ProgrammingExerciseTaskRepository programmingExerciseTaskRepository,
-            ProgrammingExerciseTestCaseRepository programmingExerciseTestCaseRepository, ExerciseHintRepository exerciseHintRepository) {
+                                          ProgrammingExerciseTestCaseRepository programmingExerciseTestCaseRepository, ExerciseHintRepository exerciseHintRepository) {
         this.programmingExerciseTaskRepository = programmingExerciseTaskRepository;
         this.programmingExerciseTestCaseRepository = programmingExerciseTestCaseRepository;
         this.exerciseHintRepository = exerciseHintRepository;
@@ -233,8 +233,7 @@ public class ProgrammingExerciseTaskService {
         if (testName.startsWith(TESTID_START)) {
             Long id = extractTestId(testName);
             return testCases.stream().filter(tc -> tc.getId().equals(id)).findFirst();
-        }
-        else {
+        } else {
             return testCases.stream().filter(tc -> tc.getTestName().equals(testName)).findFirst();
         }
     }
@@ -261,8 +260,7 @@ public class ProgrammingExerciseTaskService {
 
         try {
             return Long.parseLong(matcher.group(1));
-        }
-        catch (NumberFormatException ignore) {
+        } catch (NumberFormatException ignore) {
             return null;
         }
     }
@@ -300,8 +298,7 @@ public class ProgrammingExerciseTaskService {
             // count the numbers of brackets
             if (currentChar == '(') {
                 numberUnclosedRoundedBrackets++;
-            }
-            else if (currentChar == ')') {
+            } else if (currentChar == ')') {
                 numberUnclosedRoundedBrackets--;
             }
 
@@ -403,8 +400,7 @@ public class ProgrammingExerciseTaskService {
         Set<ProgrammingExerciseTestCase> testCases;
         if (onlyActive) {
             testCases = programmingExerciseTestCaseRepository.findByExerciseIdAndActive(exercise.getId(), true);
-        }
-        else {
+        } else {
             testCases = programmingExerciseTestCaseRepository.findByExerciseId(exercise.getId());
         }
 
@@ -455,7 +451,7 @@ public class ProgrammingExerciseTaskService {
      * @return the new problem statement
      */
     private String replacePlantUMLTestCases(String problemStatement, Set<ProgrammingExerciseTestCase> testCases,
-            BiFunction<String, Set<ProgrammingExerciseTestCase>, String> replacer) {
+                                            BiFunction<String, Set<ProgrammingExerciseTestCase>, String> replacer) {
         Matcher matcher = PLANTUML_PATTERN.matcher(problemStatement);
 
         return matcher.replaceAll(matchResult -> {

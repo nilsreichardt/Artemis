@@ -28,6 +28,7 @@ class MockTutorialGroupsCourseInformationComponent {
     @Input()
     tutorialGroups: TutorialGroup[] = [];
 }
+
 @Component({
     selector: 'jhi-tutorial-groups-import-button',
     template: '',

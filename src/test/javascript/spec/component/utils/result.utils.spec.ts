@@ -17,7 +17,15 @@ import { Result } from 'app/entities/result.model';
 
 describe('ResultUtils', () => {
     it('should filter out all non unreferenced feedbacks', () => {
-        const feedbacks = [{ reference: 'foo' }, { reference: 'foo', type: FeedbackType.MANUAL_UNREFERENCED }, { type: FeedbackType.MANUAL_UNREFERENCED }, {}];
+        const feedbacks = [
+            { reference: 'foo' },
+            {
+                reference: 'foo',
+                type: FeedbackType.MANUAL_UNREFERENCED,
+            },
+            { type: FeedbackType.MANUAL_UNREFERENCED },
+            {},
+        ];
         const unreferencedFeedbacks = getUnreferencedFeedback(feedbacks);
         expect(unreferencedFeedbacks).toEqual([{ type: FeedbackType.MANUAL_UNREFERENCED }]);
     });
@@ -26,24 +34,57 @@ describe('ResultUtils', () => {
         {
             result: {
                 participation: { exercise: { type: ExerciseType.PROGRAMMING } },
-                feedbacks: [{ type: FeedbackType.AUTOMATIC, text: STATIC_CODE_ANALYSIS_FEEDBACK_IDENTIFIER }, { type: FeedbackType.MANUAL }],
+                feedbacks: [
+                    {
+                        type: FeedbackType.AUTOMATIC,
+                        text: STATIC_CODE_ANALYSIS_FEEDBACK_IDENTIFIER,
+                    },
+                    { type: FeedbackType.MANUAL },
+                ],
                 testCaseCount: 0,
             } as Result,
             templateStatus: ResultTemplateStatus.HAS_RESULT,
             expected: true,
         },
         {
-            result: { feedbacks: [{ type: FeedbackType.AUTOMATIC, text: 'This is a test case' }, { type: FeedbackType.MANUAL }], testCaseCount: 1 },
+            result: {
+                feedbacks: [
+                    {
+                        type: FeedbackType.AUTOMATIC,
+                        text: 'This is a test case',
+                    },
+                    { type: FeedbackType.MANUAL },
+                ],
+                testCaseCount: 1,
+            },
             templateStatus: ResultTemplateStatus.HAS_RESULT,
             expected: false,
         },
         {
-            result: { feedbacks: [{ type: FeedbackType.AUTOMATIC, text: STATIC_CODE_ANALYSIS_FEEDBACK_IDENTIFIER }, { type: FeedbackType.MANUAL }], testCaseCount: 0 },
+            result: {
+                feedbacks: [
+                    {
+                        type: FeedbackType.AUTOMATIC,
+                        text: STATIC_CODE_ANALYSIS_FEEDBACK_IDENTIFIER,
+                    },
+                    { type: FeedbackType.MANUAL },
+                ],
+                testCaseCount: 0,
+            },
             templateStatus: ResultTemplateStatus.NO_RESULT,
             expected: false,
         },
         {
-            result: { feedbacks: [{ type: FeedbackType.AUTOMATIC, text: STATIC_CODE_ANALYSIS_FEEDBACK_IDENTIFIER }, { type: FeedbackType.MANUAL }], testCaseCount: 0 },
+            result: {
+                feedbacks: [
+                    {
+                        type: FeedbackType.AUTOMATIC,
+                        text: STATIC_CODE_ANALYSIS_FEEDBACK_IDENTIFIER,
+                    },
+                    { type: FeedbackType.MANUAL },
+                ],
+                testCaseCount: 0,
+            },
             templateStatus: ResultTemplateStatus.IS_BUILDING,
             expected: false,
         },
@@ -55,19 +96,44 @@ describe('ResultUtils', () => {
         { result: undefined, templateStatus: ResultTemplateStatus.HAS_RESULT, expected: 'text-secondary' },
         { result: {}, templateStatus: ResultTemplateStatus.LATE, expected: 'result-late' },
         {
-            result: { submission: { submissionExerciseType: SubmissionExerciseType.PROGRAMMING, buildFailed: true }, assessmentType: AssessmentType.AUTOMATIC },
+            result: {
+                submission: { submissionExerciseType: SubmissionExerciseType.PROGRAMMING, buildFailed: true },
+                assessmentType: AssessmentType.AUTOMATIC,
+            },
             templateStatus: ResultTemplateStatus.HAS_RESULT,
             expected: 'text-danger',
         },
         {
-            result: { participation: { type: ParticipationType.PROGRAMMING, exercise: { type: ExerciseType.PROGRAMMING } } as Result, assessmentType: AssessmentType.AUTOMATIC },
+            result: {
+                participation: {
+                    type: ParticipationType.PROGRAMMING,
+                    exercise: { type: ExerciseType.PROGRAMMING },
+                } as Result,
+                assessmentType: AssessmentType.AUTOMATIC,
+            },
             templateStatus: ResultTemplateStatus.HAS_RESULT,
             expected: 'text-secondary',
         },
-        { result: { score: undefined, successful: true }, templateStatus: ResultTemplateStatus.HAS_RESULT, expected: 'text-success' },
-        { result: { score: undefined, successful: false }, templateStatus: ResultTemplateStatus.HAS_RESULT, expected: 'text-danger' },
-        { result: { score: MIN_SCORE_GREEN, testCaseCount: 1 }, templateStatus: ResultTemplateStatus.HAS_RESULT, expected: 'text-success' },
-        { result: { score: MIN_SCORE_ORANGE, testCaseCount: 1 }, templateStatus: ResultTemplateStatus.HAS_RESULT, expected: 'result-orange' },
+        {
+            result: { score: undefined, successful: true },
+            templateStatus: ResultTemplateStatus.HAS_RESULT,
+            expected: 'text-success',
+        },
+        {
+            result: { score: undefined, successful: false },
+            templateStatus: ResultTemplateStatus.HAS_RESULT,
+            expected: 'text-danger',
+        },
+        {
+            result: { score: MIN_SCORE_GREEN, testCaseCount: 1 },
+            templateStatus: ResultTemplateStatus.HAS_RESULT,
+            expected: 'text-success',
+        },
+        {
+            result: { score: MIN_SCORE_ORANGE, testCaseCount: 1 },
+            templateStatus: ResultTemplateStatus.HAS_RESULT,
+            expected: 'result-orange',
+        },
         { result: {}, templateStatus: ResultTemplateStatus.HAS_RESULT, expected: 'text-danger' },
         {
             result: { score: 1, participation: { exercise: { type: ExerciseType.PROGRAMMING } } } as Result,
@@ -79,35 +145,65 @@ describe('ResultUtils', () => {
     });
 
     it.each([
-        { result: { participation: { exercise: { type: ExerciseType.PROGRAMMING } } } as Result, templateStatus: ResultTemplateStatus.HAS_RESULT, expected: faCheckCircle },
+        {
+            result: { participation: { exercise: { type: ExerciseType.PROGRAMMING } } } as Result,
+            templateStatus: ResultTemplateStatus.HAS_RESULT,
+            expected: faCheckCircle,
+        },
         { result: undefined, templateStatus: ResultTemplateStatus.HAS_RESULT, expected: faQuestionCircle },
         {
-            result: { submission: { submissionExerciseType: SubmissionExerciseType.PROGRAMMING, buildFailed: true }, assessmentType: AssessmentType.AUTOMATIC },
+            result: {
+                submission: { submissionExerciseType: SubmissionExerciseType.PROGRAMMING, buildFailed: true },
+                assessmentType: AssessmentType.AUTOMATIC,
+            },
             templateStatus: ResultTemplateStatus.HAS_RESULT,
             expected: faTimesCircle,
         },
         {
-            result: { participation: { type: ParticipationType.PROGRAMMING, exercise: { type: ExerciseType.PROGRAMMING } } } as Result,
+            result: {
+                participation: {
+                    type: ParticipationType.PROGRAMMING,
+                    exercise: { type: ExerciseType.PROGRAMMING },
+                },
+            } as Result,
             templateStatus: ResultTemplateStatus.HAS_RESULT,
             expected: faQuestionCircle,
         },
         {
-            result: { score: undefined, successful: true, feedbacks: [{ type: FeedbackType.AUTOMATIC, text: 'This is a test case' }], testCaseCount: 1 },
+            result: {
+                score: undefined,
+                successful: true,
+                feedbacks: [{ type: FeedbackType.AUTOMATIC, text: 'This is a test case' }],
+                testCaseCount: 1,
+            },
             templateStatus: ResultTemplateStatus.HAS_RESULT,
             expected: faCheckCircle,
         },
         {
-            result: { score: undefined, successful: false, feedbacks: [{ type: FeedbackType.AUTOMATIC, text: 'This is a test case' }], testCaseCount: 1 },
+            result: {
+                score: undefined,
+                successful: false,
+                feedbacks: [{ type: FeedbackType.AUTOMATIC, text: 'This is a test case' }],
+                testCaseCount: 1,
+            },
             templateStatus: ResultTemplateStatus.HAS_RESULT,
             expected: faTimesCircle,
         },
         {
-            result: { score: MIN_SCORE_GREEN, feedbacks: [{ type: FeedbackType.AUTOMATIC, text: 'This is a test case' }], testCaseCount: 1 },
+            result: {
+                score: MIN_SCORE_GREEN,
+                feedbacks: [{ type: FeedbackType.AUTOMATIC, text: 'This is a test case' }],
+                testCaseCount: 1,
+            },
             templateStatus: ResultTemplateStatus.HAS_RESULT,
             expected: faCheckCircle,
         },
         {
-            result: { score: MIN_SCORE_ORANGE, feedbacks: [{ type: FeedbackType.AUTOMATIC, text: 'This is a test case' }], testCaseCount: 1 },
+            result: {
+                score: MIN_SCORE_ORANGE,
+                feedbacks: [{ type: FeedbackType.AUTOMATIC, text: 'This is a test case' }],
+                testCaseCount: 1,
+            },
             templateStatus: ResultTemplateStatus.HAS_RESULT,
             expected: faTimesCircle,
         },

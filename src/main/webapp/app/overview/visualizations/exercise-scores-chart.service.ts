@@ -26,6 +26,7 @@ export class ExerciseScoresChartService {
     public resourceUrl = 'api';
 
     constructor(private http: HttpClient) {}
+
     /**
      * Get the course exercise performance statistics necessary for exercise-scores-chart.component.ts
      * @param courseId id of the course

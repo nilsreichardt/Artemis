@@ -16,6 +16,7 @@ class MockSidePanelComponent {
     @Input() panelHeader: string;
     @Input() panelDescriptionHeader?: string;
 }
+
 describe('TutorialGroupFreeDaysOverviewComponent', () => {
     let component: TutorialGroupFreeDaysOverviewComponent;
     let fixture: ComponentFixture<TutorialGroupFreeDaysOverviewComponent>;

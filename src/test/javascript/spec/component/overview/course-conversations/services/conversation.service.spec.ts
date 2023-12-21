@@ -126,9 +126,24 @@ describe('ConversationService', () => {
 
     it('should return the correct conversation name', () => {
         const requestingUser = { id: 1, login: 'test', isRequestingUser: true } as ConversationUserDTO;
-        const otherUser = { isRequestingUser: false, firstName: 'timo', lastName: 'moritz', login: 'login' } as ConversationUserDTO;
-        const otherUserTwo = { isRequestingUser: false, firstName: 'albert', lastName: 'einstein', login: 'login2' } as ConversationUserDTO;
-        const otherUserThree = { isRequestingUser: false, firstName: 'peter', lastName: 'max', login: 'login3' } as ConversationUserDTO;
+        const otherUser = {
+            isRequestingUser: false,
+            firstName: 'timo',
+            lastName: 'moritz',
+            login: 'login',
+        } as ConversationUserDTO;
+        const otherUserTwo = {
+            isRequestingUser: false,
+            firstName: 'albert',
+            lastName: 'einstein',
+            login: 'login2',
+        } as ConversationUserDTO;
+        const otherUserThree = {
+            isRequestingUser: false,
+            firstName: 'peter',
+            lastName: 'max',
+            login: 'login3',
+        } as ConversationUserDTO;
 
         // undefined
         expect(service.getConversationName(undefined)).toBe('');

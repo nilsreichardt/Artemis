@@ -1,20 +1,5 @@
 package de.tum.in.www1.artemis.web.rest.tutorialgroups;
 
-import static de.tum.in.www1.artemis.web.rest.tutorialgroups.TutorialGroupDateUtil.isIso8601DateString;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.util.Optional;
-
-import javax.validation.Valid;
-import javax.ws.rs.BadRequestException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import de.tum.in.www1.artemis.domain.tutorialgroups.TutorialGroupsConfiguration;
 import de.tum.in.www1.artemis.repository.CourseRepository;
 import de.tum.in.www1.artemis.repository.tutorialgroups.TutorialGroupsConfigurationRepository;
@@ -26,6 +11,25 @@ import de.tum.in.www1.artemis.service.feature.Feature;
 import de.tum.in.www1.artemis.service.feature.FeatureToggle;
 import de.tum.in.www1.artemis.service.tutorialgroups.TutorialGroupChannelManagementService;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+import javax.ws.rs.BadRequestException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.util.Optional;
+
+import static de.tum.in.www1.artemis.web.rest.tutorialgroups.TutorialGroupDateUtil.isIso8601DateString;
 
 @RestController
 @RequestMapping("/api")
@@ -44,7 +48,7 @@ public class TutorialGroupsConfigurationResource {
     private final AuthorizationCheckService authorizationCheckService;
 
     public TutorialGroupsConfigurationResource(TutorialGroupsConfigurationRepository tutorialGroupsConfigurationRepository, CourseRepository courseRepository,
-            TutorialGroupChannelManagementService tutorialGroupChannelManagementService, AuthorizationCheckService authorizationCheckService) {
+                                               TutorialGroupChannelManagementService tutorialGroupChannelManagementService, AuthorizationCheckService authorizationCheckService) {
         this.tutorialGroupsConfigurationRepository = tutorialGroupsConfigurationRepository;
         this.courseRepository = courseRepository;
         this.tutorialGroupChannelManagementService = tutorialGroupChannelManagementService;
@@ -113,7 +117,7 @@ public class TutorialGroupsConfigurationResource {
     @EnforceAtLeastInstructor
     @FeatureToggle(Feature.TutorialGroups)
     public ResponseEntity<TutorialGroupsConfiguration> update(@PathVariable Long courseId, @PathVariable Long tutorialGroupsConfigurationId,
-            @RequestBody @Valid TutorialGroupsConfiguration updatedTutorialGroupConfiguration) {
+                                                              @RequestBody @Valid TutorialGroupsConfiguration updatedTutorialGroupConfiguration) {
         log.debug("REST request to update TutorialGroupsConfiguration: {} of course: {}", updatedTutorialGroupConfiguration, courseId);
         if (updatedTutorialGroupConfiguration.getId() == null) {
             throw new BadRequestException("A tutorial group cannot be updated without an id");
@@ -141,8 +145,7 @@ public class TutorialGroupsConfigurationResource {
             log.debug("Tutorial group channel setting changed, updating tutorial group channels for course: {}", configurationFromDatabase.getCourse().getId());
             if (persistedConfiguration.getUseTutorialGroupChannels()) {
                 tutorialGroupChannelManagementService.createTutorialGroupsChannelsForAllTutorialGroupsOfCourse(configurationFromDatabase.getCourse());
-            }
-            else {
+            } else {
                 tutorialGroupChannelManagementService.removeTutorialGroupChannelsForCourse(configurationFromDatabase.getCourse());
             }
         }

@@ -72,13 +72,16 @@ File browser tree
             opacity: 0;
             transition: all 100ms ease-in-out;
             margin-left: auto;
+
             :not(:last-child) {
                 margin-right: 5px;
             }
+
             button {
                 padding: 0;
                 border: none;
                 pointer-events: auto;
+
                 fa-icon {
                     cursor: pointer;
                 }

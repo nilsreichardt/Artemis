@@ -48,7 +48,11 @@ describe('Plagiarism Cases Service', () => {
             id: 1,
         },
     } as TextExercise;
-    const examTextExercise = { id: 1, type: ExerciseType.TEXT, exerciseGroup: { exam: { id: 1, course: { id: 1 } } } } as TextExercise;
+    const examTextExercise = {
+        id: 1,
+        type: ExerciseType.TEXT,
+        exerciseGroup: { exam: { id: 1, course: { id: 1 } } },
+    } as TextExercise;
 
     const plagiarismCase1 = {
         id: 1,
@@ -167,7 +171,10 @@ describe('Plagiarism Cases Service', () => {
         fakeAsync(() => {
             const numberOfResultsExercise = 2;
             service.getNumberOfPlagiarismCasesForExercise(textExercise).subscribe((resp) => expect(resp).toEqual(numberOfResultsExercise));
-            const req = httpMock.expectOne({ method: 'GET', url: 'api/courses/1/exercises/1/plagiarism-cases-count' });
+            const req = httpMock.expectOne({
+                method: 'GET',
+                url: 'api/courses/1/exercises/1/plagiarism-cases-count',
+            });
             req.flush(numberOfResultsExercise);
             tick();
         }),

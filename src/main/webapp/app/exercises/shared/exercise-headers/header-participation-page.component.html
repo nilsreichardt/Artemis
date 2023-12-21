@@ -2,7 +2,9 @@
     <div class="course-info-bar course-info-bar--participation" id="participation-header">
         <div class="row">
             <div class="col-12 col-sm-12 col-lg-5 d-flex flex-column justify-content-center">
-                <h4 class="fw-medium"><ng-content select="[pagetitle]"></ng-content></h4>
+                <h4 class="fw-medium">
+                    <ng-content select="[pagetitle]"></ng-content>
+                </h4>
                 <div class="d-flex align-items-center">
                     <h6 class="me-2 mb-0 fw-medium">{{ 'artemisApp.courseOverview.exerciseDetails.dueDate' | artemisTranslate }}</h6>
                     <span>{{ (dueDate | artemisDate) || 'N/A' }}</span>
@@ -35,7 +37,7 @@
                                     }
                                     {{ exercise.maxPoints }}
                                     @if (exercise.bonusPoints) {
-                                        <span>({{ 'artemisApp.courseOverview.exerciseDetails.bonus' | artemisTranslate }} {{ exercise.bonusPoints }})</span>
+                                        <span>({{ 'artemisApp.courseOverview.exerciseDetails.bonus' | artemisTranslate }} {{ exercise.bonusPoints }} )</span>
                                     }
                                 </span>
                                 @if (exercise.difficulty) {
@@ -50,7 +52,7 @@
                     @if (exercise.assessmentDueDate) {
                         <tr>
                             <td>
-                                <h6 class="fw-medium">{{ 'artemisApp.exercise.assessmentDueDate' | artemisTranslate }}:</h6>
+                                <h6 class="fw-medium">{{ 'artemisApp.exercise.assessmentDueDate' | artemisTranslate }} :</h6>
                             </td>
                             <td>
                                 <span>{{ (exercise.assessmentDueDate | artemisDate) || 'N/A' }}</span>

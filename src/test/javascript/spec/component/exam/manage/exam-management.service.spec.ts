@@ -106,7 +106,10 @@ describe('Exam Management Service Tests', () => {
         service.importExerciseGroup(course.id!, mockExam.id!, mockExerciseGroup).subscribe((res) => expect(res.body).toEqual(mockExerciseGroup));
 
         // THEN
-        const req = httpMock.expectOne({ method: 'POST', url: `${service.resourceUrl}/${course.id!}/exams/${mockExam.id!}/import-exercise-group` });
+        const req = httpMock.expectOne({
+            method: 'POST',
+            url: `${service.resourceUrl}/${course.id!}/exams/${mockExam.id!}/import-exercise-group`,
+        });
         expect(req.request.body).toEqual(mockExerciseGroup);
 
         // CLEANUP
@@ -695,7 +698,10 @@ describe('Exam Management Service Tests', () => {
 
         const exercises = [textExercise, modelingExercise, programmingExercise];
         service.getExercisesWithPotentialPlagiarismForExam(1, 1).subscribe((resp) => expect(resp).toEqual(exercises));
-        const req = httpMock.expectOne({ method: 'GET', url: 'api/courses/1/exams/1/exercises-with-potential-plagiarism' });
+        const req = httpMock.expectOne({
+            method: 'GET',
+            url: 'api/courses/1/exams/1/exercises-with-potential-plagiarism',
+        });
         req.flush(exercises);
         tick();
     }));

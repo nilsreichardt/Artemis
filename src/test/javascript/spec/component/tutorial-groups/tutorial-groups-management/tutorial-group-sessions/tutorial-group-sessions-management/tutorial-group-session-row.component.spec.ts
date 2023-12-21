@@ -58,9 +58,16 @@ describe('TutorialGroupSessionRowComponent', () => {
 
     it('should save attendance count when input is changed', fakeAsync(() => {
         const tutorialGroupSessionService = TestBed.inject(TutorialGroupSessionService);
-        const updateAttendanceCountSpy = jest
-            .spyOn(tutorialGroupSessionService, 'updateAttendanceCount')
-            .mockReturnValue(of(new HttpResponse<TutorialGroupSession>({ body: { ...session, attendanceCount: 5 } })));
+        const updateAttendanceCountSpy = jest.spyOn(tutorialGroupSessionService, 'updateAttendanceCount').mockReturnValue(
+            of(
+                new HttpResponse<TutorialGroupSession>({
+                    body: {
+                        ...session,
+                        attendanceCount: 5,
+                    },
+                }),
+            ),
+        );
         const attendanceChangedSpy = jest.spyOn(component.attendanceChanged, 'emit');
         changeAttendanceInputAndSave();
 
@@ -88,6 +95,7 @@ describe('TutorialGroupSessionRowComponent', () => {
             expect(component.session.attendanceCount).toBe(component.persistedAttendanceCount);
         });
     }));
+
     function changeAttendanceInputAndSave() {
         const attendanceCountInput = fixture.debugElement.query(By.css('input'));
         attendanceCountInput.nativeElement.value = 5;

@@ -36,7 +36,13 @@ describe('Exercise Paging Service', () => {
 
     it('should find an element', fakeAsync(() => {
         const searchResult = { resultsOnPage: [new QuizExercise(undefined, undefined)], numberOfPages: 5 };
-        const pageable = { pageSize: 2, page: 3, sortingOrder: SortingOrder.DESCENDING, searchTerm: 'testSearchTerm', sortedColumn: 'testSortedColumn' };
+        const pageable = {
+            pageSize: 2,
+            page: 3,
+            sortingOrder: SortingOrder.DESCENDING,
+            searchTerm: 'testSearchTerm',
+            sortedColumn: 'testSortedColumn',
+        };
         service
             .searchForExercises(pageable, true, true)
             .pipe(take(1))

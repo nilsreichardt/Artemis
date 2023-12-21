@@ -1,6 +1,6 @@
 package de.tum.in.www1.artemis.service.exam;
 
-import java.awt.Rectangle;
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

@@ -171,7 +171,11 @@ describe('CourseExerciseDetailsComponent', () => {
 
                 // mock teamService, needed for team assignment
                 teamService = fixture.debugElement.injector.get(TeamService);
-                const teamAssignmentPayload = { exerciseId: 2, teamId: 2, studentParticipations: [] } as TeamAssignmentPayload;
+                const teamAssignmentPayload = {
+                    exerciseId: 2,
+                    teamId: 2,
+                    studentParticipations: [],
+                } as TeamAssignmentPayload;
                 jest.spyOn(teamService, 'teamAssignmentUpdates', 'get').mockReturnValue(Promise.resolve(of(teamAssignmentPayload)));
 
                 // mock participationService, needed for team assignment

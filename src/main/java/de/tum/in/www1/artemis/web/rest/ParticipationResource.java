@@ -1,44 +1,51 @@
 package de.tum.in.www1.artemis.web.rest;
 
-import static java.time.ZonedDateTime.now;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.security.Principal;
-import java.time.ZonedDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nullable;
-import javax.validation.constraints.NotNull;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.actuate.audit.AuditEvent;
-import org.springframework.boot.actuate.audit.AuditEventRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJacksonValue;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
 import de.tum.in.www1.artemis.config.Constants;
 import de.tum.in.www1.artemis.config.GuidedTourConfiguration;
-import de.tum.in.www1.artemis.domain.*;
-import de.tum.in.www1.artemis.domain.enumeration.*;
+import de.tum.in.www1.artemis.domain.Course;
+import de.tum.in.www1.artemis.domain.Exercise;
+import de.tum.in.www1.artemis.domain.GradingScale;
+import de.tum.in.www1.artemis.domain.ProgrammingExercise;
+import de.tum.in.www1.artemis.domain.Result;
+import de.tum.in.www1.artemis.domain.Submission;
+import de.tum.in.www1.artemis.domain.TextExercise;
+import de.tum.in.www1.artemis.domain.User;
+import de.tum.in.www1.artemis.domain.enumeration.AssessmentType;
+import de.tum.in.www1.artemis.domain.enumeration.ExerciseType;
+import de.tum.in.www1.artemis.domain.enumeration.InitializationState;
+import de.tum.in.www1.artemis.domain.enumeration.SubmissionType;
 import de.tum.in.www1.artemis.domain.modeling.ModelingExercise;
-import de.tum.in.www1.artemis.domain.participation.*;
+import de.tum.in.www1.artemis.domain.participation.Participant;
+import de.tum.in.www1.artemis.domain.participation.Participation;
+import de.tum.in.www1.artemis.domain.participation.ProgrammingExerciseParticipation;
+import de.tum.in.www1.artemis.domain.participation.ProgrammingExerciseStudentParticipation;
+import de.tum.in.www1.artemis.domain.participation.StudentParticipation;
 import de.tum.in.www1.artemis.domain.quiz.AbstractQuizSubmission;
 import de.tum.in.www1.artemis.domain.quiz.QuizBatch;
 import de.tum.in.www1.artemis.domain.quiz.QuizExercise;
 import de.tum.in.www1.artemis.domain.quiz.QuizSubmission;
-import de.tum.in.www1.artemis.repository.*;
+import de.tum.in.www1.artemis.repository.CourseRepository;
+import de.tum.in.www1.artemis.repository.ExerciseRepository;
+import de.tum.in.www1.artemis.repository.ProgrammingExerciseRepository;
+import de.tum.in.www1.artemis.repository.ProgrammingExerciseStudentParticipationRepository;
+import de.tum.in.www1.artemis.repository.QuizExerciseRepository;
+import de.tum.in.www1.artemis.repository.ResultRepository;
+import de.tum.in.www1.artemis.repository.StudentParticipationRepository;
+import de.tum.in.www1.artemis.repository.SubmissionRepository;
+import de.tum.in.www1.artemis.repository.SubmittedAnswerRepository;
+import de.tum.in.www1.artemis.repository.TeamRepository;
+import de.tum.in.www1.artemis.repository.UserRepository;
 import de.tum.in.www1.artemis.security.Role;
 import de.tum.in.www1.artemis.security.annotations.EnforceAtLeastInstructor;
 import de.tum.in.www1.artemis.security.annotations.EnforceAtLeastStudent;
 import de.tum.in.www1.artemis.security.annotations.EnforceAtLeastTutor;
-import de.tum.in.www1.artemis.service.*;
+import de.tum.in.www1.artemis.service.AuthorizationCheckService;
+import de.tum.in.www1.artemis.service.ExerciseDateService;
+import de.tum.in.www1.artemis.service.GradingScaleService;
+import de.tum.in.www1.artemis.service.ParticipationAuthorizationCheckService;
+import de.tum.in.www1.artemis.service.ParticipationService;
+import de.tum.in.www1.artemis.service.QuizBatchService;
+import de.tum.in.www1.artemis.service.QuizSubmissionService;
 import de.tum.in.www1.artemis.service.connectors.ci.ContinuousIntegrationService;
 import de.tum.in.www1.artemis.service.feature.Feature;
 import de.tum.in.www1.artemis.service.feature.FeatureToggle;
@@ -51,6 +58,42 @@ import de.tum.in.www1.artemis.web.rest.errors.AccessForbiddenException;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
 import de.tum.in.www1.artemis.web.rest.errors.ConflictException;
 import de.tum.in.www1.artemis.web.rest.util.HeaderUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.actuate.audit.AuditEvent;
+import org.springframework.boot.actuate.audit.AuditEventRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import javax.annotation.Nullable;
+import javax.validation.constraints.NotNull;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.security.Principal;
+import java.time.ZonedDateTime;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static java.time.ZonedDateTime.now;
 
 /**
  * REST controller for managing Participation.
@@ -119,15 +162,15 @@ public class ParticipationResource {
     private final GradingScaleService gradingScaleService;
 
     public ParticipationResource(ParticipationService participationService, ProgrammingExerciseParticipationService programmingExerciseParticipationService,
-            CourseRepository courseRepository, QuizExerciseRepository quizExerciseRepository, ExerciseRepository exerciseRepository,
-            ProgrammingExerciseRepository programmingExerciseRepository, AuthorizationCheckService authCheckService,
-            ParticipationAuthorizationCheckService participationAuthCheckService, Optional<ContinuousIntegrationService> continuousIntegrationService,
-            UserRepository userRepository, StudentParticipationRepository studentParticipationRepository, AuditEventRepository auditEventRepository,
-            GuidedTourConfiguration guidedTourConfiguration, TeamRepository teamRepository, FeatureToggleService featureToggleService,
-            ProgrammingExerciseStudentParticipationRepository programmingExerciseStudentParticipationRepository, SubmissionRepository submissionRepository,
-            ResultRepository resultRepository, ExerciseDateService exerciseDateService, InstanceMessageSendService instanceMessageSendService, QuizBatchService quizBatchService,
-            QuizScheduleService quizScheduleService, SubmittedAnswerRepository submittedAnswerRepository, GroupNotificationService groupNotificationService,
-            QuizSubmissionService quizSubmissionService, GradingScaleService gradingScaleService) {
+                                 CourseRepository courseRepository, QuizExerciseRepository quizExerciseRepository, ExerciseRepository exerciseRepository,
+                                 ProgrammingExerciseRepository programmingExerciseRepository, AuthorizationCheckService authCheckService,
+                                 ParticipationAuthorizationCheckService participationAuthCheckService, Optional<ContinuousIntegrationService> continuousIntegrationService,
+                                 UserRepository userRepository, StudentParticipationRepository studentParticipationRepository, AuditEventRepository auditEventRepository,
+                                 GuidedTourConfiguration guidedTourConfiguration, TeamRepository teamRepository, FeatureToggleService featureToggleService,
+                                 ProgrammingExerciseStudentParticipationRepository programmingExerciseStudentParticipationRepository, SubmissionRepository submissionRepository,
+                                 ResultRepository resultRepository, ExerciseDateService exerciseDateService, InstanceMessageSendService instanceMessageSendService, QuizBatchService quizBatchService,
+                                 QuizScheduleService quizScheduleService, SubmittedAnswerRepository submittedAnswerRepository, GroupNotificationService groupNotificationService,
+                                 QuizSubmissionService quizSubmissionService, GradingScaleService gradingScaleService) {
         this.participationService = participationService;
         this.programmingExerciseParticipationService = programmingExerciseParticipationService;
         this.quizExerciseRepository = quizExerciseRepository;
@@ -225,7 +268,7 @@ public class ParticipationResource {
     @EnforceAtLeastStudent
     @FeatureToggle(Feature.ProgrammingExercises)
     public ResponseEntity<Participation> startPracticeParticipation(@PathVariable Long exerciseId,
-            @RequestParam(value = "useGradedParticipation", defaultValue = "false") boolean useGradedParticipation) throws URISyntaxException {
+                                                                    @RequestParam(value = "useGradedParticipation", defaultValue = "false") boolean useGradedParticipation) throws URISyntaxException {
         log.debug("REST request to practice Exercise : {}", exerciseId);
         Exercise exercise = exerciseRepository.findByIdElseThrow(exerciseId);
         User user = userRepository.getUserWithGroupsAndAuthorities();
@@ -293,8 +336,7 @@ public class ParticipationResource {
             StudentParticipation otherParticipation = optionalOtherStudentParticipation.get();
             if (participation.getInitializationState() == InitializationState.INACTIVE) {
                 otherParticipation.setInitializationState(InitializationState.FINISHED);
-            }
-            else {
+            } else {
                 otherParticipation.setInitializationState(InitializationState.INACTIVE);
             }
             studentParticipationRepository.saveAndFlush(otherParticipation);
@@ -368,8 +410,7 @@ public class ParticipationResource {
         if (participation != null) {
             // only regular participation before the due date; only practice run afterwards
             return participation.isPracticeMode() == exerciseDateService.isAfterDueDate(participation);
-        }
-        else {
+        } else {
             return programmingExercise.getDueDate() == null || now().isBefore(programmingExercise.getDueDate());
         }
     }
@@ -428,8 +469,7 @@ public class ParticipationResource {
             if (course.getPresentationScore() != null && course.getPresentationScore() > 0) {
                 if (participation.getPresentationScore() >= 1.) {
                     participation.setPresentationScore(1.);
-                }
-                else {
+                } else {
                     participation.setPresentationScore(null);
                 }
             }
@@ -531,7 +571,7 @@ public class ParticipationResource {
     @GetMapping("exercises/{exerciseId}/participations")
     @EnforceAtLeastTutor
     public ResponseEntity<Set<StudentParticipation>> getAllParticipationsForExercise(@PathVariable Long exerciseId,
-            @RequestParam(defaultValue = "false") boolean withLatestResults) {
+                                                                                     @RequestParam(defaultValue = "false") boolean withLatestResults) {
         log.debug("REST request to get all Participations for Exercise {}", exerciseId);
         Exercise exercise = exerciseRepository.findByIdElseThrow(exerciseId);
         authCheckService.checkHasAtLeastRoleForExerciseElseThrow(Role.TEACHING_ASSISTANT, exercise, null);
@@ -542,15 +582,13 @@ public class ParticipationResource {
                 participation.setSubmissionCount(participation.getSubmissions().size());
                 if (participation.getResults() != null && !participation.getResults().isEmpty()) {
                     participation.setSubmissions(null);
-                }
-                else if (participation.getSubmissions() != null && !participation.getSubmissions().isEmpty()) {
+                } else if (participation.getSubmissions() != null && !participation.getSubmissions().isEmpty()) {
                     var lastLegalSubmission = participation.getSubmissions().stream().filter(submission -> submission.getType() != SubmissionType.ILLEGAL)
                             .max(Comparator.naturalOrder());
                     participation.setSubmissions(lastLegalSubmission.map(Set::of).orElse(Collections.emptySet()));
                 }
             });
-        }
-        else {
+        } else {
             participations = studentParticipationRepository.findByExerciseId(exerciseId);
 
             Map<Long, Integer> submissionCountMap = studentParticipationRepository.countSubmissionsPerParticipationByExerciseIdAsMap(exerciseId);
@@ -605,15 +643,12 @@ public class ParticipationResource {
                 programmingExercise.setProgrammingLanguage(null);
                 programmingExercise.setPackageName(null);
                 programmingExercise.setAllowOnlineEditor(null);
-            }
-            else if (exercise instanceof QuizExercise quizExercise) {
+            } else if (exercise instanceof QuizExercise quizExercise) {
                 quizExercise.setQuizQuestions(null);
                 quizExercise.setQuizPointStatistic(null);
-            }
-            else if (exercise instanceof TextExercise textExercise) {
+            } else if (exercise instanceof TextExercise textExercise) {
                 textExercise.setExampleSolution(null);
-            }
-            else if (exercise instanceof ModelingExercise modelingExercise) {
+            } else if (exercise instanceof ModelingExercise modelingExercise) {
                 modelingExercise.setExampleSolutionModel(null);
                 modelingExercise.setExampleSolutionExplanation(null);
             }
@@ -700,8 +735,7 @@ public class ParticipationResource {
         MappingJacksonValue response;
         if (exercise instanceof QuizExercise quizExercise) {
             response = participationForQuizExercise(quizExercise, user);
-        }
-        else {
+        } else {
             Optional<StudentParticipation> optionalParticipation = participationService.findOneByExerciseAndStudentLoginAnyStateWithEagerResults(exercise, principal.getName());
             if (optionalParticipation.isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.FAILED_DEPENDENCY, "No participation found for " + principal.getName() + " in exercise " + exerciseId);
@@ -711,8 +745,7 @@ public class ParticipationResource {
         }
         if (response == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        else {
+        } else {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
@@ -759,8 +792,7 @@ public class ParticipationResource {
             MappingJacksonValue value = new MappingJacksonValue(participation);
             value.setSerializationView(view);
             return value;
-        }
-        else {
+        } else {
             // Quiz hasn't started yet => no Result, only quizExercise without questions
             // OR: the quiz batch is already done and the submission has not yet been processed =>
             // TODO: handle this case, but the issue will go away on its own by just waiting
@@ -788,7 +820,7 @@ public class ParticipationResource {
     @DeleteMapping("participations/{participationId}")
     @EnforceAtLeastInstructor
     public ResponseEntity<Void> deleteParticipation(@PathVariable Long participationId, @RequestParam(defaultValue = "false") boolean deleteBuildPlan,
-            @RequestParam(defaultValue = "false") boolean deleteRepository) {
+                                                    @RequestParam(defaultValue = "false") boolean deleteRepository) {
         StudentParticipation participation = studentParticipationRepository.findByIdElseThrow(participationId);
         if (participation instanceof ProgrammingExerciseParticipation && !featureToggleService.isFeatureEnabled(Feature.ProgrammingExercises)) {
             throw new AccessForbiddenException("Programming Exercise Feature is disabled.");
@@ -811,7 +843,7 @@ public class ParticipationResource {
     @DeleteMapping("guided-tour/participations/{participationId}")
     @EnforceAtLeastStudent
     public ResponseEntity<Void> deleteParticipationForGuidedTour(@PathVariable Long participationId, @RequestParam(defaultValue = "false") boolean deleteBuildPlan,
-            @RequestParam(defaultValue = "false") boolean deleteRepository) {
+                                                                 @RequestParam(defaultValue = "false") boolean deleteRepository) {
         StudentParticipation participation = studentParticipationRepository.findByIdElseThrow(participationId);
         if (participation instanceof ProgrammingExerciseParticipation && !featureToggleService.isFeatureEnabled(Feature.ProgrammingExercises)) {
             throw new AccessForbiddenException("Programming Exercise Feature is disabled.");
@@ -823,8 +855,7 @@ public class ParticipationResource {
         if (participation.isOwnedBy(user)) {
             checkAccessPermissionAtLeastStudent(participation, user);
             guidedTourConfiguration.checkExerciseForTutorialElseThrow(participation.getExercise());
-        }
-        else {
+        } else {
             throw new AccessForbiddenException("Users are not allowed to delete their own participation.");
         }
 

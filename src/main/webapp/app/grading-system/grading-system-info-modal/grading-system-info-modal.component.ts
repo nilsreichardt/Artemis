@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class GradingSystemInfoModalComponent {
     // Icons
     farQuestionCircle = faQuestionCircle;
+
     constructor(private modalService: NgbModal) {}
 
     /**

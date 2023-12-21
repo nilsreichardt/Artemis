@@ -28,7 +28,7 @@
             >
                 <ng-template #tooltipTemplate let-model="model">
                     <b>{{ model.name }}</b> <br />
-                    <span>{{ 'artemisApp.courseStatistics.exerciseAverage' | artemisTranslate }}: {{ model.value }}%</span> <br />
+                    <span>{{ 'artemisApp.courseStatistics.exerciseAverage' | artemisTranslate }}: {{ model.value }} %</span> <br />
                     <b
                         >{{ 'artemisApp.courseStatistics.exerciseType' | artemisTranslate }}:
                         {{ 'artemisApp.courseStatistics.' + convertTypeForTooltip(model.name, model.value) | artemisTranslate }}</b

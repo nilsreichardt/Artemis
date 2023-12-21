@@ -13,6 +13,7 @@ export class SuspiciousSessionsComponent implements OnInit {
     @Input() suspiciousSessions: SuspiciousExamSessions;
     suspiciousFingerprint = false;
     suspiciousIpAddress = false;
+
     ngOnInit(): void {
         this.suspiciousFingerprint =
             this.isSuspiciousFor(SuspiciousSessionReason.DIFFERENT_STUDENT_EXAMS_SAME_BROWSER_FINGERPRINT) ||

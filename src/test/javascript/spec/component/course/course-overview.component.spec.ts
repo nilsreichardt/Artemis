@@ -68,7 +68,12 @@ const exercise2: Exercise = {
     dueDate: dayjs().add(1, 'days'),
     secondCorrectionEnabled: true,
 };
-const quizExercise: QuizExercise = { id: 7, numberOfAssessmentsOfCorrectionRounds: [], studentAssignedTeamIdComputed: false, secondCorrectionEnabled: true };
+const quizExercise: QuizExercise = {
+    id: 7,
+    numberOfAssessmentsOfCorrectionRounds: [],
+    studentAssignedTeamIdComputed: false,
+    secondCorrectionEnabled: true,
+};
 
 const courseEmpty: Course = {};
 
@@ -131,7 +136,10 @@ describe('CourseOverviewComponent', () => {
 
     let metisConversationService: MetisConversationService;
 
-    const course = { id: 1, courseInformationSharingConfiguration: CourseInformationSharingConfiguration.COMMUNICATION_AND_MESSAGING } as Course;
+    const course = {
+        id: 1,
+        courseInformationSharingConfiguration: CourseInformationSharingConfiguration.COMMUNICATION_AND_MESSAGING,
+    } as Course;
 
     beforeEach(fakeAsync(() => {
         route = {
@@ -195,7 +203,14 @@ describe('CourseOverviewComponent', () => {
                 jhiWebsocketServiceSubscribeSpy = jest.spyOn(jhiWebsocketService, 'subscribe');
                 jest.spyOn(teamService, 'teamAssignmentUpdates', 'get').mockResolvedValue(of(new TeamAssignmentPayload()));
                 // default for findOneForDashboardStub is to return the course
-                findOneForDashboardStub = jest.spyOn(courseService, 'findOneForDashboard').mockReturnValue(of(new HttpResponse({ body: course1, headers: new HttpHeaders() })));
+                findOneForDashboardStub = jest.spyOn(courseService, 'findOneForDashboard').mockReturnValue(
+                    of(
+                        new HttpResponse({
+                            body: course1,
+                            headers: new HttpHeaders(),
+                        }),
+                    ),
+                );
                 // default for findOneForRegistrationStub is to return the course as well
                 findOneForRegistrationStub = jest
                     .spyOn(courseService, 'findOneForRegistration')
@@ -443,7 +458,15 @@ describe('CourseOverviewComponent', () => {
         const getCourseStub = jest.spyOn(courseStorageService, 'getCourse');
         const teamAssignmentUpdatesStub = jest.spyOn(teamService, 'teamAssignmentUpdates', 'get');
         getCourseStub.mockReturnValue(course2);
-        teamAssignmentUpdatesStub.mockReturnValue(Promise.resolve(of({ exerciseId: 6, teamId: 1, studentParticipations: [] })));
+        teamAssignmentUpdatesStub.mockReturnValue(
+            Promise.resolve(
+                of({
+                    exerciseId: 6,
+                    teamId: 1,
+                    studentParticipations: [],
+                }),
+            ),
+        );
         findOneForDashboardStub.mockReturnValue(of(new HttpResponse({ body: course2, headers: new HttpHeaders() })));
 
         component.ngOnInit();

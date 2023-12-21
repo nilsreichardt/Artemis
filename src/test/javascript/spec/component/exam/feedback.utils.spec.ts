@@ -23,7 +23,11 @@ describe('FeedbackUtils', () => {
     });
 
     describe('prepareFeedbackComponentParameters', () => {
-        const exercise = { id: 42, type: ExerciseType.PROGRAMMING, dueDate: dayjs().subtract(4, 'hours') } as ProgrammingExercise;
+        const exercise = {
+            id: 42,
+            type: ExerciseType.PROGRAMMING,
+            dueDate: dayjs().subtract(4, 'hours'),
+        } as ProgrammingExercise;
         const result = { assessmentType: AssessmentType.AUTOMATIC };
         const participation = {};
         const templateStatus = ResultTemplateStatus.MISSING;

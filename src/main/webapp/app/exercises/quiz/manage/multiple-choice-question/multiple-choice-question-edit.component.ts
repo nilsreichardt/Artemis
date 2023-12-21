@@ -45,6 +45,7 @@ export class MultipleChoiceQuestionEditComponent implements OnInit, QuizQuestion
     get showPreview(): boolean {
         return this.markdownEditor && this.markdownEditor.previewMode;
     }
+
     showMultipleChoiceQuestionPreview = true;
     showMultipleChoiceQuestionVisual = true;
 

@@ -36,7 +36,7 @@ public class ComplaintService {
     private final ExamRepository examRepository;
 
     public ComplaintService(ComplaintRepository complaintRepository, ComplaintResponseRepository complaintResponseRepository, ResultRepository resultRepository,
-            ExamRepository examRepository, UserRepository userRepository) {
+                            ExamRepository examRepository, UserRepository userRepository) {
         this.complaintRepository = complaintRepository;
         this.complaintResponseRepository = complaintResponseRepository;
         this.resultRepository = resultRepository;
@@ -80,8 +80,7 @@ public class ComplaintService {
             if (!examTestRun && !isTimeOfComplaintValid(exam)) {
                 throw new BadRequestAlertException("You cannot submit a complaint after the student review period", ENTITY_NAME, "afterStudentReviewPeriod");
             }
-        }
-        else {
+        } else {
             if (complaint.getComplaintType() == ComplaintType.COMPLAINT) {
                 long numberOfUnacceptedComplaints = countUnacceptedComplaintsByParticipantAndCourseId(participant, courseId);
                 long numberOfAllowedComplaintsInCourse = getMaxComplaintsPerParticipant(course, participant);
@@ -89,8 +88,7 @@ public class ComplaintService {
                     throw new BadRequestAlertException("You cannot have more than " + numberOfAllowedComplaintsInCourse + " open or rejected complaints at the same time.",
                             ENTITY_NAME, "tooManyComplaints");
                 }
-            }
-            else if (complaint.getComplaintType() == ComplaintType.MORE_FEEDBACK && !course.getRequestMoreFeedbackEnabled()) {
+            } else if (complaint.getComplaintType() == ComplaintType.MORE_FEEDBACK && !course.getRequestMoreFeedbackEnabled()) {
                 throw new BadRequestAlertException("You cannot request more feedback in this course because this feature has been disabled by the instructors.", ENTITY_NAME,
                         "moreFeedbackRequestsDisabled");
             }
@@ -126,11 +124,9 @@ public class ComplaintService {
     public long countUnacceptedComplaintsByParticipantAndCourseId(Participant participant, long courseId) {
         if (participant instanceof User) {
             return complaintRepository.countUnacceptedComplaintsByComplaintTypeStudentIdAndCourseId(participant.getId(), courseId);
-        }
-        else if (participant instanceof Team) {
+        } else if (participant instanceof Team) {
             return complaintRepository.countUnacceptedComplaintsByComplaintTypeTeamShortNameAndCourseId(participant.getParticipantIdentifier(), courseId);
-        }
-        else {
+        } else {
             throw new Error("Unknown participant type");
         }
     }
@@ -185,8 +181,7 @@ public class ComplaintService {
                     ComplaintType.COMPLAINT);
             numberOfMoreFeedbackRequestsOfExercise = new ArrayList<>();
             numberOfMoreFeedbackResponsesOfExercise = new ArrayList<>();
-        }
-        else {
+        } else {
             numberOfComplaintsOfExercise = complaintRepository.countComplaintsByExerciseIdsAndComplaintType(exerciseIds, ComplaintType.COMPLAINT);
             numberOfComplaintResponsesOfExercise = complaintResponseRepository.countComplaintsByExerciseIdsAndComplaintComplaintType(exerciseIds, ComplaintType.COMPLAINT);
 
@@ -264,7 +259,7 @@ public class ComplaintService {
      * @param type                 specifies if this is an actual complaint or a more feedback request
      */
     private static void validateTimeOfComplaintOrRequestMoreFeedback(Result result, Exercise exercise, StudentParticipation studentParticipation, Course course,
-            ComplaintType type) {
+                                                                     ComplaintType type) {
         int maxDays = switch (type) {
             case COMPLAINT -> course.getMaxComplaintTimeDays();
             case MORE_FEEDBACK -> course.getMaxRequestMoreFeedbackTimeDays();

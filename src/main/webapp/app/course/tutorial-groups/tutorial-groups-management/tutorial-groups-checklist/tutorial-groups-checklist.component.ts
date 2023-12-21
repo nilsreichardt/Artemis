@@ -25,6 +25,7 @@ export class TutorialGroupsChecklistComponent implements OnInit, OnDestroy {
     faPlus = faPlus;
 
     ngUnsubscribe = new Subject<void>();
+
     constructor(
         private activatedRoute: ActivatedRoute,
         private courseManagementService: CourseManagementService,

@@ -23,7 +23,9 @@ const shouldCacheDecider = (result: any) => {
 
 export interface ICacheableImageService {
     loadCachedLocalStorage(url: string): Observable<any>;
+
     loadCachedSessionStorage(url: string): Observable<any>;
+
     loadWithoutCache(url: string): Observable<any>;
 }
 

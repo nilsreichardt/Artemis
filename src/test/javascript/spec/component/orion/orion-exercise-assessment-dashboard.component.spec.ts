@@ -45,7 +45,10 @@ describe('OrionExerciseAssessmentDashboardComponent', () => {
                 MockProvider(OrionConnectorService),
                 MockProvider(OrionAssessmentService),
                 MockProvider(ExerciseService),
-                { provide: ActivatedRoute, useValue: { snapshot: { paramMap: convertToParamMap({ exerciseId: 10 }) } } },
+                {
+                    provide: ActivatedRoute,
+                    useValue: { snapshot: { paramMap: convertToParamMap({ exerciseId: 10 }) } },
+                },
             ],
         })
             .compileComponents()

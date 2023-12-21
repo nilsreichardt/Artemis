@@ -114,7 +114,12 @@ describe('AttachmentUnitsComponent', () => {
 
     beforeEach(() => {
         jest.spyOn(TestBed.inject(Router), 'getCurrentNavigation').mockReturnValue({
-            extras: { state: { file: new File([''], 'testFile.pdf', { type: 'application/pdf' }), fileName: 'testFile' } },
+            extras: {
+                state: {
+                    file: new File([''], 'testFile.pdf', { type: 'application/pdf' }),
+                    fileName: 'testFile',
+                },
+            },
         } as any);
 
         attachmentUnitsComponentFixture = TestBed.createComponent(AttachmentUnitsComponent);
@@ -137,7 +142,11 @@ describe('AttachmentUnitsComponent', () => {
     });
 
     it('should create attachment units', fakeAsync(() => {
-        const lectureUnitInformation: LectureUnitInformationDTO = { units: units, numberOfPages: numberOfPages, removeSlidesCommaSeparatedKeyPhrases: '' };
+        const lectureUnitInformation: LectureUnitInformationDTO = {
+            units: units,
+            numberOfPages: numberOfPages,
+            removeSlidesCommaSeparatedKeyPhrases: '',
+        };
         const filename = 'filename-on-server';
         attachmentUnitsComponent.filename = filename;
 

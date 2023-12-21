@@ -3,7 +3,7 @@
         <form [formGroup]="courseForm" (ngSubmit)="save()" #formDir="ngForm">
             <div class="headline">
                 @if (croppedImage) {
-                    <jhi-secured-image [src]="croppedImage" [cachingStrategy]="CachingStrategy.LOCAL_STORAGE"> </jhi-secured-image>
+                    <jhi-secured-image [src]="croppedImage" [cachingStrategy]="CachingStrategy.LOCAL_STORAGE"></jhi-secured-image>
                 }
                 @if (!croppedImage) {
                     <div class="no-image"></div>

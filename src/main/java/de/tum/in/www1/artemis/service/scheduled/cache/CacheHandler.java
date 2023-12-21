@@ -104,8 +104,7 @@ public abstract class CacheHandler<K, C extends Cache> {
             // Return the new deserialized, new cached object returned by get()
             // (this is not the newCachedQuiz object anymore, although we use near caching in OBJECT in-memory format, because Hazelcast.)
             return cache.get(key);
-        }
-        finally {
+        } finally {
             cache.unlock(key);
         }
     }
@@ -126,8 +125,7 @@ public abstract class CacheHandler<K, C extends Cache> {
             cache.set(key, writeOperation.apply(getTransientWriteCacheFor(key)));
             // We do this get here to deserialize and load the newly written instance into the near cache directly after the writing operation
             cache.get(key);
-        }
-        finally {
+        } finally {
             cache.unlock(key);
         }
     }
@@ -151,8 +149,7 @@ public abstract class CacheHandler<K, C extends Cache> {
                 // We do this get here to deserialize and load the newly written instance into the near cache directly after the write
                 cache.get(key);
             }
-        }
-        finally {
+        } finally {
             cache.unlock(key);
         }
     }

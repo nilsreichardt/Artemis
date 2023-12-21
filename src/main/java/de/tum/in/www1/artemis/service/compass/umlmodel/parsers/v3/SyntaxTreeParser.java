@@ -3,13 +3,20 @@ package de.tum.in.www1.artemis.service.compass.umlmodel.parsers.v3;
 import static de.tum.in.www1.artemis.service.compass.utils.JSONMapping.*;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import com.google.gson.JsonObject;
 
 import de.tum.in.www1.artemis.service.compass.umlmodel.UMLElement;
 import de.tum.in.www1.artemis.service.compass.umlmodel.parsers.UMLModelParser;
-import de.tum.in.www1.artemis.service.compass.umlmodel.syntaxtree.*;
+import de.tum.in.www1.artemis.service.compass.umlmodel.syntaxtree.SyntaxTree;
+import de.tum.in.www1.artemis.service.compass.umlmodel.syntaxtree.SyntaxTreeLink;
+import de.tum.in.www1.artemis.service.compass.umlmodel.syntaxtree.SyntaxTreeNonterminal;
+import de.tum.in.www1.artemis.service.compass.umlmodel.syntaxtree.SyntaxTreeTerminal;
 
 public class SyntaxTreeParser {
 

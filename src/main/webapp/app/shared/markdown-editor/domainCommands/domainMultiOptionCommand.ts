@@ -6,9 +6,11 @@ import { ValueItem } from 'app/shared/markdown-editor/command-constants';
  */
 export abstract class DomainMultiOptionCommand extends DomainCommand {
     protected values: ValueItem[] = [];
+
     setValues(values: ValueItem[]) {
         this.values = values;
     }
+
     getValues() {
         return this.values;
     }

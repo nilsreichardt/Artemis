@@ -74,7 +74,10 @@ export class TextExerciseService implements ExerciseServicable<TextExercise> {
      */
     find(exerciseId: number, withPlagiarismDetectionConfig: boolean = false): Observable<EntityResponseType> {
         return this.http
-            .get<TextExercise>(`${this.resourceUrl}/${exerciseId}`, { observe: 'response', params: { withPlagiarismDetectionConfig: withPlagiarismDetectionConfig } })
+            .get<TextExercise>(`${this.resourceUrl}/${exerciseId}`, {
+                observe: 'response',
+                params: { withPlagiarismDetectionConfig: withPlagiarismDetectionConfig },
+            })
             .pipe(map((res: EntityResponseType) => this.exerciseService.processExerciseEntityResponse(res)));
     }
 
@@ -139,7 +142,10 @@ export class TextExerciseService implements ExerciseServicable<TextExercise> {
         copy = ExerciseService.setBonusPointsConstrainedByIncludedInOverallScore(copy);
         copy.categories = ExerciseService.stringifyExerciseCategories(copy);
         return this.http
-            .put<TextExercise>(`${this.resourceUrl}/${textExercise.id}/re-evaluate`, copy, { params: options, observe: 'response' })
+            .put<TextExercise>(`${this.resourceUrl}/${textExercise.id}/re-evaluate`, copy, {
+                params: options,
+                observe: 'response',
+            })
             .pipe(map((res: EntityResponseType) => this.exerciseService.processExerciseEntityResponse(res)));
     }
 

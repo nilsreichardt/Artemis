@@ -28,7 +28,15 @@ describe('RatingListComponent', () => {
         return TestBed.configureTestingModule({
             imports: [ArtemisTestModule],
             declarations: [RatingListComponent, TranslatePipeMock, MockComponent(StarRatingComponent), MockDirective(SortDirective)],
-            providers: [{ provide: ActivatedRoute, useValue: route }, { provide: Router, useClass: MockRouter }, MockProvider(RatingService), MockProvider(SortService)],
+            providers: [
+                { provide: ActivatedRoute, useValue: route },
+                {
+                    provide: Router,
+                    useClass: MockRouter,
+                },
+                MockProvider(RatingService),
+                MockProvider(SortService),
+            ],
         })
             .compileComponents()
             .then(() => {
@@ -61,7 +69,13 @@ describe('RatingListComponent', () => {
     });
 
     it('should open exercise', () => {
-        const rating = { id: 1, result: { id: 1, participation: { id: 1, exercise: { id: 1, type: ExerciseType.TEXT } as Exercise } as Participation } as Result } as Rating;
+        const rating = {
+            id: 1,
+            result: {
+                id: 1,
+                participation: { id: 1, exercise: { id: 1, type: ExerciseType.TEXT } as Exercise } as Participation,
+            } as Result,
+        } as Rating;
         const routerNavigateSpy = jest.spyOn(router, 'navigate').mockImplementation(() => lastValueFrom(of(true)));
         component.openResult(rating);
         expect(routerNavigateSpy).toHaveBeenCalledOnce();

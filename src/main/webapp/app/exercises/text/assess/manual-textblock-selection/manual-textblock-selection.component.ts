@@ -13,9 +13,11 @@ export class ManualTextblockSelectionComponent {
     @Input() set textBlockRefs(textBlockRefs: TextBlockRef[]) {
         this.textBlockRefGroups = TextBlockRefGroup.fromTextBlockRefs(textBlockRefs);
     }
+
     get textBlockRefs(): TextBlockRef[] {
         return this.textBlockRefGroups.reduce((previous: TextBlockRef[], group: TextBlockRefGroup) => [...previous, ...group.refs], []);
     }
+
     @Output() textBlockRefsChange = new EventEmitter<TextBlockRef[]>();
     @Output() textBlockRefAdded = new EventEmitter<TextBlockRef>();
     @Input() selectedRef?: TextBlockRef;

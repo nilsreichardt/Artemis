@@ -49,6 +49,7 @@ export class ConversationInfoComponent implements OnInit, OnDestroy {
     changesPerformed = new EventEmitter<void>();
 
     readOnlyMode = false;
+
     constructor(
         private channelService: ChannelService,
         private groupChatService: GroupChatService,

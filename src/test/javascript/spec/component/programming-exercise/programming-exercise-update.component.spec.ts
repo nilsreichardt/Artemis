@@ -131,7 +131,12 @@ describe('ProgrammingExerciseUpdateComponent', () => {
                 { provide: TranslateService, useClass: MockTranslateService },
                 { provide: ActivatedRoute, useValue: new MockActivatedRoute({}) },
                 { provide: NgbModal, useClass: MockNgbModalService },
-                { provide: AlertService, useValue: { addAlert: () => {} } },
+                {
+                    provide: AlertService,
+                    useValue: {
+                        addAlert: () => {},
+                    },
+                },
             ],
         })
             .compileComponents()
@@ -240,7 +245,11 @@ describe('ProgrammingExerciseUpdateComponent', () => {
 
             // THEN
             expect(comp.isSaving).toBeFalse();
-            expect(alertSpy).toHaveBeenCalledWith({ type: AlertType.DANGER, message: 'error-message', disableTranslation: true });
+            expect(alertSpy).toHaveBeenCalledWith({
+                type: AlertType.DANGER,
+                message: 'error-message',
+                disableTranslation: true,
+            });
         });
     });
 

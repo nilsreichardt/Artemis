@@ -45,7 +45,10 @@ describe('ExerciseHint Management Update Component', () => {
     programmingExercise.id = 15;
 
     const exerciseHint = new ExerciseHint();
-    const route = { data: of({ exerciseHint, exercise: programmingExercise }), params: of({ courseId: 12 }) } as any as ActivatedRoute;
+    const route = {
+        data: of({ exerciseHint, exercise: programmingExercise }),
+        params: of({ courseId: 12 }),
+    } as any as ActivatedRoute;
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({

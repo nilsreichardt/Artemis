@@ -3,7 +3,7 @@
         <div class="card-header unit-card-header row align-content-center justify-content-between" (click)="handleCollapse($event)">
             <div class="col-auto row align-content-center flex-shrink-1">
                 <h5 class="m-0 fw-medium">
-                    <fa-icon class="me-2" [icon]="faVideo" [ngbTooltip]="'artemisApp.videoUnit.tooltip' | artemisTranslate"> </fa-icon>
+                    <fa-icon class="me-2" [icon]="faVideo" [ngbTooltip]="'artemisApp.videoUnit.tooltip' | artemisTranslate"></fa-icon>
                     {{ videoUnit?.name ? videoUnit.name : '' }}
                     @if (!videoUnit?.visibleToStudents) {
                         <span

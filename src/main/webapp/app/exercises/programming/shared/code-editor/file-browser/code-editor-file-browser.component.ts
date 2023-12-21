@@ -59,6 +59,7 @@ export class CodeEditorFileBrowserComponent implements OnInit, OnChanges, AfterV
     get selectedFile(): string | undefined {
         return this.selectedFileValue;
     }
+
     @Input() disableActions = false;
     @Input()
     unsavedFiles: string[];
@@ -66,10 +67,12 @@ export class CodeEditorFileBrowserComponent implements OnInit, OnChanges, AfterV
     errorFiles: string[];
     @Input()
     editorState: EditorState;
+
     @Input()
     get commitState() {
         return this.commitStateValue;
     }
+
     @Input()
     isTutorAssessment = false;
     @Input()
@@ -374,7 +377,12 @@ export class CodeEditorFileBrowserComponent implements OnInit, OnChanges, AfterV
     compressTree(node: FileTreeItem): FileTreeItem {
         // If the node has only one child and that child is a folder, we can compress the tree.
         if (node.children && node.children.length === 1 && this.repositoryFiles[node.children[0].value] === FileType.FOLDER) {
-            return this.compressTree({ ...node.children[0], text: node.text + '/' + node.children[0].text, folder: node.folder, file: node.file });
+            return this.compressTree({
+                ...node.children[0],
+                text: node.text + '/' + node.children[0].text,
+                folder: node.folder,
+                file: node.file,
+            });
         }
         // If the node has children, we cannot compress it. However, we can try to compress its children.
         else if (node.children) {
@@ -553,7 +561,10 @@ export class CodeEditorFileBrowserComponent implements OnInit, OnChanges, AfterV
         const { value: filePath } = item;
         const fileType = this.repositoryFiles[filePath];
         if (filePath) {
-            const modalRef = this.modalService.open(CodeEditorFileBrowserDeleteComponent, { keyboard: true, size: 'lg' });
+            const modalRef = this.modalService.open(CodeEditorFileBrowserDeleteComponent, {
+                keyboard: true,
+                size: 'lg',
+            });
             modalRef.componentInstance.parent = this;
             modalRef.componentInstance.fileNameToDelete = filePath;
             modalRef.componentInstance.fileType = fileType;

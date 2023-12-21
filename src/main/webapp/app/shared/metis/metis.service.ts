@@ -247,7 +247,11 @@ export class MetisService implements OnDestroy {
                     if (indexOfAnswer === -1) {
                         if (!this.cachedPosts[indexOfCachedPost].answers) {
                             // Need to create a new message object since Angular doesn't detect changes otherwise
-                            this.cachedPosts[indexOfCachedPost] = { ...this.cachedPosts[indexOfCachedPost], answers: [], reactions: [] };
+                            this.cachedPosts[indexOfCachedPost] = {
+                                ...this.cachedPosts[indexOfCachedPost],
+                                answers: [],
+                                reactions: [],
+                            };
                         }
                         this.cachedPosts[indexOfCachedPost].answers!.push(createdAnswerPost);
                         this.posts$.next(this.cachedPosts);
@@ -291,7 +295,11 @@ export class MetisService implements OnDestroy {
                 if (indexOfCachedPost > -1) {
                     const indexOfAnswer = this.cachedPosts[indexOfCachedPost].answers?.findIndex((answer) => answer.id === updatedAnswerPost.id) ?? -1;
                     if (indexOfAnswer > -1) {
-                        updatedAnswerPost.post = { ...this.cachedPosts[indexOfCachedPost], answers: [], reactions: [] };
+                        updatedAnswerPost.post = {
+                            ...this.cachedPosts[indexOfCachedPost],
+                            answers: [],
+                            reactions: [],
+                        };
                         this.cachedPosts[indexOfCachedPost].answers![indexOfAnswer] = updatedAnswerPost;
                         this.posts$.next(this.cachedPosts);
                         this.totalNumberOfPosts$.next(this.cachedTotalNumberOfPots);
@@ -436,6 +444,7 @@ export class MetisService implements OnDestroy {
             return false;
         }
     }
+
     /**
      * creates empty default post that is needed on initialization of a newly opened modal to edit or create a post
      * @param conversation optional conversation as default context

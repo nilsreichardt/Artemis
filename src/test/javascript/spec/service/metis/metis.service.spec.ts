@@ -208,7 +208,14 @@ describe('Metis Service', () => {
             const createdAnswerPostSub = metisService.createAnswerPost(answerPost).subscribe((createdAnswerPost) => {
                 expect(createdAnswerPost).toEqual(answerPost);
             });
-            const cachedPostsSub = metisService.posts.subscribe((posts) => expect(posts).toEqual([{ ...post, answers: [answerPost] }]));
+            const cachedPostsSub = metisService.posts.subscribe((posts) =>
+                expect(posts).toEqual([
+                    {
+                        ...post,
+                        answers: [answerPost],
+                    },
+                ]),
+            );
 
             expect(answerPostServiceSpy).toHaveBeenCalledOnce();
             tick();
@@ -225,7 +232,14 @@ describe('Metis Service', () => {
             const createdAnswerPostSub = metisService.createAnswerPost(answerPost).subscribe();
 
             metisService.deleteAnswerPost(answerPost);
-            const cachedPostsSub = metisService.posts.subscribe((posts) => expect(posts).toEqual([{ ...post, answers: [] }]));
+            const cachedPostsSub = metisService.posts.subscribe((posts) =>
+                expect(posts).toEqual([
+                    {
+                        ...post,
+                        answers: [],
+                    },
+                ]),
+            );
 
             expect(answerPostServiceSpy).toHaveBeenCalledOnce();
             tick();
@@ -244,7 +258,14 @@ describe('Metis Service', () => {
             const updatedAnswerPostSub = metisService.updateAnswerPost(answerPost).subscribe((updatedAnswerPost) => {
                 expect(updatedAnswerPost).toEqual(answerPost);
             });
-            const cachedPostsSub = metisService.posts.subscribe((posts) => expect(posts).toEqual([{ ...post, answers: [answerPost] }]));
+            const cachedPostsSub = metisService.posts.subscribe((posts) =>
+                expect(posts).toEqual([
+                    {
+                        ...post,
+                        answers: [answerPost],
+                    },
+                ]),
+            );
 
             expect(answerPostServiceSpy).toHaveBeenCalledOnce();
             tick();
@@ -265,7 +286,14 @@ describe('Metis Service', () => {
             const createdReactionSub = metisService.createReaction(reaction).subscribe((createdReaction) => {
                 expect(createdReaction).toEqual(reaction);
             });
-            const cachedPostsSub = metisService.posts.subscribe((posts) => expect(posts).toEqual([{ ...post, reactions: [reaction] }]));
+            const cachedPostsSub = metisService.posts.subscribe((posts) =>
+                expect(posts).toEqual([
+                    {
+                        ...post,
+                        reactions: [reaction],
+                    },
+                ]),
+            );
 
             expect(reactionServiceSpy).toHaveBeenCalledOnce();
             tick();
@@ -284,7 +312,14 @@ describe('Metis Service', () => {
             metisService.deleteReaction(reaction).subscribe(() => {
                 expect(metisServiceGetFilteredPostsSpy).not.toHaveBeenCalled();
             });
-            const cachedPostsSub = metisService.posts.subscribe((posts) => expect(posts).toEqual([{ ...post, reactions: [] }]));
+            const cachedPostsSub = metisService.posts.subscribe((posts) =>
+                expect(posts).toEqual([
+                    {
+                        ...post,
+                        reactions: [],
+                    },
+                ]),
+            );
 
             tick();
             expect(reactionServiceSpy).toHaveBeenCalledOnce();
@@ -400,7 +435,12 @@ describe('Metis Service', () => {
         });
 
         it('should create websocket subscription when posts with lecture context are initially retrieved from DB', fakeAsync(() => {
-            websocketServiceReceiveStub.mockReturnValue(of({ post: metisPostInChannel, action: MetisPostAction.CREATE } as MetisPostDTO));
+            websocketServiceReceiveStub.mockReturnValue(
+                of({
+                    post: metisPostInChannel,
+                    action: MetisPostAction.CREATE,
+                } as MetisPostDTO),
+            );
             // setup subscription
             metisService.getFilteredPosts({ courseWideChannelIds: [metisPostInChannel.conversation!.id!] });
             metisServiceGetFilteredPostsSpy.mockReset();
@@ -412,10 +452,19 @@ describe('Metis Service', () => {
         }));
 
         it('should create websocket subscription when posts with exercise context are initially retrieved from DB', fakeAsync(() => {
-            websocketServiceReceiveStub.mockReturnValue(of({ post: metisPostInChannel, action: MetisPostAction.DELETE } as MetisPostDTO));
+            websocketServiceReceiveStub.mockReturnValue(
+                of({
+                    post: metisPostInChannel,
+                    action: MetisPostAction.DELETE,
+                } as MetisPostDTO),
+            );
             metisService.setPageType(PageType.OVERVIEW);
             // setup subscription
-            metisService.getFilteredPosts({ courseWideChannelIds: [metisPostInChannel.conversation!.id!], page: 0, pageSize: ITEMS_PER_PAGE });
+            metisService.getFilteredPosts({
+                courseWideChannelIds: [metisPostInChannel.conversation!.id!],
+                page: 0,
+                pageSize: ITEMS_PER_PAGE,
+            });
             metisServiceGetFilteredPostsSpy.mockReset();
             expect(metisServiceCreateWebsocketSubscriptionSpy).not.toHaveBeenCalled();
             expect(websocketServiceSubscribeSpy).not.toHaveBeenCalled();
@@ -425,7 +474,12 @@ describe('Metis Service', () => {
         }));
 
         it('should create websocket subscription when posts with course-wide context are initially retrieved from DB', fakeAsync(() => {
-            websocketServiceReceiveStub.mockReturnValue(of({ post: metisPostInChannel, action: MetisPostAction.UPDATE } as MetisPostDTO));
+            websocketServiceReceiveStub.mockReturnValue(
+                of({
+                    post: metisPostInChannel,
+                    action: MetisPostAction.UPDATE,
+                } as MetisPostDTO),
+            );
             // setup subscription
             metisService.getFilteredPosts({ courseWideChannelIds: [metisPostInChannel.conversation!.id!] });
             metisServiceGetFilteredPostsSpy.mockReset();
@@ -438,7 +492,12 @@ describe('Metis Service', () => {
         }));
 
         it('should not create new subscription if already exists', fakeAsync(() => {
-            websocketServiceReceiveStub.mockReturnValue(of({ post: metisPostInChannel, action: MetisPostAction.DELETE } as MetisPostDTO));
+            websocketServiceReceiveStub.mockReturnValue(
+                of({
+                    post: metisPostInChannel,
+                    action: MetisPostAction.DELETE,
+                } as MetisPostDTO),
+            );
             // setup subscription for the first time
             metisService.getFilteredPosts({ courseWideChannelIds: [metisPostInChannel.conversation!.id!] });
             metisServiceGetFilteredPostsSpy.mockReset();
@@ -450,7 +509,12 @@ describe('Metis Service', () => {
         }));
 
         it('subscribes to broadcast topic for course-wide channels', fakeAsync(() => {
-            websocketServiceReceiveStub.mockReturnValue(of({ post: metisPostInChannel, action: MetisPostAction.CREATE } as MetisPostDTO));
+            websocketServiceReceiveStub.mockReturnValue(
+                of({
+                    post: metisPostInChannel,
+                    action: MetisPostAction.CREATE,
+                } as MetisPostDTO),
+            );
             metisService.setPageType(PageType.OVERVIEW);
             // setup subscription
             metisService.getFilteredPosts({ conversationId: 1, page: 0, pageSize: ITEMS_PER_PAGE }, true, {
@@ -462,15 +526,28 @@ describe('Metis Service', () => {
             expect(websocketServiceSubscribeSpy).not.toHaveBeenCalled();
             // receive message on channel
             tick();
-            expect(metisServiceGetFilteredPostsSpy).toHaveBeenCalledWith({ conversationId: 1, page: 0, pageSize: ITEMS_PER_PAGE }, true, {
-                id: 1,
-                type: ConversationType.CHANNEL,
-                isCourseWide: true,
-            } as ChannelDTO);
+            expect(metisServiceGetFilteredPostsSpy).toHaveBeenCalledWith(
+                {
+                    conversationId: 1,
+                    page: 0,
+                    pageSize: ITEMS_PER_PAGE,
+                },
+                true,
+                {
+                    id: 1,
+                    type: ConversationType.CHANNEL,
+                    isCourseWide: true,
+                } as ChannelDTO,
+            );
         }));
 
         it('subscribes to user specific topic for non-course-wide channels', fakeAsync(() => {
-            websocketServiceReceiveStub.mockReturnValue(of({ post: metisPostInChannel, action: MetisPostAction.CREATE } as MetisPostDTO));
+            websocketServiceReceiveStub.mockReturnValue(
+                of({
+                    post: metisPostInChannel,
+                    action: MetisPostAction.CREATE,
+                } as MetisPostDTO),
+            );
             metisService.setPageType(PageType.OVERVIEW);
             // setup subscription
             metisService.getFilteredPosts({ conversationId: 1, page: 0, pageSize: ITEMS_PER_PAGE }, true, {
@@ -482,11 +559,19 @@ describe('Metis Service', () => {
             expect(websocketServiceSubscribeSpy).not.toHaveBeenCalled();
             // receive message on channel
             tick();
-            expect(metisServiceGetFilteredPostsSpy).toHaveBeenCalledWith({ conversationId: 1, page: 0, pageSize: ITEMS_PER_PAGE }, true, {
-                id: 1,
-                type: ConversationType.CHANNEL,
-                isCourseWide: false,
-            } as ChannelDTO);
+            expect(metisServiceGetFilteredPostsSpy).toHaveBeenCalledWith(
+                {
+                    conversationId: 1,
+                    page: 0,
+                    pageSize: ITEMS_PER_PAGE,
+                },
+                true,
+                {
+                    id: 1,
+                    type: ConversationType.CHANNEL,
+                    isCourseWide: false,
+                } as ChannelDTO,
+            );
         }));
 
         it.each([MetisPostAction.CREATE, MetisPostAction.UPDATE, MetisPostAction.DELETE])(
@@ -573,7 +658,10 @@ describe('Metis Service', () => {
             );
 
             // set currentPostContextFilter with search text
-            metisService.getFilteredPosts({ conversationId: mockPostDTO.post.conversation?.id, searchText: 'Search text' } as PostContextFilter);
+            metisService.getFilteredPosts({
+                conversationId: mockPostDTO.post.conversation?.id,
+                searchText: 'Search text',
+            } as PostContextFilter);
 
             jest.spyOn(conversationService, 'markAsRead').mockReturnValue(of());
             // Emulate receiving a message matching the search text

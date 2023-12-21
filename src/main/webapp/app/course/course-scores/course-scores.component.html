@@ -11,7 +11,8 @@
             </h4>
             @if (course && course.isAtLeastInstructor) {
                 <a [routerLink]="['/course-management', course.id, 'grading-system']" class="btn btn-info btn-md">
-                    <fa-icon [icon]="faClipboard"></fa-icon> <span jhitranslate="artemisApp.course.gradingSystem">Grading Key</span>
+                    <fa-icon [icon]="faClipboard"></fa-icon>
+                    <span jhitranslate="artemisApp.course.gradingSystem">Grading Key</span>
                 </a>
             }
         </div>
@@ -70,7 +71,8 @@
                                 </div>
                             </th>
                             <td id="average_points" [ngClass]="highlightedType">
-                                {{ roundValueSpecifiedByCourseSettings(this.averageNumberOfOverallPoints, course) }} ({{ this.averageScoreIncluded }}%)
+                                {{ roundValueSpecifiedByCourseSettings(this.averageNumberOfOverallPoints, course) }}
+                                ({{ this.averageScoreIncluded }}%)
                             </td>
                             <td>{{ this.averagePointsTotal }} ({{ this.averageScoreTotal }}%)</td>
                         </tr>
@@ -147,11 +149,13 @@
                             }
                             @if (maxNumberOfPresentationPoints > 0) {
                                 <th jhiSortBy="presentationPoints">
-                                    <span jhiTranslate="artemisApp.instructorDashboard.presentationPoints">Presentation Points (%)</span> <fa-icon [icon]="faSort"></fa-icon>
+                                    <span jhiTranslate="artemisApp.instructorDashboard.presentationPoints">Presentation Points (%)</span>
+                                    <fa-icon [icon]="faSort"></fa-icon>
                                 </th>
                             }
                             <th jhiSortBy="overallPoints">
-                                <span jhiTranslate="artemisApp.instructorDashboard.overallScore">Overall Points (%)</span> <fa-icon [icon]="faSort"></fa-icon>
+                                <span jhiTranslate="artemisApp.instructorDashboard.overallScore">Overall Points (%)</span>
+                                <fa-icon [icon]="faSort"></fa-icon>
                             </th>
                             @if (gradingScaleExists) {
                                 <th jhiSortBy="overallPoints">
@@ -227,12 +231,14 @@
                             @if (maxNumberOfPresentationPoints > 0) {
                                 <th>
                                     {{ localize(averageNumberOfPresentationPoints) }}
-                                    ({{ localize(roundScorePercentSpecifiedByCourseSettings(averageNumberOfPresentationPoints / maxNumberOfPresentationPoints, course)) }}%)
+                                    ({{ localize(roundScorePercentSpecifiedByCourseSettings(averageNumberOfPresentationPoints / maxNumberOfPresentationPoints, course)) }}
+                                    %)
                                 </th>
                             }
                             <th>
                                 {{ localize(averageNumberOfOverallPoints) }}
-                                ({{ localize(roundScorePercentSpecifiedByCourseSettings(averageNumberOfOverallPoints / maxNumberOfOverallPoints, course)) }}%)
+                                ({{ localize(roundScorePercentSpecifiedByCourseSettings(averageNumberOfOverallPoints / maxNumberOfOverallPoints, course)) }}
+                                %)
                             </th>
                             @if (gradingScaleExists) {
                                 <th>
@@ -286,12 +292,14 @@
                                 @if (maxNumberOfPresentationPoints > 0) {
                                     <td>
                                         {{ localize(student.presentationPoints) }}
-                                        ({{ localize(roundScorePercentSpecifiedByCourseSettings(student.presentationPoints / maxNumberOfPresentationPoints, course)) }}%)
+                                        ({{ localize(roundScorePercentSpecifiedByCourseSettings(student.presentationPoints / maxNumberOfPresentationPoints, course)) }}
+                                        %)
                                     </td>
                                 }
                                 <td>
                                     {{ localize(student.overallPoints) }}
-                                    ({{ localize(roundScorePercentSpecifiedByCourseSettings(student.overallPoints / maxNumberOfOverallPoints, course)) }}%)
+                                    ({{ localize(roundScorePercentSpecifiedByCourseSettings(student.overallPoints / maxNumberOfOverallPoints, course)) }}
+                                    %)
                                 </td>
                                 @if (gradingScaleExists) {
                                     <td>

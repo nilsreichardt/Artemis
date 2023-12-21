@@ -35,11 +35,13 @@ public class AthenaSubmissionSelectionService {
 
     private final AthenaDTOConverter athenaDTOConverter;
 
-    private record RequestDTO(ExerciseDTO exercise, List<Long> submissionIds// Athena just needs submission IDs => quicker request, because less data is sent
+    private record RequestDTO(ExerciseDTO exercise, List<Long> submissionIds
+    // Athena just needs submission IDs => quicker request, because less data is sent
     ) {
     }
 
-    private record ResponseDTO(@JsonProperty("data") long submissionId // submission ID to choose, or -1 if no submission was explicitly chosen
+    private record ResponseDTO(@JsonProperty("data") long submissionId
+    // submission ID to choose, or -1 if no submission was explicitly chosen
     ) {
     }
 

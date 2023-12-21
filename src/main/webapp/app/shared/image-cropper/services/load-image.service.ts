@@ -144,7 +144,14 @@ export class LoadImageService {
         });
     }
 
-    private static getTransformedSize(originalSize: { width: number; height: number }, exifTransform: ExifTransform, cropperSettings: CropperSettings): Dimensions {
+    private static getTransformedSize(
+        originalSize: {
+            width: number;
+            height: number;
+        },
+        exifTransform: ExifTransform,
+        cropperSettings: CropperSettings,
+    ): Dimensions {
         const canvasRotation = cropperSettings.canvasRotation + exifTransform.rotate;
         if (cropperSettings.containWithinAspectRatio) {
             if (canvasRotation % 2) {

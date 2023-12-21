@@ -11,6 +11,7 @@ import { MockDirective, MockModule, MockPipe, MockProvider } from 'ng-mocks';
 import { mockExercise, mockSourceTeams, mockTeams } from '../../helpers/mocks/service/mock-team.service';
 import { ArtemisTestModule } from '../../test.module';
 import { TranslateDirective } from 'app/shared/language/translate.directive';
+
 describe('TeamsImportButtonComponent', () => {
     let comp: TeamsImportButtonComponent;
     let fixture: ComponentFixture<TeamsImportButtonComponent>;
@@ -49,7 +50,10 @@ describe('TeamsImportButtonComponent', () => {
             });
             componentInstance = { teams: [], exercise: undefined };
             const result = new Promise((resolve) => resolve(mockSourceTeams));
-            modalServiceStub = jest.spyOn(modalService, 'open').mockReturnValue(<NgbModalRef>{ componentInstance, result });
+            modalServiceStub = jest.spyOn(modalService, 'open').mockReturnValue(<NgbModalRef>{
+                componentInstance,
+                result,
+            });
         });
         afterEach(() => {
             jest.restoreAllMocks();

@@ -19,6 +19,7 @@ export class CourseCommunicationPage {
     setContentInModal(content: string) {
         cy.get('.modal-content').find('.markdown-editor').find('.ace_editor').click().type(content, { delay: 8 });
     }
+
     setContentInline(content: string) {
         cy.get('.markdown-editor-wrapper').find('.markdown-editor').find('.ace_editor').click().type(content, { delay: 8 });
     }

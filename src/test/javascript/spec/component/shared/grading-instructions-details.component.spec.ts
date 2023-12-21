@@ -62,10 +62,26 @@ describe('Grading Instructions Management Component', () => {
         component = fixture.componentInstance;
         component.exercise = exercise;
         component.backupExercise = backupExercise;
-        gradingInstruction = { id: 1, credits: 1, gradingScale: 'scale', instructionDescription: 'description', feedback: 'feedback', usageCount: 0 };
+        gradingInstruction = {
+            id: 1,
+            credits: 1,
+            gradingScale: 'scale',
+            instructionDescription: 'description',
+            feedback: 'feedback',
+            usageCount: 0,
+        };
         gradingCriterion = { id: 1, title: 'testCriteria', structuredGradingInstructions: [gradingInstruction] };
-        gradingInstructionWithoutId = { credits: 1, gradingScale: 'scale', instructionDescription: 'description', feedback: 'feedback', usageCount: 0 };
-        gradingCriterionWithoutId = { title: 'testCriteria', structuredGradingInstructions: [gradingInstructionWithoutId] };
+        gradingInstructionWithoutId = {
+            credits: 1,
+            gradingScale: 'scale',
+            instructionDescription: 'description',
+            feedback: 'feedback',
+            usageCount: 0,
+        };
+        gradingCriterionWithoutId = {
+            title: 'testCriteria',
+            structuredGradingInstructions: [gradingInstructionWithoutId],
+        };
     });
 
     describe('onInit', () => {

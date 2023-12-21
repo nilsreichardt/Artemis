@@ -37,6 +37,7 @@ export class TextResultComponent {
         this.submissionText = this.submission.text || '';
         this.convertTextToResultBlocks(result.feedbacks);
     }
+
     @Input()
     course?: Course;
 

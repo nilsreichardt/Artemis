@@ -87,7 +87,13 @@ describe('TreeviewItem', () => {
     describe('children', () => {
         it('should affectedly change children value', () => {
             const treeviewItem = new TreeviewItem<number>({ children: [], text: 'Parent', value: 1 });
-            const children: TreeviewItem<number>[] = [new TreeviewItem<number>({ children: [], text: 'Child 1', value: 11 })];
+            const children: TreeviewItem<number>[] = [
+                new TreeviewItem<number>({
+                    children: [],
+                    text: 'Child 1',
+                    value: 11,
+                }),
+            ];
             expect(treeviewItem.children).toEqual([]);
             treeviewItem.children = children;
             expect(treeviewItem.children).toBe(children);

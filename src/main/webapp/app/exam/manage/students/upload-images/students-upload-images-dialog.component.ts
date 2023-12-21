@@ -15,6 +15,7 @@ class NotFoundExamUserType {
     numberOfImagesSaved: number;
     listOfExamUserRegistrationNumbers: string[];
 }
+
 @Component({
     selector: 'jhi-student-upload-images-dialog',
     templateUrl: './students-upload-images-dialog.component.html',

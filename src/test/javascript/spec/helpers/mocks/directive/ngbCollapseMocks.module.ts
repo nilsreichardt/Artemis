@@ -7,6 +7,7 @@ import { Directive, EventEmitter, Input, NgModule, Output } from '@angular/core'
 class NgbCollapseMockDirective {
     @Input() animation: any;
     private _isCollapsed = false;
+
     @Input('ngbCollapse')
     set collapsed(isCollapsed: boolean) {
         if (this._isCollapsed !== isCollapsed) {
@@ -18,6 +19,7 @@ class NgbCollapseMockDirective {
     @Input() horizontal: boolean;
     @Output() shown = new EventEmitter<void>();
     @Output() hidden = new EventEmitter<void>();
+
     toggle() {}
 }
 

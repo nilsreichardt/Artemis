@@ -26,7 +26,11 @@ const route = { params: of({ courseId: 3, exerciseId: 22, questionId: 1 }) };
 const answerOption1 = { id: 5 } as AnswerOption;
 const answerCounter = { answer: answerOption1 } as AnswerCounter;
 const questionStatistic = { answerCounters: [answerCounter] } as MultipleChoiceQuestionStatistic;
-const question = { id: 1, answerOptions: [answerOption1], quizQuestionStatistic: questionStatistic } as MultipleChoiceQuestion;
+const question = {
+    id: 1,
+    answerOptions: [answerOption1],
+    quizQuestionStatistic: questionStatistic,
+} as MultipleChoiceQuestion;
 const course = { id: 3 } as Course;
 let quizExercise = { id: 22, quizStarted: true, course, quizQuestions: [question] } as QuizExercise;
 

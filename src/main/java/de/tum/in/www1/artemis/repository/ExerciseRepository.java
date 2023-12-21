@@ -547,7 +547,7 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
     }
 
     /**
-     * For an explanation, see {@link de.tum.in.www1.artemis.web.rest.ExamResource#getAllExercisesWithPotentialPlagiarismForExam(long,long)}
+     * For an explanation, see {@link de.tum.in.www1.artemis.web.rest.ExamResource#getAllExercisesWithPotentialPlagiarismForExam(long, long)}
      *
      * @param examId the id of the exam for which we want to get all exercises with potential plagiarism
      * @return a list of exercises with potential plagiarism

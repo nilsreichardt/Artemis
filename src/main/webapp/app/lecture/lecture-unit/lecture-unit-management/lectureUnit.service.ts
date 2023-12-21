@@ -37,7 +37,10 @@ export class LectureUnitService {
 
     setCompletion(lectureUnitId: number, lectureId: number, completed: boolean) {
         const params = new HttpParams().set('completed', completed.toString());
-        return this.httpClient.post(`${this.resourceURL}/lectures/${lectureId}/lecture-units/${lectureUnitId}/completion`, null, { params, observe: 'response' });
+        return this.httpClient.post(`${this.resourceURL}/lectures/${lectureId}/lecture-units/${lectureUnitId}/completion`, null, {
+            params,
+            observe: 'response',
+        });
     }
 
     convertLectureUnitDatesFromClient<T extends LectureUnit>(lectureUnit: T): T {

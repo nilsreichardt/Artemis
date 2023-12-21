@@ -65,8 +65,8 @@ public class ProgrammingExerciseFeedbackCreationService {
     private final ProgrammingExerciseRepository programmingExerciseRepository;
 
     public ProgrammingExerciseFeedbackCreationService(ProfileService profileService, ProgrammingExerciseTestCaseRepository testCaseRepository,
-            WebsocketMessagingService websocketMessagingService, ProgrammingExerciseTaskService programmingExerciseTaskService,
-            ProgrammingExerciseRepository programmingExerciseRepository) {
+                                                      WebsocketMessagingService websocketMessagingService, ProgrammingExerciseTaskService programmingExerciseTaskService,
+                                                      ProgrammingExerciseRepository programmingExerciseRepository) {
         this.profileService = profileService;
         this.testCaseRepository = testCaseRepository;
         this.websocketMessagingService = websocketMessagingService;
@@ -197,8 +197,7 @@ public class ProgrammingExerciseFeedbackCreationService {
                 try {
                     // the feedback is already pre-truncated to fit, it should not be shortened further
                     feedback.setDetailTextTruncated(mapper.writeValueAsString(issue));
-                }
-                catch (JsonProcessingException e) {
+                } catch (JsonProcessingException e) {
                     continue;
                 }
                 feedbackList.add(feedback);
@@ -219,13 +218,12 @@ public class ProgrammingExerciseFeedbackCreationService {
      * @return Feedback object for the test job
      */
     public Feedback createFeedbackFromTestCase(String testName, List<String> testMessages, boolean successful, final ProgrammingExercise exercise,
-            Set<ProgrammingExerciseTestCase> activeTestCases) {
+                                               Set<ProgrammingExerciseTestCase> activeTestCases) {
         Feedback feedback = new Feedback();
         var testCase = activeTestCases.stream().filter(test -> testName.equals(test.getTestName())).findAny();
         if (testCase.isPresent()) {
             feedback.setTestCase(testCase.get());
-        }
-        else {
+        } else {
             // This feedback was created by a test which is not known to Artemis (not part of the solution result)
             // Feedback like this does not get displayed to students. (see ProgrammingExerciseGradingService#filterAutomaticFeedbacksWithoutTestCase
             feedback.setText(testName);
@@ -235,11 +233,9 @@ public class ProgrammingExerciseFeedbackCreationService {
             String errorMessageString = testMessages.stream()
                     .map(errorString -> processResultErrorMessage(exercise.getProgrammingLanguage(), exercise.getProjectType(), errorString)).collect(Collectors.joining("\n\n"));
             feedback.setDetailText(errorMessageString);
-        }
-        else if (!testMessages.isEmpty()) {
+        } else if (!testMessages.isEmpty()) {
             feedback.setDetailText(String.join("\n\n", testMessages));
-        }
-        else {
+        } else {
             feedback.setDetailText(null);
         }
 
@@ -310,7 +306,7 @@ public class ProgrammingExerciseFeedbackCreationService {
     }
 
     private Set<ProgrammingExerciseTestCase> getTestCasesWithUpdatedActivation(Set<ProgrammingExerciseTestCase> existingTestCases,
-            Set<ProgrammingExerciseTestCase> testCasesFromFeedbacks) {
+                                                                               Set<ProgrammingExerciseTestCase> testCasesFromFeedbacks) {
         // We compare the new generated test cases from feedback with the existing test cases from the database
         return existingTestCases.stream().filter(existing -> {
             Optional<ProgrammingExerciseTestCase> matchingTestCase = testCasesFromFeedbacks.stream().filter(existing::isSameTestCase).findFirst();
@@ -346,8 +342,7 @@ public class ProgrammingExerciseFeedbackCreationService {
             // set type depending on the test case name
             if (STRUCTURAL_TEST_PATTERN.matcher(testCaseName).matches()) {
                 testCase.setType(ProgrammingExerciseTestCaseType.STRUCTURAL);
-            }
-            else {
+            } else {
                 testCase.setType(ProgrammingExerciseTestCaseType.BEHAVIORAL);
             }
         });

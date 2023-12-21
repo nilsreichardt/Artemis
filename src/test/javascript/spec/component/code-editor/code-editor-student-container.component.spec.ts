@@ -25,7 +25,12 @@ describe('CodeEditorStudentContainerComponent', () => {
 
     const studentParticipation: ProgrammingExerciseStudentParticipation = {
         id: 21,
-        exercise: { id: 42, numberOfAssessmentsOfCorrectionRounds: [], secondCorrectionEnabled: false, studentAssignedTeamIdComputed: false },
+        exercise: {
+            id: 42,
+            numberOfAssessmentsOfCorrectionRounds: [],
+            secondCorrectionEnabled: false,
+            studentAssignedTeamIdComputed: false,
+        },
     };
 
     beforeEach(() => {
@@ -34,7 +39,10 @@ describe('CodeEditorStudentContainerComponent', () => {
             declarations: [],
             providers: [
                 { provide: ResultService, useClass: MockResultService },
-                { provide: ProgrammingExerciseParticipationService, useClass: MockProgrammingExerciseParticipationService },
+                {
+                    provide: ProgrammingExerciseParticipationService,
+                    useClass: MockProgrammingExerciseParticipationService,
+                },
                 {
                     provide: ActivatedRoute,
                     useValue: { params: of({ participationId: studentParticipation.id }) },

@@ -45,7 +45,15 @@ describe('PostingsMarkdownEditor', () => {
 
     beforeEach(() => {
         return TestBed.configureTestingModule({
-            providers: [{ provide: MetisService, useClass: MockMetisService }, MockProvider(LectureService), MockProvider(CourseManagementService), MockProvider(ChannelService)],
+            providers: [
+                {
+                    provide: MetisService,
+                    useClass: MockMetisService,
+                },
+                MockProvider(LectureService),
+                MockProvider(CourseManagementService),
+                MockProvider(ChannelService),
+            ],
             declarations: [PostingMarkdownEditorComponent, MockMarkdownEditorDirective],
             schemas: [CUSTOM_ELEMENTS_SCHEMA], // required because we mock the nested MarkdownEditorComponent
         })

@@ -156,7 +156,14 @@ export class ExerciseAPIRequests {
      * @param title - The title for the text exercise (optional, default: auto-generated).
      * @returns A Cypress.Chainable<Cypress.Response<TextExercise>> representing the API request response.
      */
-    createTextExercise(body: { course: Course } | { exerciseGroup: ExerciseGroup }, title = 'Text ' + generateUUID()): Cypress.Chainable<Cypress.Response<TextExercise>> {
+    createTextExercise(
+        body:
+            | { course: Course }
+            | {
+                  exerciseGroup: ExerciseGroup;
+              },
+        title = 'Text ' + generateUUID(),
+    ): Cypress.Chainable<Cypress.Response<TextExercise>> {
         const template = {
             ...textExerciseTemplate,
             title,

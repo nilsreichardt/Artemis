@@ -60,7 +60,10 @@
                             [animations]="false"
                             [trimLabels]="false"
                         >
-                            <ng-template #tooltipTemplate let-model="model"> {{ ((model.value * 100) / this.numberOfSubmissions.total).toFixed(2) }}% </ng-template>
+                            <ng-template #tooltipTemplate let-model="model">
+                                {{ ((model.value * 100) / this.numberOfSubmissions.total).toFixed(2) }}
+                                %
+                            </ng-template>
                         </ngx-charts-pie-chart>
                     </div>
                 }
@@ -123,9 +126,8 @@
                                     @if (exercise.isAtLeastInstructor) {
                                         <div>
                                             <a [routerLink]="moreFeedbackRequestsLink">
-                                                {{ moreFeedbackRequestsDashboardInfo.done }} / {{ moreFeedbackRequestsDashboardInfo.total }} ({{
-                                                    moreFeedbackRequestsDashboardInfo.doneToTotalPercentage
-                                                }})
+                                                {{ moreFeedbackRequestsDashboardInfo.done }}
+                                                / {{ moreFeedbackRequestsDashboardInfo.total }} ({{ moreFeedbackRequestsDashboardInfo.doneToTotalPercentage }})
                                             </a>
                                             |
                                             <a [routerLink]="moreFeedbackRequestsLink" [queryParams]="{ tutorId: tutor?.id }">
@@ -135,9 +137,8 @@
                                     }
                                     @if (!exercise.isAtLeastInstructor) {
                                         <div>
-                                            {{ moreFeedbackRequestsDashboardInfo.done }} / {{ moreFeedbackRequestsDashboardInfo.total }} ({{
-                                                moreFeedbackRequestsDashboardInfo.doneToTotalPercentage
-                                            }}) |
+                                            {{ moreFeedbackRequestsDashboardInfo.done }}
+                                            / {{ moreFeedbackRequestsDashboardInfo.total }} ({{ moreFeedbackRequestsDashboardInfo.doneToTotalPercentage }}) |
                                             <a [routerLink]="moreFeedbackRequestsLink" [queryParams]="{ tutorId: tutor?.id }">
                                                 {{ moreFeedbackRequestsDashboardInfo.tutor }}
                                             </a>
@@ -285,7 +286,8 @@
                             @if (stats.toReview.total > 0) {
                                 <div class="col-6">
                                     <p class="h3">
-                                        {{ 'artemisApp.exerciseAssessmentDashboard.readSubmissions' | artemisTranslate }} ({{ stats.toReview.done }} / {{ stats.toReview.total }})
+                                        {{ 'artemisApp.exerciseAssessmentDashboard.readSubmissions' | artemisTranslate }}
+                                        ({{ stats.toReview.done }} / {{ stats.toReview.total }})
                                     </p>
 
                                     @if (stats.toReview.done < stats.toReview.total) {
@@ -330,8 +332,8 @@
                             @if (stats.toAssess.total > 0 && stats.toReview.done >= stats.toReview.total) {
                                 <div class="col-6">
                                     <p class="h3">
-                                        {{ 'artemisApp.exerciseAssessmentDashboard.assessedSubmissions' | artemisTranslate }} ({{ stats.toAssess.done }} /
-                                        {{ stats.toAssess.total }})
+                                        {{ 'artemisApp.exerciseAssessmentDashboard.assessedSubmissions' | artemisTranslate }}
+                                        ({{ stats.toAssess.done }} / {{ stats.toAssess.total }})
                                     </p>
                                     @if (stats.toAssess.done < stats.toAssess.total) {
                                         <button

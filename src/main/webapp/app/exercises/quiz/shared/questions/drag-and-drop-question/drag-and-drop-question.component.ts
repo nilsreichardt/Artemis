@@ -30,6 +30,7 @@ enum MappingResult {
     MAPPED_INCORRECT,
     NOT_MAPPED,
 }
+
 @Component({
     selector: 'jhi-drag-and-drop-question',
     templateUrl: './drag-and-drop-question.component.html',
@@ -50,9 +51,11 @@ export class DragAndDropQuestionComponent implements OnChanges, OnInit {
         this._question = question;
         this.watchCollection();
     }
+
     get question() {
         return this._question;
     }
+
     // TODO: Map vs. Array --> consistency
     @Input()
     mappings: DragAndDropMapping[];
@@ -64,6 +67,7 @@ export class DragAndDropQuestionComponent implements OnChanges, OnInit {
     questionIndex: number;
     @Input()
     score: number;
+
     @Input()
     set forceSampleSolution(forceSampleSolution) {
         this._forceSampleSolution = forceSampleSolution;
@@ -71,9 +75,11 @@ export class DragAndDropQuestionComponent implements OnChanges, OnInit {
             this.showSampleSolution();
         }
     }
+
     get forceSampleSolution() {
         return this._forceSampleSolution;
     }
+
     @Input()
     onMappingUpdate: any;
     @Input()

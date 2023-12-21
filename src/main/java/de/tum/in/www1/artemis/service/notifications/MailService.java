@@ -96,7 +96,7 @@ public class MailService implements InstantNotificationService {
     private static final String WEEKLY_SUMMARY_NEW_EXERCISES = "weeklySummaryNewExercises";
 
     public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender, MessageSource messageSource, SpringTemplateEngine templateEngine,
-            TimeService timeService) {
+                       TimeService timeService) {
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
         this.messageSource = messageSource;
@@ -127,8 +127,7 @@ public class MailService implements InstantNotificationService {
             message.setText(content, isHtml);
             javaMailSender.send(mimeMessage);
             log.info("Sent email with subject '{}' to User '{}'", subject, recipient);
-        }
-        catch (MailException | MessagingException e) {
+        } catch (MailException | MessagingException e) {
             log.error("Email could not be sent to user '{}'", recipient, e);
             throw new ArtemisMailException("Email could not be sent to user", e);
         }
@@ -179,7 +178,7 @@ public class MailService implements InstantNotificationService {
 
     private void prepareTemplateAndSendEmailWithArgumentInSubject(User admin, String templateName, String titleKey, String argument, Context context) {
         String content = templateEngine.process(templateName, context);
-        String subject = messageSource.getMessage(titleKey, new Object[] { argument }, context.getLocale());
+        String subject = messageSource.getMessage(titleKey, new Object[]{argument}, context.getLocale());
         sendEmail(admin, subject, content, false, true);
     }
 
@@ -290,8 +289,7 @@ public class MailService implements InstantNotificationService {
             // posts use a different mechanism for the url
             context.setVariable(NOTIFICATION_URL, extractNotificationUrl(post, artemisServerUrl.toString()));
             subject = createAnnouncementText(notificationSubject, locale);
-        }
-        else {
+        } else {
             context.setVariable(NOTIFICATION_URL, extractNotificationUrl(notification, artemisServerUrl.toString()));
         }
         context.setVariable(BASE_URL, artemisServerUrl);
@@ -314,22 +312,22 @@ public class MailService implements InstantNotificationService {
         if (notificationType == NotificationType.NEW_PLAGIARISM_CASE_STUDENT) {
             Exercise exercise = plagiarismCase.getExercise();
             Course course = exercise.getCourseViaExerciseGroupOrCourseMember();
-            return messageSource.getMessage("email.plagiarism.title", new Object[] { exercise.getTitle(), course.getTitle() }, context.getLocale());
+            return messageSource.getMessage("email.plagiarism.title", new Object[]{exercise.getTitle(), course.getTitle()}, context.getLocale());
         }
         if (notificationType == NotificationType.NEW_CPC_PLAGIARISM_CASE_STUDENT) {
             Exercise exercise = plagiarismCase.getExercise();
             Course course = exercise.getCourseViaExerciseGroupOrCourseMember();
-            return messageSource.getMessage("email.plagiarism.cpc.title", new Object[] { exercise.getTitle(), course.getTitle() }, context.getLocale());
+            return messageSource.getMessage("email.plagiarism.cpc.title", new Object[]{exercise.getTitle(), course.getTitle()}, context.getLocale());
         }
         if (notificationType == NotificationType.PLAGIARISM_CASE_VERDICT_STUDENT) {
             context.setVariable(PLAGIARISM_VERDICT, plagiarismCase.getVerdict());
-            return messageSource.getMessage("artemisApp.singleUserNotification.title.plagiarismCaseVerdictStudent", new Object[] {}, context.getLocale());
+            return messageSource.getMessage("artemisApp.singleUserNotification.title.plagiarismCaseVerdictStudent", new Object[]{}, context.getLocale());
         }
         return notification.getTitle();
     }
 
     private void setContextForTutorialGroupNotifications(Context context, NotificationType notificationType,
-            SingleUserNotificationService.TutorialGroupNotificationSubject notificationSubject) {
+                                                         SingleUserNotificationService.TutorialGroupNotificationSubject notificationSubject) {
 
         if (NotificationType.TUTORIAL_GROUP_REGISTRATION_STUDENT.equals(notificationType)) {
             context.setVariable(NOTIFICATION_TYPE, "studentRegistration");
@@ -372,16 +370,22 @@ public class MailService implements InstantNotificationService {
             case EXERCISE_RELEASED -> templateEngine.process("mail/notification/exerciseReleasedEmail", context);
             case EXERCISE_PRACTICE -> templateEngine.process("mail/notification/exerciseOpenForPracticeEmail", context);
             case NEW_ANNOUNCEMENT_POST -> templateEngine.process("mail/notification/announcementPostEmail", context);
-            case FILE_SUBMISSION_SUCCESSFUL -> templateEngine.process("mail/notification/fileSubmissionSuccessfulEmail", context);
-            case EXERCISE_SUBMISSION_ASSESSED -> templateEngine.process("mail/notification/exerciseSubmissionAssessedEmail", context);
+            case FILE_SUBMISSION_SUCCESSFUL ->
+                    templateEngine.process("mail/notification/fileSubmissionSuccessfulEmail", context);
+            case EXERCISE_SUBMISSION_ASSESSED ->
+                    templateEngine.process("mail/notification/exerciseSubmissionAssessedEmail", context);
             case DUPLICATE_TEST_CASE -> templateEngine.process("mail/notification/duplicateTestCasesEmail", context);
-            case NEW_PLAGIARISM_CASE_STUDENT, NEW_CPC_PLAGIARISM_CASE_STUDENT -> templateEngine.process("mail/notification/plagiarismCaseEmail", context);
-            case PLAGIARISM_CASE_VERDICT_STUDENT -> templateEngine.process("mail/notification/plagiarismVerdictEmail", context);
+            case NEW_PLAGIARISM_CASE_STUDENT, NEW_CPC_PLAGIARISM_CASE_STUDENT ->
+                    templateEngine.process("mail/notification/plagiarismCaseEmail", context);
+            case PLAGIARISM_CASE_VERDICT_STUDENT ->
+                    templateEngine.process("mail/notification/plagiarismVerdictEmail", context);
             case TUTORIAL_GROUP_REGISTRATION_STUDENT, TUTORIAL_GROUP_DEREGISTRATION_STUDENT, TUTORIAL_GROUP_REGISTRATION_TUTOR, TUTORIAL_GROUP_DEREGISTRATION_TUTOR,
                     TUTORIAL_GROUP_MULTIPLE_REGISTRATION_TUTOR, TUTORIAL_GROUP_ASSIGNED, TUTORIAL_GROUP_UNASSIGNED ->
-                templateEngine.process("mail/notification/tutorialGroupBasicEmail", context);
-            case TUTORIAL_GROUP_DELETED -> templateEngine.process("mail/notification/tutorialGroupDeletedEmail", context);
-            case TUTORIAL_GROUP_UPDATED -> templateEngine.process("mail/notification/tutorialGroupUpdatedEmail", context);
+                    templateEngine.process("mail/notification/tutorialGroupBasicEmail", context);
+            case TUTORIAL_GROUP_DELETED ->
+                    templateEngine.process("mail/notification/tutorialGroupDeletedEmail", context);
+            case TUTORIAL_GROUP_UPDATED ->
+                    templateEngine.process("mail/notification/tutorialGroupUpdatedEmail", context);
             case DATA_EXPORT_CREATED -> templateEngine.process("mail/notification/dataExportCreatedEmail", context);
             case DATA_EXPORT_FAILED -> templateEngine.process("mail/notification/dataExportFailedEmail", context);
             default -> throw new UnsupportedOperationException("Unsupported NotificationType: " + notificationType);

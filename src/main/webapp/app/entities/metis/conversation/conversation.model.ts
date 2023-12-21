@@ -12,6 +12,7 @@ export enum ConversationType {
     CHANNEL = 'channel',
     ONE_TO_ONE = 'oneToOneChat',
 }
+
 /**
  * Entity
  */

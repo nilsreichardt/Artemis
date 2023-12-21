@@ -115,7 +115,10 @@ describe('Plagiarism Cases Instructor View Component', () => {
         expect(component.examId).toBe(0);
         expect(component.plagiarismCases).toEqual([plagiarismCase1, plagiarismCase2, plagiarismCase3, plagiarismCase4]);
         expect(component.exercisesWithPlagiarismCases).toEqual([exercise1, exercise2]);
-        expect(component.groupedPlagiarismCases).toEqual({ 1: [plagiarismCase1, plagiarismCase2], 2: [plagiarismCase3, plagiarismCase4] });
+        expect(component.groupedPlagiarismCases).toEqual({
+            1: [plagiarismCase1, plagiarismCase2],
+            2: [plagiarismCase3, plagiarismCase4],
+        });
     }));
 
     it('should get plagiarism cases for course when exam id is not set', fakeAsync(() => {

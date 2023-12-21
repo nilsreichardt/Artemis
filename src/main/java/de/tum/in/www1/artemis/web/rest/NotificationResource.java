@@ -1,12 +1,16 @@
 package de.tum.in.www1.artemis.web.rest;
 
-import static de.tum.in.www1.artemis.domain.notification.NotificationConstants.MESSAGE_REPLY_IN_CONVERSATION_TITLE;
-import static de.tum.in.www1.artemis.domain.notification.NotificationConstants.NEW_MESSAGE_TITLE;
-
-import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.Set;
-
+import de.tum.in.www1.artemis.domain.User;
+import de.tum.in.www1.artemis.domain.notification.Notification;
+import de.tum.in.www1.artemis.repository.NotificationRepository;
+import de.tum.in.www1.artemis.repository.NotificationSettingRepository;
+import de.tum.in.www1.artemis.repository.UserRepository;
+import de.tum.in.www1.artemis.security.annotations.EnforceAtLeastStudent;
+import de.tum.in.www1.artemis.service.notifications.NotificationSettingsCommunicationChannel;
+import de.tum.in.www1.artemis.service.notifications.NotificationSettingsService;
+import de.tum.in.www1.artemis.service.tutorialgroups.TutorialGroupService;
+import de.tum.in.www1.artemis.service.util.TimeLogUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -18,17 +22,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import de.tum.in.www1.artemis.domain.User;
-import de.tum.in.www1.artemis.domain.notification.Notification;
-import de.tum.in.www1.artemis.repository.*;
-import de.tum.in.www1.artemis.security.annotations.EnforceAtLeastStudent;
-import de.tum.in.www1.artemis.service.notifications.NotificationSettingsCommunicationChannel;
-import de.tum.in.www1.artemis.service.notifications.NotificationSettingsService;
-import de.tum.in.www1.artemis.service.tutorialgroups.TutorialGroupService;
-import de.tum.in.www1.artemis.service.util.TimeLogUtil;
-import io.swagger.annotations.ApiParam;
 import tech.jhipster.web.util.PaginationUtil;
+
+import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Set;
+
+import static de.tum.in.www1.artemis.domain.notification.NotificationConstants.MESSAGE_REPLY_IN_CONVERSATION_TITLE;
+import static de.tum.in.www1.artemis.domain.notification.NotificationConstants.NEW_MESSAGE_TITLE;
 
 /**
  * REST controller for managing Notification.
@@ -52,7 +53,7 @@ public class NotificationResource {
     private final TutorialGroupService tutorialGroupService;
 
     public NotificationResource(NotificationRepository notificationRepository, UserRepository userRepository, NotificationSettingRepository notificationSettingRepository,
-            NotificationSettingsService notificationSettingsService, TutorialGroupService tutorialGroupService) {
+                                NotificationSettingsService notificationSettingsService, TutorialGroupService tutorialGroupService) {
         this.notificationRepository = notificationRepository;
         this.userRepository = userRepository;
         this.notificationSettingRepository = notificationSettingRepository;
@@ -87,8 +88,7 @@ public class NotificationResource {
         if (deactivatedTitles.isEmpty()) {
             page = notificationRepository.findAllNotificationsForRecipientWithLogin(currentUser.getGroups(), currentUser.getLogin(), hideNotificationsUntilDate, tutorialGroupIds,
                     TITLES_TO_NOT_LOAD_NOTIFICATION, pageable);
-        }
-        else {
+        } else {
             page = notificationRepository.findAllNotificationsFilteredBySettingsForRecipientWithLogin(currentUser.getGroups(), currentUser.getLogin(), hideNotificationsUntilDate,
                     deactivatedTitles, tutorialGroupIds, TITLES_TO_NOT_LOAD_NOTIFICATION, pageable);
         }

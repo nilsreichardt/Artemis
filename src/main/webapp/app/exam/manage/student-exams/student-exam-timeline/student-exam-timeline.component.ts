@@ -107,6 +107,7 @@ export class StudentExamTimelineComponent implements OnInit, AfterViewInit, OnDe
             this.updateSubmissionOrSubmissionVersionInView();
         });
     }
+
     ngOnDestroy(): void {
         this.activatedRouteSubscription?.unsubscribe();
         this.changesSubscription?.unsubscribe();

@@ -15,20 +15,25 @@
     overflow: hidden;
     white-space: nowrap;
 }
+
 .synced {
     color: var(--exam-navigation-bar-synced-color);
     background-color: var(--exam-navigation-bar-synced-background-color);
 }
+
 .notSynced {
     color: var(--exam-navigation-bar-synced-color);
     background-color: var(--exam-navigation-bar-not-synced-background-color);
 }
+
 .inactive {
     background-color: var(--exam-navigation-bar-inactive-background);
 }
+
 .active {
     background-color: var(--exam-navigation-bar-active-background);
 }
+
 .exerciseIndex {
     color: var(--exam-navigation-bar-exercise-index-color);
     text-align: center;

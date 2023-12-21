@@ -80,6 +80,7 @@ export class ProgrammingExerciseResetDialogComponent implements OnInit {
             },
         });
     }
+
     /**
      * Handles the reset response by showing a success message, dismissing the active modal dialog, and resetting the resetInProgress flag.
      */

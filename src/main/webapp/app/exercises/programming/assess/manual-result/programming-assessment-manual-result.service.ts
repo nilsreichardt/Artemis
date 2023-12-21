@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class ProgrammingAssessmentManualResultService {
     private resourceUrl = 'api';
+
     // TODO: It would be good to refactor the convertDate methods into a separate service, so that we don't have to import the result service here.
     constructor(
         private http: HttpClient,

@@ -15,7 +15,13 @@ describe('ExamLiveEventsOverlayComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [ExamLiveEventsOverlayComponent],
-            providers: [{ provide: ExamParticipationLiveEventsService, useClass: MockExamParticipationLiveEventsService }, MockProvider(NgbActiveModal)],
+            providers: [
+                {
+                    provide: ExamParticipationLiveEventsService,
+                    useClass: MockExamParticipationLiveEventsService,
+                },
+                MockProvider(NgbActiveModal),
+            ],
         }).compileComponents();
     });
 
@@ -42,7 +48,10 @@ describe('ExamLiveEventsOverlayComponent', () => {
     });
 
     it('should acknowledge an event', () => {
-        const eventToAcknowledge: ExamLiveEvent = { id: 1, eventType: ExamLiveEventType.EXAM_WIDE_ANNOUNCEMENT } as any as ExamLiveEvent;
+        const eventToAcknowledge: ExamLiveEvent = {
+            id: 1,
+            eventType: ExamLiveEventType.EXAM_WIDE_ANNOUNCEMENT,
+        } as any as ExamLiveEvent;
         component.unacknowledgedEvents = [eventToAcknowledge];
 
         jest.spyOn(mockLiveEventsService, 'acknowledgeEvent');

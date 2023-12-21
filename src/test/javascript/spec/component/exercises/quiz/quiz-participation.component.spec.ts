@@ -42,7 +42,14 @@ import { NgModel } from '@angular/forms';
 
 // Store a copy of now to avoid timing issues
 const now = dayjs();
-const question1: QuizQuestion = { id: 1, type: QuizQuestionType.DRAG_AND_DROP, points: 1, invalid: false, exportQuiz: false, randomizeOrder: true };
+const question1: QuizQuestion = {
+    id: 1,
+    type: QuizQuestionType.DRAG_AND_DROP,
+    points: 1,
+    invalid: false,
+    exportQuiz: false,
+    randomizeOrder: true,
+};
 const question2: MultipleChoiceQuestion = {
     id: 2,
     type: QuizQuestionType.MULTIPLE_CHOICE,
@@ -52,7 +59,14 @@ const question2: MultipleChoiceQuestion = {
     exportQuiz: false,
     randomizeOrder: true,
 };
-const question3: QuizQuestion = { id: 3, type: QuizQuestionType.SHORT_ANSWER, points: 3, invalid: false, exportQuiz: false, randomizeOrder: true };
+const question3: QuizQuestion = {
+    id: 3,
+    type: QuizQuestionType.SHORT_ANSWER,
+    points: 3,
+    invalid: false,
+    exportQuiz: false,
+    randomizeOrder: true,
+};
 
 const quizExercise: QuizExercise = {
     id: 1,
@@ -330,7 +344,14 @@ describe('QuizParticipationComponent', () => {
         ])('should join %s batches that have started %p', (quizMode, started) => {
             exerciseService = fixture.debugElement.injector.get(QuizExerciseService);
             const participationService = fixture.debugElement.injector.get(ParticipationService);
-            const participation: StudentParticipation = { exercise: { ...quizExercise, quizBatches: [], quizMode, quizStarted: false } as QuizExercise };
+            const participation: StudentParticipation = {
+                exercise: {
+                    ...quizExercise,
+                    quizBatches: [],
+                    quizMode,
+                    quizStarted: false,
+                } as QuizExercise,
+            };
             participationSpy = jest
                 .spyOn(participationService, 'findParticipationForCurrentUser')
                 .mockReturnValue(of({ body: participation } as HttpResponse<StudentParticipation>));
@@ -428,7 +449,11 @@ describe('QuizParticipationComponent', () => {
             fixture.detectChanges();
 
             const answer: SubmittedAnswer = { scoreInPoints: 1, quizQuestion: question2 };
-            const quizSubmission: QuizSubmission = { submissionDate: now.subtract(3, 'minutes'), submittedAnswers: [answer], scoreInPoints: 1 };
+            const quizSubmission: QuizSubmission = {
+                submissionDate: now.subtract(3, 'minutes'),
+                submittedAnswers: [answer],
+                scoreInPoints: 1,
+            };
             const result: Result = { submission: quizSubmission };
             const participation: StudentParticipation = { exercise: quizExerciseForResults, results: [result] };
             component.showQuizResultAfterQuizEnd(participation);
@@ -475,7 +500,13 @@ describe('QuizParticipationComponent', () => {
         it('should adjust release date of the quiz if it didnt start', () => {
             const releaseDate = dayjs().add(1, 'minutes');
             const timeUntilPlannedStart = 10;
-            const quizToApply = { ...quizExercise, started: false, isPlannedToStart: true, releaseDate, timeUntilPlannedStart };
+            const quizToApply = {
+                ...quizExercise,
+                started: false,
+                isPlannedToStart: true,
+                releaseDate,
+                timeUntilPlannedStart,
+            };
 
             component.applyQuizFull(quizToApply);
             expect(component.quizExercise).toEqual(quizToApply);
@@ -483,7 +514,11 @@ describe('QuizParticipationComponent', () => {
         });
 
         it('should apply participation', () => {
-            const submission: QuizSubmission = { id: 1, submissionDate: dayjs().subtract(10, 'minutes'), submittedAnswers: [] };
+            const submission: QuizSubmission = {
+                id: 1,
+                submissionDate: dayjs().subtract(10, 'minutes'),
+                submittedAnswers: [],
+            };
             const result: Result = { id: 1, submission };
             const endedQuizExercise = { ...quizExercise, quizEnded: true };
             const participation: StudentParticipation = { exercise: endedQuizExercise, results: [result] };
@@ -648,7 +683,10 @@ describe('QuizParticipationComponent', () => {
 
             const request = httpMock.expectOne({ method: 'POST' });
             const quizSubmission: QuizSubmission = { submissionDate: now, submitted: true };
-            request.flush({ submission: quizSubmission, participation: { exercise: quizExerciseForPractice } as StudentParticipation } as Result);
+            request.flush({
+                submission: quizSubmission,
+                participation: { exercise: quizExerciseForPractice } as StudentParticipation,
+            } as Result);
             expect(request.request.url).toBe(`api/exercises/${quizExerciseForPractice.id}/submissions/practice`);
             fixture.detectChanges();
 

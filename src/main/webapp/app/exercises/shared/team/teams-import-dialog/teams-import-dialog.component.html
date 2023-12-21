@@ -133,8 +133,11 @@
                                     <div class="source-teams-legend d-flex justify-content-between">
                                         <div>
                                             <div class="list-group-item--teams" [class.has-success]="true">
-                                                <div class="team-name">{{ 'artemisApp.team.sourceTeams.legend.teamShortName' | artemisTranslate }}1</div>
-                                                <jhi-team-students-list class="team-students" [students]="sampleTeamForLegend.students || []"> </jhi-team-students-list>
+                                                <div class="team-name">
+                                                    {{ 'artemisApp.team.sourceTeams.legend.teamShortName' | artemisTranslate }}
+                                                    1
+                                                </div>
+                                                <jhi-team-students-list class="team-students" [students]="sampleTeamForLegend.students || []"></jhi-team-students-list>
                                             </div>
                                             <div class="label-with-tooltip">
                                                 <label jhiTranslate="artemisApp.team.sourceTeams.legend.items.conflictFreeTeam.label">Conflict-free team</label>
@@ -143,8 +146,11 @@
                                         </div>
                                         <div>
                                             <div class="list-group-item--teams" [class.has-error]="true">
-                                                <div class="team-name">{{ 'artemisApp.team.sourceTeams.legend.teamShortName' | artemisTranslate }}2</div>
-                                                <jhi-team-students-list class="team-students" [students]="sampleTeamForLegend.students || []"> </jhi-team-students-list>
+                                                <div class="team-name">
+                                                    {{ 'artemisApp.team.sourceTeams.legend.teamShortName' | artemisTranslate }}
+                                                    2
+                                                </div>
+                                                <jhi-team-students-list class="team-students" [students]="sampleTeamForLegend.students || []"></jhi-team-students-list>
                                             </div>
                                             <div class="label-with-tooltip">
                                                 <label jhiTranslate="artemisApp.team.sourceTeams.legend.items.teamShortNameConflict.label">Team short name conflict</label>
@@ -153,7 +159,10 @@
                                         </div>
                                         <div>
                                             <div class="list-group-item--teams">
-                                                <div class="team-name">{{ 'artemisApp.team.sourceTeams.legend.teamShortName' | artemisTranslate }}3</div>
+                                                <div class="team-name">
+                                                    {{ 'artemisApp.team.sourceTeams.legend.teamShortName' | artemisTranslate }}
+                                                    3
+                                                </div>
                                                 <jhi-team-students-list
                                                     class="team-students"
                                                     [students]="sampleTeamForLegend.students || []"

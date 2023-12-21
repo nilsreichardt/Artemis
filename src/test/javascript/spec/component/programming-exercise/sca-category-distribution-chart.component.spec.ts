@@ -57,7 +57,13 @@ describe('SCA category distribution chart', () => {
         TestBed.configureTestingModule({
             imports: [ArtemisTestModule, MockModule(BarChartModule)],
             declarations: [ScaCategoryDistributionChartComponent, MockPipe(ArtemisTranslatePipe)],
-            providers: [MockProvider(ArtemisNavigationUtilService), { provide: TranslateService, useClass: MockTranslateService }],
+            providers: [
+                MockProvider(ArtemisNavigationUtilService),
+                {
+                    provide: TranslateService,
+                    useClass: MockTranslateService,
+                },
+            ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(ScaCategoryDistributionChartComponent);

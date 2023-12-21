@@ -18,6 +18,11 @@ export class LecturePagingService extends PagingService {
 
     searchForLectures(pageable: PageableSearch): Observable<EntityResponseType> {
         const params = this.createHttpParams(pageable);
-        return this.http.get(`${LecturePagingService.resourceUrl}`, { params, observe: 'response' }).pipe(map((resp: HttpResponse<EntityResponseType>) => resp && resp.body!));
+        return this.http
+            .get(`${LecturePagingService.resourceUrl}`, {
+                params,
+                observe: 'response',
+            })
+            .pipe(map((resp: HttpResponse<EntityResponseType>) => resp && resp.body!));
     }
 }

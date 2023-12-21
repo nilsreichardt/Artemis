@@ -18,6 +18,15 @@ export function initOrionConnector(connector: OrionConnectorService) {
     declarations: [OrionButtonComponent, ModalConfirmAutofocusComponent, OrionFilterDirective],
     imports: [CommonModule, ArtemisSharedModule, TranslateModule, FeatureToggleModule],
     exports: [OrionButtonComponent, OrionFilterDirective],
-    providers: [{ provide: APP_INITIALIZER, useFactory: initOrionConnector, deps: [OrionConnectorService], multi: true }, OrionBuildAndTestService, OrionAssessmentService],
+    providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initOrionConnector,
+            deps: [OrionConnectorService],
+            multi: true,
+        },
+        OrionBuildAndTestService,
+        OrionAssessmentService,
+    ],
 })
 export class OrionModule {}

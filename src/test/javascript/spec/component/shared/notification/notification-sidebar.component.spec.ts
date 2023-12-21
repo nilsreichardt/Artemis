@@ -39,8 +39,16 @@ describe('Notification Sidebar Component', () => {
     let sessionStorageService: SessionStorageService;
     let artemisTranslatePipe: ArtemisTranslatePipe;
 
-    const notificationNow = { id: 1, notificationDate: dayjs(), title: EXERCISE_SUBMISSION_ASSESSED_TITLE } as Notification;
-    const notificationPast = { id: 2, notificationDate: dayjs().subtract(2, 'day'), title: ATTACHMENT_CHANGE_TITLE } as Notification;
+    const notificationNow = {
+        id: 1,
+        notificationDate: dayjs(),
+        title: EXERCISE_SUBMISSION_ASSESSED_TITLE,
+    } as Notification;
+    const notificationPast = {
+        id: 2,
+        notificationDate: dayjs().subtract(2, 'day'),
+        title: ATTACHMENT_CHANGE_TITLE,
+    } as Notification;
     const notifications = [notificationNow, notificationPast] as Notification[];
 
     const notificationSettingA: NotificationSetting = {
@@ -95,7 +103,11 @@ describe('Notification Sidebar Component', () => {
         it.each([
             { userDate: referenceDate, storageDate: undefined, expectedDate: referenceDate },
             { userDate: undefined, storageDate: referenceDate, expectedDate: referenceDate },
-            { userDate: referenceDate, storageDate: referenceDate.add(5, 'minutes'), expectedDate: referenceDate.add(5, 'minutes') },
+            {
+                userDate: referenceDate,
+                storageDate: referenceDate.add(5, 'minutes'),
+                expectedDate: referenceDate.add(5, 'minutes'),
+            },
             { userDate: referenceDate, storageDate: referenceDate.subtract(5, 'minutes'), expectedDate: referenceDate },
         ])('should set the correct last notification read', ({ userDate, storageDate, expectedDate }) => {
             const getAuthenticationStateStub = jest.spyOn(accountService, 'getAuthenticationState').mockReturnValue(of({ lastNotificationRead: userDate } as User));
@@ -162,7 +174,12 @@ describe('Notification Sidebar Component', () => {
         it('should get the notification text translation', () => {
             notificationSidebarComponent.ngOnInit();
 
-            const notification = { id: 1, notificationDate: dayjs(), text: 'test', textIsPlaceholder: true } as Notification;
+            const notification = {
+                id: 1,
+                notificationDate: dayjs(),
+                text: 'test',
+                textIsPlaceholder: true,
+            } as Notification;
             const notificationTextTranslation = notificationSidebarComponent.getNotificationTextTranslation(notification);
             expect(notificationTextTranslation).toEqual(artemisTranslatePipe.transform('test'));
         });
@@ -179,7 +196,11 @@ describe('Notification Sidebar Component', () => {
     describe('Notification Texts', () => {
         it('should display the correct text for a notification with text', () => {
             // Set up the component with a notification that has text
-            const notificationWithText = { id: 3, notificationDate: dayjs(), text: 'Test Notification' } as Notification;
+            const notificationWithText = {
+                id: 3,
+                notificationDate: dayjs(),
+                text: 'Test Notification',
+            } as Notification;
             notificationSidebarComponent.sortedNotifications = [notificationWithText];
 
             // Trigger change detection to update the view

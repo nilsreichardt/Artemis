@@ -113,7 +113,13 @@ describe('ExampleSubmissionImportComponent', () => {
         setStateAndCallOnInit(() => {
             component.listSorting = true;
             tick(10);
-            expect(searchForSubmissionsSpy).toHaveBeenCalledWith({ ...state, sortingOrder: SortingOrder.ASCENDING }, exercise.id);
+            expect(searchForSubmissionsSpy).toHaveBeenCalledWith(
+                {
+                    ...state,
+                    sortingOrder: SortingOrder.ASCENDING,
+                },
+                exercise.id,
+            );
             expect(component.listSorting).toBeTrue();
         });
     }));
@@ -136,7 +142,13 @@ describe('ExampleSubmissionImportComponent', () => {
             tick(10);
             expect(searchForSubmissionsSpy).not.toHaveBeenCalled();
             tick(290);
-            expect(searchForSubmissionsSpy).toHaveBeenCalledWith({ ...state, searchTerm: givenSearchTerm }, exercise.id);
+            expect(searchForSubmissionsSpy).toHaveBeenCalledWith(
+                {
+                    ...state,
+                    searchTerm: givenSearchTerm,
+                },
+                exercise.id,
+            );
             expect(component.searchTerm).toBe(givenSearchTerm);
         });
     }));
@@ -146,7 +158,13 @@ describe('ExampleSubmissionImportComponent', () => {
         setStateAndCallOnInit(() => {
             component.sortedColumn = TableColumn.STUDENT_NAME;
             tick(10);
-            expect(searchForSubmissionsSpy).toHaveBeenCalledWith({ ...state, sortedColumn: TableColumn.STUDENT_NAME }, exercise.id);
+            expect(searchForSubmissionsSpy).toHaveBeenCalledWith(
+                {
+                    ...state,
+                    sortedColumn: TableColumn.STUDENT_NAME,
+                },
+                exercise.id,
+            );
             expect(component.sortedColumn).toBe(TableColumn.STUDENT_NAME);
         });
     }));

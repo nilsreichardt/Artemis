@@ -61,7 +61,7 @@ public class TutorParticipationService {
     }
 
     public TutorParticipationService(TutorParticipationRepository tutorParticipationRepository, ExampleSubmissionRepository exampleSubmissionRepository,
-            ExampleSubmissionService exampleSubmissionService) {
+                                     ExampleSubmissionService exampleSubmissionService) {
         this.tutorParticipationRepository = tutorParticipationRepository;
         this.exampleSubmissionRepository = exampleSubmissionRepository;
         this.exampleSubmissionService = exampleSubmissionService;
@@ -175,8 +175,7 @@ public class TutorParticipationService {
             // Return the highest priority error (the closest instructor feedback match)
             return matchingInstructorFeedback.stream().map(feedback -> tutorFeedbackMatchesInstructorFeedback(tutorFeedback, feedback).orElseThrow())
                     .max(Comparator.naturalOrder());
-        }
-        else {
+        } else {
             if (matchingInstructorFeedback.size() > 1) {
                 throw new IllegalStateException("Multiple instructor feedback exist with the same reference");
             }
@@ -216,8 +215,7 @@ public class TutorParticipationService {
                 // TODO: I think we should let Spring automatically convert it to Json
                 var feedbackCorrectionErrorJSON = objectWriter.writeValueAsString(new FeedbackCorrectionError(feedback.getReference(), validationError.get()));
                 return Stream.of(feedbackCorrectionErrorJSON);
-            }
-            catch (JsonProcessingException e) {
+            } catch (JsonProcessingException e) {
                 log.warn("JsonProcessingException in validateTutorialExampleSubmission: {}", e.getMessage());
                 return Stream.empty();
             }

@@ -24,6 +24,7 @@ export class ReEvaluateShortAnswerQuestionComponent {
     @Input() set question(question: QuizQuestion) {
         this.shortAnswerQuestion = question as ShortAnswerQuestion;
     }
+
     @Input()
     questionIndex: number;
 

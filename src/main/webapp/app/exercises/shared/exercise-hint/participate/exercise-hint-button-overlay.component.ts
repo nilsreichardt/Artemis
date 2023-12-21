@@ -24,7 +24,10 @@ export class ExerciseHintButtonOverlayComponent {
     constructor(private modalService: NgbModal) {}
 
     openModal() {
-        this.ngbModalRef = this.modalService.open(ExerciseHintStudentDialogComponent as Component, { size: 'lg', backdrop: 'static' });
+        this.ngbModalRef = this.modalService.open(ExerciseHintStudentDialogComponent as Component, {
+            size: 'lg',
+            backdrop: 'static',
+        });
         this.ngbModalRef.componentInstance.onHintActivated = this.onHintActivated;
         // cloning is required that the lists not change while modal is open
         this.ngbModalRef.componentInstance.activatedExerciseHints = cloneDeep(this.activatedExerciseHints!);

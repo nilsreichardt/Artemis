@@ -58,8 +58,7 @@ public class CompetencyService {
         final Page<Competency> competencyPage;
         if (authCheckService.isAdmin(user)) {
             competencyPage = competencyRepository.findByTitleIgnoreCaseContainingOrCourse_TitleIgnoreCaseContaining(searchTerm, searchTerm, pageable);
-        }
-        else {
+        } else {
             competencyPage = competencyRepository.findByTitleInLectureOrCourseAndUserHasAccessToCourse(searchTerm, searchTerm, user.getGroups(), pageable);
         }
         return new SearchResultPageDTO<>(competencyPage.getContent(), competencyPage.getTotalPages());
@@ -148,8 +147,7 @@ public class CompetencyService {
                     if (neighbor.isBeingVisited()) {
                         // backward edge exists
                         return true;
-                    }
-                    else if (!neighbor.isVisited() && vertexIsPartOfCycle(neighbor)) {
+                    } else if (!neighbor.isVisited() && vertexIsPartOfCycle(neighbor)) {
                         return true;
                     }
                 }

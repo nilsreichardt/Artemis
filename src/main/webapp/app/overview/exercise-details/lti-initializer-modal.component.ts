@@ -26,7 +26,11 @@ export class LtiInitializerModalComponent {
      */
     clear(): void {
         this.alertService.info('artemisApp.lti.startExercise');
-        this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { initialize: null }, queryParamsHandling: 'merge' });
+        this.router.navigate([], {
+            relativeTo: this.activatedRoute,
+            queryParams: { initialize: null },
+            queryParamsHandling: 'merge',
+        });
         this.activeModal.dismiss();
     }
 }

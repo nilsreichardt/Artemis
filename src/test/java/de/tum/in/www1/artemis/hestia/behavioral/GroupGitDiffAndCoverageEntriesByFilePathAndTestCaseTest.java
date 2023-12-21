@@ -1,19 +1,22 @@
 package de.tum.in.www1.artemis.hestia.behavioral;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import de.tum.in.www1.artemis.domain.ProgrammingExerciseTestCase;
+import de.tum.in.www1.artemis.domain.hestia.CoverageFileReport;
+import de.tum.in.www1.artemis.domain.hestia.CoverageReport;
+import de.tum.in.www1.artemis.domain.hestia.ProgrammingExerciseGitDiffEntry;
+import de.tum.in.www1.artemis.domain.hestia.ProgrammingExerciseGitDiffReport;
+import de.tum.in.www1.artemis.domain.hestia.TestwiseCoverageReportEntry;
+import de.tum.in.www1.artemis.service.hestia.behavioral.BehavioralBlackboard;
+import de.tum.in.www1.artemis.service.hestia.behavioral.GroupedFile;
+import de.tum.in.www1.artemis.service.hestia.behavioral.knowledgesource.GroupGitDiffAndCoverageEntriesByFilePathAndTestCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import de.tum.in.www1.artemis.domain.ProgrammingExerciseTestCase;
-import de.tum.in.www1.artemis.domain.hestia.*;
-import de.tum.in.www1.artemis.service.hestia.behavioral.BehavioralBlackboard;
-import de.tum.in.www1.artemis.service.hestia.behavioral.GroupedFile;
-import de.tum.in.www1.artemis.service.hestia.behavioral.knowledgesource.GroupGitDiffAndCoverageEntriesByFilePathAndTestCase;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class GroupGitDiffAndCoverageEntriesByFilePathAndTestCaseTest {
 

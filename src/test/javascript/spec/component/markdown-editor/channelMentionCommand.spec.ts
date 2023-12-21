@@ -34,7 +34,10 @@ describe('ChannelMentionCommand', () => {
         };
 
         metisServiceMock = {
-            getCourse: () => ({ id: 1, courseInformationSharingConfiguration: CourseInformationSharingConfiguration.COMMUNICATION_AND_MESSAGING }),
+            getCourse: () => ({
+                id: 1,
+                courseInformationSharingConfiguration: CourseInformationSharingConfiguration.COMMUNICATION_AND_MESSAGING,
+            }),
         };
 
         aceEditorMock = {

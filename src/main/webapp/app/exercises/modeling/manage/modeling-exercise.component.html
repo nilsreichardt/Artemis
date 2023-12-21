@@ -62,7 +62,9 @@
                             <td>{{ modelingExercise.presentationScoreEnabled }}</td>
                         }
                         <td jhiTranslate="{{ 'artemisApp.DiagramType.' + modelingExercise.diagramType }}">{{ modelingExercise.diagramType }}</td>
-                        <td class="d-md-table-cell"><jhi-exercise-categories [exercise]="modelingExercise"></jhi-exercise-categories></td>
+                        <td class="d-md-table-cell">
+                            <jhi-exercise-categories [exercise]="modelingExercise"></jhi-exercise-categories>
+                        </td>
                         <td class="text-end">
                             <div class="btn-group flex-btn-group-container">
                                 <!-- Participations -->

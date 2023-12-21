@@ -205,7 +205,10 @@ export class HomeComponent implements OnInit, AfterViewChecked {
             return;
         }
 
-        const modalRef: NgbModalRef = this.modalService.open(ModalConfirmAutofocusComponent as Component, { size: 'lg', backdrop: 'static' });
+        const modalRef: NgbModalRef = this.modalService.open(ModalConfirmAutofocusComponent as Component, {
+            size: 'lg',
+            backdrop: 'static',
+        });
         modalRef.componentInstance.text = 'login.ide.confirmation';
         modalRef.componentInstance.title = 'login.ide.title';
         modalRef.result.then(

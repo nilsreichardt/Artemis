@@ -112,7 +112,10 @@ export class ExamAPIRequests {
      * @returns A Cypress.Chainable<Cypress.Response<any>> representing the API request response.
      */
     registerStudentForExam(exam: Exam, student: CypressCredentials) {
-        return cy.request({ method: POST, url: COURSE_BASE + exam.course!.id + '/exams/' + exam.id + '/students/' + student.username });
+        return cy.request({
+            method: POST,
+            url: COURSE_BASE + exam.course!.id + '/exams/' + exam.id + '/students/' + student.username,
+        });
     }
 
     /**
@@ -145,7 +148,11 @@ export class ExamAPIRequests {
         exerciseGroup.exam = exam;
         exerciseGroup.title = title;
         exerciseGroup.isMandatory = mandatory;
-        return cy.request({ method: POST, url: COURSE_BASE + exam.course!.id + '/exams/' + exam.id + '/exerciseGroups', body: exerciseGroup });
+        return cy.request({
+            method: POST,
+            url: COURSE_BASE + exam.course!.id + '/exams/' + exam.id + '/exerciseGroups',
+            body: exerciseGroup,
+        });
     }
 
     /**
@@ -154,7 +161,10 @@ export class ExamAPIRequests {
      * @returns A Cypress.Chainable<Cypress.Response<any>> representing the API request response.
      */
     generateMissingIndividualExams(exam: Exam) {
-        return cy.request({ method: POST, url: COURSE_BASE + exam.course!.id + '/exams/' + exam.id + '/generate-missing-student-exams' });
+        return cy.request({
+            method: POST,
+            url: COURSE_BASE + exam.course!.id + '/exams/' + exam.id + '/generate-missing-student-exams',
+        });
     }
 
     /**
@@ -163,6 +173,9 @@ export class ExamAPIRequests {
      * @returns A Cypress.Chainable<Cypress.Response<any>> representing the API request response.
      */
     prepareExerciseStartForExam(exam: Exam) {
-        return cy.request({ method: POST, url: COURSE_BASE + exam.course!.id + '/exams/' + exam.id + '/student-exams/start-exercises' });
+        return cy.request({
+            method: POST,
+            url: COURSE_BASE + exam.course!.id + '/exams/' + exam.id + '/student-exams/start-exercises',
+        });
     }
 }

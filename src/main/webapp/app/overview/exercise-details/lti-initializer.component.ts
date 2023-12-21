@@ -36,7 +36,11 @@ export class LtiInitializerComponent implements OnInit {
                         });
                         return;
                     }
-                    this.modalRef = this.modalService.open(LtiInitializerModalComponent, { size: 'lg', backdrop: 'static', keyboard: false });
+                    this.modalRef = this.modalService.open(LtiInitializerModalComponent, {
+                        size: 'lg',
+                        backdrop: 'static',
+                        keyboard: false,
+                    });
                     this.modalRef.componentInstance.loginName = this.accountService.userIdentity?.login;
                     this.modalRef.componentInstance.password = password;
                 });

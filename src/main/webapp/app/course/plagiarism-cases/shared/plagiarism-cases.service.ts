@@ -78,12 +78,22 @@ export class PlagiarismCasesService {
      * @param { number } courseId id of the course
      * @param { number[] } exerciseIds ids of the exercises
      */
-    public getPlagiarismCaseInfosForStudent(courseId: number, exerciseIds: number[]): Observable<HttpResponse<{ [exerciseId: number]: PlagiarismCaseInfo }>> {
+    public getPlagiarismCaseInfosForStudent(
+        courseId: number,
+        exerciseIds: number[],
+    ): Observable<
+        HttpResponse<{
+            [exerciseId: number]: PlagiarismCaseInfo;
+        }>
+    > {
         let params = new HttpParams();
         for (const exerciseId of exerciseIds) {
             params = params.append('exerciseId', exerciseId);
         }
-        return this.http.get<PlagiarismCaseInfo[]>(`${this.resourceUrl}/${courseId}/plagiarism-cases`, { params, observe: 'response' });
+        return this.http.get<PlagiarismCaseInfo[]>(`${this.resourceUrl}/${courseId}/plagiarism-cases`, {
+            params,
+            observe: 'response',
+        });
     }
 
     /**
@@ -132,6 +142,7 @@ export class PlagiarismCasesService {
             observe: 'response',
         });
     }
+
     public getNumberOfPlagiarismCasesForExercise(exercise: Exercise): Observable<number> {
         let courseId: number;
         if (exercise.exerciseGroup) {

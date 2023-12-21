@@ -668,7 +668,12 @@ describe('TeamsImportDialogComponent', () => {
         it('call alert service if students not found', () => {
             const notFoundRegistrationNumbers = ['1', '2', '3'];
             const notFoundLogins = ['l1', 'l2', 'l3'];
-            response = new HttpErrorResponse({ error: { errorKey: 'studentsNotFound', params: { registrationNumbers: notFoundRegistrationNumbers, logins: notFoundLogins } } });
+            response = new HttpErrorResponse({
+                error: {
+                    errorKey: 'studentsNotFound',
+                    params: { registrationNumbers: notFoundRegistrationNumbers, logins: notFoundLogins },
+                },
+            });
             comp.isImporting = true;
             comp.onSaveError(response);
             expect(comp.isImporting).toBeFalse();
@@ -683,7 +688,12 @@ describe('TeamsImportDialogComponent', () => {
                 { first: 'l3', second: '3' },
             ];
             const message = 'l1:1,l2:2,l3:3';
-            response = new HttpErrorResponse({ error: { errorKey: 'studentsAppearMultipleTimes', params: { students } } });
+            response = new HttpErrorResponse({
+                error: {
+                    errorKey: 'studentsAppearMultipleTimes',
+                    params: { students },
+                },
+            });
             comp.isImporting = true;
             comp.onSaveError(response);
             expect(comp.isImporting).toBeFalse();

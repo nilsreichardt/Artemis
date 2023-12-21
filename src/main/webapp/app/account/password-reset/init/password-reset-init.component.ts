@@ -64,7 +64,10 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
             },
             error: (err: HttpErrorResponse) => {
                 if (this.useExternal && err?.error?.errorKey === 'externalUser') {
-                    this.externalResetModalRef = this.modalService.open(ExternalUserPasswordResetModalComponent, { size: 'lg', backdrop: 'static' });
+                    this.externalResetModalRef = this.modalService.open(ExternalUserPasswordResetModalComponent, {
+                        size: 'lg',
+                        backdrop: 'static',
+                    });
                     this.externalResetModalRef.componentInstance.externalCredentialProvider = this.externalCredentialProvider;
                     this.externalResetModalRef.componentInstance.externalPasswordResetLink = this.externalPasswordResetLink;
                 } else {

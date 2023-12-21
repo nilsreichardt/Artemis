@@ -36,14 +36,36 @@ multipleChoiceQuestion.answerOptions = [wrongAnswerOption, correctAnswerOption];
 const dragAndDropQuestion = { id: 2, type: QuizQuestionType.DRAG_AND_DROP } as DragAndDropQuestion;
 const dragItem = { id: 1, question: dragAndDropQuestion, text: 'dragItem' } as DragItem;
 const dropLocation = { id: 1, question: dragAndDropQuestion, posX: 1, posY: 1, width: 1, height: 1 } as DropLocation;
-const correctDragAndDropMapping = { id: 1, dragItemIndex: 1, dropLocationIndex: 1, dragItem, dropLocation, question: dragAndDropQuestion } as DragAndDropMapping;
+const correctDragAndDropMapping = {
+    id: 1,
+    dragItemIndex: 1,
+    dropLocationIndex: 1,
+    dragItem,
+    dropLocation,
+    question: dragAndDropQuestion,
+} as DragAndDropMapping;
 dragAndDropQuestion.correctMappings = [correctDragAndDropMapping];
 dragAndDropQuestion.dragItems = [dragItem];
 dragAndDropQuestion.dropLocations = [dropLocation];
 
 const shortAnswerQuestion = { id: 3, type: QuizQuestionType.SHORT_ANSWER } as ShortAnswerQuestion;
-const shortAnswerSpot = { id: 1, width: 1, spotNr: 1, question: shortAnswerQuestion, posX: 1, posY: 1, tempID: 1 } as ShortAnswerSpot;
-const shortAnswerSolution = { id: 1, text: 'solution', question: shortAnswerQuestion, posX: 1, posY: 1, tempID: 1 } as ShortAnswerSolution;
+const shortAnswerSpot = {
+    id: 1,
+    width: 1,
+    spotNr: 1,
+    question: shortAnswerQuestion,
+    posX: 1,
+    posY: 1,
+    tempID: 1,
+} as ShortAnswerSpot;
+const shortAnswerSolution = {
+    id: 1,
+    text: 'solution',
+    question: shortAnswerQuestion,
+    posX: 1,
+    posY: 1,
+    tempID: 1,
+} as ShortAnswerSolution;
 const correctShortAnswerMapping = {
     id: 1,
     shortAnswerSolutionIndex: 1,
@@ -58,10 +80,30 @@ shortAnswerQuestion.spots = [shortAnswerSpot];
 
 const studentParticipation = { id: 1 } as StudentParticipation;
 
-const multipleChoiceSubmittedAnswer = { id: 1, selectedOptions: [correctAnswerOption], quizQuestion: multipleChoiceQuestion, scoreInPoints: 1 } as MultipleChoiceSubmittedAnswer;
-const dragAndDropSubmittedAnswer = { id: 1, mappings: [correctDragAndDropMapping], quizQuestion: dragAndDropQuestion, scoreInPoints: 1 } as DragAndDropSubmittedAnswer;
-const shortAnswerSubmittedAnswer = { id: 1, mappings: [correctDragAndDropMapping], quizQuestion: shortAnswerQuestion, scoreInPoints: 1 } as ShortAnswerSubmittedAnswer;
-const shortAnswerSubmittedText = { id: 1, spot: shortAnswerSpot, text: 'solution', submittedAnswer: shortAnswerSubmittedAnswer } as ShortAnswerSubmittedText;
+const multipleChoiceSubmittedAnswer = {
+    id: 1,
+    selectedOptions: [correctAnswerOption],
+    quizQuestion: multipleChoiceQuestion,
+    scoreInPoints: 1,
+} as MultipleChoiceSubmittedAnswer;
+const dragAndDropSubmittedAnswer = {
+    id: 1,
+    mappings: [correctDragAndDropMapping],
+    quizQuestion: dragAndDropQuestion,
+    scoreInPoints: 1,
+} as DragAndDropSubmittedAnswer;
+const shortAnswerSubmittedAnswer = {
+    id: 1,
+    mappings: [correctDragAndDropMapping],
+    quizQuestion: shortAnswerQuestion,
+    scoreInPoints: 1,
+} as ShortAnswerSubmittedAnswer;
+const shortAnswerSubmittedText = {
+    id: 1,
+    spot: shortAnswerSpot,
+    text: 'solution',
+    submittedAnswer: shortAnswerSubmittedAnswer,
+} as ShortAnswerSubmittedText;
 shortAnswerSubmittedAnswer.submittedTexts = [shortAnswerSubmittedText];
 
 const submissionWithAnswers = {
@@ -69,7 +111,11 @@ const submissionWithAnswers = {
     submittedAnswers: [multipleChoiceSubmittedAnswer, dragAndDropSubmittedAnswer, shortAnswerSubmittedAnswer],
     submitted: true,
 } as QuizSubmission;
-const exercise = { id: 1, studentParticipations: [studentParticipation], quizQuestions: [multipleChoiceQuestion, dragAndDropQuestion, shortAnswerQuestion] } as QuizExercise;
+const exercise = {
+    id: 1,
+    studentParticipations: [studentParticipation],
+    quizQuestions: [multipleChoiceQuestion, dragAndDropQuestion, shortAnswerQuestion],
+} as QuizExercise;
 
 describe('QuizExamSummaryComponent', () => {
     let fixture: ComponentFixture<QuizExamSummaryComponent>;

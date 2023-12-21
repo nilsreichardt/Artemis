@@ -117,14 +117,20 @@ export class SubmissionPolicyUpdateComponent implements OnInit {
     ngOnInit(): void {
         this.onSubmissionPolicyTypeChanged(this.programmingExercise.submissionPolicy?.type ?? SubmissionPolicyType.NONE);
         this.form = new FormGroup({
-            submissionLimit: new FormControl({ value: this.programmingExercise.submissionPolicy?.submissionLimit, disabled: !this.editable }, [
-                Validators.pattern(this.submissionLimitPattern),
-                Validators.required,
-            ]),
-            exceedingPenalty: new FormControl({ value: this.programmingExercise.submissionPolicy?.exceedingPenalty, disabled: !this.editable }, [
-                Validators.pattern(this.exceedingPenaltyPattern),
-                Validators.required,
-            ]),
+            submissionLimit: new FormControl(
+                {
+                    value: this.programmingExercise.submissionPolicy?.submissionLimit,
+                    disabled: !this.editable,
+                },
+                [Validators.pattern(this.submissionLimitPattern), Validators.required],
+            ),
+            exceedingPenalty: new FormControl(
+                {
+                    value: this.programmingExercise.submissionPolicy?.exceedingPenalty,
+                    disabled: !this.editable,
+                },
+                [Validators.pattern(this.exceedingPenaltyPattern), Validators.required],
+            ),
         });
         this.submissionLimitControl = this.form.get('submissionLimit')! as FormControl;
         this.exceedingPenaltyControl = this.form.get('exceedingPenalty')! as FormControl;

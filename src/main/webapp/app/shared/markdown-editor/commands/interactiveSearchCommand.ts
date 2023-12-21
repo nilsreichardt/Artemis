@@ -9,6 +9,7 @@ export interface SelectableItem {
 
 export abstract class InteractiveSearchCommand extends MultiOptionCommand {
     private selectWithSearchComponent: SelectWithSearchComponent;
+
     execute(): void {
         this.aceEditor.execCommand(this.getAssociatedInputCharacter());
     }

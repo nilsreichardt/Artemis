@@ -1,27 +1,45 @@
 package de.tum.in.www1.artemis.exercise.quizexercise;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import de.tum.in.www1.artemis.domain.Course;
+import de.tum.in.www1.artemis.domain.enumeration.QuizMode;
+import de.tum.in.www1.artemis.domain.enumeration.ScoringType;
+import de.tum.in.www1.artemis.domain.exam.ExerciseGroup;
+import de.tum.in.www1.artemis.domain.quiz.AnswerOption;
+import de.tum.in.www1.artemis.domain.quiz.DragAndDropMapping;
+import de.tum.in.www1.artemis.domain.quiz.DragAndDropQuestion;
+import de.tum.in.www1.artemis.domain.quiz.DragAndDropSubmittedAnswer;
+import de.tum.in.www1.artemis.domain.quiz.DragItem;
+import de.tum.in.www1.artemis.domain.quiz.DropLocation;
+import de.tum.in.www1.artemis.domain.quiz.MultipleChoiceQuestion;
+import de.tum.in.www1.artemis.domain.quiz.MultipleChoiceSubmittedAnswer;
+import de.tum.in.www1.artemis.domain.quiz.QuizBatch;
+import de.tum.in.www1.artemis.domain.quiz.QuizExercise;
+import de.tum.in.www1.artemis.domain.quiz.QuizGroup;
+import de.tum.in.www1.artemis.domain.quiz.QuizPointStatistic;
+import de.tum.in.www1.artemis.domain.quiz.QuizQuestion;
+import de.tum.in.www1.artemis.domain.quiz.QuizSubmission;
+import de.tum.in.www1.artemis.domain.quiz.ShortAnswerMapping;
+import de.tum.in.www1.artemis.domain.quiz.ShortAnswerQuestion;
+import de.tum.in.www1.artemis.domain.quiz.ShortAnswerSolution;
+import de.tum.in.www1.artemis.domain.quiz.ShortAnswerSpot;
+import de.tum.in.www1.artemis.domain.quiz.ShortAnswerSubmittedAnswer;
+import de.tum.in.www1.artemis.domain.quiz.ShortAnswerSubmittedText;
+import de.tum.in.www1.artemis.domain.quiz.SubmittedAnswer;
+import de.tum.in.www1.artemis.exercise.ExerciseFactory;
+import de.tum.in.www1.artemis.participation.ParticipationFactory;
+import de.tum.in.www1.artemis.service.FilePathService;
+import org.apache.commons.io.FileUtils;
+import org.springframework.util.ResourceUtils;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.validation.constraints.NotNull;
-
-import org.apache.commons.io.FileUtils;
-import org.springframework.util.ResourceUtils;
-
-import de.tum.in.www1.artemis.domain.Course;
-import de.tum.in.www1.artemis.domain.enumeration.QuizMode;
-import de.tum.in.www1.artemis.domain.enumeration.ScoringType;
-import de.tum.in.www1.artemis.domain.exam.ExerciseGroup;
-import de.tum.in.www1.artemis.domain.quiz.*;
-import de.tum.in.www1.artemis.exercise.ExerciseFactory;
-import de.tum.in.www1.artemis.participation.ParticipationFactory;
-import de.tum.in.www1.artemis.service.FilePathService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * Factory for creating QuizExercises and related objects.
@@ -300,8 +318,7 @@ public class QuizExerciseFactory {
                 }
             }
             return submittedAnswer;
-        }
-        else if (question instanceof DragAndDropQuestion) {
+        } else if (question instanceof DragAndDropQuestion) {
             var submittedAnswer = new DragAndDropSubmittedAnswer();
             submittedAnswer.setQuizQuestion(question);
 
@@ -334,8 +351,7 @@ public class QuizExerciseFactory {
                 submittedAnswer.addMappings(new DragAndDropMapping().dragItem(dragItem2).dropLocation(dropLocation2));
                 submittedAnswer.addMappings(new DragAndDropMapping().dragItem(dragItem3).dropLocation(dropLocation3));
                 submittedAnswer.addMappings(new DragAndDropMapping().dragItem(dragItem4).dropLocation(dropLocation4));
-            }
-            else {
+            } else {
                 submittedAnswer.addMappings(new DragAndDropMapping().dragItem(dragItem2).dropLocation(dropLocation3));
                 submittedAnswer.addMappings(new DragAndDropMapping().dragItem(dragItem1).dropLocation(dropLocation4));
                 submittedAnswer.addMappings(new DragAndDropMapping().dragItem(dragItem3).dropLocation(dropLocation1));
@@ -343,8 +359,7 @@ public class QuizExerciseFactory {
             }
 
             return submittedAnswer;
-        }
-        else if (question instanceof ShortAnswerQuestion) {
+        } else if (question instanceof ShortAnswerQuestion) {
             var submittedAnswer = new ShortAnswerSubmittedAnswer();
             submittedAnswer.setQuizQuestion(question);
 
@@ -354,8 +369,7 @@ public class QuizExerciseFactory {
                 var correctText = ((ShortAnswerQuestion) question).getCorrectSolutionForSpot(spot).iterator().next().getText();
                 if (correct) {
                     submittedText.setText(correctText);
-                }
-                else {
+                } else {
                     submittedText.setText(correctText.toUpperCase());
                 }
                 submittedAnswer.addSubmittedTexts(submittedText);
@@ -469,8 +483,7 @@ public class QuizExerciseFactory {
         try {
             FileUtils.copyFile(ResourceUtils.getFile("classpath:test-data/attachment/placeholder.jpg"),
                     FilePathService.getDragItemFilePath().resolve("10").resolve("drag_item.jpg").toFile());
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             fail("Failed while copying test attachment files", ex);
         }
         var dragItem5 = new DragItem().pictureFilePath("/api/files/drag-and-drop/drag-items/10/drag_item.jpg");
@@ -580,8 +593,7 @@ public class QuizExerciseFactory {
                 submittedAnswer.addSelectedOptions(answerOption);
             }
             return submittedAnswer;
-        }
-        else if (question instanceof DragAndDropQuestion) {
+        } else if (question instanceof DragAndDropQuestion) {
             var submittedAnswer = new DragAndDropSubmittedAnswer();
             submittedAnswer.setQuizQuestion(question);
 
@@ -608,8 +620,7 @@ public class QuizExerciseFactory {
             submittedAnswer.addMappings(new DragAndDropMapping().dragItem(dragItem3).dropLocation(dropLocation2));
 
             return submittedAnswer;
-        }
-        else if (question instanceof ShortAnswerQuestion) {
+        } else if (question instanceof ShortAnswerQuestion) {
             var submittedAnswer = new ShortAnswerSubmittedAnswer();
             submittedAnswer.setQuizQuestion(question);
 
@@ -619,8 +630,7 @@ public class QuizExerciseFactory {
                 var correctText = ((ShortAnswerQuestion) question).getCorrectSolutionForSpot(spot).iterator().next().getText();
                 if (spot.getSpotNr() == 2) {
                     submittedText.setText(correctText);
-                }
-                else {
+                } else {
                     submittedText.setText("wrong submitted text");
                 }
                 submittedAnswer.addSubmittedTexts(submittedText);
@@ -656,8 +666,7 @@ public class QuizExerciseFactory {
                 }
                 quizSubmission.addSubmittedAnswers(submittedAnswer);
 
-            }
-            else {
+            } else {
                 quizSubmission.addSubmittedAnswers(generateSubmittedAnswerFor(question, false));
             }
         }

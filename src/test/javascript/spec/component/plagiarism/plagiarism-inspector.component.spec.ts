@@ -41,6 +41,7 @@ jest.mock('export-to-csv', () => {
     class MockExportToCsv {
         generateCsv = generateCsv;
     }
+
     return { ExportToCsv: MockExportToCsv };
 });
 
@@ -135,7 +136,12 @@ describe('Plagiarism Inspector Component', () => {
     it('should register to topic and fetch latest results on init', fakeAsync(() => {
         const websocketService = TestBed.inject(JhiWebsocketService);
         const websocketServiceSpy = jest.spyOn(websocketService, 'subscribe');
-        jest.spyOn(websocketService, 'receive').mockReturnValue(of({ state: 'COMPLETED', messages: 'a message' } as PlagiarismCheckState));
+        jest.spyOn(websocketService, 'receive').mockReturnValue(
+            of({
+                state: 'COMPLETED',
+                messages: 'a message',
+            } as PlagiarismCheckState),
+        );
         jest.spyOn(modelingExerciseService, 'getLatestPlagiarismResult').mockReturnValue(of(modelingPlagiarismResultDTO));
 
         comp.ngOnInit();

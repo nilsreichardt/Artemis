@@ -133,7 +133,8 @@
                                     [class.disabled]="isAssessmentButtonDisabled(value, value.submission)"
                                     [routerLink]="getAssessmentLink(value, value.participation, value.submission)"
                                     class="btn btn-warning btn-sm"
-                                    ><fa-icon [icon]="faFolderOpen" [fixedWidth]="true"></fa-icon>
+                                >
+                                    <fa-icon [icon]="faFolderOpen" [fixedWidth]="true"></fa-icon>
                                     {{ 'artemisApp.exerciseAssessmentDashboard.' + assessmentAction(value.submission) + 'Assessment' | artemisTranslate }}</a
                                 >
                             </div>

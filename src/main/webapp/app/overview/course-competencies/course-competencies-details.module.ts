@@ -23,6 +23,7 @@ const routes: Routes = [
         canActivate: [UserRouteAccessService],
     },
 ];
+
 @NgModule({
     imports: [
         RouterModule.forChild(routes),

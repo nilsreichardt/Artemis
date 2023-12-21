@@ -35,7 +35,11 @@ export class AdminFeatureToggleComponent implements OnInit {
             .getFeatureToggles()
             .pipe(
                 tap((activeToggles) => {
-                    this.availableToggles = Object.values(FeatureToggle).map((name, index) => ({ name, index, isActive: activeToggles.includes(name) }));
+                    this.availableToggles = Object.values(FeatureToggle).map((name, index) => ({
+                        name,
+                        index,
+                        isActive: activeToggles.includes(name),
+                    }));
                 }),
             )
             .subscribe();

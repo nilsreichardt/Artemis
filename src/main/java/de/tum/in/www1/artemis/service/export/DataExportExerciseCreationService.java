@@ -73,9 +73,9 @@ public class DataExportExerciseCreationService {
     private final AuthorizationCheckService authCheckService;
 
     public DataExportExerciseCreationService(@Value("${artemis.repo-download-clone-path}") Path repoClonePath, FileService fileService,
-            ProgrammingExerciseExportService programmingExerciseExportService, DataExportQuizExerciseCreationService dataExportQuizExerciseCreationService,
-            PlagiarismCaseRepository plagiarismCaseRepository, Optional<ApollonConversionService> apollonConversionService, ComplaintRepository complaintRepository,
-            ExerciseRepository exerciseRepository, ResultService resultService, AuthorizationCheckService authCheckService) {
+                                             ProgrammingExerciseExportService programmingExerciseExportService, DataExportQuizExerciseCreationService dataExportQuizExerciseCreationService,
+                                             PlagiarismCaseRepository plagiarismCaseRepository, Optional<ApollonConversionService> apollonConversionService, ComplaintRepository complaintRepository,
+                                             ExerciseRepository exerciseRepository, ResultService resultService, AuthorizationCheckService authCheckService) {
         this.fileService = fileService;
         this.programmingExerciseExportService = programmingExerciseExportService;
         this.dataExportQuizExerciseCreationService = dataExportQuizExerciseCreationService;
@@ -111,8 +111,7 @@ public class DataExportExerciseCreationService {
             for (var exercise : exercises) {
                 if (exercise instanceof ProgrammingExercise programmingExercise) {
                     createProgrammingExerciseExport(programmingExercise, exercisesDir, user);
-                }
-                else {
+                } else {
                     createNonProgrammingExerciseExport(exercise, exercisesDir, user);
                 }
             }
@@ -196,14 +195,11 @@ public class DataExportExerciseCreationService {
                 createSubmissionCsvFile(submission, exerciseDir);
                 if (submission instanceof FileUploadSubmission fileUploadSubmission) {
                     copyFileUploadSubmissionFile(FileUploadSubmission.buildFilePath(exercise.getId(), submission.getId()), exerciseDir, fileUploadSubmission);
-                }
-                else if (submission instanceof TextSubmission textSubmission) {
+                } else if (submission instanceof TextSubmission textSubmission) {
                     storeTextSubmissionContent(textSubmission, exerciseDir);
-                }
-                else if (submission instanceof ModelingSubmission modelingSubmission) {
+                } else if (submission instanceof ModelingSubmission modelingSubmission) {
                     storeModelingSubmissionContent(modelingSubmission, exerciseDir);
-                }
-                else if (submission instanceof QuizSubmission) {
+                } else if (submission instanceof QuizSubmission) {
                     dataExportQuizExerciseCreationService.createQuizAnswersExport((QuizExercise) exercise, participation, exerciseDir, includeResults);
                 }
                 // for a programming exercise, we want to include the results that are visible before the assessment due date
@@ -236,8 +232,7 @@ public class DataExportExerciseCreationService {
 
         try (var modelAsPdf = apollonConversionService.get().convertModel(modelingSubmission.getModel())) {
             FileUtils.writeByteArrayToFile(outputDir.resolve(fileName + PDF_FILE_EXTENSION).toFile(), modelAsPdf.readAllBytes());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.warn("Failed to include the model as pdf, going to include it as plain JSON file.");
             addModelJsonWithExplanationHowToView(modelingSubmission.getModel(), outputDir, fileName);
         }
@@ -273,8 +268,7 @@ public class DataExportExerciseCreationService {
         if (textSubmission.getText() != null) {
             FileUtils.writeStringToFile(outputDir.resolve("text_exercise_submission_" + textSubmission.getId() + "_text.txt").toFile(), textSubmission.getText(),
                     StandardCharsets.UTF_8);
-        }
-        else {
+        } else {
             log.warn("Cannot include text submission content in data export because content is null for submission with id: {}", textSubmission.getId());
         }
     }
@@ -416,8 +410,7 @@ public class DataExportExerciseCreationService {
         }
         if (plagiarismCase.getVerdict() == PlagiarismVerdict.POINT_DEDUCTION) {
             dataStreamBuilder.add(plagiarismCase.getVerdictPointDeduction());
-        }
-        else if (plagiarismCase.getVerdict() == PlagiarismVerdict.WARNING) {
+        } else if (plagiarismCase.getVerdict() == PlagiarismVerdict.WARNING) {
             dataStreamBuilder.add(plagiarismCase.getVerdictMessage());
         }
         CSVFormat csvFormat = CSVFormat.DEFAULT.builder().setHeader(headers.toArray(String[]::new)).build();
@@ -440,8 +433,7 @@ public class DataExportExerciseCreationService {
     private void copyFileUploadSubmissionFile(Path submissionFilePath, Path outputDir, FileUploadSubmission fileUploadSubmission) throws IOException {
         try {
             FileUtils.copyDirectory(submissionFilePath.toFile(), outputDir.toFile());
-        }
-        catch (IOException exception) {
+        } catch (IOException exception) {
             log.info("Cannot include submission for file upload exercise stored at {}", submissionFilePath);
             addInfoThatFileForFileUploadSubmissionNoLongerExists(outputDir, fileUploadSubmission);
         }

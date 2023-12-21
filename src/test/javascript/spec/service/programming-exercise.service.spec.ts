@@ -288,7 +288,10 @@ describe('ProgrammingExercise Service', () => {
         const exerciseId = 1;
         const submissionId = 2;
         const submissionId2 = 3;
-        const expected = { id: 1, entries: [new ProgrammingExerciseGitDiffEntry()] } as unknown as ProgrammingExerciseGitDiffReport;
+        const expected = {
+            id: 1,
+            entries: [new ProgrammingExerciseGitDiffEntry()],
+        } as unknown as ProgrammingExerciseGitDiffReport;
         service.getDiffReportForSubmissions(exerciseId, submissionId, submissionId2).subscribe((resp) => expect(resp).toEqual(expected));
         const url = `${resourceUrl}/${exerciseId}/submissions/${submissionId}/diff-report/${submissionId2}`;
         const req = httpMock.expectOne({ method: 'GET', url });

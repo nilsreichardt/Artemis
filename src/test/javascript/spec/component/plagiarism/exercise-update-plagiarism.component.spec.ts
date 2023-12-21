@@ -48,7 +48,10 @@ describe('Exercise Update Plagiarism Component', () => {
 
     it('should enable cpc', () => {
         comp.exercise = {
-            plagiarismDetectionConfig: { continuousPlagiarismControlEnabled: false, continuousPlagiarismControlPostDueDateChecksEnabled: false },
+            plagiarismDetectionConfig: {
+                continuousPlagiarismControlEnabled: false,
+                continuousPlagiarismControlPostDueDateChecksEnabled: false,
+            },
         } as Exercise;
         comp.toggleCPCEnabled();
         expect(comp.exercise.plagiarismDetectionConfig!.continuousPlagiarismControlEnabled).toBeTrue();
@@ -57,7 +60,10 @@ describe('Exercise Update Plagiarism Component', () => {
 
     it('should disable cpc', () => {
         comp.exercise = {
-            plagiarismDetectionConfig: { continuousPlagiarismControlEnabled: true, continuousPlagiarismControlPostDueDateChecksEnabled: true },
+            plagiarismDetectionConfig: {
+                continuousPlagiarismControlEnabled: true,
+                continuousPlagiarismControlPostDueDateChecksEnabled: true,
+            },
         } as Exercise;
         comp.toggleCPCEnabled();
         expect(comp.exercise.plagiarismDetectionConfig!.continuousPlagiarismControlEnabled).toBeFalse();

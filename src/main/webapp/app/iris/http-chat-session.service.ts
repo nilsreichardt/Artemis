@@ -8,6 +8,7 @@ export class HeartbeatDTO {
     active: boolean;
     rateLimitInfo: IrisRateLimitInformation;
 }
+
 /**
  * The `IrisHttpChatSessionService` provides methods for retrieving existing or creating new Iris chat sessions.
  * It interacts with the server-side API to perform session-related operations.

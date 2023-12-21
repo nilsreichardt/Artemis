@@ -69,6 +69,7 @@ export class MockLanguageHelper {
     get language(): Observable<string> {
         return this._language.asObservable();
     }
+
     updateTitle(titleKey?: string) {}
 
     private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {

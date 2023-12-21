@@ -140,7 +140,9 @@
                     readonly
                     class="form-control"
                 />
-                <button type="button" class="btn btn-secondary" [owlDateTimeTrigger]="period"><fa-icon [icon]="faCalendarAlt"></fa-icon></button>
+                <button type="button" class="btn btn-secondary" [owlDateTimeTrigger]="period">
+                    <fa-icon [icon]="faCalendarAlt"></fa-icon>
+                </button>
                 <owl-date-time [firstDayOfWeek]="1" [pickerType]="'calendar'" [pickerMode]="'dialog'" #period></owl-date-time>
             </div>
             @if (periodControl?.invalid && (periodControl?.dirty || periodControl?.touched)) {

@@ -36,7 +36,7 @@ public class AthenaFeedbackSendingService {
      * Creates a new service to send feedback to the Athena service
      */
     public AthenaFeedbackSendingService(@Qualifier("athenaRestTemplate") RestTemplate athenaRestTemplate, AthenaModuleUrlHelper athenaModuleUrlHelper,
-            AthenaDTOConverter athenaDTOConverter) {
+                                        AthenaDTOConverter athenaDTOConverter) {
         connector = new AthenaConnector<>(athenaRestTemplate, ResponseDTO.class);
         this.athenaModuleUrlHelper = athenaModuleUrlHelper;
         this.athenaDTOConverter = athenaDTOConverter;
@@ -91,8 +91,7 @@ public class AthenaFeedbackSendingService {
                     feedbacks.stream().filter(Feedback::isManualFeedback).map((feedback) -> athenaDTOConverter.ofFeedback(exercise, submission.getId(), feedback)).toList());
             ResponseDTO response = connector.invokeWithRetry(athenaModuleUrlHelper.getAthenaModuleUrl(exercise.getExerciseType()) + "/feedbacks", request, maxRetries);
             log.info("Athena responded to feedback: {}", response.data);
-        }
-        catch (NetworkingException networkingException) {
+        } catch (NetworkingException networkingException) {
             log.error("Error while calling Athena", networkingException);
         }
     }

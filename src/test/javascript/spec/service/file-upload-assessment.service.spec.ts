@@ -129,7 +129,10 @@ describe('Modeling Assessment Service', () => {
                     .updateAssessmentAfterComplaint(feedbacks, complaintResponse, submissionId)
                     .pipe(take(1))
                     .subscribe((resp) => (httpExpectedResult = resp));
-                const req = httpMock.expectOne({ url: `api/file-upload-submissions/${submissionId}/assessment-after-complaint`, method: 'PUT' });
+                const req = httpMock.expectOne({
+                    url: `api/file-upload-submissions/${submissionId}/assessment-after-complaint`,
+                    method: 'PUT',
+                });
                 req.flush(returnedFromService);
                 expect(httpExpectedResult.body).toEqual(expected);
             });

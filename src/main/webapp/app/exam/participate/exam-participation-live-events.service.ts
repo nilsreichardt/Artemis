@@ -13,7 +13,10 @@ const EVENT_ACKNOWLEDGEMENT_LOCAL_STORAGE_KEY = 'examLastAcknowledgedEvent';
 
 type UnixAcknowledgeTimestamps = { system: number; user: number };
 export type AcknowledgeTimestamps = { system?: dayjs.Dayjs; user?: dayjs.Dayjs };
-type StudentExamAcknowledgedEvents = { lastChange: number; acknowledgedEvents: { [eventId: string]: UnixAcknowledgeTimestamps } };
+type StudentExamAcknowledgedEvents = {
+    lastChange: number;
+    acknowledgedEvents: { [eventId: string]: UnixAcknowledgeTimestamps };
+};
 
 export enum ExamLiveEventType {
     EXAM_WIDE_ANNOUNCEMENT = 'examWideAnnouncement',
@@ -127,7 +130,10 @@ export class ExamParticipationLiveEventsService {
         }
 
         const nowUnix = dayjs().unix();
-        const eventAcknowledgement = this.lastAcknowledgedEventStatus.acknowledgedEvents[String(event.id)] || { system: 0, user: 0 };
+        const eventAcknowledgement = this.lastAcknowledgedEventStatus.acknowledgedEvents[String(event.id)] || {
+            system: 0,
+            user: 0,
+        };
 
         if (byUser) {
             eventAcknowledgement.user = nowUnix;

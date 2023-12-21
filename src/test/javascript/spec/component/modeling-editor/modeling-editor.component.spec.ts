@@ -31,7 +31,10 @@ describe('ModelingEditorComponent', () => {
     const diagram = new ApollonDiagram(UMLDiagramType.ClassDiagram, course.id!);
     // @ts-ignore
     const classDiagram = cloneDeep(testClassDiagram as UMLModel); // note: clone is needed to prevent weird errors with setters, because testClassDiagram is not an actual object
-    const route = { params: of({ id: 1, courseId: 123 }), snapshot: { paramMap: convertToParamMap({ courseId: course.id }) } } as any as ActivatedRoute;
+    const route = {
+        params: of({ id: 1, courseId: 123 }),
+        snapshot: { paramMap: convertToParamMap({ courseId: course.id }) },
+    } as any as ActivatedRoute;
     beforeEach(() => {
         diagram.id = 1;
         diagram.jsonRepresentation = JSON.stringify(classDiagram);

@@ -45,7 +45,10 @@ describe('HealthComponent', () => {
 
     it('should call refresh on init', () => {
         // GIVEN
-        const health: Health = { status: 'UP', components: { mail: { status: 'UP', details: { mailDetail: 'mail' } } } };
+        const health: Health = {
+            status: 'UP',
+            components: { mail: { status: 'UP', details: { mailDetail: 'mail' } } },
+        };
         jest.spyOn(healthService, 'checkHealth').mockReturnValue(of(health));
 
         // WHEN
@@ -59,7 +62,15 @@ describe('HealthComponent', () => {
     it('should handle a 503 on refreshing health data', () => {
         // GIVEN
         const health: Health = { status: 'DOWN', components: { mail: { status: 'DOWN' } } };
-        jest.spyOn(healthService, 'checkHealth').mockReturnValue(throwError(() => new HttpErrorResponse({ status: 503, error: health })));
+        jest.spyOn(healthService, 'checkHealth').mockReturnValue(
+            throwError(
+                () =>
+                    new HttpErrorResponse({
+                        status: 503,
+                        error: health,
+                    }),
+            ),
+        );
 
         // WHEN
         comp.refresh();
@@ -70,7 +81,10 @@ describe('HealthComponent', () => {
     });
 
     it('should open a modal with health if eye icon is clicked', () => {
-        const health: Health = { status: 'UP', components: { mail: { status: 'UP', details: { mailDetail: 'mail' } } } };
+        const health: Health = {
+            status: 'UP',
+            components: { mail: { status: 'UP', details: { mailDetail: 'mail' } } },
+        };
         jest.spyOn(healthService, 'checkHealth').mockReturnValue(of(health));
 
         const mockModalRef = { componentInstance: {} } as NgbModalRef;

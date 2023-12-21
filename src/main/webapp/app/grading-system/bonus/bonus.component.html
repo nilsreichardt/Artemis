@@ -57,7 +57,7 @@
     <div class="bonus-calculated">
         @if (bonus.sourceGradingScale?.gradeSteps) {
             <div class="mb-0 ms-2 fs-6 fw-bold no-flex-shrink">
-                <span>{{ 'artemisApp.bonus.bonusSource.maxPoints' | artemisTranslate }}: {{ getGradingScaleMaxPoints(bonus.sourceGradingScale) }}</span>
+                <span>{{ 'artemisApp.bonus.bonusSource.maxPoints' | artemisTranslate }} : {{ getGradingScaleMaxPoints(bonus.sourceGradingScale) }}</span>
                 @if (bonus.sourceGradingScale?.course) {
                     <jhi-help-icon text="artemisApp.bonus.bonusSource.maxPointsCourseHelpText"></jhi-help-icon>
                 }

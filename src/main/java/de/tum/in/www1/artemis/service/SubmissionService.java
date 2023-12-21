@@ -64,10 +64,10 @@ public class SubmissionService {
     private final Optional<AthenaSubmissionSelectionService> athenaSubmissionSelectionService;
 
     public SubmissionService(SubmissionRepository submissionRepository, UserRepository userRepository, AuthorizationCheckService authCheckService,
-            ResultRepository resultRepository, StudentParticipationRepository studentParticipationRepository, ParticipationService participationService,
-            FeedbackRepository feedbackRepository, ExamDateService examDateService, ExerciseDateService exerciseDateService, CourseRepository courseRepository,
-            ParticipationRepository participationRepository, ComplaintRepository complaintRepository, FeedbackService feedbackService,
-            Optional<AthenaSubmissionSelectionService> athenaSubmissionSelectionService) {
+                             ResultRepository resultRepository, StudentParticipationRepository studentParticipationRepository, ParticipationService participationService,
+                             FeedbackRepository feedbackRepository, ExamDateService examDateService, ExerciseDateService exerciseDateService, CourseRepository courseRepository,
+                             ParticipationRepository participationRepository, ComplaintRepository complaintRepository, FeedbackService feedbackService,
+                             Optional<AthenaSubmissionSelectionService> athenaSubmissionSelectionService) {
         this.submissionRepository = submissionRepository;
         this.userRepository = userRepository;
         this.authCheckService = authCheckService;
@@ -157,7 +157,7 @@ public class SubmissionService {
      * @return list of submissions
      */
     public <T extends Submission> List<T> getAllSubmissionsAssessedByTutorForCorrectionRoundAndExerciseIgnoreTestRuns(Long exerciseId, User tutor, boolean examMode,
-            int correctionRound) {
+                                                                                                                      int correctionRound) {
         List<T> submissions;
         if (examMode) {
             var participations = this.studentParticipationRepository.findAllByParticipationExerciseIdAndResultAssessorAndCorrectionRoundIgnoreTestRuns(exerciseId, tutor);
@@ -165,8 +165,7 @@ public class SubmissionService {
                     .map(submission -> (T) submission)
                     .filter(submission -> submission.getResults().size() - 1 >= correctionRound && submission.getResults().get(correctionRound) != null)
                     .collect(Collectors.toCollection(ArrayList::new));
-        }
-        else {
+        } else {
             submissions = this.submissionRepository.findAllByParticipationExerciseIdAndResultAssessorIgnoreTestRuns(exerciseId, tutor);
         }
 
@@ -181,8 +180,7 @@ public class SubmissionService {
             // No manual result means that no user has started an assessment for the corresponding submission yet.
             participations = studentParticipationRepository.findByExerciseIdWithLatestSubmissionWithoutManualResultsAndIgnoreTestRunParticipation(exercise.getId(),
                     correctionRound);
-        }
-        else {
+        } else {
             // Get all participations of submissions that are submitted and do not already have a manual result.
             // No manual result means that no user has started an assessment for the corresponding submission yet.
             // Does not fetch participations for which the due date has not yet passed.
@@ -235,7 +233,7 @@ public class SubmissionService {
      * @return a submission without any manual result or an empty Optional if no submission without manual result could be found
      */
     public <S extends Submission> Optional<S> getAthenaSubmissionToAssess(Exercise exercise, boolean skipAssessmentQueue, boolean examMode, int correctionRound,
-            Function<Long, Optional<S>> findSubmissionById) {
+                                                                          Function<Long, Optional<S>> findSubmissionById) {
         if (exercise.getFeedbackSuggestionsEnabled() && athenaSubmissionSelectionService.isPresent() && !skipAssessmentQueue && correctionRound == 0) {
             var assessableSubmissions = getAssessableSubmissions(exercise, examMode, correctionRound);
             var athenaSubmissionId = athenaSubmissionSelectionService.get().getProposedSubmissionId(exercise, assessableSubmissions.stream().map(Submission::getId).toList());
@@ -244,8 +242,7 @@ public class SubmissionService {
                 // Test again if it is still assessable (Athena might have taken some time to respond and another assessment might have started in the meantime):
                 if (submission.isPresent() && (submission.get().getLatestResult() == null || !submission.get().getLatestResult().isManual())) {
                     return submission;
-                }
-                else {
+                } else {
                     log.debug("Athena proposed submission {} is not assessable anymore", athenaSubmissionId.get());
                 }
             }
@@ -265,7 +262,7 @@ public class SubmissionService {
      * @return a submission without any manual result or an empty Optional if no submission without manual result could be found
      */
     public <S extends Submission> Optional<S> getRandomAssessableSubmission(Exercise exercise, boolean skipAssessmentQueue, boolean examMode, int correctionRound,
-            Function<Long, Optional<S>> findSubmissionById) {
+                                                                            Function<Long, Optional<S>> findSubmissionById) {
         var submissionProposedByAthena = getAthenaSubmissionToAssess(exercise, skipAssessmentQueue, examMode, correctionRound, findSubmissionById);
         if (submissionProposedByAthena.isPresent()) {
             return submissionProposedByAthena;
@@ -567,8 +564,7 @@ public class SubmissionService {
         if (result == null && correctionRound > 0) {
             // copy the result of the previous correction round
             result = copyResultFromPreviousRoundAndSave(submission, submission.getResultForCorrectionRound(correctionRound - 1));
-        }
-        else if (result == null) {
+        } else if (result == null) {
             result = saveNewEmptyResult(submission);
         }
 
@@ -597,8 +593,7 @@ public class SubmissionService {
             if (optionalSubmission.isPresent() && (!submittedOnly || optionalSubmission.get().isSubmitted())) {
                 participation.setSubmissions(Set.of(optionalSubmission.get()));
                 Optional.ofNullable(optionalSubmission.get().getLatestResult()).ifPresent(result -> participation.setResults(Set.of(result)));
-            }
-            else {
+            } else {
                 participation.setSubmissions(Set.of());
             }
         });
@@ -616,8 +611,7 @@ public class SubmissionService {
         final List<T> submissionsBeforeDueDate = submissions.stream().filter(this::isBeforeDueDate).toList();
         if (!submissionsBeforeDueDate.isEmpty()) {
             return submissionsBeforeDueDate;
-        }
-        else {
+        } else {
             return submissions;
         }
     }
@@ -647,8 +641,7 @@ public class SubmissionService {
                 log.debug("The due date of exercise '{}' has not been reached yet.", exercise.getTitle());
                 throw new AccessForbiddenException("The due date of exercise '" + exercise.getTitle() + "' has not been reached yet.");
             }
-        }
-        else {
+        } else {
             // special check for programming exercises as they use buildAndTestStudentSubmissionAfterDueDate instead of dueDate
             if (exercise instanceof ProgrammingExercise programmingExercise && !exercise.getAllowManualFeedbackRequests()) {
                 if (programmingExercise.getBuildAndTestStudentSubmissionsAfterDueDate() != null
@@ -679,8 +672,7 @@ public class SubmissionService {
         List<StudentParticipation> participations;
         if (examMode) {
             participations = studentParticipationRepository.findAllWithEagerSubmissionsAndEagerResultsAndEagerAssessorByExerciseIdIgnoreTestRuns(exerciseId);
-        }
-        else {
+        } else {
             participations = studentParticipationRepository.findAllWithEagerSubmissionsAndEagerResultsAndEagerAssessorByExerciseId(exerciseId);
         }
         List<T> submissions = new ArrayList<>();

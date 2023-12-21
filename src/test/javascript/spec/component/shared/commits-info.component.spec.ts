@@ -20,8 +20,18 @@ describe('CommitsInfoComponent', () => {
     let programmingExerciseParticipationServiceSpy: jest.SpyInstance;
     let profileService: ProfileService;
     let profileServiceSpy: jest.SpyInstance;
-    const commitInfo1 = { hash: '123', author: 'author', timestamp: dayjs('2021-01-02'), message: 'commit message' } as CommitInfo;
-    const commitInfo2 = { hash: '456', author: 'author2', timestamp: dayjs('2021-01-01'), message: 'other message' } as CommitInfo;
+    const commitInfo1 = {
+        hash: '123',
+        author: 'author',
+        timestamp: dayjs('2021-01-02'),
+        message: 'commit message',
+    } as CommitInfo;
+    const commitInfo2 = {
+        hash: '456',
+        author: 'author2',
+        timestamp: dayjs('2021-01-01'),
+        message: 'other message',
+    } as CommitInfo;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -55,7 +65,14 @@ describe('CommitsInfoComponent', () => {
     });
 
     it('should do nothing onInit if commits are passed as input', () => {
-        component.commits = [{ hash: '123', author: 'author', timestamp: dayjs('2021-01-01'), message: 'commit message' }];
+        component.commits = [
+            {
+                hash: '123',
+                author: 'author',
+                timestamp: dayjs('2021-01-01'),
+                message: 'commit message',
+            },
+        ];
         component.ngOnInit();
         expect(programmingExerciseParticipationServiceSpy).not.toHaveBeenCalled();
     });

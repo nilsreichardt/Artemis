@@ -13,6 +13,7 @@
         height: 100%;
     }
 }
+
 .exam-footer-content {
     height: 100%;
     display: flex;
@@ -26,9 +27,11 @@
         }
     }
 }
+
 .connected {
     background-color: var(--exam-participation-footer-connected-background);
 }
+
 .disconnected {
     background-color: var(--exam-participation-footer-disconnected-background);
 }

@@ -78,8 +78,7 @@ public class ModelClusterFactory {
 
             if (element instanceof UMLAttribute attribute) {
                 context = new Context(attribute.getParentElement().getSimilarityID());
-            }
-            else if (element instanceof UMLMethod method) {
+            } else if (element instanceof UMLMethod method) {
                 context = new Context(method.getParentElement().getSimilarityID());
             }
 
@@ -100,8 +99,7 @@ public class ModelClusterFactory {
             try {
                 UMLDiagram model = UMLModelParser.buildModelFromJSON(modelObject, modelingSubmission.getId());
                 return model.getAllModelElements();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 log.error("Error while building and adding model!", e);
             }
         }
@@ -118,7 +116,7 @@ public class ModelClusterFactory {
      * @param submission          the submission that element belongs to
      */
     private void selectCluster(UMLElement element, Set<UMLElement> uniqueModelElements, Map<Integer, ModelCluster> clusters, ModelingExercise exercise,
-            ModelingSubmission submission) {
+                               ModelingSubmission submission) {
 
         // Pair of similarity value and cluster ID
         var bestSimilarityFit = Pair.of(-1.0, -1);
@@ -136,8 +134,7 @@ public class ModelClusterFactory {
             int similarityId = bestSimilarityFit.getSecond();
             element.setSimilarityID(similarityId);
             cluster = clusters.get(similarityId);
-        }
-        else {
+        } else {
             int similarityId = uniqueModelElements.size();
             cluster = new ModelCluster();
             cluster.setMinimumSimilarity(CompassConfiguration.EQUALITY_THRESHOLD);

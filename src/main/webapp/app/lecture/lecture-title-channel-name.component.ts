@@ -10,6 +10,7 @@ export class LectureTitleChannelNameComponent implements OnInit {
     @Input() lecture: Lecture;
 
     hideChannelNameInput = false;
+
     ngOnInit() {
         this.hideChannelNameInput = !this.requiresChannelName(this.lecture);
     }

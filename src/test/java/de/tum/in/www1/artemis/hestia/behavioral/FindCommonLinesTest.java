@@ -1,16 +1,15 @@
 package de.tum.in.www1.artemis.hestia.behavioral;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import de.tum.in.www1.artemis.service.hestia.behavioral.BehavioralBlackboard;
+import de.tum.in.www1.artemis.service.hestia.behavioral.GroupedFile;
+import de.tum.in.www1.artemis.service.hestia.behavioral.knowledgesource.FindCommonLines;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Set;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import de.tum.in.www1.artemis.service.hestia.behavioral.BehavioralBlackboard;
-import de.tum.in.www1.artemis.service.hestia.behavioral.GroupedFile;
-import de.tum.in.www1.artemis.service.hestia.behavioral.knowledgesource.FindCommonLines;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class FindCommonLinesTest {
 

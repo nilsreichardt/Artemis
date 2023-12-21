@@ -60,7 +60,10 @@ export class ExerciseGroupService {
             params = params.set('deleteStudentReposBuildPlans', deleteStudentReposBuildPlans.toString());
             params = params.set('deleteBaseReposBuildPlans', deleteBaseReposBuildPlans.toString());
         }
-        return this.http.delete<void>(`${this.resourceUrl}/${courseId}/exams/${examId}/exerciseGroups/${exerciseGroupId}`, { params, observe: 'response' });
+        return this.http.delete<void>(`${this.resourceUrl}/${courseId}/exams/${examId}/exerciseGroups/${exerciseGroupId}`, {
+            params,
+            observe: 'response',
+        });
     }
 
     /**

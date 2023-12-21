@@ -36,7 +36,11 @@ export class ExternalSubmissionButtonComponent {
      */
     openExternalSubmissionDialog(event: MouseEvent) {
         event.stopPropagation();
-        const modalRef: NgbModalRef = this.modalService.open(ExternalSubmissionDialogComponent, { keyboard: true, size: 'lg', backdrop: 'static' });
+        const modalRef: NgbModalRef = this.modalService.open(ExternalSubmissionDialogComponent, {
+            keyboard: true,
+            size: 'lg',
+            backdrop: 'static',
+        });
         modalRef.componentInstance.exercise = this.exercise;
     }
 }

@@ -8,13 +8,13 @@ metadata:
   name: artemis-app
 spec:
   rules:
-  - host: artemis-app.artemis.rancher.localhost
-    http:
-      paths:
-      - server:
-          serviceName: artemis
-          servicePort: 8080
-        pathType: ImplementationSpecific
+    - host: artemis-app.artemis.rancher.localhost
+      http:
+        paths:
+          - server:
+              serviceName: artemis
+              servicePort: 8080
+            pathType: ImplementationSpecific
   tls:
-  - hosts:
-    - artemis-app.artemis.rancher.localhost
+    - hosts:
+        - artemis-app.artemis.rancher.localhost

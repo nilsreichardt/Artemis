@@ -26,7 +26,12 @@ export abstract class ModelingComponent {
         if (this.resizeOptions) {
             interact('.resizable')
                 .resizable({
-                    edges: { left: false, right: this.resizeOptions.horizontalResize && '.draggable-right', bottom: this.resizeOptions.verticalResize, top: false },
+                    edges: {
+                        left: false,
+                        right: this.resizeOptions.horizontalResize && '.draggable-right',
+                        bottom: this.resizeOptions.verticalResize,
+                        top: false,
+                    },
                     modifiers: [
                         interact.modifiers!.restrictSize({
                             min: { width: MODELING_EDITOR_MIN_WIDTH, height: MODELING_EDITOR_MIN_HEIGHT },

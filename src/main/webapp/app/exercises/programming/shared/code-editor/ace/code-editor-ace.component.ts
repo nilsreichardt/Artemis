@@ -46,8 +46,18 @@ import { faCircleNotch, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { CodeEditorTutorAssessmentInlineFeedbackComponent } from 'app/exercises/programming/assess/code-editor-tutor-assessment-inline-feedback.component';
 import { CodeEditorTutorAssessmentInlineFeedbackSuggestionComponent } from 'app/exercises/programming/assess/code-editor-tutor-assessment-inline-feedback-suggestion.component';
 
-export type Annotation = { fileName: string; row: number; column: number; text: string; type: string; timestamp: number; hash?: string };
-export type FileSession = { [fileName: string]: { code: string; cursor: { column: number; row: number }; loadingError: boolean } };
+export type Annotation = {
+    fileName: string;
+    row: number;
+    column: number;
+    text: string;
+    type: string;
+    timestamp: number;
+    hash?: string;
+};
+export type FileSession = {
+    [fileName: string]: { code: string; cursor: { column: number; row: number }; loadingError: boolean };
+};
 
 @Component({
     selector: 'jhi-code-editor-ace',
@@ -454,7 +464,10 @@ export class CodeEditorAceComponent implements AfterViewInit, OnChanges, OnDestr
             this.annotationsArray = this.annotationsArray.filter((a) => a.fileName === fileChange.fileName);
             this.storeAnnotations([fileChange.fileName]);
         } else if (fileChange instanceof CreateFileChange && this.selectedFile === fileChange.fileName) {
-            this.fileSession = { ...this.fileSession, [fileChange.fileName]: { code: '', cursor: { row: 0, column: 0 }, loadingError: false } };
+            this.fileSession = {
+                ...this.fileSession,
+                [fileChange.fileName]: { code: '', cursor: { row: 0, column: 0 }, loadingError: false },
+            };
             await this.initEditor();
         }
         this.displayAnnotations();

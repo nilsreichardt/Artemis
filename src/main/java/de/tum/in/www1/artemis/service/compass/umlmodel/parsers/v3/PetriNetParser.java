@@ -3,13 +3,20 @@ package de.tum.in.www1.artemis.service.compass.umlmodel.parsers.v3;
 import static de.tum.in.www1.artemis.service.compass.utils.JSONMapping.*;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import com.google.gson.JsonObject;
 
 import de.tum.in.www1.artemis.service.compass.umlmodel.UMLElement;
 import de.tum.in.www1.artemis.service.compass.umlmodel.parsers.UMLModelParser;
-import de.tum.in.www1.artemis.service.compass.umlmodel.petrinet.*;
+import de.tum.in.www1.artemis.service.compass.umlmodel.petrinet.PetriNet;
+import de.tum.in.www1.artemis.service.compass.umlmodel.petrinet.PetriNetArc;
+import de.tum.in.www1.artemis.service.compass.umlmodel.petrinet.PetriNetPlace;
+import de.tum.in.www1.artemis.service.compass.umlmodel.petrinet.PetriNetTransition;
 
 public class PetriNetParser {
 

@@ -61,6 +61,7 @@ export class ProgrammingExerciseCustomBuildPlanComponent implements OnChanges {
         this.programmingExercise.windFile = undefined;
         this.programmingExercise.buildPlanConfiguration = undefined;
     }
+
     /**
      * Loads the predefined template for the selected programming language and project type
      * if there is one available.

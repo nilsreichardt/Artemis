@@ -46,7 +46,10 @@ export class ProgrammingAssessmentRepoExportButtonComponent {
     openRepoExportDialog(event: MouseEvent) {
         this.buttonPressed.emit();
         event.stopPropagation();
-        const modalRef = this.modalService.open(ProgrammingAssessmentRepoExportDialogComponent, { keyboard: true, size: 'lg' });
+        const modalRef = this.modalService.open(ProgrammingAssessmentRepoExportDialogComponent, {
+            keyboard: true,
+            size: 'lg',
+        });
         modalRef.componentInstance.programmingExercises = this.programmingExercises;
         modalRef.componentInstance.participationIdList = this.participationIdList;
         modalRef.componentInstance.participantIdentifierList = this.participantIdentifierList;

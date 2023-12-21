@@ -148,9 +148,21 @@ export class ExerciseScoresChartComponent implements AfterViewInit, OnChanges {
                 round(exerciseScoreDTO.maxScoreAchieved!),
                 this.maxScale,
             );
-            scoreSeries.push({ name: exerciseScoreDTO.exerciseTitle!, value: round(exerciseScoreDTO.scoreOfStudent!), ...extraInformation });
-            averageSeries.push({ name: exerciseScoreDTO.exerciseTitle!, value: round(exerciseScoreDTO.averageScoreAchieved!), ...extraInformation });
-            bestScoreSeries.push({ name: exerciseScoreDTO.exerciseTitle!, value: round(exerciseScoreDTO.maxScoreAchieved!), ...extraInformation });
+            scoreSeries.push({
+                name: exerciseScoreDTO.exerciseTitle!,
+                value: round(exerciseScoreDTO.scoreOfStudent!),
+                ...extraInformation,
+            });
+            averageSeries.push({
+                name: exerciseScoreDTO.exerciseTitle!,
+                value: round(exerciseScoreDTO.averageScoreAchieved!),
+                ...extraInformation,
+            });
+            bestScoreSeries.push({
+                name: exerciseScoreDTO.exerciseTitle!,
+                value: round(exerciseScoreDTO.maxScoreAchieved!),
+                ...extraInformation,
+            });
         });
 
         const studentScore = { name: this.yourScoreLabel, series: scoreSeries };

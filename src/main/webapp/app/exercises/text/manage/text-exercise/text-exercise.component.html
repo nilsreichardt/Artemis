@@ -56,7 +56,9 @@
                         @if (course.presentationScore !== 0) {
                             <td>{{ textExercise.presentationScoreEnabled }}</td>
                         }
-                        <td class="d-md-table-cell"><jhi-exercise-categories [exercise]="textExercise"></jhi-exercise-categories></td>
+                        <td class="d-md-table-cell">
+                            <jhi-exercise-categories [exercise]="textExercise"></jhi-exercise-categories>
+                        </td>
                         <td class="text-end">
                             <jhi-text-exercise-row-buttons [courseId]="courseId" [exercise]="textExercise"></jhi-text-exercise-row-buttons>
                         </td>

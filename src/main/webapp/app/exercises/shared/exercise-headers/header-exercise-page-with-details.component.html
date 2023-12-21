@@ -24,7 +24,7 @@
                                 }
                                 {{ exercise.maxPoints }}
                                 @if (exercise.bonusPoints) {
-                                    <span>({{ 'artemisApp.courseOverview.exerciseDetails.bonus' | artemisTranslate }} {{ exercise.bonusPoints }})</span>
+                                    <span>({{ 'artemisApp.courseOverview.exerciseDetails.bonus' | artemisTranslate }} {{ exercise.bonusPoints }} )</span>
                                 }
                             </span>
                             @if (exercise.includedInOverallScore !== IncludedInOverallScore.INCLUDED_COMPLETELY) {
@@ -45,7 +45,10 @@
             }
             @if (submissionPolicy && submissionPolicy.active) {
                 <div class="submission-row">
-                    <div>{{ 'artemisApp.programmingExercise.submissionPolicy.submissionLimitTitle' | artemisTranslate }}:</div>
+                    <div>
+                        {{ 'artemisApp.programmingExercise.submissionPolicy.submissionLimitTitle' | artemisTranslate }}
+                        :
+                    </div>
                     <div>
                         {{
                             numberOfSubmissions +

@@ -186,7 +186,15 @@ describe('ExerciseImportComponent', () => {
         setStateAndCallOnInit(() => {
             comp.listSorting = true;
             tick(10);
-            expect(searchForExercisesStub).toHaveBeenCalledWith({ ...state, sortingOrder: SortingOrder.ASCENDING }, true, true, undefined);
+            expect(searchForExercisesStub).toHaveBeenCalledWith(
+                {
+                    ...state,
+                    sortingOrder: SortingOrder.ASCENDING,
+                },
+                true,
+                true,
+                undefined,
+            );
             expect(comp.listSorting).toBeTrue();
         });
     }));
@@ -209,7 +217,15 @@ describe('ExerciseImportComponent', () => {
             tick(10);
             expect(searchForExercisesStub).not.toHaveBeenCalled();
             tick(290);
-            expect(searchForExercisesStub).toHaveBeenCalledWith({ ...state, searchTerm: givenSearchTerm }, true, true, undefined);
+            expect(searchForExercisesStub).toHaveBeenCalledWith(
+                {
+                    ...state,
+                    searchTerm: givenSearchTerm,
+                },
+                true,
+                true,
+                undefined,
+            );
             expect(comp.searchTerm).toEqual(givenSearchTerm);
         });
     }));
@@ -219,7 +235,15 @@ describe('ExerciseImportComponent', () => {
         setStateAndCallOnInit(() => {
             comp.sortedColumn = 'TITLE';
             tick(10);
-            expect(searchForExercisesStub).toHaveBeenCalledWith({ ...state, sortedColumn: 'TITLE' }, true, true, undefined);
+            expect(searchForExercisesStub).toHaveBeenCalledWith(
+                {
+                    ...state,
+                    sortedColumn: 'TITLE',
+                },
+                true,
+                true,
+                undefined,
+            );
             expect(comp.sortedColumn).toBe('TITLE');
         });
     }));

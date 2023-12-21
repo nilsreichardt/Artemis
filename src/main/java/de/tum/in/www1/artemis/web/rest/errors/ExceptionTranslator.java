@@ -1,13 +1,6 @@
 package de.tum.in.www1.artemis.web.rest.errors;
 
-import java.io.IOException;
-import java.util.List;
-
-import javax.annotation.Nullable;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.BadRequestException;
-
+import de.tum.in.www1.artemis.service.connectors.gitlab.GitLabException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
@@ -24,13 +17,21 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.socket.sockjs.SockJsMessageDeliveryException;
-import org.zalando.problem.*;
+import org.zalando.problem.DefaultProblem;
+import org.zalando.problem.Problem;
+import org.zalando.problem.ProblemBuilder;
+import org.zalando.problem.Status;
 import org.zalando.problem.spring.web.advice.ProblemHandling;
 import org.zalando.problem.spring.web.advice.security.SecurityAdviceTrait;
 import org.zalando.problem.violations.ConstraintViolationProblem;
-
-import de.tum.in.www1.artemis.service.connectors.gitlab.GitLabException;
 import tech.jhipster.web.util.HeaderUtil;
+
+import javax.annotation.Nullable;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.BadRequestException;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Controller advice to translate the server side exceptions to client-friendly json structures. The error response follows RFC7807 - Problem Details for HTTP APIs
@@ -69,8 +70,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
 
         if (problem instanceof ConstraintViolationProblem) {
             builder.with(VIOLATIONS_KEY, ((ConstraintViolationProblem) problem).getViolations()).with(MESSAGE_KEY, ErrorConstants.ERR_VALIDATION);
-        }
-        else {
+        } else {
             builder.withCause(((DefaultProblem) problem).getCause()).withDetail(problem.getDetail()).withInstance(problem.getInstance());
             problem.getParameters().forEach(builder::with);
             if (!problem.getParameters().containsKey(MESSAGE_KEY) && problem.getStatus() != null) {
@@ -151,8 +151,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
             log.info("Broken pipe IOException occurred: {}", e.getMessage());
             // socket is closed, cannot return any response
             return null;
-        }
-        else {
+        } else {
             return new HttpEntity<>(e.getMessage());
         }
     }
@@ -169,8 +168,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
             // session is closed, cannot return any response
             log.info("Session closed SockJsMessageDeliveryException occurred: {}", e.getMessage());
             return null;
-        }
-        else {
+        } else {
             return new HttpEntity<>(e.getMessage());
         }
     }

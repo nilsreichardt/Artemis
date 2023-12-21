@@ -164,7 +164,10 @@ describe('ModelingExercise Service', () => {
             .checkPlagiarism(elemDefault.id, options)
             .pipe(take(1))
             .subscribe((resp) => expect(resp).toEqual(expected));
-        const req = httpMock.expectOne({ method: 'GET', url: `${service.resourceUrl}/${elemDefault.id}/check-plagiarism?similarityThreshold=9&minimumScore=4&minimumSize=6` });
+        const req = httpMock.expectOne({
+            method: 'GET',
+            url: `${service.resourceUrl}/${elemDefault.id}/check-plagiarism?similarityThreshold=9&minimumScore=4&minimumSize=6`,
+        });
         req.flush(returnedFromService);
         tick();
     }));
@@ -181,7 +184,10 @@ describe('ModelingExercise Service', () => {
             .getLatestPlagiarismResult(elemDefault.id)
             .pipe(take(1))
             .subscribe((resp) => expect(resp).toEqual(expected));
-        const req = httpMock.expectOne({ method: 'GET', url: `${service.resourceUrl}/${elemDefault.id}/plagiarism-result` });
+        const req = httpMock.expectOne({
+            method: 'GET',
+            url: `${service.resourceUrl}/${elemDefault.id}/plagiarism-result`,
+        });
         req.flush(returnedFromService);
         tick();
     }));
@@ -193,7 +199,10 @@ describe('ModelingExercise Service', () => {
             .getNumberOfClusters(elemDefault.id)
             .pipe(take(1))
             .subscribe((resp) => expect(resp.body).toEqual(expected));
-        const req = httpMock.expectOne({ method: 'GET', url: `${service.adminResourceUrl}/${elemDefault.id}/check-clusters` });
+        const req = httpMock.expectOne({
+            method: 'GET',
+            url: `${service.adminResourceUrl}/${elemDefault.id}/check-clusters`,
+        });
         req.flush(expected);
         tick();
     }));
@@ -205,7 +214,10 @@ describe('ModelingExercise Service', () => {
             .buildClusters(elemDefault.id)
             .pipe(take(1))
             .subscribe((resp) => expect(resp).toEqual(expected));
-        const req = httpMock.expectOne({ method: 'POST', url: `${service.adminResourceUrl}/${elemDefault.id}/trigger-automatic-assessment` });
+        const req = httpMock.expectOne({
+            method: 'POST',
+            url: `${service.adminResourceUrl}/${elemDefault.id}/trigger-automatic-assessment`,
+        });
         req.flush(expected);
         tick();
     }));
@@ -216,7 +228,10 @@ describe('ModelingExercise Service', () => {
         // We use a fake async and don't need to await the promise
         // eslint-disable-next-line jest/valid-expect
         expect(lastValueFrom(service.deleteClusters(elemDefault.id))).toResolve();
-        const req = httpMock.expectOne({ method: 'DELETE', url: `${service.adminResourceUrl}/${elemDefault.id}/clusters` });
+        const req = httpMock.expectOne({
+            method: 'DELETE',
+            url: `${service.adminResourceUrl}/${elemDefault.id}/clusters`,
+        });
         req.flush(null);
         tick();
     }));

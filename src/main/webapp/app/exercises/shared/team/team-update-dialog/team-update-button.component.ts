@@ -40,7 +40,11 @@ export class TeamUpdateButtonComponent {
      */
     openTeamCreateDialog(event: MouseEvent) {
         event.stopPropagation();
-        const modalRef: NgbModalRef = this.modalService.open(TeamUpdateDialogComponent, { keyboard: true, size: 'lg', backdrop: 'static' });
+        const modalRef: NgbModalRef = this.modalService.open(TeamUpdateDialogComponent, {
+            keyboard: true,
+            size: 'lg',
+            backdrop: 'static',
+        });
         modalRef.componentInstance.team = this.team || new Team();
         modalRef.componentInstance.exercise = this.exercise;
 

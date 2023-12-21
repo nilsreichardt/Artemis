@@ -45,7 +45,14 @@ describe('Test Run Management Component', () => {
         { id: 1, user: { id: 99 } },
         { id: 2, user: { id: 90 } },
     ] as StudentExam[];
-    const route = { snapshot: { paramMap: convertToParamMap({ courseId: course.id, examId: exam.id }) } } as any as ActivatedRoute;
+    const route = {
+        snapshot: {
+            paramMap: convertToParamMap({
+                courseId: course.id,
+                examId: exam.id,
+            }),
+        },
+    } as any as ActivatedRoute;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -126,7 +133,17 @@ describe('Test Run Management Component', () => {
             const componentInstance = { title: String, text: String };
             const result = new Promise((resolve) => resolve({} as StudentExam));
             jest.spyOn(modalService, 'open').mockReturnValue(<NgbModalRef>{ componentInstance, result });
-            jest.spyOn(examManagementService, 'createTestRun').mockReturnValue(of(new HttpResponse({ body: { id: 3, user: { id: 90 }, exercises: [exercise] } as StudentExam })));
+            jest.spyOn(examManagementService, 'createTestRun').mockReturnValue(
+                of(
+                    new HttpResponse({
+                        body: {
+                            id: 3,
+                            user: { id: 90 },
+                            exercises: [exercise],
+                        } as StudentExam,
+                    }),
+                ),
+            );
             fixture.detectChanges();
 
             expect(component.examContainsExercises).toBeTruthy();

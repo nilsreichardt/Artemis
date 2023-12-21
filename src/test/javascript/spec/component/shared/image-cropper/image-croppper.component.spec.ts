@@ -112,8 +112,20 @@ describe('ImageCropperComponent', () => {
             cropper = comp.cropper;
             settings = comp.settings;
             sourceImage = comp.sourceImage;
-            loadedImage = { transformed: { base64: 'base64', image: new Image(), size: { width: 100, height: 100 } } } as LoadedImage;
-            fakeEvent = { base64: 'base64', width: 100, height: 100, cropperPosition: { x1: 42, y1: 42, x2: 42, y2: 42 }, imagePosition: { x1: 42, y1: 42, x2: 42, y2: 42 } };
+            loadedImage = {
+                transformed: {
+                    base64: 'base64',
+                    image: new Image(),
+                    size: { width: 100, height: 100 },
+                },
+            } as LoadedImage;
+            fakeEvent = {
+                base64: 'base64',
+                width: 100,
+                height: 100,
+                cropperPosition: { x1: 42, y1: 42, x2: 42, y2: 42 },
+                imagePosition: { x1: 42, y1: 42, x2: 42, y2: 42 },
+            };
         });
 
         it('should crop and emit with loaded image', () => {

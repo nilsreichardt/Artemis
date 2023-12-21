@@ -27,7 +27,9 @@ describe('TableEditableFieldComponent', () => {
 
     it('should render checkbox with its state as the boolean value provided and send an update on change', async () => {
         const checkbox = debugElement.query(By.css(tableCheckbox));
-        const fakeUpdateValue = { emit: jest.fn(() => {}) } as any;
+        const fakeUpdateValue = {
+            emit: jest.fn(() => {}),
+        } as any;
 
         comp.value = true;
         comp.onValueUpdate = fakeUpdateValue;

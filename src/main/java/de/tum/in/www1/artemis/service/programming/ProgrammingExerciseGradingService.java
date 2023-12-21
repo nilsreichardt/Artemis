@@ -82,13 +82,13 @@ public class ProgrammingExerciseGradingService {
     private final FeedbackService feedbackService;
 
     public ProgrammingExerciseGradingService(StudentParticipationRepository studentParticipationRepository, ResultRepository resultRepository,
-            Optional<ContinuousIntegrationResultService> continuousIntegrationResultService, Optional<VersionControlService> versionControlService,
-            ProgrammingExerciseTestCaseRepository testCaseRepository, TemplateProgrammingExerciseParticipationRepository templateProgrammingExerciseParticipationRepository,
-            SolutionProgrammingExerciseParticipationRepository solutionProgrammingExerciseParticipationRepository, ProgrammingSubmissionRepository programmingSubmissionRepository,
-            AuditEventRepository auditEventRepository, GroupNotificationService groupNotificationService, ResultService resultService, ExerciseDateService exerciseDateService,
-            SubmissionPolicyService submissionPolicyService, ProgrammingExerciseRepository programmingExerciseRepository, BuildLogEntryService buildLogService,
-            StaticCodeAnalysisCategoryRepository staticCodeAnalysisCategoryRepository, ProgrammingExerciseFeedbackCreationService feedbackCreationService,
-            FeedbackService feedbackService) {
+                                             Optional<ContinuousIntegrationResultService> continuousIntegrationResultService, Optional<VersionControlService> versionControlService,
+                                             ProgrammingExerciseTestCaseRepository testCaseRepository, TemplateProgrammingExerciseParticipationRepository templateProgrammingExerciseParticipationRepository,
+                                             SolutionProgrammingExerciseParticipationRepository solutionProgrammingExerciseParticipationRepository, ProgrammingSubmissionRepository programmingSubmissionRepository,
+                                             AuditEventRepository auditEventRepository, GroupNotificationService groupNotificationService, ResultService resultService, ExerciseDateService exerciseDateService,
+                                             SubmissionPolicyService submissionPolicyService, ProgrammingExerciseRepository programmingExerciseRepository, BuildLogEntryService buildLogService,
+                                             StaticCodeAnalysisCategoryRepository staticCodeAnalysisCategoryRepository, ProgrammingExerciseFeedbackCreationService feedbackCreationService,
+                                             FeedbackService feedbackService) {
         this.studentParticipationRepository = studentParticipationRepository;
         this.continuousIntegrationResultService = continuousIntegrationResultService;
         this.resultRepository = resultRepository;
@@ -165,8 +165,7 @@ public class ProgrammingExerciseGradingService {
             newResult.setRatedIfNotAfterDueDate();
             // NOTE: the result is not saved yet, but is connected to the submission, the submission is not completely saved yet
             return processNewProgrammingExerciseResult(participation, newResult);
-        }
-        catch (ContinuousIntegrationException ex) {
+        } catch (ContinuousIntegrationException ex) {
             log.error("Result for participation {} could not be created", participation.getId(), ex);
             return null;
         }
@@ -234,8 +233,7 @@ public class ProgrammingExerciseGradingService {
                 // This is also the case when a new programming exercise is created and the local CI system builds and tests the template and solution repositories for the first
                 // time.
                 submissionDate = versionControlService.orElseThrow().getPushDate(participation, commitHash.get(), null);
-            }
-            catch (VersionControlException e) {
+            } catch (VersionControlException e) {
                 log.error("Could not retrieve push date for participation {} and build plan {}", participation.getId(), participation.getBuildPlanId(), e);
             }
         }
@@ -489,7 +487,7 @@ public class ProgrammingExerciseGradingService {
      * @return the latest result with an updated score, or nothing if the participation had no results.
      */
     private Optional<Result> updateLatestResult(ProgrammingExercise exercise, Participation participation, Set<ProgrammingExerciseTestCase> allTestCases,
-            Set<ProgrammingExerciseTestCase> testCasesBeforeDueDate, Set<ProgrammingExerciseTestCase> testCasesAfterDueDate, boolean applySubmissionPolicy) {
+                                                Set<ProgrammingExerciseTestCase> testCasesBeforeDueDate, Set<ProgrammingExerciseTestCase> testCasesAfterDueDate, boolean applySubmissionPolicy) {
         final Result result = participation.findLatestLegalResult();
         if (result == null) {
             return Optional.empty();
@@ -549,11 +547,13 @@ public class ProgrammingExerciseGradingService {
      * @param staticCodeAnalysisFeedback of a given programming exercise.
      * @param weightSum                  the sum of all weights of test cases that are visible
      */
-    private record ScoreCalculationData(ProgrammingExercise exercise, Result result, Set<ProgrammingExerciseTestCase> testCases,
-            Set<ProgrammingExerciseTestCase> successfulTestCases, List<Feedback> staticCodeAnalysisFeedback, double weightSum) {
+    private record ScoreCalculationData(ProgrammingExercise exercise, Result result,
+                                        Set<ProgrammingExerciseTestCase> testCases,
+                                        Set<ProgrammingExerciseTestCase> successfulTestCases,
+                                        List<Feedback> staticCodeAnalysisFeedback, double weightSum) {
 
         ScoreCalculationData(ProgrammingExercise exercise, Result result, Set<ProgrammingExerciseTestCase> testCases, Set<ProgrammingExerciseTestCase> successfulTestCases,
-                List<Feedback> staticCodeAnalysisFeedback) {
+                             List<Feedback> staticCodeAnalysisFeedback) {
             this(exercise, result, testCases, successfulTestCases, staticCodeAnalysisFeedback, calculateWeightSum(testCases));
         }
 
@@ -577,7 +577,7 @@ public class ProgrammingExerciseGradingService {
      * @return The updated result
      */
     private Result calculateScoreForResult(Set<ProgrammingExerciseTestCase> testCases, Set<ProgrammingExerciseTestCase> relevantTestCases, @NotNull Result result,
-            ProgrammingExercise exercise, boolean applySubmissionPolicy) {
+                                           ProgrammingExercise exercise, boolean applySubmissionPolicy) {
         List<Feedback> automaticFeedbacks = result.getFeedbacks().stream().filter(feedback -> FeedbackType.AUTOMATIC.equals(feedback.getType())).toList();
         List<Feedback> staticCodeAnalysisFeedback = new ArrayList<>();
         List<Feedback> testCaseFeedback = new ArrayList<>();
@@ -585,8 +585,7 @@ public class ProgrammingExerciseGradingService {
         for (Feedback automaticFeedback : automaticFeedbacks) {
             if (automaticFeedback.isStaticCodeAnalysisFeedback()) {
                 staticCodeAnalysisFeedback.add(automaticFeedback);
-            }
-            else {
+            } else {
                 testCaseFeedback.add(automaticFeedback); // if feedback isn't static code analysis here, then it has to be test case feedback
             }
         }
@@ -837,12 +836,10 @@ public class ProgrammingExerciseGradingService {
         // Therefore, all test cases have equal weight in such a case.
         if (isWeightSumZero && scoreCalculationData.participation() instanceof SolutionProgrammingExerciseParticipation) {
             testPoints = (1.0 / totalTestCaseCount) * exerciseMaxPoints;
-        }
-        else if (isWeightSumZero) {
+        } else if (isWeightSumZero) {
             // this test case must have zero weight as well; avoid division by zero
             testPoints = 0D;
-        }
-        else {
+        } else {
             double testWeight = testCase.getWeight() * testCase.getBonusMultiplier();
             testPoints = (testWeight / scoreCalculationData.weightSum()) * exerciseMaxPoints;
         }
@@ -1002,15 +999,14 @@ public class ProgrammingExerciseGradingService {
      * @param feedback          The given feedback object
      */
     private void addFeedbackToStatistics(final Map<String, Integer> categoryIssuesMap, final Map<String, ProgrammingExerciseGradingStatisticsDTO.TestCaseStats> testCaseStatsMap,
-            final Feedback feedback) {
+                                         final Feedback feedback) {
         if (feedback.isStaticCodeAnalysisFeedback()) {
             String categoryName = feedback.getStaticCodeAnalysisCategory();
             if (categoryName.isEmpty()) {
                 return;
             }
             categoryIssuesMap.compute(categoryName, (category, count) -> count == null ? 1 : count + 1);
-        }
-        else if (FeedbackType.AUTOMATIC.equals(feedback.getType()) && feedback.getTestCase() != null) {
+        } else if (FeedbackType.AUTOMATIC.equals(feedback.getType()) && feedback.getTestCase() != null) {
             String testName = feedback.getTestCase().getTestName();
             testCaseStatsMap.putIfAbsent(testName, new ProgrammingExerciseGradingStatisticsDTO.TestCaseStats(0, 0));
             testCaseStatsMap.get(testName).updateWithFeedback(feedback);

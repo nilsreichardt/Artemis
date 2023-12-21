@@ -5,7 +5,7 @@
     @if (!readOnly) {
         <div class="close">
             @if (canDismiss) {
-                <fa-icon [icon]="faTimes" [ngbTooltip]="'artemisApp.textAssessment.feedbackEditor.dismissFeedback' | artemisTranslate" (click)="dismiss()"> </fa-icon>
+                <fa-icon [icon]="faTimes" [ngbTooltip]="'artemisApp.textAssessment.feedbackEditor.dismissFeedback' | artemisTranslate" (click)="dismiss()"></fa-icon>
             } @else {
                 <jhi-confirm-icon
                     [initialIcon]="faTimes"
@@ -54,7 +54,10 @@
                                         @if (criterion.title) {
                                             <a class="dropdown-item"> {{ criterion.title }}&nbsp;<fa-icon class="float-end" [icon]="faAngleRight"></fa-icon> </a>
                                         } @else {
-                                            <a class="dropdown-item">(No title) <fa-icon class="float-end" [icon]="faAngleRight"></fa-icon></a>
+                                            <a class="dropdown-item"
+                                                >(No title)
+                                                <fa-icon class="float-end" [icon]="faAngleRight"></fa-icon>
+                                            </a>
                                         }
                                         <ul class="dropdown-menu dropdown-submenu">
                                             <jhi-textblock-feedback-dropdown

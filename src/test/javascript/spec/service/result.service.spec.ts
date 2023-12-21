@@ -22,6 +22,7 @@ import { AssessmentType } from 'app/entities/assessment-type.model';
 import { ProgrammingSubmission } from 'app/entities/programming-submission.model';
 import { FeedbackType, STATIC_CODE_ANALYSIS_FEEDBACK_IDENTIFIER, SUBMISSION_POLICY_FEEDBACK_IDENTIFIER } from 'app/entities/feedback.model';
 import { ModelingExercise } from 'app/entities/modeling-exercise.model';
+import * as Sentry from '@sentry/angular-ivy';
 // Preliminary mock before import to prevent errors
 jest.mock('@sentry/angular-ivy', () => {
     const originalModule = jest.requireActual('@sentry/angular-ivy');
@@ -30,7 +31,6 @@ jest.mock('@sentry/angular-ivy', () => {
         captureException: jest.fn(),
     };
 });
-import * as Sentry from '@sentry/angular-ivy';
 
 describe('ResultService', () => {
     let resultService: ResultService;
@@ -49,16 +49,46 @@ describe('ResultService', () => {
         secondCorrectionEnabled: false,
         studentAssignedTeamIdComputed: false,
     };
-    const participation1: StudentParticipation = { type: ParticipationType.STUDENT, initializationDate: dayjs().subtract(4, 'hours'), exercise: programmingExercise };
+    const participation1: StudentParticipation = {
+        type: ParticipationType.STUDENT,
+        initializationDate: dayjs().subtract(4, 'hours'),
+        exercise: programmingExercise,
+    };
     const participation2: StudentParticipation = { type: ParticipationType.STUDENT, exercise: programmingExercise };
     const submission1: ProgrammingSubmission = { buildFailed: true };
-    const result1: Result = { id: 1, participation: participation1, completionDate: dayjs().add(1, 'hours'), submission: submission1, score: 0 };
-    const result2: Result = { id: 2, participation: participation2, completionDate: dayjs().add(2, 'hours'), score: 20 };
+    const result1: Result = {
+        id: 1,
+        participation: participation1,
+        completionDate: dayjs().add(1, 'hours'),
+        submission: submission1,
+        score: 0,
+    };
+    const result2: Result = {
+        id: 2,
+        participation: participation2,
+        completionDate: dayjs().add(2, 'hours'),
+        score: 20,
+    };
     const result3: Result = {
         feedbacks: [
-            { testCase: { testName: 'testBubbleSort' }, detailText: 'lorem ipsum', positive: false, type: FeedbackType.AUTOMATIC },
-            { testCase: { testName: 'testMergeSort' }, detailText: 'lorem ipsum', positive: true, type: FeedbackType.AUTOMATIC },
-            { text: SUBMISSION_POLICY_FEEDBACK_IDENTIFIER, detailText: 'should not get counted', positive: true, type: FeedbackType.AUTOMATIC },
+            {
+                testCase: { testName: 'testBubbleSort' },
+                detailText: 'lorem ipsum',
+                positive: false,
+                type: FeedbackType.AUTOMATIC,
+            },
+            {
+                testCase: { testName: 'testMergeSort' },
+                detailText: 'lorem ipsum',
+                positive: true,
+                type: FeedbackType.AUTOMATIC,
+            },
+            {
+                text: SUBMISSION_POLICY_FEEDBACK_IDENTIFIER,
+                detailText: 'should not get counted',
+                positive: true,
+                type: FeedbackType.AUTOMATIC,
+            },
         ],
         testCaseCount: 2,
         passedTestCaseCount: 1,
@@ -68,9 +98,24 @@ describe('ResultService', () => {
     };
     const result4: Result = {
         feedbacks: [
-            { testCase: { testName: 'testBubbleSort' }, detailText: 'lorem ipsum', positive: false, type: FeedbackType.AUTOMATIC },
-            { testCase: { testName: 'testMergeSort' }, detailText: 'lorem ipsum', positive: true, type: FeedbackType.AUTOMATIC },
-            { text: STATIC_CODE_ANALYSIS_FEEDBACK_IDENTIFIER, detailText: 'should not get counted', positive: false, type: FeedbackType.AUTOMATIC },
+            {
+                testCase: { testName: 'testBubbleSort' },
+                detailText: 'lorem ipsum',
+                positive: false,
+                type: FeedbackType.AUTOMATIC,
+            },
+            {
+                testCase: { testName: 'testMergeSort' },
+                detailText: 'lorem ipsum',
+                positive: true,
+                type: FeedbackType.AUTOMATIC,
+            },
+            {
+                text: STATIC_CODE_ANALYSIS_FEEDBACK_IDENTIFIER,
+                detailText: 'should not get counted',
+                positive: false,
+                type: FeedbackType.AUTOMATIC,
+            },
         ],
         testCaseCount: 2,
         passedTestCaseCount: 1,
@@ -78,7 +123,11 @@ describe('ResultService', () => {
         completionDate: dayjs().add(4, 'hours'),
         score: 50,
     };
-    const result5: Result = { feedbacks: [{ text: 'Manual feedback', type: FeedbackType.MANUAL }], completionDate: dayjs().subtract(5, 'minutes'), score: 80 };
+    const result5: Result = {
+        feedbacks: [{ text: 'Manual feedback', type: FeedbackType.MANUAL }],
+        completionDate: dayjs().subtract(5, 'minutes'),
+        score: 80,
+    };
 
     const modelingExercise: ModelingExercise = {
         maxPoints: 50,
@@ -157,7 +206,10 @@ describe('ResultService', () => {
         it('should return correct string for non programming exercise long format', () => {
             expect(resultService.getResultString(modelingResult, modelingExercise)).toBe('artemisApp.result.resultString.nonProgramming');
             expect(translateServiceSpy).toHaveBeenCalledOnce();
-            expect(translateServiceSpy).toHaveBeenCalledWith('artemisApp.result.resultString.nonProgramming', { relativeScore: 42, points: 21 });
+            expect(translateServiceSpy).toHaveBeenCalledWith('artemisApp.result.resultString.nonProgramming', {
+                relativeScore: 42,
+                points: 21,
+            });
         });
 
         it('should return correct string for non programming exercise short format', () => {
@@ -208,7 +260,10 @@ describe('ResultService', () => {
             const expectedProgrammingString = short ? 'artemisApp.result.resultString.short' : 'artemisApp.result.resultString.programming';
             expect(resultService.getResultString(result3, programmingExercise, short)).toBe(expectedProgrammingString);
             expect(translateServiceSpy).toHaveBeenCalledTimes(2);
-            expect(translateServiceSpy).toHaveBeenCalledWith('artemisApp.result.resultString.buildSuccessfulTests', { numberOfTestsPassed: 1, numberOfTestsTotal: 2 });
+            expect(translateServiceSpy).toHaveBeenCalledWith('artemisApp.result.resultString.buildSuccessfulTests', {
+                numberOfTestsPassed: 1,
+                numberOfTestsTotal: 2,
+            });
             if (short) {
                 expect(translateServiceSpy).toHaveBeenCalledWith(expectedProgrammingString, {
                     relativeScore: 60,
@@ -225,7 +280,10 @@ describe('ResultService', () => {
         it('should return correct string for programming exercise with code issues', () => {
             expect(resultService.getResultString(result4, programmingExercise)).toBe('artemisApp.result.resultString.programmingCodeIssues');
             expect(translateServiceSpy).toHaveBeenCalledTimes(2);
-            expect(translateServiceSpy).toHaveBeenCalledWith('artemisApp.result.resultString.buildSuccessfulTests', { numberOfTestsPassed: 1, numberOfTestsTotal: 2 });
+            expect(translateServiceSpy).toHaveBeenCalledWith('artemisApp.result.resultString.buildSuccessfulTests', {
+                numberOfTestsPassed: 1,
+                numberOfTestsTotal: 2,
+            });
             expect(translateServiceSpy).toHaveBeenCalledWith(`artemisApp.result.resultString.programmingCodeIssues`, {
                 relativeScore: 50,
                 buildAndTestMessage: 'artemisApp.result.resultString.buildSuccessfulTests',

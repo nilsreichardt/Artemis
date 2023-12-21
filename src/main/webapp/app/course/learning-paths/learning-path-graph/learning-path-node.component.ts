@@ -32,7 +32,10 @@ export class LearningPathNodeComponent implements OnInit {
 
     ngOnInit() {
         if (this.competencyProgressDTO) {
-            this.nodeDetailsData.competencyProgress = { progress: this.competencyProgressDTO.progress, confidence: this.competencyProgressDTO.confidence };
+            this.nodeDetailsData.competencyProgress = {
+                progress: this.competencyProgressDTO.progress,
+                confidence: this.competencyProgressDTO.confidence,
+            };
         }
     }
 

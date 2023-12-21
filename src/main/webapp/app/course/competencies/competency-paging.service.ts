@@ -18,6 +18,11 @@ export class CompetencyPagingService extends PagingService {
 
     searchForCompetencies(pageable: PageableSearch): Observable<EntityResponseType> {
         const params = this.createHttpParams(pageable);
-        return this.http.get(`${this.resourceUrl}`, { params, observe: 'response' }).pipe(map((resp: HttpResponse<EntityResponseType>) => resp && resp.body!));
+        return this.http
+            .get(`${this.resourceUrl}`, {
+                params,
+                observe: 'response',
+            })
+            .pipe(map((resp: HttpResponse<EntityResponseType>) => resp && resp.body!));
     }
 }

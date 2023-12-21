@@ -25,6 +25,7 @@ export class UnreferencedFeedbackComponent {
     @Input() set feedbacks(feedbacks: Feedback[]) {
         this.unreferencedFeedback = [...feedbacks];
     }
+
     @Input() feedbackSuggestions: Feedback[] = [];
 
     @Output() feedbacksChange = new EventEmitter<Feedback[]>();
@@ -39,6 +40,7 @@ export class UnreferencedFeedbackComponent {
         this.feedbacksChange.emit(this.unreferencedFeedback);
         this.validateFeedback();
     }
+
     /**
      * Validates the feedback:
      *   - There must be any form of feedback, either general feedback or feedback referencing a model element or both

@@ -46,7 +46,10 @@ export class ModelingExerciseService implements ExerciseServicable<ModelingExerc
 
     find(modelingExerciseId: number, withPlagiarismDetectionConfig: boolean = false): Observable<EntityResponseType> {
         return this.http
-            .get<ModelingExercise>(`${this.resourceUrl}/${modelingExerciseId}`, { observe: 'response', params: { withPlagiarismDetectionConfig: withPlagiarismDetectionConfig } })
+            .get<ModelingExercise>(`${this.resourceUrl}/${modelingExerciseId}`, {
+                observe: 'response',
+                params: { withPlagiarismDetectionConfig: withPlagiarismDetectionConfig },
+            })
             .pipe(map((res: EntityResponseType) => this.exerciseService.processExerciseEntityResponse(res)));
     }
 
@@ -77,7 +80,10 @@ export class ModelingExerciseService implements ExerciseServicable<ModelingExerc
      */
     checkPlagiarism(exerciseId: number, options?: PlagiarismOptions): Observable<PlagiarismResultDTO<ModelingPlagiarismResult>> {
         return this.http
-            .get<PlagiarismResultDTO<ModelingPlagiarismResult>>(`${this.resourceUrl}/${exerciseId}/check-plagiarism`, { observe: 'response', params: { ...options?.toParams() } })
+            .get<PlagiarismResultDTO<ModelingPlagiarismResult>>(`${this.resourceUrl}/${exerciseId}/check-plagiarism`, {
+                observe: 'response',
+                params: { ...options?.toParams() },
+            })
             .pipe(map((response: HttpResponse<PlagiarismResultDTO<ModelingPlagiarismResult>>) => response.body!));
     }
 
@@ -139,7 +145,10 @@ export class ModelingExerciseService implements ExerciseServicable<ModelingExerc
         copy = ExerciseService.setBonusPointsConstrainedByIncludedInOverallScore(copy);
         copy.categories = ExerciseService.stringifyExerciseCategories(copy);
         return this.http
-            .put<ModelingExercise>(`${this.resourceUrl}/${modelingExercise.id}/re-evaluate`, copy, { params: options, observe: 'response' })
+            .put<ModelingExercise>(`${this.resourceUrl}/${modelingExercise.id}/re-evaluate`, copy, {
+                params: options,
+                observe: 'response',
+            })
             .pipe(map((res: EntityResponseType) => this.exerciseService.processExerciseEntityResponse(res)));
     }
 }

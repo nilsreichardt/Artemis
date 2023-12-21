@@ -65,14 +65,20 @@ describe('ExerciseTitleChannelNameComponent', () => {
         // create new course exercise
         component.isExamMode = false;
         component.isImport = false;
-        component.ngOnChanges({ isExamMode: new SimpleChange(undefined, false, true), isImport: new SimpleChange(undefined, false, true) });
+        component.ngOnChanges({
+            isExamMode: new SimpleChange(undefined, false, true),
+            isImport: new SimpleChange(undefined, false, true),
+        });
 
         expect(component.hideChannelNameInput).toBeFalse();
 
         // create new exam exercise
         component.isExamMode = true;
         component.isImport = false;
-        component.ngOnChanges({ isExamMode: new SimpleChange(undefined, true, false), isImport: new SimpleChange(undefined, false, false) });
+        component.ngOnChanges({
+            isExamMode: new SimpleChange(undefined, true, false),
+            isImport: new SimpleChange(undefined, false, false),
+        });
 
         expect(component.hideChannelNameInput).toBeTrue();
 
@@ -82,28 +88,40 @@ describe('ExerciseTitleChannelNameComponent', () => {
         // import course exercise
         component.isExamMode = false;
         component.isImport = true;
-        component.ngOnChanges({ isExamMode: new SimpleChange(undefined, false, false), isImport: new SimpleChange(undefined, true, false) });
+        component.ngOnChanges({
+            isExamMode: new SimpleChange(undefined, false, false),
+            isImport: new SimpleChange(undefined, true, false),
+        });
 
         expect(component.hideChannelNameInput).toBeFalse();
 
         // import exam exercise
         component.isExamMode = true;
         component.isImport = true;
-        component.ngOnChanges({ isExamMode: new SimpleChange(undefined, true, false), isImport: new SimpleChange(undefined, true, false) });
+        component.ngOnChanges({
+            isExamMode: new SimpleChange(undefined, true, false),
+            isImport: new SimpleChange(undefined, true, false),
+        });
 
         expect(component.hideChannelNameInput).toBeTrue();
 
         // edit exam exercise
         component.isExamMode = true;
         component.isImport = false;
-        component.ngOnChanges({ isExamMode: new SimpleChange(undefined, true, false), isImport: new SimpleChange(undefined, true, false) });
+        component.ngOnChanges({
+            isExamMode: new SimpleChange(undefined, true, false),
+            isImport: new SimpleChange(undefined, true, false),
+        });
 
         expect(component.hideChannelNameInput).toBeTrue();
 
         // edit course exercise without existing channel name
         component.isExamMode = false;
         component.isImport = false;
-        component.ngOnChanges({ isExamMode: new SimpleChange(undefined, false, false), isImport: new SimpleChange(undefined, false, false) });
+        component.ngOnChanges({
+            isExamMode: new SimpleChange(undefined, false, false),
+            isImport: new SimpleChange(undefined, false, false),
+        });
 
         expect(component.hideChannelNameInput).toBeTrue();
 
@@ -111,7 +129,10 @@ describe('ExerciseTitleChannelNameComponent', () => {
         component.exercise.channelName = 'test';
         component.isExamMode = false;
         component.isImport = false;
-        component.ngOnChanges({ isExamMode: new SimpleChange(undefined, true, false), isImport: new SimpleChange(undefined, false, false) });
+        component.ngOnChanges({
+            isExamMode: new SimpleChange(undefined, true, false),
+            isImport: new SimpleChange(undefined, false, false),
+        });
 
         expect(component.hideChannelNameInput).toBeFalse();
     });

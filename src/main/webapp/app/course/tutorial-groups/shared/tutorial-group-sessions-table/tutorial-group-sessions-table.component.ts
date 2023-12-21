@@ -51,6 +51,7 @@ export class TutorialGroupSessionsTableComponent implements OnChanges {
     nextSession: TutorialGroupSession | undefined = undefined;
 
     isCollapsed = true;
+
     get numberOfColumns(): number {
         let numberOfColumns = this.tutorialGroup.tutorialGroupSchedule ? 4 : 3;
         if (this.extraColumn) {

@@ -24,6 +24,7 @@ jest.mock('export-to-csv', () => {
     class MockExportToCsv {
         generateCsv = generateCsv;
     }
+
     return { ExportToCsv: MockExportToCsv };
 });
 

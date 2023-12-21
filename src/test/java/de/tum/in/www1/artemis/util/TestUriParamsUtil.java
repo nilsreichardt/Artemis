@@ -1,10 +1,10 @@
 package de.tum.in.www1.artemis.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.apache.http.NameValuePair;
 
 import java.util.List;
 
-import org.apache.http.NameValuePair;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestUriParamsUtil {
 

@@ -14,6 +14,7 @@ import { StudentDTO } from 'app/entities/student-dto.model';
 import { ParseError, ParseResult, ParseWorkerConfig, parse } from 'papaparse';
 import { of } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
+
 jest.mock('papaparse', () => {
     const original = jest.requireActual('papaparse');
     return {
@@ -281,7 +282,14 @@ describe('TutorialGroupsRegistrationImportDialog', () => {
         const returnedDTOOne = { ...exampleOne, importSuccessful: true };
         const returnedDTOTwo = { ...exampleTwo, importSuccessful: false, errorMessage: 'error' };
 
-        const importSpy = jest.spyOn(tutorialGroupService, 'import').mockReturnValue(of(new HttpResponse({ body: [returnedDTOOne, returnedDTOTwo], status: 200 })));
+        const importSpy = jest.spyOn(tutorialGroupService, 'import').mockReturnValue(
+            of(
+                new HttpResponse({
+                    body: [returnedDTOOne, returnedDTOTwo],
+                    status: 200,
+                }),
+            ),
+        );
 
         component.import();
 
@@ -310,6 +318,7 @@ describe('TutorialGroupsRegistrationImportDialog', () => {
         expect(instantSpy).toHaveBeenCalledOnce();
         expect(instantSpy).toHaveBeenCalledWith(translationKey);
     }
+
     function assertStateAfterValidationError(expectedError: string) {
         expect(component.registrationsDisplayedInTable).toEqual([]);
         expect(component.validationErrors).toEqual([expectedError]);

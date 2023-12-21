@@ -20,6 +20,7 @@ export class ProgrammingExerciseTestCaseUpdate {
         return new ProgrammingExerciseTestCaseUpdate(testCase.id, testCase.weight, testCase.bonusPoints, testCase.bonusMultiplier, testCase.visibility);
     }
 }
+
 export class StaticCodeAnalysisCategoryUpdate {
     constructor(
         public id?: number,
@@ -35,13 +36,21 @@ export class StaticCodeAnalysisCategoryUpdate {
 
 export interface IProgrammingExerciseGradingService {
     subscribeForTestCases(exerciseId: number): Observable<ProgrammingExerciseTestCase[] | undefined>;
+
     notifyTestCases(exerciseId: number, testCases: ProgrammingExerciseTestCase[]): void;
+
     updateTestCase(exerciseId: number, testCaseUpdates: ProgrammingExerciseTestCaseUpdate[]): Observable<ProgrammingExerciseTestCase[]>;
+
     resetTestCases(exerciseId: number): Observable<ProgrammingExerciseTestCase[]>;
+
     getCodeAnalysisCategories(exerciseId: number): Observable<StaticCodeAnalysisCategory[]>;
+
     updateCodeAnalysisCategories(exerciseId: number, updates: StaticCodeAnalysisCategoryUpdate[]): Observable<StaticCodeAnalysisCategoryUpdate[]>;
+
     resetCategories(exerciseId: number): Observable<StaticCodeAnalysisCategory[]>;
+
     getGradingStatistics(exerciseId: number): Observable<ProgrammingExerciseGradingStatistics>;
+
     importCategoriesFromExercise(targetExerciseId: number, sourceExerciseId: number): Observable<StaticCodeAnalysisCategory[]>;
 }
 

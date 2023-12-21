@@ -74,7 +74,10 @@ describe('ModelingSubmission Service', () => {
             .getSubmissions(exerciseId, requestOption)
             .pipe(take(1))
             .subscribe((resp) => expect(resp).toMatchObject({ body: [] }));
-        const req = httpMock.expectOne({ method: 'GET', url: `${service.resourceUrl}/exercises/${exerciseId}/modeling-submissions?test=Test` });
+        const req = httpMock.expectOne({
+            method: 'GET',
+            url: `${service.resourceUrl}/exercises/${exerciseId}/modeling-submissions?test=Test`,
+        });
         expect(req.request.params.get('test')).toBe('Test');
         req.flush(returnedFromService);
         tick();
@@ -86,7 +89,10 @@ describe('ModelingSubmission Service', () => {
             .getSubmissions(5, requestOption, correctionRound)
             .pipe(take(1))
             .subscribe((resp) => expect(resp).toMatchObject({ body: [] }));
-        const req = httpMock.expectOne({ method: 'GET', url: `${service.resourceUrl}/exercises/${exerciseId}/modeling-submissions?test=Test&correction-round=${correctionRound}` });
+        const req = httpMock.expectOne({
+            method: 'GET',
+            url: `${service.resourceUrl}/exercises/${exerciseId}/modeling-submissions?test=Test&correction-round=${correctionRound}`,
+        });
         expect(req.request.params.get('test')).toBe('Test');
         expect(req.request.params.get('correction-round')).toBe(`${correctionRound}`);
         req.flush(returnedFromService);
@@ -99,7 +105,10 @@ describe('ModelingSubmission Service', () => {
             .getSubmissionWithoutAssessment(exerciseId, true, correctionRound)
             .pipe(take(1))
             .subscribe((resp) => expect(resp).toStrictEqual({ ...elemDefault }));
-        const req = httpMock.expectOne({ method: 'GET', url: `api/exercises/${exerciseId}/modeling-submission-without-assessment?correction-round=${correctionRound}&lock=true` });
+        const req = httpMock.expectOne({
+            method: 'GET',
+            url: `api/exercises/${exerciseId}/modeling-submission-without-assessment?correction-round=${correctionRound}&lock=true`,
+        });
         expect(req.request.params.get('lock')).toBe('true');
         expect(req.request.params.get('correction-round')).toBe(`${correctionRound}`);
         req.flush(returnedFromService);
@@ -112,7 +121,10 @@ describe('ModelingSubmission Service', () => {
             .getLatestSubmissionForModelingEditor(participationId)
             .pipe(take(1))
             .subscribe((resp) => expect(resp).toMatchObject({ ...elemDefault }));
-        const req = httpMock.expectOne({ method: 'GET', url: `api/participations/${participationId}/latest-modeling-submission` });
+        const req = httpMock.expectOne({
+            method: 'GET',
+            url: `api/participations/${participationId}/latest-modeling-submission`,
+        });
         req.flush(returnedFromService);
         tick();
     }));

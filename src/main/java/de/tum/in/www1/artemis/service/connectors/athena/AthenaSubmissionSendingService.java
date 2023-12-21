@@ -45,7 +45,7 @@ public class AthenaSubmissionSendingService {
      * Creates a new AthenaSubmissionSendingService.
      */
     public AthenaSubmissionSendingService(@Qualifier("athenaRestTemplate") RestTemplate athenaRestTemplate, SubmissionRepository submissionRepository,
-            AthenaModuleUrlHelper athenaModuleUrlHelper, AthenaDTOConverter athenaDTOConverter) {
+                                          AthenaModuleUrlHelper athenaModuleUrlHelper, AthenaDTOConverter athenaDTOConverter) {
         this.submissionRepository = submissionRepository;
         connector = new AthenaConnector<>(athenaRestTemplate, ResponseDTO.class);
         this.athenaModuleUrlHelper = athenaModuleUrlHelper;
@@ -121,8 +121,7 @@ public class AthenaSubmissionSendingService {
                     filteredSubmissions.stream().map((submission) -> athenaDTOConverter.ofSubmission(exercise.getId(), submission)).toList());
             ResponseDTO response = connector.invokeWithRetry(athenaModuleUrlHelper.getAthenaModuleUrl(exercise.getExerciseType()) + "/submissions", request, maxRetries);
             log.info("Athena (calculating automatic feedback) responded: {}", response.data);
-        }
-        catch (NetworkingException error) {
+        } catch (NetworkingException error) {
             log.error("Error while calling Athena", error);
         }
     }

@@ -34,6 +34,7 @@ class ConversationMemberRowStubComponent {
     @Input()
     conversationMember: ConversationUserDTO;
 }
+
 const examples: ConversationDto[] = [generateOneToOneChatDTO({}), generateExampleGroupChatDTO({}), generateExampleChannelDTO({})];
 
 examples.forEach((activeConversation) => {
@@ -68,7 +69,14 @@ examples.forEach((activeConversation) => {
                 of(
                     new HttpResponse({
                         headers,
-                        body: [{ id: 1, name: 'user1', login: 'user1' } as ConversationUserDTO, { id: 2, name: 'user2', login: 'user2' } as ConversationUserDTO],
+                        body: [
+                            { id: 1, name: 'user1', login: 'user1' } as ConversationUserDTO,
+                            {
+                                id: 2,
+                                name: 'user2',
+                                login: 'user2',
+                            } as ConversationUserDTO,
+                        ],
                     }),
                 ),
             );
@@ -147,7 +155,11 @@ examples.forEach((activeConversation) => {
 
             const modalService = TestBed.inject(NgbModal);
             const mockModalRef = {
-                componentInstance: { course: undefined, activeConversation: undefined, initialize: () => {} },
+                componentInstance: {
+                    course: undefined,
+                    activeConversation: undefined,
+                    initialize: () => {},
+                },
                 result: Promise.resolve(),
             };
             const openDialogSpy = jest.spyOn(modalService, 'open').mockReturnValue(mockModalRef as unknown as NgbModalRef);

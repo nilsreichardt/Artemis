@@ -32,6 +32,7 @@ export class TutorialGroupSessionsTableStubComponent {
 
     @Output() attendanceUpdated = new EventEmitter<void>();
 }
+
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: '[jhi-session-row]',

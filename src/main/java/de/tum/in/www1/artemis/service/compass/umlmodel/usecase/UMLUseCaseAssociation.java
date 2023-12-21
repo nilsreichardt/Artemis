@@ -46,8 +46,7 @@ public class UMLUseCaseAssociation extends UMLElement {
         // only use case associations can have names where it would make sense to compare them
         if (type == UMLUseCaseAssociationType.USE_CASE_ASSOCIATION) {
             similarity += NameSimilarity.levenshteinSimilarity(getName(), referenceAssociation.getName()) * CompassConfiguration.USE_CASE_ASSOCIATION_NAME_WEIGHT;
-        }
-        else {
+        } else {
             // increase weight in case the name is not taken into account, so that we can still reach a max of 1.0
             sourceWeight += CompassConfiguration.USE_CASE_ASSOCIATION_NAME_WEIGHT / 2;
             targetWeight += CompassConfiguration.USE_CASE_ASSOCIATION_NAME_WEIGHT / 2;

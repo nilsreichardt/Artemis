@@ -18,6 +18,7 @@
     .tab-list {
         background: var(--md-tab-list-bg);
     }
+
     .tab-content,
     .tab-content > .active {
         display: flex;
@@ -123,6 +124,7 @@
 .nested {
     padding-left: 30px;
 }
+
 .nested-slide {
     padding-left: 50px;
 }

@@ -158,9 +158,18 @@ export class ScaCategoryDistributionChartComponent extends ProgrammingGradingCha
         // sum of all penalty points
         const totalPenaltyPoints = categoryPenalties.reduce((sum, { penaltyPoints }) => sum + penaltyPoints, 0);
 
-        const penalty = { name: this.translateService.instant('artemisApp.programmingAssessment.penalty'), series: [] as any[] };
-        const issue = { name: this.translateService.instant('artemisApp.programmingAssessment.issues'), series: [] as any[] };
-        const deductions = { name: this.translateService.instant('artemisApp.programmingAssessment.deductions'), series: [] as any[] };
+        const penalty = {
+            name: this.translateService.instant('artemisApp.programmingAssessment.penalty'),
+            series: [] as any[],
+        };
+        const issue = {
+            name: this.translateService.instant('artemisApp.programmingAssessment.issues'),
+            series: [] as any[],
+        };
+        const deductions = {
+            name: this.translateService.instant('artemisApp.programmingAssessment.deductions'),
+            series: [] as any[],
+        };
 
         categoryPenalties.forEach((element, index) => {
             const penaltyScore = totalPenalty > 0 ? Math.max((Math.min(element.category.penalty, element.category.maxPenalty) / totalPenalty) * 100, 0) : 0;
@@ -168,9 +177,26 @@ export class ScaCategoryDistributionChartComponent extends ProgrammingGradingCha
             const penaltyPoints = totalPenaltyPoints > 0 ? Math.max((element.penaltyPoints / totalPenaltyPoints) * 100, 0) : 0;
             const color = getColor(index / this.categories.length, 50);
 
-            penalty.series.push({ name: element.category.name, value: penaltyScore, issues: issuesScore, points: penaltyPoints, isPenalty: true, id: element.category.id });
-            issue.series.push({ name: element.category.name, value: issuesScore, penalty: penaltyScore, points: penaltyPoints });
-            deductions.series.push({ name: element.category.name, value: penaltyPoints, penalty: penaltyScore, issues: issuesScore });
+            penalty.series.push({
+                name: element.category.name,
+                value: penaltyScore,
+                issues: issuesScore,
+                points: penaltyPoints,
+                isPenalty: true,
+                id: element.category.id,
+            });
+            issue.series.push({
+                name: element.category.name,
+                value: issuesScore,
+                penalty: penaltyScore,
+                points: penaltyPoints,
+            });
+            deductions.series.push({
+                name: element.category.name,
+                value: penaltyPoints,
+                penalty: penaltyScore,
+                issues: issuesScore,
+            });
 
             this.ngxColors.domain.push(color);
             categoryColors[element.category.name] = color;

@@ -217,8 +217,22 @@ describe('Plagiarism Split View Component', () => {
         ] as TextSubmissionElement[];
         const mappedElements = new Map();
         mappedElements.set('none', [
-            new FromToElement({ file: '', column: 1, line: 1 } as TextSubmissionElement, { file: '', column: 2, line: 2 } as TextSubmissionElement),
-            new FromToElement({ file: '', column: 4, line: 4 } as TextSubmissionElement, { file: '', column: 6, line: 6 } as TextSubmissionElement),
+            new FromToElement(
+                { file: '', column: 1, line: 1 } as TextSubmissionElement,
+                {
+                    file: '',
+                    column: 2,
+                    line: 2,
+                } as TextSubmissionElement,
+            ),
+            new FromToElement(
+                { file: '', column: 4, line: 4 } as TextSubmissionElement,
+                {
+                    file: '',
+                    column: 6,
+                    line: 6,
+                } as TextSubmissionElement,
+            ),
         ]);
 
         const result = comp.mapMatchesToElements(matches, submissionA);
@@ -247,9 +261,23 @@ describe('Plagiarism Split View Component', () => {
         ] as SimpleMatch[];
         const mappedElements = new Map();
         mappedElements.set('none', [
-            new FromToElement({ file: '', column: 1, line: 1 } as TextSubmissionElement, { file: '', column: 2, line: 2 } as TextSubmissionElement),
+            new FromToElement(
+                { file: '', column: 1, line: 1 } as TextSubmissionElement,
+                {
+                    file: '',
+                    column: 2,
+                    line: 2,
+                } as TextSubmissionElement,
+            ),
             new FromToElement(undefined as unknown as TextSubmissionElement, undefined as unknown as TextSubmissionElement),
-            new FromToElement({ file: '', column: 4, line: 4 } as TextSubmissionElement, { file: '', column: 6, line: 6 } as TextSubmissionElement),
+            new FromToElement(
+                { file: '', column: 4, line: 4 } as TextSubmissionElement,
+                {
+                    file: '',
+                    column: 6,
+                    line: 6,
+                } as TextSubmissionElement,
+            ),
         ]);
 
         const result = comp.mapMatchesToElements(matches, submissionA);

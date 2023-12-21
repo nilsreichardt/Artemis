@@ -1,7 +1,15 @@
 package de.tum.in.www1.artemis.config.localvcci;
 
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import javax.xml.stream.XMLInputFactory;
 
@@ -132,6 +140,7 @@ public class LocalCIConfiguration {
     }
 
     // TODO: the Artemis server should start even if docker is not running. Also, pulling the image should be done after the start has finished or only on demand
+
     /**
      * Creates a Docker client that is used to communicate with the Docker daemon.
      *

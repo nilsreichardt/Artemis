@@ -44,6 +44,7 @@ export class GradingInstructionCommand extends DomainTagCommand {
             '\n'
         );
     }
+
     /**
      * @function execute
      * @desc Add a new grading instruction in the editor at the location of the cursor

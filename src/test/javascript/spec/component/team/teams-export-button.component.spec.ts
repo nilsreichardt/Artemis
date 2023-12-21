@@ -10,6 +10,7 @@ import { MockDirective, MockModule, MockPipe, MockProvider } from 'ng-mocks';
 import { mockTeams } from '../../helpers/mocks/service/mock-team.service';
 import { ArtemisTestModule } from '../../test.module';
 import { TranslateDirective } from 'app/shared/language/translate.directive';
+
 describe('TeamsExportButtonComponent', () => {
     let comp: TeamsExportButtonComponent;
     let fixture: ComponentFixture<TeamsExportButtonComponent>;

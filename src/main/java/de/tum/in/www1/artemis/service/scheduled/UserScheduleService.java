@@ -90,8 +90,7 @@ public class UserScheduleService {
         optionalVcsUserManagementService.ifPresent(vcsUserManagementService -> {
             try {
                 vcsUserManagementService.deleteVcsUser(existingUser.getLogin());
-            }
-            catch (VersionControlException e) {
+            } catch (VersionControlException e) {
                 // Ignore exception since the user should still be deleted but log it.
                 log.warn("Cannot remove non-activated user {} from the VCS:", existingUser.getLogin(), e);
             }

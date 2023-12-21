@@ -132,6 +132,7 @@ export class ConversationMessagesComponent implements OnInit, AfterViewInit, OnD
             this.createEmptyPost();
         }
     }
+
     private subscribeToMetis() {
         this.metisService.posts.pipe(takeUntil(this.ngUnsubscribe)).subscribe((posts: Post[]) => {
             this.setPosts(posts);
@@ -214,6 +215,7 @@ export class ConversationMessagesComponent implements OnInit, AfterViewInit, OnD
     setPostForThread(post: Post) {
         this.openThread.emit(post);
     }
+
     handleScrollOnNewMessage = () => {
         if ((this.posts.length > 0 && this.content.nativeElement.scrollTop === 0 && this.page === 1) || this.previousScrollDistanceFromTop === this.messagesContainerHeight) {
             this.scrollToBottomOfMessages();

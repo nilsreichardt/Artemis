@@ -63,9 +63,21 @@ describe('Example Modeling Submission Component', () => {
         credits: 30,
         correctionStatus: 'CORRECT',
     };
-    const mockFeedbackWithoutReference: Feedback = { text: 'FeedbackWithoutReference', credits: 30, type: FeedbackType.MANUAL_UNREFERENCED };
-    const mockFeedbackInvalid: Feedback = { text: 'FeedbackInvalid', referenceId: '4', reference: 'reference', correctionStatus: FeedbackCorrectionErrorType.INCORRECT_SCORE };
-    const mockFeedbackCorrectionError: FeedbackCorrectionError = { reference: 'reference', type: FeedbackCorrectionErrorType.INCORRECT_SCORE };
+    const mockFeedbackWithoutReference: Feedback = {
+        text: 'FeedbackWithoutReference',
+        credits: 30,
+        type: FeedbackType.MANUAL_UNREFERENCED,
+    };
+    const mockFeedbackInvalid: Feedback = {
+        text: 'FeedbackInvalid',
+        referenceId: '4',
+        reference: 'reference',
+        correctionStatus: FeedbackCorrectionErrorType.INCORRECT_SCORE,
+    };
+    const mockFeedbackCorrectionError: FeedbackCorrectionError = {
+        reference: 'reference',
+        type: FeedbackCorrectionErrorType.INCORRECT_SCORE,
+    };
 
     const routeQueryParam = { readOnly: 0, toComplete: 0 };
 
@@ -128,7 +140,10 @@ describe('Example Modeling Submission Component', () => {
     });
 
     it('should handle a new submission', () => {
-        route.snapshot = { ...route.snapshot, paramMap: convertToParamMap({ exerciseId: '22', exampleSubmissionId: 'new' }) } as ActivatedRouteSnapshot;
+        route.snapshot = {
+            ...route.snapshot,
+            paramMap: convertToParamMap({ exerciseId: '22', exampleSubmissionId: 'new' }),
+        } as ActivatedRouteSnapshot;
 
         // WHEN
         fixture.detectChanges();

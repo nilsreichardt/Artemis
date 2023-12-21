@@ -57,12 +57,14 @@ export class TutorialGroupsConfigurationFormComponent implements OnInit, OnChang
     ngOnInit(): void {
         this.initializeForm();
     }
+
     ngOnChanges(): void {
         this.initializeForm();
         if (this.isEditMode && this.formData) {
             this.setFormValues(this.formData);
         }
     }
+
     private setFormValues(formData: TutorialGroupsConfigurationFormData) {
         this.existingChannelSetting = formData.useTutorialGroupChannels;
         this.form.patchValue(formData);

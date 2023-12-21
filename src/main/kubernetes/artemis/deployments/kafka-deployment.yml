@@ -23,26 +23,26 @@ spec:
         workload.user.cattle.io/workloadselector: deployment-artemis-kafka
     spec:
       containers:
-      - envFrom:
-        - configMapRef:
-            name: kafka
-            optional: false
-        image: confluentinc/cp-kafka:5.5.3
-        imagePullPolicy: Always
-        name: kafka
-        resources: {}
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities: {}
-          privileged: false
-          readOnlyRootFilesystem: false
-          runAsNonRoot: false
-        stdin: true
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-        tty: true
+        - envFrom:
+            - configMapRef:
+                name: kafka
+                optional: false
+          image: confluentinc/cp-kafka:5.5.3
+          imagePullPolicy: Always
+          name: kafka
+          resources: { }
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { }
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          stdin: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          tty: true
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
-      securityContext: {}
+      securityContext: { }
       terminationGracePeriodSeconds: 30

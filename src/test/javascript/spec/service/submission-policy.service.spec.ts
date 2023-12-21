@@ -20,7 +20,10 @@ describe('Submission Policy Service', () => {
         });
         httpMock = TestBed.inject(HttpTestingController);
         submissionPolicyService = TestBed.inject(SubmissionPolicyService);
-        lockRepositoryPolicy = { type: SubmissionPolicyType.LOCK_REPOSITORY, submissionLimit: 5 } as LockRepositoryPolicy;
+        lockRepositoryPolicy = {
+            type: SubmissionPolicyType.LOCK_REPOSITORY,
+            submissionLimit: 5,
+        } as LockRepositoryPolicy;
         programmingExercise = new ProgrammingExercise(undefined, undefined);
         programmingExercise.id = 1;
     });

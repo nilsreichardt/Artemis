@@ -16,6 +16,7 @@ export enum FeatureToggle {
     TutorialGroups = 'TutorialGroups',
     LearningPaths = 'LearningPaths',
 }
+
 export type ActiveFeatureToggles = Array<FeatureToggle>;
 
 const defaultActiveFeatureState: ActiveFeatureToggles = Object.values(FeatureToggle);

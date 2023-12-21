@@ -10,6 +10,7 @@ export enum SuspiciousSessionReason {
     SAME_STUDENT_EXAM_DIFFERENT_BROWSER_FINGERPRINTS = 'SAME_STUDENT_EXAM_DIFFERENT_BROWSER_FINGERPRINTS',
     IP_ADDRESS_OUTSIDE_OF_RANGE = 'IP_ADDRESS_OUTSIDE_OF_RANGE',
 }
+
 export class ExamSession implements BaseEntity {
     public id?: number;
     public studentExam?: StudentExam;
@@ -29,6 +30,7 @@ export class ExamSession implements BaseEntity {
 export class SuspiciousExamSessions {
     examSessions: ExamSession[];
 }
+
 export class SuspiciousSessionsAnalysisOptions {
     constructor(
         sameIpAddressDifferentStudentExams: boolean,
@@ -45,6 +47,7 @@ export class SuspiciousSessionsAnalysisOptions {
         this.ipAddressOutsideOfRange = ipAddressOutsideOfRange;
         this.ipSubnet = subnet;
     }
+
     sameIpAddressDifferentStudentExams = false;
     sameBrowserFingerprintDifferentStudentExams = false;
     differentIpAddressesSameStudentExam = false;

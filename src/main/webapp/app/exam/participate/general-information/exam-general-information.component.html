@@ -55,13 +55,15 @@
                         </tr>
                         <tr class="mb-2">
                             <th>{{ 'artemisApp.exam.workingTime' | artemisTranslate }}:</th>
-                            <td>{{ exam.startDate | artemisDate: 'time' }} - {{ examEndDate | artemisDate: 'time' }}</td>
+                            <td>{{ exam.startDate | artemisDate: 'time' }}- {{ examEndDate | artemisDate: 'time' }}</td>
                         </tr>
                     }
                     @if (exam.endDate && studentExam?.workingTime) {
                         <tr>
                             <th>{{ 'artemisApp.exam.duration' | artemisTranslate }}:</th>
-                            <td><jhi-student-exam-working-time [studentExam]="studentExam" /></td>
+                            <td>
+                                <jhi-student-exam-working-time [studentExam]="studentExam" />
+                            </td>
                         </tr>
                     }
                 }
@@ -119,7 +121,7 @@
                     }
                     @if (studentExam.submitted && studentExam.submissionDate && studentExam.startedDate) {
                         <tr>
-                            <th>{{ 'artemisApp.exam.overview.testExam.workingTimeCalculated' | artemisTranslate }} :</th>
+                            <th>{{ 'artemisApp.exam.overview.testExam.workingTimeCalculated' | artemisTranslate }}:</th>
                             <td>
                                 <jhi-testexam-working-time [studentExam]="studentExam" />
                             </td>

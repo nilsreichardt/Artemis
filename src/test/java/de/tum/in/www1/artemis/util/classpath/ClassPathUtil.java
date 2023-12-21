@@ -1,10 +1,10 @@
 package de.tum.in.www1.artemis.util.classpath;
 
-import java.util.List;
-
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassGraph.ClasspathElementFilter;
 import io.github.classgraph.ScanResult;
+
+import java.util.List;
 
 /**
  * Utility methods for scanning the class path using {@link ClassGraph}

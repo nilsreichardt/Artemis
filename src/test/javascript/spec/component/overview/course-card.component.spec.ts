@@ -27,9 +27,18 @@ describe('CourseCardComponent', () => {
         results: [{ successful: true }],
     };
     const pastExercise = { id: 1, dueDate: dayjs().subtract(2, 'days') } as Exercise;
-    const nextExercise = { id: 2, dueDate: dayjs().add(2, 'days'), studentParticipations: [{ submissions: [submission] }] } as Exercise;
+    const nextExercise = {
+        id: 2,
+        dueDate: dayjs().add(2, 'days'),
+        studentParticipations: [{ submissions: [submission] }],
+    } as Exercise;
     const secondNextExercise = { id: 3, dueDate: dayjs().add(4, 'days') } as Exercise;
-    const course = { id: 1, exercises: [pastExercise, nextExercise, secondNextExercise], lectures: [], exams: [] } as Course;
+    const course = {
+        id: 1,
+        exercises: [pastExercise, nextExercise, secondNextExercise],
+        lectures: [],
+        exams: [],
+    } as Course;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -64,7 +73,12 @@ describe('CourseCardComponent', () => {
     });
 
     it('should display the total course scores returned from the scores storage service', () => {
-        const mockCourseScores: CourseScores = new CourseScores(0, 20, 0, { absoluteScore: 4, relativeScore: 0.3, currentRelativeScore: 0.2, presentationScore: 0 });
+        const mockCourseScores: CourseScores = new CourseScores(0, 20, 0, {
+            absoluteScore: 4,
+            relativeScore: 0.3,
+            currentRelativeScore: 0.2,
+            presentationScore: 0,
+        });
         jest.spyOn(scoresStorageService, 'getStoredTotalScores').mockReturnValue(mockCourseScores);
 
         fixture.detectChanges();

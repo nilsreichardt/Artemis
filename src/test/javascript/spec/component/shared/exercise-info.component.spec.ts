@@ -47,8 +47,28 @@ describe('Exercise Info Component', () => {
     it.each([
         [{ course: { maxComplaintTimeDays: 7 } } as Exercise, undefined, undefined, false],
         [{ course: { maxComplaintTimeDays: 7 }, dueDate: dateOne } as Exercise, undefined, undefined, false],
-        [{ course: { maxComplaintTimeDays: 7 }, dueDate: dateOne } as Exercise, { submissionCount: 42 } as StudentParticipation, undefined, true],
-        [{ course: { maxComplaintTimeDays: 7 }, dueDate: dateOne } as Exercise, { results: [{ completionDate: dateOne, rated: true }] } as StudentParticipation, dateWeek, false],
+        [
+            {
+                course: { maxComplaintTimeDays: 7 },
+                dueDate: dateOne,
+            } as Exercise,
+            { submissionCount: 42 } as StudentParticipation,
+            undefined,
+            true,
+        ],
+        [
+            { course: { maxComplaintTimeDays: 7 }, dueDate: dateOne } as Exercise,
+            {
+                results: [
+                    {
+                        completionDate: dateOne,
+                        rated: true,
+                    },
+                ],
+            } as StudentParticipation,
+            dateWeek,
+            false,
+        ],
     ])(
         'should determine complaint state',
         (exercise: Exercise, studentParticipation: StudentParticipation | undefined, expectedComplaintDate: dayjs.Dayjs | undefined, canComplainLaterOn: boolean) => {

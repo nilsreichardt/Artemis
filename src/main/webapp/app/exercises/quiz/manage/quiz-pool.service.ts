@@ -23,7 +23,10 @@ export class QuizPoolService {
      */
     update(courseId: number, examId: number, quizPool: QuizPool, req?: any): Observable<HttpResponse<QuizPool>> {
         const options = createRequestOption(req);
-        return this.http.put<QuizPool>(`api/courses/${courseId}/exams/${examId}/quiz-pools`, quizPool, { params: options, observe: 'response' });
+        return this.http.put<QuizPool>(`api/courses/${courseId}/exams/${examId}/quiz-pools`, quizPool, {
+            params: options,
+            observe: 'response',
+        });
     }
 
     /**

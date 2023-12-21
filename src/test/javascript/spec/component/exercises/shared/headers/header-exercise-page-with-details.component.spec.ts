@@ -186,8 +186,28 @@ describe('HeaderExercisePageWithDetails', () => {
 
     it.each([
         [[] as Result[], 0],
-        [[{ submission: { type: SubmissionType.MANUAL, commitHash: 'first' } as ProgrammingSubmission }] as Result[], 1],
-        [[{ submission: { type: SubmissionType.INSTRUCTOR, commitHash: 'first' } as ProgrammingSubmission }] as Result[], 0],
+        [
+            [
+                {
+                    submission: {
+                        type: SubmissionType.MANUAL,
+                        commitHash: 'first',
+                    } as ProgrammingSubmission,
+                },
+            ] as Result[],
+            1,
+        ],
+        [
+            [
+                {
+                    submission: {
+                        type: SubmissionType.INSTRUCTOR,
+                        commitHash: 'first',
+                    } as ProgrammingSubmission,
+                },
+            ] as Result[],
+            0,
+        ],
         [
             [
                 { submission: { type: SubmissionType.MANUAL, commitHash: 'first' } as ProgrammingSubmission },

@@ -46,6 +46,7 @@ export class User extends Account {
         this.vcsAccessToken = vcsAccessToken;
     }
 }
+
 /**
  * A DTO representing a user with the minimal information allowed to be seen by other users in a course
  */

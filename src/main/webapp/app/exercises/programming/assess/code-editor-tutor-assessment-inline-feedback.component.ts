@@ -18,11 +18,13 @@ export class CodeEditorTutorAssessmentInlineFeedbackComponent {
     get feedback(): Feedback {
         return this._feedback;
     }
+
     set feedback(feedback: Feedback | undefined) {
         this._feedback = feedback || new Feedback();
         this.oldFeedback = cloneDeep(this.feedback);
         this.viewOnly = !!feedback;
     }
+
     private _feedback: Feedback;
     @Input()
     selectedFile: string;

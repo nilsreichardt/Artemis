@@ -36,7 +36,7 @@ class ModelingComparisonTest {
         var submission2 = ModelingExerciseFactory.generateModelingExerciseSubmission(modelingExercise, MODEL, "explanation");  // same as submission1
         var submission3 = ModelingExerciseFactory.generateModelingExerciseSubmission(modelingExercise, EMPTY_MODEL, "explanation");
         var submission4 = ModelingExerciseFactory.generateModelingExerciseSubmission(modelingExercise, EMPTY_MODEL, "different explanation"); // same model as submission3, but
-                                                                                                                                              // different explanation
+        // different explanation
         var submission5 = ModelingExerciseFactory.generateModelingExerciseSubmission(modelingExercise, null, null);
         var submission6 = ModelingExerciseFactory.generateModelingExerciseSubmission(modelingExercise, null, null);
 

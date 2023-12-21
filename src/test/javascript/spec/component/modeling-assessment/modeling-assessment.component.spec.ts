@@ -95,8 +95,17 @@ describe('ModelingAssessmentComponent', () => {
         credits: 35,
         copiedFeedbackId: 12,
     };
-    const mockFeedbackWithoutReference: Feedback = { text: 'FeedbackWithoutReference', credits: 30, type: FeedbackType.MANUAL_UNREFERENCED };
-    const mockFeedbackInvalid: Feedback = { text: 'FeedbackInvalid', referenceId: '4', reference: 'reference', correctionStatus: FeedbackCorrectionErrorType.INCORRECT_SCORE };
+    const mockFeedbackWithoutReference: Feedback = {
+        text: 'FeedbackWithoutReference',
+        credits: 30,
+        type: FeedbackType.MANUAL_UNREFERENCED,
+    };
+    const mockFeedbackInvalid: Feedback = {
+        text: 'FeedbackInvalid',
+        referenceId: '4',
+        reference: 'reference',
+        correctionStatus: FeedbackCorrectionErrorType.INCORRECT_SCORE,
+    };
     const mockValidFeedbacks = [mockFeedbackWithReference, mockFeedbackWithoutReference];
     const mockFeedbacks = [...mockValidFeedbacks, mockFeedbackInvalid];
 
@@ -357,8 +366,17 @@ describe('ModelingAssessmentComponent', () => {
     });
 
     it('should update feedbacks', () => {
-        const newMockFeedbackWithReference = { text: 'NewFeedbackWithReference', referenceId: 'relationshipId', reference: 'reference', credits: 30 } as Feedback;
-        const newMockFeedbackWithoutReference = { text: 'NewFeedbackWithoutReference', credits: 30, type: FeedbackType.MANUAL_UNREFERENCED } as Feedback;
+        const newMockFeedbackWithReference = {
+            text: 'NewFeedbackWithReference',
+            referenceId: 'relationshipId',
+            reference: 'reference',
+            credits: 30,
+        } as Feedback;
+        const newMockFeedbackWithoutReference = {
+            text: 'NewFeedbackWithoutReference',
+            credits: 30,
+            type: FeedbackType.MANUAL_UNREFERENCED,
+        } as Feedback;
         const newMockFeedbackInvalid = { text: 'NewFeedbackInvalid', referenceId: '4', reference: 'reference' };
         const newMockValidFeedbacks = [newMockFeedbackWithReference, newMockFeedbackWithoutReference];
         const newMockFeedbacks = [...newMockValidFeedbacks, newMockFeedbackInvalid];

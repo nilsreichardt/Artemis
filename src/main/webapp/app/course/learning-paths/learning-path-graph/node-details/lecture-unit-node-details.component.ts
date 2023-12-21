@@ -27,6 +27,7 @@ export class LectureUnitNodeDetailsComponent implements OnInit {
             this.loadData();
         }
     }
+
     private loadData() {
         this.isLoading = true;
 

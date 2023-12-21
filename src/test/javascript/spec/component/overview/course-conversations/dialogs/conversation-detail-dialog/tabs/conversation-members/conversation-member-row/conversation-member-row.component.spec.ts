@@ -261,6 +261,7 @@ examples.forEach((activeConversation) => {
                 expect(changesPerformedSpy).toHaveBeenCalledOnce();
             }
         }));
+
         function genericConfirmationDialogTest(method: (event: MouseEvent) => void) {
             const modalService = TestBed.inject(NgbModal);
             const mockModalRef = {

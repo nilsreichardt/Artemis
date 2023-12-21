@@ -73,7 +73,13 @@ describe('Test case distribution chart', () => {
         TestBed.configureTestingModule({
             imports: [ArtemisTestModule, MockModule(BarChartModule)],
             declarations: [TestCaseDistributionChartComponent, MockPipe(ArtemisTranslatePipe)],
-            providers: [MockProvider(ArtemisNavigationUtilService), { provide: TranslateService, useClass: MockTranslateService }],
+            providers: [
+                MockProvider(ArtemisNavigationUtilService),
+                {
+                    provide: TranslateService,
+                    useClass: MockTranslateService,
+                },
+            ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestCaseDistributionChartComponent);

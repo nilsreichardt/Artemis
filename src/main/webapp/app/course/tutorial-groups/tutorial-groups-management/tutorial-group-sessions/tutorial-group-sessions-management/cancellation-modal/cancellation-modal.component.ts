@@ -62,6 +62,7 @@ export class CancellationModalComponent implements OnInit, OnDestroy {
             return tutorialGroupSession.start.tz(this.course.timeZone).format('LLLL') + ' - ' + tutorialGroupSession.end.tz(this.course.timeZone).format('LT');
         }
     }
+
     cancelOrActivate(): void {
         if (this.tutorialGroupSession.status === TutorialGroupSessionStatus.ACTIVE) {
             this.cancelSession();

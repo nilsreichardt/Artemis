@@ -7,6 +7,7 @@ import { ExampleSubmission } from 'app/entities/example-submission.model';
 
 export interface FeedbackMarker {
     markWrongFeedback(errors: FeedbackCorrectionError[]): void;
+
     markAllFeedbackToCorrect(): void;
 }
 

@@ -35,11 +35,18 @@
                         <fa-icon class="ng-fa-icon" [icon]="faArchive" [ngbTooltip]="'artemisApp.notification.hideAllCurrentlyDisplayedNotifications' | artemisTranslate">
                         </fa-icon>
                     } @else {
-                        <fa-icon class="ng-fa-icon" [icon]="faEye" [ngbTooltip]="'artemisApp.notification.showAllSavedNotifications' | artemisTranslate"> </fa-icon>
+                        <fa-icon class="ng-fa-icon" [icon]="faEye" [ngbTooltip]="'artemisApp.notification.showAllSavedNotifications' | artemisTranslate"></fa-icon>
                     }
                 </button>
                 <small class="text-body-secondary">
-                    {{ 'artemisApp.notification.loadedNotificationCount' | artemisTranslate: { loaded: sortedNotifications?.length || '0', total: totalNotifications } }}
+                    {{
+                        'artemisApp.notification.loadedNotificationCount'
+                            | artemisTranslate
+                                : {
+                                      loaded: sortedNotifications?.length || '0',
+                                      total: totalNotifications
+                                  }
+                    }}
                 </small>
             </div>
         </div>

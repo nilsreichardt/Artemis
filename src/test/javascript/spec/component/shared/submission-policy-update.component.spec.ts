@@ -9,8 +9,15 @@ import { TranslateDirective } from 'app/shared/language/translate.directive';
 import { HelpIconComponent } from 'app/shared/components/help-icon.component';
 
 describe('Submission Policy Update Form Component', () => {
-    const lockRepositoryPolicy = { type: SubmissionPolicyType.LOCK_REPOSITORY, submissionLimit: 5 } as LockRepositoryPolicy;
-    const submissionPenaltyPolicy = { type: SubmissionPolicyType.SUBMISSION_PENALTY, submissionLimit: 5, exceedingPenalty: 50.4 } as SubmissionPenaltyPolicy;
+    const lockRepositoryPolicy = {
+        type: SubmissionPolicyType.LOCK_REPOSITORY,
+        submissionLimit: 5,
+    } as LockRepositoryPolicy;
+    const submissionPenaltyPolicy = {
+        type: SubmissionPolicyType.SUBMISSION_PENALTY,
+        submissionLimit: 5,
+        exceedingPenalty: 50.4,
+    } as SubmissionPenaltyPolicy;
     const brokenPenaltyPolicy = { type: SubmissionPolicyType.SUBMISSION_PENALTY } as SubmissionPenaltyPolicy;
 
     let fixture: ComponentFixture<SubmissionPolicyUpdateComponent>;

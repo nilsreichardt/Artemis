@@ -19,7 +19,13 @@ describe('StatisticsScoreDistributionGraphComponent', () => {
         TestBed.configureTestingModule({
             imports: [ArtemisTestModule, MockModule(BarChartModule)],
             declarations: [StatisticsScoreDistributionGraphComponent, MockPipe(ArtemisTranslatePipe)],
-            providers: [MockProvider(ArtemisNavigationUtilService), { provide: TranslateService, useClass: MockTranslateService }],
+            providers: [
+                MockProvider(ArtemisNavigationUtilService),
+                {
+                    provide: TranslateService,
+                    useClass: MockTranslateService,
+                },
+            ],
         })
             .compileComponents()
             .then(() => {

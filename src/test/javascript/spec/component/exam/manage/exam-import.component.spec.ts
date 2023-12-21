@@ -177,7 +177,11 @@ describe('Exam Import Component', () => {
         'should perform import of exercise groups AND correctly process conflict from server',
         (errorKey) => {
             const preCheckError = new HttpErrorResponse({
-                error: { errorKey: errorKey, numberOfInvalidProgrammingExercises: 0, params: { exerciseGroups: [exerciseGroup1] } },
+                error: {
+                    errorKey: errorKey,
+                    numberOfInvalidProgrammingExercises: 0,
+                    params: { exerciseGroups: [exerciseGroup1] },
+                },
                 status: 400,
             });
             const importSpy = jest.spyOn(examManagementService, 'importExerciseGroup').mockReturnValue(throwError(() => preCheckError));

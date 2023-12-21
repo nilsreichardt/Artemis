@@ -127,11 +127,11 @@
             @if (course?.isAtLeastInstructor && examChecklist && examConductionState !== examConductionStateEnum.ERROR) {
                 <ol>
                     <li>
-                        <span> {{ 'artemisApp.examStatus.conduction.workingTime' | artemisTranslate }}: {{ exam.workingTime! | artemisDurationFromSeconds: true }} </span>
+                        <span> {{ 'artemisApp.examStatus.conduction.workingTime' | artemisTranslate }} : {{ exam.workingTime! | artemisDurationFromSeconds: true }} </span>
                     </li>
                     @if (isTestExam) {
                         <li>
-                            <span> {{ 'artemisApp.examStatus.conduction.testExam.numberOfStudents' | artemisTranslate }}: {{ exam.numberOfExamUsers }} </span>
+                            <span> {{ 'artemisApp.examStatus.conduction.testExam.numberOfStudents' | artemisTranslate }} : {{ exam.numberOfExamUsers }} </span>
                         </li>
                     }
                     <li>

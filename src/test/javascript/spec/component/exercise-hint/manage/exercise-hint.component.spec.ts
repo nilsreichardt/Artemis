@@ -24,7 +24,12 @@ describe('ExerciseHint Management Component', () => {
         TestBed.configureTestingModule({
             imports: [ArtemisTestModule],
             declarations: [ExerciseHintComponent],
-            providers: [{ provide: ActivatedRoute, useValue: new MockActivatedRoute({ exerciseId: 15, exercise: programmingExercise }) }],
+            providers: [
+                {
+                    provide: ActivatedRoute,
+                    useValue: new MockActivatedRoute({ exerciseId: 15, exercise: programmingExercise }),
+                },
+            ],
         })
             .compileComponents()
             .then(() => {

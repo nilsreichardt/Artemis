@@ -28,7 +28,10 @@ describe('ModelingExamSubmissionComponent', () => {
 
     const resetComponent = () => {
         if (comp) {
-            mockSubmission = { explanationText: 'Test Explanation', model: JSON.stringify({ model: true }) } as ModelingSubmission;
+            mockSubmission = {
+                explanationText: 'Test Explanation',
+                model: JSON.stringify({ model: true }),
+            } as ModelingSubmission;
             const course = new Course();
             course.isAtLeastInstructor = true;
             mockExercise = new ModelingExercise(UMLDiagramType.ClassDiagram, course, undefined);
@@ -233,7 +236,11 @@ describe('ModelingExamSubmissionComponent', () => {
     });
 
     it('should update the model on submission version change', async () => {
-        jest.replaceProperty(comp, 'modelingEditor', { apollonEditor: { nextRender: () => {} } as unknown as ApollonEditor } as unknown as ModelingEditorComponent);
+        jest.replaceProperty(comp, 'modelingEditor', {
+            apollonEditor: {
+                nextRender: () => {},
+            } as unknown as ApollonEditor,
+        } as unknown as ModelingEditorComponent);
         const submissionVersion = {
             content:
                 'Model: {"version":"3.0.0","type":"ClassDiagram","size":{"width":220,"height":420},"interactive":{"elements":{},"relationships":{}},"elements":{},"relationships":{},"assessments":{}}; Explanation: explanation',

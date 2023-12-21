@@ -5,6 +5,7 @@ export class MockAthenaService {
     getProgrammingFeedbackSuggestions(exerciseId: number, submissionId: number): Observable<ProgrammingFeedbackSuggestion[]> {
         return of([]);
     }
+
     getTextFeedbackSuggestions(exerciseId: number, submissionId: number): Observable<TextFeedbackSuggestion[]> {
         return of([]);
     }

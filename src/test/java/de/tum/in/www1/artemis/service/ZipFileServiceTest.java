@@ -1,7 +1,8 @@
 package de.tum.in.www1.artemis.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
+import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,10 +10,8 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 
 class ZipFileServiceTest extends AbstractSpringIntegrationIndependentTest {
 

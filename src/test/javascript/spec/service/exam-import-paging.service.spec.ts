@@ -35,7 +35,13 @@ describe('Exam Import Paging Service', () => {
 
     it('should find an exam', fakeAsync(() => {
         const searchResult = { resultsOnPage: [exam], numberOfPages: 5 };
-        const pageable = { pageSize: 2, page: 4, sortingOrder: SortingOrder.DESCENDING, searchTerm: 'ExamSearch', sortedColumn: 'testSortedColumn' };
+        const pageable = {
+            pageSize: 2,
+            page: 4,
+            sortingOrder: SortingOrder.DESCENDING,
+            searchTerm: 'ExamSearch',
+            sortedColumn: 'testSortedColumn',
+        };
         service
             .searchForExams(pageable, false)
             .pipe(take(1))

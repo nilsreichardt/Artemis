@@ -57,7 +57,10 @@ export class ProgrammingExerciseParticipationService implements IProgrammingExer
         if (gradedParticipationId) {
             params = params.set('gradedParticipationId', gradedParticipationId.toString());
         }
-        return this.http.put<void>(`${this.resourceUrl}${participationId}/reset-repository`, null, { observe: 'response', params });
+        return this.http.put<void>(`${this.resourceUrl}${participationId}/reset-repository`, null, {
+            observe: 'response',
+            params,
+        });
     }
 
     sendTitlesToEntityTitleService(participation: Participation | undefined) {

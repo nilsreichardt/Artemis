@@ -26,10 +26,29 @@ export class AboutUsComponent implements OnInit {
     readonly sections: [string, { [key: string]: string }][] = [
         ['exercises.programming', { programmingUrl: 'https://docs.artemis.cit.tum.de/user/exercises/programming/' }],
         ['exercises.quiz', { quizUrl: 'https://docs.artemis.cit.tum.de/user/exercises/quiz/' }],
-        ['exercises.modeling', { modelingUrl: 'https://docs.artemis.cit.tum.de/user/exercises/modeling/', apollonUrl: 'https://apollon.ase.in.tum.de/' }],
-        ['exercises.text', { textUrl: 'https://docs.artemis.cit.tum.de/user/exercises/textual/', athenaUrl: 'https://github.com/ls1intum/Athena' }],
+        [
+            'exercises.modeling',
+            {
+                modelingUrl: 'https://docs.artemis.cit.tum.de/user/exercises/modeling/',
+                apollonUrl: 'https://apollon.ase.in.tum.de/',
+            },
+        ],
+        [
+            'exercises.text',
+            {
+                textUrl: 'https://docs.artemis.cit.tum.de/user/exercises/textual/',
+                athenaUrl: 'https://github.com/ls1intum/Athena',
+            },
+        ],
         ['exercises.fileUpload', { fileUploadUrl: 'https://docs.artemis.cit.tum.de/user/exercises/file-upload/' }],
-        ['exam', { examModeUrl: 'https://docs.artemis.cit.tum.de/user/exam_mode/', studentFeatureUrl: '/features/students', instructorFeatureUrl: '/features/instructors' }],
+        [
+            'exam',
+            {
+                examModeUrl: 'https://docs.artemis.cit.tum.de/user/exam_mode/',
+                studentFeatureUrl: '/features/students',
+                instructorFeatureUrl: '/features/instructors',
+            },
+        ],
         ['grading', { gradingUrl: 'https://docs.artemis.cit.tum.de/user/grading/' }],
         ['assessment', { assessmentUrl: 'https://docs.artemis.cit.tum.de/user/exercises/assessment/' }],
         ['communication', { communicationUrl: 'https://docs.artemis.cit.tum.de/user/communication/' }],
@@ -37,7 +56,13 @@ export class AboutUsComponent implements OnInit {
         ['teamExercises', { teamExercisesUrl: 'https://docs.artemis.cit.tum.de/user/exercises/team-exercises/' }],
         ['lectures', { lecturesUrl: 'https://docs.artemis.cit.tum.de/user/lectures/' }],
         ['integratedMarkdownEditor', { markdownEditorUrl: 'https://docs.artemis.cit.tum.de/user/markdown-support/' }],
-        ['plagiarismChecks', { jPlagUrl: 'https://github.com/jplag/JPlag/', plagiarismChecksUrl: 'https://docs.artemis.cit.tum.de/user/plagiarism-check/' }],
+        [
+            'plagiarismChecks',
+            {
+                jPlagUrl: 'https://github.com/jplag/JPlag/',
+                plagiarismChecksUrl: 'https://docs.artemis.cit.tum.de/user/plagiarism-check/',
+            },
+        ],
         ['learningAnalytics', { learningAnalyticsUrl: 'https://docs.artemis.cit.tum.de/user/learning-analytics/' }],
         ['adaptiveLearning', { adaptiveLearningUrl: 'https://docs.artemis.cit.tum.de/user/adaptive-learning/' }],
         ['tutorialGroups', { tutorialGroupsUrl: 'https://docs.artemis.cit.tum.de/user/tutorialgroups/' }],
@@ -61,7 +86,10 @@ export class AboutUsComponent implements OnInit {
     ngOnInit(): void {
         this.staticContentService.getStaticJsonFromArtemisServer('about-us.json').subscribe((data) => {
             // Map contributors into the model, as the returned data are just plain objects
-            this.data = { ...data, contributors: data.contributors.map((con: any) => new ContributorModel(con.fullName, con.photoDirectory, con.sortBy, con.role, con.website)) };
+            this.data = {
+                ...data,
+                contributors: data.contributors.map((con: any) => new ContributorModel(con.fullName, con.photoDirectory, con.sortBy, con.role, con.website)),
+            };
 
             // Sort by last name
             // Either the last "word" in the name, or the dedicated sortBy field, if present

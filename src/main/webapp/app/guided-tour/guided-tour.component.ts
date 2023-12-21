@@ -557,11 +557,20 @@ export class GuidedTourComponent implements AfterViewInit, OnDestroy {
                         'width.px': selectedElementLeft > 0 ? selectedElementLeft : 0,
                     };
                 case OverlayPosition.RIGHT:
-                    return { 'top.px': selectedElementTop, 'left.px': selectedElementLeft + selectedElementWidth, 'height.px': selectedElementHeight };
+                    return {
+                        'top.px': selectedElementTop,
+                        'left.px': selectedElementLeft + selectedElementWidth,
+                        'height.px': selectedElementHeight,
+                    };
                 case OverlayPosition.BOTTOM:
                     return { 'top.px': selectedElementTop + selectedElementHeight > 0 ? selectedElementTop + selectedElementHeight : 0 };
                 case OverlayPosition.ELEMENT:
-                    return { 'top.px': selectedElementTop, 'left.px': selectedElementLeft, 'height.px': selectedElementHeight, 'width.px': selectedElementWidth };
+                    return {
+                        'top.px': selectedElementTop,
+                        'left.px': selectedElementLeft,
+                        'height.px': selectedElementHeight,
+                        'width.px': selectedElementWidth,
+                    };
             }
         }
         return undefined;

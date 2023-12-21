@@ -34,9 +34,13 @@ declare global {
     namespace Cypress {
         interface Chainable {
             login(credentials: CypressCredentials, url?: string): any;
+
             loginWithGUI(credentials: CypressCredentials): any;
+
             getSettled(selector: string, options?: any): Chainable<unknown>;
+
             reloadUntilFound(selector: string, interval?: number, timeout?: number): Chainable<undefined>;
+
             formRequest(url: string, method: string, formData: FormData): Chainable<any>;
         }
     }

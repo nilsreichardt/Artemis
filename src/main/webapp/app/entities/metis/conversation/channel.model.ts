@@ -52,6 +52,7 @@ export class ChannelDTO extends ConversationDto {
     public tutorialGroupId?: number;
 
     public tutorialGroupTitle?: string;
+
     constructor() {
         super(ConversationType.CHANNEL);
     }

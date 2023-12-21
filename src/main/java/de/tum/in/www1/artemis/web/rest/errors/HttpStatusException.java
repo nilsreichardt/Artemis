@@ -1,12 +1,12 @@
 package de.tum.in.www1.artemis.web.rest.errors;
 
+import org.zalando.problem.AbstractThrowableProblem;
+import org.zalando.problem.Status;
+
 import java.io.Serial;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.zalando.problem.AbstractThrowableProblem;
-import org.zalando.problem.Status;
 
 public abstract class HttpStatusException extends AbstractThrowableProblem {
 

@@ -9,8 +9,7 @@ import { MockTranslateService } from '../helpers/mocks/service/mock-translate.se
 import { MockSyncStorage } from '../helpers/mocks/service/mock-sync-storage.service';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { MockRouter } from '../helpers/mocks/mock-router';
-import { Params, Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TextAssessmentService } from 'app/exercises/text/assess/text-assessment.service';
 import { throwError } from 'rxjs';
 import { Location } from '@angular/common';

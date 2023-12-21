@@ -16,7 +16,13 @@ describe('DataExportConfirmationDialogService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [DataExportConfirmationDialogService, { provide: TranslateService, useClass: MockTranslateService }],
+            providers: [
+                DataExportConfirmationDialogService,
+                {
+                    provide: TranslateService,
+                    useClass: MockTranslateService,
+                },
+            ],
             declarations: [MockComponent(DeleteDialogComponent)],
         });
         service = TestBed.inject(DataExportConfirmationDialogService);
@@ -44,6 +50,9 @@ describe('DataExportConfirmationDialogService', () => {
         });
         service.openConfirmationDialog(data);
         expect(openModalStub).toHaveBeenCalledOnce();
-        expect(openModalStub).toHaveBeenCalledWith(DataExportConfirmationDialogComponent, { size: 'lg', backdrop: 'static' });
+        expect(openModalStub).toHaveBeenCalledWith(DataExportConfirmationDialogComponent, {
+            size: 'lg',
+            backdrop: 'static',
+        });
     });
 });

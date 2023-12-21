@@ -45,6 +45,7 @@ export class Series {
     exerciseTitle? = '';
     exerciseId = 0;
     isProgrammingExercise = false;
+
     constructor(name: ChartBarTitle) {
         this.name = name;
     }
@@ -63,6 +64,7 @@ export class NgxExercise {
     presentationScore = 0;
     xScaleMax = 0;
     height = 0;
+
     constructor(name: string | undefined, series: Series[], type: ExerciseType) {
         this.name = name;
         this.series = series;
@@ -73,6 +75,7 @@ export class NgxExercise {
 export class ExerciseTitle {
     name: string;
     color: string;
+
     constructor(name: string, color: string) {
         this.name = name;
         this.color = color;

@@ -52,7 +52,11 @@ describe('JhiResetRepoButtonComponent', () => {
     });
 
     it('should initialize correctly', () => {
-        comp.exercise = { numberOfAssessmentsOfCorrectionRounds: [], secondCorrectionEnabled: false, studentAssignedTeamIdComputed: false };
+        comp.exercise = {
+            numberOfAssessmentsOfCorrectionRounds: [],
+            secondCorrectionEnabled: false,
+            studentAssignedTeamIdComputed: false,
+        };
         comp.participations = [gradedParticipation, practiceParticipation];
         comp.ngOnInit();
 
@@ -61,12 +65,34 @@ describe('JhiResetRepoButtonComponent', () => {
     });
 
     it.each([
-        { participations: [{ testRun: false, initializationState: InitializationState.INITIALIZED }], exercise: {}, shouldShowButton: true },
-        { participations: [{ testRun: false, initializationState: InitializationState.INITIALIZED }], exercise: { dueDate: dayjs().add(1, 'day') }, shouldShowButton: true },
-        { participations: [{ testRun: false, initializationState: InitializationState.INITIALIZED }], exercise: { dueDate: dayjs().subtract(1, 'day') }, shouldShowButton: false },
-        { participations: [{ testRun: false, initializationState: InitializationState.INACTIVE }], exercise: { dueDate: dayjs().add(1, 'day') }, shouldShowButton: false },
         {
-            participations: [{ testRun: false, initializationState: InitializationState.INITIALIZED, individualDueDate: dayjs().add(1, 'day') }],
+            participations: [{ testRun: false, initializationState: InitializationState.INITIALIZED }],
+            exercise: {},
+            shouldShowButton: true,
+        },
+        {
+            participations: [{ testRun: false, initializationState: InitializationState.INITIALIZED }],
+            exercise: { dueDate: dayjs().add(1, 'day') },
+            shouldShowButton: true,
+        },
+        {
+            participations: [{ testRun: false, initializationState: InitializationState.INITIALIZED }],
+            exercise: { dueDate: dayjs().subtract(1, 'day') },
+            shouldShowButton: false,
+        },
+        {
+            participations: [{ testRun: false, initializationState: InitializationState.INACTIVE }],
+            exercise: { dueDate: dayjs().add(1, 'day') },
+            shouldShowButton: false,
+        },
+        {
+            participations: [
+                {
+                    testRun: false,
+                    initializationState: InitializationState.INITIALIZED,
+                    individualDueDate: dayjs().add(1, 'day'),
+                },
+            ],
             exercise: { dueDate: dayjs().subtract(1, 'day') },
             shouldShowButton: true,
         },
@@ -91,7 +117,11 @@ describe('JhiResetRepoButtonComponent', () => {
     });
 
     it.each([
-        { participations: [gradedParticipation, practiceParticipation], expectedResetId: practiceParticipation.id, gradedParticipationId: gradedParticipation.id },
+        {
+            participations: [gradedParticipation, practiceParticipation],
+            expectedResetId: practiceParticipation.id,
+            gradedParticipationId: gradedParticipation.id,
+        },
         { participations: [gradedParticipation, practiceParticipation], expectedResetId: practiceParticipation.id },
         { participations: [practiceParticipation], expectedResetId: practiceParticipation.id },
         { participations: [gradedParticipation], expectedResetId: gradedParticipation.id },

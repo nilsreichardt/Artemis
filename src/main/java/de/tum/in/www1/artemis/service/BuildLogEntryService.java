@@ -88,8 +88,7 @@ public class BuildLogEntryService {
         }
         if (programmingLanguage == ProgrammingLanguage.JAVA) {
             return isUnnecessaryJavaLog(logString);
-        }
-        else if (programmingLanguage == ProgrammingLanguage.SWIFT || programmingLanguage == ProgrammingLanguage.C) {
+        } else if (programmingLanguage == ProgrammingLanguage.SWIFT || programmingLanguage == ProgrammingLanguage.C) {
             return isUnnecessaryCOrSwiftLog(logString);
         }
         return false;

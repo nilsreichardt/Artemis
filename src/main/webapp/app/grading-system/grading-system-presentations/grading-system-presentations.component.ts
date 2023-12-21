@@ -7,6 +7,7 @@ export enum PresentationType {
     BASIC = 'basic',
     GRADED = 'graded',
 }
+
 export interface PresentationsConfig {
     // The type of presentations
     presentationType: PresentationType;

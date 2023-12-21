@@ -31,6 +31,7 @@ export enum ConversationMemberSearchFilter {
     STUDENT,
     CHANNEL_MODERATOR, // this is a special role that is only used for channels
 }
+
 @Injectable({ providedIn: 'root' })
 export class ConversationService {
     public resourceUrl = '/api/courses/';
@@ -111,14 +112,20 @@ export class ConversationService {
         let params = new HttpParams();
         params = params.append('isFavorite', isFavorite.toString());
 
-        return this.http.post<void>(`${this.resourceUrl}${courseId}/conversations/${conversationId}/favorite`, null, { observe: 'response', params });
+        return this.http.post<void>(`${this.resourceUrl}${courseId}/conversations/${conversationId}/favorite`, null, {
+            observe: 'response',
+            params,
+        });
     }
 
     changeHiddenStatus(courseId: number, conversationId: number, isHidden: boolean): Observable<HttpResponse<void>> {
         let params = new HttpParams();
         params = params.append('isHidden', isHidden.toString());
         return this.http
-            .post<void>(`${this.resourceUrl}${courseId}/conversations/${conversationId}/hidden`, null, { observe: 'response', params })
+            .post<void>(`${this.resourceUrl}${courseId}/conversations/${conversationId}/hidden`, null, {
+                observe: 'response',
+                params,
+            })
             .pipe(
                 tap(() =>
                     isHidden

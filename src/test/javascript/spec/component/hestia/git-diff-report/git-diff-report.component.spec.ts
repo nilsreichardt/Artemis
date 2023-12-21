@@ -52,7 +52,14 @@ describe('ProgrammingExerciseGitDiffReport Component', () => {
     });
 
     it('Should set added/removed lines to 1-0', () => {
-        const entries = [{ filePath: 'src/a.java', previousFilePath: 'src/a.java', startLine: 1, lineCount: 1 }] as ProgrammingExerciseGitDiffEntry[];
+        const entries = [
+            {
+                filePath: 'src/a.java',
+                previousFilePath: 'src/a.java',
+                startLine: 1,
+                lineCount: 1,
+            },
+        ] as ProgrammingExerciseGitDiffEntry[];
 
         comp.report = { entries } as ProgrammingExerciseGitDiffReport;
         comp.ngOnInit();
@@ -133,7 +140,14 @@ describe('ProgrammingExerciseGitDiffReport Component', () => {
     });
 
     it('Should set added/removed lines to 0-1', () => {
-        const entries = [{ filePath: 'src/a.java', previousFilePath: 'src/a.java', previousStartLine: 1, previousLineCount: 1 }] as ProgrammingExerciseGitDiffEntry[];
+        const entries = [
+            {
+                filePath: 'src/a.java',
+                previousFilePath: 'src/a.java',
+                previousStartLine: 1,
+                previousLineCount: 1,
+            },
+        ] as ProgrammingExerciseGitDiffEntry[];
 
         comp.report = { entries } as ProgrammingExerciseGitDiffReport;
         comp.ngOnInit();

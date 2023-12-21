@@ -63,7 +63,10 @@ export class FileService {
      * @returns markdown file
      */
     getTemplateCodeOfCondcut(): Observable<HttpResponse<string>> {
-        return this.http.get<string>(`api/files/templates/code-of-conduct`, { observe: 'response', responseType: 'text' as 'json' });
+        return this.http.get<string>(`api/files/templates/code-of-conduct`, {
+            observe: 'response',
+            responseType: 'text' as 'json',
+        });
     }
 
     /**

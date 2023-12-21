@@ -243,7 +243,13 @@ describe('Exercise Service', () => {
     });
 
     it('should fill & empty example modeling solution', () => {
-        let exampleSolutionInfo = ExerciseService.extractExampleSolutionInfo({ ...modelingExercise, exampleSolutionPublicationDate: dayjs().subtract(1, 'm') }, artemisMarkdown);
+        let exampleSolutionInfo = ExerciseService.extractExampleSolutionInfo(
+            {
+                ...modelingExercise,
+                exampleSolutionPublicationDate: dayjs().subtract(1, 'm'),
+            },
+            artemisMarkdown,
+        );
         expect(exampleSolutionInfo.exampleSolution).toBeUndefined();
         expect(exampleSolutionInfo.exampleSolutionUML).toEqual(JSON.parse(modelingExercise.exampleSolutionModel!));
         expect(exampleSolutionInfo.programmingExercise).toBeUndefined();
@@ -259,7 +265,13 @@ describe('Exercise Service', () => {
     it('should fill & empty example text solution', () => {
         const artemisMarkdownSpy = jest.spyOn(artemisMarkdown, 'safeHtmlForMarkdown').mockReturnValue({} as SafeHtml);
 
-        let exampleSolutionInfo = ExerciseService.extractExampleSolutionInfo({ ...textExercise, exampleSolutionPublicationDate: dayjs().subtract(1, 'm') }, artemisMarkdown);
+        let exampleSolutionInfo = ExerciseService.extractExampleSolutionInfo(
+            {
+                ...textExercise,
+                exampleSolutionPublicationDate: dayjs().subtract(1, 'm'),
+            },
+            artemisMarkdown,
+        );
         expect(exampleSolutionInfo.exampleSolution).toBeDefined();
         expect(exampleSolutionInfo.exampleSolutionUML).toBeUndefined();
         expect(exampleSolutionInfo.programmingExercise).toBeUndefined();
@@ -277,7 +289,13 @@ describe('Exercise Service', () => {
     it('should fill & empty example file upload solution', () => {
         const artemisMarkdownSpy = jest.spyOn(artemisMarkdown, 'safeHtmlForMarkdown').mockReturnValue({} as SafeHtml);
 
-        let exampleSolutionInfo = ExerciseService.extractExampleSolutionInfo({ ...fileUploadExercise, exampleSolutionPublicationDate: dayjs().subtract(1, 'm') }, artemisMarkdown);
+        let exampleSolutionInfo = ExerciseService.extractExampleSolutionInfo(
+            {
+                ...fileUploadExercise,
+                exampleSolutionPublicationDate: dayjs().subtract(1, 'm'),
+            },
+            artemisMarkdown,
+        );
         expect(exampleSolutionInfo.exampleSolution).toBeDefined();
         expect(exampleSolutionInfo.exampleSolutionUML).toBeUndefined();
         expect(exampleSolutionInfo.programmingExercise).toBeUndefined();
@@ -293,12 +311,24 @@ describe('Exercise Service', () => {
     });
 
     it('should fill & empty example programming exercise solution', () => {
-        let exampleSolutionInfo = ExerciseService.extractExampleSolutionInfo({ ...programmingExercise, exampleSolutionPublicationDate: dayjs().subtract(1, 'm') }, artemisMarkdown);
+        let exampleSolutionInfo = ExerciseService.extractExampleSolutionInfo(
+            {
+                ...programmingExercise,
+                exampleSolutionPublicationDate: dayjs().subtract(1, 'm'),
+            },
+            artemisMarkdown,
+        );
         expect(exampleSolutionInfo.exampleSolution).toBeUndefined();
         expect(exampleSolutionInfo.exampleSolutionUML).toBeUndefined();
         expect(exampleSolutionInfo.exampleSolutionPublished).toBeTrue();
 
-        exampleSolutionInfo = ExerciseService.extractExampleSolutionInfo({ ...programmingExercise, exampleSolutionPublicationDate: dayjs().add(1, 'm') }, artemisMarkdown);
+        exampleSolutionInfo = ExerciseService.extractExampleSolutionInfo(
+            {
+                ...programmingExercise,
+                exampleSolutionPublicationDate: dayjs().add(1, 'm'),
+            },
+            artemisMarkdown,
+        );
         expect(exampleSolutionInfo.exampleSolution).toBeUndefined();
         expect(exampleSolutionInfo.exampleSolutionUML).toBeUndefined();
         expect(exampleSolutionInfo.exampleSolutionPublished).toBeFalse();
@@ -523,9 +553,17 @@ describe('Exercise Service', () => {
 
     it('should correctly send the exercise name to the title service', () => {
         const entityTitleService = TestBed.inject(EntityTitleService);
-        const examExerciseForStudent = { id: 1, title: 'exercise', exerciseGroup: { id: 1, title: 'exercise group' } } as Exercise;
+        const examExerciseForStudent = {
+            id: 1,
+            title: 'exercise',
+            exerciseGroup: { id: 1, title: 'exercise group' },
+        } as Exercise;
         const examExerciseForTutor = { ...examExerciseForStudent, isAtLeastTutor: true } as Exercise;
-        const courseExerciseForStudent = { ...examExerciseForStudent, exerciseGroup: undefined, course: { id: 2, title: 'course' } } as Exercise;
+        const courseExerciseForStudent = {
+            ...examExerciseForStudent,
+            exerciseGroup: undefined,
+            course: { id: 2, title: 'course' },
+        } as Exercise;
         const courseExerciseForTutor = { ...courseExerciseForStudent, isAtLeastTutor: true } as Exercise;
         const entityTitleServiceSpy = jest.spyOn(entityTitleService, 'setTitle');
         service.sendExerciseTitleToTitleService(examExerciseForStudent);

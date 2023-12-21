@@ -17,6 +17,7 @@ import { SafeHtmlPipe } from 'app/shared/pipes/safe-html.pipe';
 import { GradeStepBoundsPipe } from 'app/shared/pipes/grade-step-bounds.pipe';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ThemeService } from 'app/core/theme/theme.service';
+
 describe('GradingKeyOverviewComponent', () => {
     let fixture: ComponentFixture<GradingKeyOverviewComponent>;
     let component: GradingKeyOverviewComponent;

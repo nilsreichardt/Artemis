@@ -33,6 +33,7 @@ jest.mock('export-to-csv', () => {
     class MockExportToCsv {
         generateCsv = generateCsv;
     }
+
     return { ExportToCsv: MockExportToCsv };
 });
 
@@ -41,7 +42,13 @@ describe('Course Group Component', () => {
     let fixture: ComponentFixture<CourseGroupComponent>;
     let userService: UserService;
     const courseGroup = CourseGroup.STUDENTS;
-    const course = { id: 123, title: 'Course Title', isAtLeastInstructor: true, endDate: dayjs().subtract(5, 'minutes'), courseArchivePath: 'some-path' };
+    const course = {
+        id: 123,
+        title: 'Course Title',
+        isAtLeastInstructor: true,
+        endDate: dayjs().subtract(5, 'minutes'),
+        courseArchivePath: 'some-path',
+    };
     const parentRoute = {
         data: of({ course }),
     } as any as ActivatedRoute;

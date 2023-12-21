@@ -21,5 +21,6 @@ export class ParticipationResultDTO {
     score?: number;
     rated?: boolean;
     participationId: number;
+
     constructor() {}
 }

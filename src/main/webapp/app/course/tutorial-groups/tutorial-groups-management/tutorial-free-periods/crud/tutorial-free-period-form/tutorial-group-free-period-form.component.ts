@@ -7,6 +7,7 @@ export interface TutorialGroupFreePeriodFormData {
     date?: Date;
     reason?: string;
 }
+
 @Component({
     selector: 'jhi-tutorial-free-period-form',
     templateUrl: './tutorial-group-free-period-form.component.html',

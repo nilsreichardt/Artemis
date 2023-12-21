@@ -50,7 +50,12 @@ describe('Assessment progress label test', () => {
     });
 
     it('should count the manual submissions', () => {
-        const result = { id: 44, rated: true, assessmentType: AssessmentType.MANUAL, completionDate: dayjs() } as Result;
+        const result = {
+            id: 44,
+            rated: true,
+            assessmentType: AssessmentType.MANUAL,
+            completionDate: dayjs(),
+        } as Result;
         const submission = { id: 77, results: [result] } as Submission;
 
         comp.submissions = [submission];

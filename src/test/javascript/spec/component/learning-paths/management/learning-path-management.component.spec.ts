@@ -179,7 +179,13 @@ describe('LearningPathManagementComponent', () => {
         setStateAndCallOnInit(() => {
             comp.listSorting = false;
             tick(10);
-            expect(searchForLearningPathsStub).toHaveBeenCalledWith({ ...state, sortingOrder: SortingOrder.DESCENDING }, courseId);
+            expect(searchForLearningPathsStub).toHaveBeenCalledWith(
+                {
+                    ...state,
+                    sortingOrder: SortingOrder.DESCENDING,
+                },
+                courseId,
+            );
             expect(comp.listSorting).toBeFalse();
         });
     }));
@@ -202,7 +208,13 @@ describe('LearningPathManagementComponent', () => {
             tick(10);
             expect(searchForLearningPathsStub).not.toHaveBeenCalled();
             tick(290);
-            expect(searchForLearningPathsStub).toHaveBeenCalledWith({ ...state, searchTerm: givenSearchTerm }, courseId);
+            expect(searchForLearningPathsStub).toHaveBeenCalledWith(
+                {
+                    ...state,
+                    searchTerm: givenSearchTerm,
+                },
+                courseId,
+            );
             expect(comp.searchTerm).toEqual(givenSearchTerm);
         });
     }));
@@ -212,7 +224,13 @@ describe('LearningPathManagementComponent', () => {
         setStateAndCallOnInit(() => {
             comp.sortedColumn = TableColumn.USER_LOGIN;
             tick(10);
-            expect(searchForLearningPathsStub).toHaveBeenCalledWith({ ...state, sortedColumn: TableColumn.USER_LOGIN }, courseId);
+            expect(searchForLearningPathsStub).toHaveBeenCalledWith(
+                {
+                    ...state,
+                    sortedColumn: TableColumn.USER_LOGIN,
+                },
+                courseId,
+            );
             expect(comp.sortedColumn).toEqual(TableColumn.USER_LOGIN);
         });
     }));

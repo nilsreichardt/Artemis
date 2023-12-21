@@ -3,7 +3,10 @@ package de.tum.in.www1.artemis.domain;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.apache.commons.math3.util.Precision;
 import org.hibernate.annotations.Cache;

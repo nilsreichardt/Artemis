@@ -55,7 +55,10 @@ describe('LegalDocumentService', () => {
             let req;
             if (documentType === LegalDocumentType.PRIVACY_STATEMENT) {
                 service.getPrivacyStatementForUpdate(lang).subscribe((resp) => expect(resp).toEqual(expected));
-                req = httpMock.expectOne({ method: 'GET', url: `api/admin/privacy-statement-for-update?language=${lang}` });
+                req = httpMock.expectOne({
+                    method: 'GET',
+                    url: `api/admin/privacy-statement-for-update?language=${lang}`,
+                });
             } else {
                 service.getImprintForUpdate(lang).subscribe((resp) => expect(resp).toEqual(expected));
                 req = httpMock.expectOne({ method: 'GET', url: `api/admin/imprint-for-update?language=${lang}` });

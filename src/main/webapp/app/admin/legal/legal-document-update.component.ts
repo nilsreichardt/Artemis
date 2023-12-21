@@ -125,7 +125,10 @@ export class LegalDocumentUpdateComponent implements OnInit, AfterContentChecked
     }
 
     showWarning(legalDocumentLanguage: any) {
-        this.unsavedChangesWarning = this.modalService.open(UnsavedChangesWarningComponent, { size: 'lg', backdrop: 'static' });
+        this.unsavedChangesWarning = this.modalService.open(UnsavedChangesWarningComponent, {
+            size: 'lg',
+            backdrop: 'static',
+        });
         if (this.legalDocumentType === LegalDocumentType.PRIVACY_STATEMENT) {
             this.unsavedChangesWarning.componentInstance.textMessage = 'artemisApp.legal.privacyStatement.unsavedChangesWarning';
         } else if (this.legalDocumentType === LegalDocumentType.IMPRINT) {
@@ -159,7 +162,12 @@ export class LegalDocumentUpdateComponent implements OnInit, AfterContentChecked
     updateTextIfLanguageChangedInPreview() {
         if (this.languageChangeInPreview) {
             // we have to trigger a change event, so the ace editor updates its content
-            this.markdownEditor.aceEditorContainer.getEditor().session._emit('change', { start: { row: 0, column: 0 }, end: { row: 0, column: 0 }, action: 'insert', lines: [] });
+            this.markdownEditor.aceEditorContainer.getEditor().session._emit('change', {
+                start: { row: 0, column: 0 },
+                end: { row: 0, column: 0 },
+                action: 'insert',
+                lines: [],
+            });
             this.languageChangeInPreview = false;
         }
     }

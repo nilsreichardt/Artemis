@@ -21,9 +21,11 @@ export class MultipleChoiceQuestionComponent {
         this._question = question;
         this.watchCollection();
     }
+
     get question(): MultipleChoiceQuestion {
         return this._question;
     }
+
     // TODO: Map vs. Array --> consistency
     @Input()
     selectedAnswerOptions: AnswerOption[];

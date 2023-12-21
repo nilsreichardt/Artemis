@@ -44,7 +44,14 @@ export class TextSubmissionService {
             .pipe(map((res: HttpResponse<TextSubmission>) => res.body!));
     }
 
-    getSubmissions(exerciseId: number, req: { submittedOnly?: boolean; assessedByTutor?: boolean }, correctionRound = 0): Observable<HttpResponse<TextSubmission[]>> {
+    getSubmissions(
+        exerciseId: number,
+        req: {
+            submittedOnly?: boolean;
+            assessedByTutor?: boolean;
+        },
+        correctionRound = 0,
+    ): Observable<HttpResponse<TextSubmission[]>> {
         const url = `api/exercises/${exerciseId}/text-submissions`;
         let params = createRequestOption(req);
         if (correctionRound !== 0) {

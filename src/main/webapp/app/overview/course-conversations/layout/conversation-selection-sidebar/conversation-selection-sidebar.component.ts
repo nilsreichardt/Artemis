@@ -25,6 +25,7 @@ interface SearchQuery {
     searchTerm: string;
     force: boolean;
 }
+
 @Component({
     selector: 'jhi-conversation-selection-sidebar',
     styleUrls: ['./conversation-selection-sidebar.component.scss'],
@@ -85,6 +86,7 @@ export class ConversationSelectionSidebarComponent implements AfterViewInit, OnI
         this.subscribeToActiveConversation();
         this.subscribeToConversationsOfUser();
     }
+
     private subscribeToSearch() {
         this.search$
             .pipe(
@@ -260,6 +262,7 @@ export class ConversationSelectionSidebarComponent implements AfterViewInit, OnI
                 });
             });
     }
+
     openCreateGroupChatDialog(event: MouseEvent) {
         event.stopPropagation();
         const modalRef: NgbModalRef = this.modalService.open(GroupChatCreateDialogComponent, defaultFirstLayerDialogOptions);
@@ -280,6 +283,7 @@ export class ConversationSelectionSidebarComponent implements AfterViewInit, OnI
                 });
             });
     }
+
     openCreateOneToOneChatDialog(event: MouseEvent) {
         event.stopPropagation();
         const modalRef: NgbModalRef = this.modalService.open(OneToOneChatCreateDialogComponent, defaultFirstLayerDialogOptions);

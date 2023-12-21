@@ -19,7 +19,14 @@ describe('ExamLiveEventsButtonComponent', () => {
         await TestBed.configureTestingModule({
             declarations: [ExamLiveEventsButtonComponent],
             imports: [MockModule(FontAwesomeModule)],
-            providers: [MockProvider(AlertService), MockProvider(NgbModal), { provide: ExamParticipationLiveEventsService, useClass: MockExamParticipationLiveEventsService }],
+            providers: [
+                MockProvider(AlertService),
+                MockProvider(NgbModal),
+                {
+                    provide: ExamParticipationLiveEventsService,
+                    useClass: MockExamParticipationLiveEventsService,
+                },
+            ],
         }).compileComponents();
     });
 

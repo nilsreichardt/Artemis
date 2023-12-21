@@ -57,12 +57,42 @@ describe('StatisticsAverageScoreGraphComponent', () => {
         exerciseType: ExerciseType.MODELING,
         categories: [{ color: '#347aeb', category: 'structural pattern' }],
     };
-    const exercise6 = { exerciseId: 6, exerciseName: 'BuilderPattern', averageScore: 50, exerciseType: ExerciseType.QUIZ };
-    const exercise7 = { exerciseId: 7, exerciseName: 'BehaviouralPattern', averageScore: 55, exerciseType: ExerciseType.PROGRAMMING };
-    const exercise8 = { exerciseId: 8, exerciseName: 'SingletonPattern', averageScore: 56, exerciseType: ExerciseType.TEXT };
-    const exercise9 = { exerciseId: 9, exerciseName: 'ObserverPattern', averageScore: 60, exerciseType: ExerciseType.FILE_UPLOAD };
-    const exercise10 = { exerciseId: 10, exerciseName: 'StrategyPattern', averageScore: 75, exerciseType: ExerciseType.PROGRAMMING };
-    const exercise11 = { exerciseId: 11, exerciseName: 'StatePattern', averageScore: 100, exerciseType: ExerciseType.MODELING };
+    const exercise6 = {
+        exerciseId: 6,
+        exerciseName: 'BuilderPattern',
+        averageScore: 50,
+        exerciseType: ExerciseType.QUIZ,
+    };
+    const exercise7 = {
+        exerciseId: 7,
+        exerciseName: 'BehaviouralPattern',
+        averageScore: 55,
+        exerciseType: ExerciseType.PROGRAMMING,
+    };
+    const exercise8 = {
+        exerciseId: 8,
+        exerciseName: 'SingletonPattern',
+        averageScore: 56,
+        exerciseType: ExerciseType.TEXT,
+    };
+    const exercise9 = {
+        exerciseId: 9,
+        exerciseName: 'ObserverPattern',
+        averageScore: 60,
+        exerciseType: ExerciseType.FILE_UPLOAD,
+    };
+    const exercise10 = {
+        exerciseId: 10,
+        exerciseName: 'StrategyPattern',
+        averageScore: 75,
+        exerciseType: ExerciseType.PROGRAMMING,
+    };
+    const exercise11 = {
+        exerciseId: 11,
+        exerciseName: 'StatePattern',
+        averageScore: 100,
+        exerciseType: ExerciseType.MODELING,
+    };
 
     const returnValue = [exercise2, exercise4, exercise5, exercise8, exercise9, exercise10, exercise6, exercise11, exercise1, exercise3, exercise7];
 

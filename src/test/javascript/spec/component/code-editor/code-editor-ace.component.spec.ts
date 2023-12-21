@@ -166,7 +166,13 @@ describe('CodeEditorAceComponent', () => {
             await fixture.whenStable();
 
             expect(comp.isLoading).toBeFalse();
-            expect(comp.fileSession).toEqual({ dummy: { code: '', cursor: { column: 0, row: 0 }, loadingError: true } });
+            expect(comp.fileSession).toEqual({
+                dummy: {
+                    code: '',
+                    cursor: { column: 0, row: 0 },
+                    loadingError: true,
+                },
+            });
             expect(initEditorSpy).toHaveBeenCalledWith();
             expect(onErrorSpy).toHaveBeenCalledWith(errorCode);
         }),
@@ -180,7 +186,13 @@ describe('CodeEditorAceComponent', () => {
 
     it('should not load the file from server on selected file change if the file is already in session', () => {
         const selectedFile = 'dummy';
-        const fileSession = { [selectedFile]: { code: 'lorem ipsum', cursor: { column: 0, row: 0 }, loadingError: false } };
+        const fileSession = {
+            [selectedFile]: {
+                code: 'lorem ipsum',
+                cursor: { column: 0, row: 0 },
+                loadingError: false,
+            },
+        };
         const initEditorSpy = jest.spyOn(comp, 'initEditor');
         const loadFileSpy = jest.spyOn(comp, 'fetchFileContent');
         comp.selectedFile = selectedFile;
@@ -195,7 +207,13 @@ describe('CodeEditorAceComponent', () => {
 
     it('should load the file from server on selected file change if the file is already in session but there was a loading error', waitForAsync(async () => {
         const selectedFile = 'dummy';
-        const fileSession = { [selectedFile]: { code: 'lorem ipsum', cursor: { column: 0, row: 0 }, loadingError: true } };
+        const fileSession = {
+            [selectedFile]: {
+                code: 'lorem ipsum',
+                cursor: { column: 0, row: 0 },
+                loadingError: true,
+            },
+        };
         const initEditorSpy = jest.spyOn(comp, 'initEditor');
         const loadFileSpy = jest.spyOn(comp, 'fetchFileContent');
         const loadFileSubject = new Subject<{ fileName: 'dummy'; fileContent: 'lorem ipsum' }>();
@@ -233,7 +251,13 @@ describe('CodeEditorAceComponent', () => {
     it('should init editor on newly created file if selected', async () => {
         const selectedFile = 'file';
         const fileChange = new CreateFileChange(FileType.FILE, selectedFile);
-        const fileSession = { anotherFile: { code: 'lorem ipsum 2', cursor: { column: 0, row: 0 }, loadingError: false } };
+        const fileSession = {
+            anotherFile: {
+                code: 'lorem ipsum 2',
+                cursor: { column: 0, row: 0 },
+                loadingError: false,
+            },
+        };
         const initEditorSpy = jest.spyOn(comp, 'initEditor');
         comp.selectedFile = selectedFile;
         comp.fileSession = fileSession;
@@ -253,7 +277,13 @@ describe('CodeEditorAceComponent', () => {
         const onFileContentChangeSpy = jest.spyOn(comp.onFileContentChange, 'emit');
 
         const selectedFile = 'file';
-        const fileSession = { [selectedFile]: { code: 'lorem ipsum', cursor: { column: 0, row: 0 }, loadingError: false } };
+        const fileSession = {
+            [selectedFile]: {
+                code: 'lorem ipsum',
+                cursor: { column: 0, row: 0 },
+                loadingError: false,
+            },
+        };
         comp.selectedFile = selectedFile;
         comp.fileSession = fileSession;
 
@@ -267,7 +297,13 @@ describe('CodeEditorAceComponent', () => {
 
         const selectedFile = 'file';
         const newFileContent = 'lorem ipsum new';
-        const fileSession = { [selectedFile]: { code: 'lorem ipsum', cursor: { column: 0, row: 0 }, loadingError: false } };
+        const fileSession = {
+            [selectedFile]: {
+                code: 'lorem ipsum',
+                cursor: { column: 0, row: 0 },
+                loadingError: false,
+            },
+        };
         const annotations = [{ fileName: selectedFile, row: 5, column: 4, text: 'error', type: 'error', timestamp: 0 }];
         const editorChange = { start: { row: 1, column: 1 }, end: { row: 2, column: 1 }, action: 'remove' };
 

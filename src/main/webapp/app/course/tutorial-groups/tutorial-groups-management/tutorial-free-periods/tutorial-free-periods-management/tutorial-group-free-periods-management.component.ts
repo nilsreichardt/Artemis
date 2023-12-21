@@ -92,7 +92,12 @@ export class TutorialGroupFreePeriodsManagementComponent implements OnInit, OnDe
 
     openCreateFreeDayDialog(event: MouseEvent) {
         event.stopPropagation();
-        const modalRef: NgbModalRef = this.modalService.open(CreateTutorialGroupFreePeriodComponent, { size: 'lg', scrollable: false, backdrop: 'static', animation: false });
+        const modalRef: NgbModalRef = this.modalService.open(CreateTutorialGroupFreePeriodComponent, {
+            size: 'lg',
+            scrollable: false,
+            backdrop: 'static',
+            animation: false,
+        });
         modalRef.componentInstance.course = this.course;
         modalRef.componentInstance.tutorialGroupConfigurationId = this.tutorialGroupsConfiguration.id!;
         modalRef.componentInstance.initialize();

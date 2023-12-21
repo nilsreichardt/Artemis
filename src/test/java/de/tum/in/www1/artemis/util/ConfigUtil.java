@@ -20,8 +20,7 @@ public class ConfigUtil {
 
         try {
             test.execute();
-        }
-        finally {
+        } finally {
             ReflectionTestUtils.setField(resource, configName, oldValue);
         }
     }

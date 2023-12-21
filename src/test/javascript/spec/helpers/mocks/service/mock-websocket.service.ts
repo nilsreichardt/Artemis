@@ -29,6 +29,7 @@ export class MockWebsocketService implements IWebsocketService {
     unsubscribe(): void {}
 
     state = of(new ConnectionState(true, true, false));
+
     get connectionState(): Observable<ConnectionState> {
         return this.state;
     }

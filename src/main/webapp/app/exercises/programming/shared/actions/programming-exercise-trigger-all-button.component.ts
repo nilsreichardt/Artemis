@@ -58,7 +58,10 @@ export class ProgrammingExerciseTriggerAllButtonComponent implements OnInit {
      * and will create new results for the students (which could be confusing to them).
      */
     openTriggerAllModal() {
-        const modalRef = this.modalService.open(ProgrammingExerciseInstructorTriggerAllDialogComponent, { size: 'lg', backdrop: 'static' });
+        const modalRef = this.modalService.open(ProgrammingExerciseInstructorTriggerAllDialogComponent, {
+            size: 'lg',
+            backdrop: 'static',
+        });
         modalRef.componentInstance.exerciseId = this.exercise.id;
         modalRef.componentInstance.dueDatePassed = hasDueDatePassed(this.exercise);
         modalRef.result.then(() => {

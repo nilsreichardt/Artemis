@@ -20,7 +20,14 @@ describe('Create Test Run Modal Component', () => {
     const course = { id: 1 } as Course;
     const exercise = { id: 1, title: 'exampleExercise', type: ExerciseType.TEXT } as Exercise;
     const exerciseGroup1 = { id: 1, exercises: [exercise], title: 'exampleExerciseGroup' } as ExerciseGroup;
-    const exam = { id: 1, course, started: true, startDate: dayjs(), endDate: dayjs().add(20, 'seconds'), exerciseGroups: [exerciseGroup1] } as Exam;
+    const exam = {
+        id: 1,
+        course,
+        started: true,
+        startDate: dayjs(),
+        endDate: dayjs().add(20, 'seconds'),
+        exerciseGroups: [exerciseGroup1],
+    } as Exam;
     const exerciseGroup2 = { id: 2 } as ExerciseGroup;
 
     beforeEach(() => {

@@ -1,12 +1,12 @@
 package de.tum.in.www1.artemis.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.util.ResourceUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.stream.Collectors;
 
-import org.springframework.util.ResourceUtils;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class FileUtils {
 

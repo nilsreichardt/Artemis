@@ -151,7 +151,7 @@
                                                     {{ result.submission.submissionDate | artemisDate: 'long-date' }}
                                                 </h4>
                                             }
-                                            <jhi-result [result]="result" [showUngradedResults]="true" [showBadge]="true" [exercise]="exercise"> </jhi-result>
+                                            <jhi-result [result]="result" [showUngradedResults]="true" [showBadge]="true" [exercise]="exercise"></jhi-result>
                                         </div>
                                     }
                                     @if (!sortedHistoryResults) {
@@ -165,9 +165,9 @@
                     </div>
                 }
                 <!-- RESULTS END -->
-                <jhi-problem-statement [exercise]="exercise" [participation]="practiceStudentParticipation ?? gradedStudentParticipation!"> </jhi-problem-statement>
+                <jhi-problem-statement [exercise]="exercise" [participation]="practiceStudentParticipation ?? gradedStudentParticipation!"></jhi-problem-statement>
                 @if (exercise.type === PROGRAMMING && exercise.studentParticipations && exercise.studentParticipations.length) {
-                    <jhi-reset-repo-button [exercise]="exercise" [participations]="exercise.studentParticipations" [smallButtons]="false"> </jhi-reset-repo-button>
+                    <jhi-reset-repo-button [exercise]="exercise" [participations]="exercise.studentParticipations" [smallButtons]="false"></jhi-reset-repo-button>
                 }
                 @if (exampleSolutionInfo?.exampleSolutionPublished) {
                     <div class="row mb-2 mt-2 align-items-baseline">

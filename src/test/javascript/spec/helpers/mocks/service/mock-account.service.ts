@@ -10,6 +10,7 @@ export class MockAccountService implements IAccountService {
     get userIdentity() {
         return this.userIdentityValue;
     }
+
     set userIdentity(user: User | undefined) {
         this.userIdentityValue = user;
     }

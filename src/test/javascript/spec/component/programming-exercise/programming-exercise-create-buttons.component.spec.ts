@@ -49,7 +49,10 @@ describe('ProgrammingExercise Create Buttons Component', () => {
         jest.spyOn(modalService, 'open').mockReturnValue(mockReturnValue);
 
         comp.openImportModal();
-        expect(modalService.open).toHaveBeenCalledWith(ExerciseImportWrapperComponent, { size: 'lg', backdrop: 'static' });
+        expect(modalService.open).toHaveBeenCalledWith(ExerciseImportWrapperComponent, {
+            size: 'lg',
+            backdrop: 'static',
+        });
         expect(modalService.open).toHaveBeenCalledOnce();
         expect(mockReturnValue.componentInstance.exerciseType).toEqual(ExerciseType.PROGRAMMING);
     });

@@ -21,6 +21,7 @@ export abstract class AbstractDialogComponent {
             this.activeModal.dismiss();
         }
     }
+
     close(result?: any) {
         if (this.activeModal) {
             this.activeModal.close(result);

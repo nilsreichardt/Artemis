@@ -47,12 +47,22 @@ describe('CodeEditorGridComponent', () => {
             expect(draggableIconForWindow).not.toBeNull();
 
             const resizable = () => {};
-            const windowInteractable: Interactable = { target: '.resizable-' + windowName.toLowerCase(), resizable } as Interactable;
+            const windowInteractable: Interactable = {
+                target: '.resizable-' + windowName.toLowerCase(),
+                resizable,
+            } as Interactable;
 
             const blur = () => {};
-            const pointerEvent: PointerEvent = { type: 'click', target: { blur } as unknown as HTMLElement } as unknown as PointerEvent;
+            const pointerEvent: PointerEvent = {
+                type: 'click',
+                target: { blur } as unknown as HTMLElement,
+            } as unknown as PointerEvent;
 
-            const windowCollapseEvent: InteractableEvent = { event: pointerEvent, horizontal: true, interactable: windowInteractable };
+            const windowCollapseEvent: InteractableEvent = {
+                event: pointerEvent,
+                horizontal: true,
+                interactable: windowInteractable,
+            };
 
             expectWindowToBeCollapsed(windowName, false);
 

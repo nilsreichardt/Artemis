@@ -1,18 +1,19 @@
 package de.tum.in.www1.artemis.web.rest;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
-
-import de.tum.in.www1.artemis.domain.*;
+import de.tum.in.www1.artemis.domain.Course;
+import de.tum.in.www1.artemis.domain.Exercise;
+import de.tum.in.www1.artemis.domain.Feedback;
+import de.tum.in.www1.artemis.domain.Result;
+import de.tum.in.www1.artemis.domain.Submission;
+import de.tum.in.www1.artemis.domain.User;
 import de.tum.in.www1.artemis.domain.enumeration.FeedbackType;
 import de.tum.in.www1.artemis.domain.participation.Participation;
 import de.tum.in.www1.artemis.domain.participation.StudentParticipation;
-import de.tum.in.www1.artemis.repository.*;
+import de.tum.in.www1.artemis.repository.ExampleSubmissionRepository;
+import de.tum.in.www1.artemis.repository.ExerciseRepository;
+import de.tum.in.www1.artemis.repository.ResultRepository;
+import de.tum.in.www1.artemis.repository.SubmissionRepository;
+import de.tum.in.www1.artemis.repository.UserRepository;
 import de.tum.in.www1.artemis.security.Role;
 import de.tum.in.www1.artemis.service.AssessmentService;
 import de.tum.in.www1.artemis.service.AuthorizationCheckService;
@@ -23,6 +24,13 @@ import de.tum.in.www1.artemis.web.rest.errors.AccessForbiddenException;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
 import de.tum.in.www1.artemis.web.rest.errors.EntityNotFoundException;
 import de.tum.in.www1.artemis.web.websocket.ResultWebsocketService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
+import java.util.Optional;
 
 public abstract class AssessmentResource {
 
@@ -49,8 +57,8 @@ public abstract class AssessmentResource {
     protected final SingleUserNotificationService singleUserNotificationService;
 
     public AssessmentResource(AuthorizationCheckService authCheckService, UserRepository userRepository, ExerciseRepository exerciseRepository, AssessmentService assessmentService,
-            ResultRepository resultRepository, ExamService examService, ResultWebsocketService resultWebsocketService, ExampleSubmissionRepository exampleSubmissionRepository,
-            SubmissionRepository submissionRepository, SingleUserNotificationService singleUserNotificationService) {
+                              ResultRepository resultRepository, ExamService examService, ResultWebsocketService resultWebsocketService, ExampleSubmissionRepository exampleSubmissionRepository,
+                              SubmissionRepository submissionRepository, SingleUserNotificationService singleUserNotificationService) {
         this.authCheckService = authCheckService;
         this.userRepository = userRepository;
         this.exerciseRepository = exerciseRepository;
@@ -153,8 +161,7 @@ public abstract class AssessmentResource {
         Result result;
         if (submission.getLatestResult() == null) {
             result = assessmentService.saveManualAssessment(submission, feedbacks, null);
-        }
-        else {
+        } else {
             result = assessmentService.saveManualAssessment(submission, feedbacks, submission.getLatestResult().getId());
         }
         result = resultRepository.submitResult(result, exercise, Optional.empty());

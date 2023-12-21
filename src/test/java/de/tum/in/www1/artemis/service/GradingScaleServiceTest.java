@@ -1,20 +1,5 @@
 package de.tum.in.www1.artemis.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.test.context.support.WithMockUser;
-
 import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
 import de.tum.in.www1.artemis.assessment.GradingScaleUtilService;
 import de.tum.in.www1.artemis.course.CourseUtilService;
@@ -29,6 +14,20 @@ import de.tum.in.www1.artemis.repository.GradingScaleRepository;
 import de.tum.in.www1.artemis.security.SecurityUtils;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
 import de.tum.in.www1.artemis.web.rest.errors.EntityNotFoundException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.context.support.WithMockUser;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
 
@@ -76,7 +75,7 @@ class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
      * @param invalidPercentage the invalid percentage
      */
     @ParameterizedTest(name = "{displayName} [{index}] {argumentsWithNames}")
-    @ValueSource(doubles = { -60, -1.3, -0.0002 })
+    @ValueSource(doubles = {-60, -1.3, -0.0002})
     @WithMockUser(username = "instructor1", roles = "INSTRUCTOR")
     void testMatchPercentageToGradeStepInvalidPercentage(double invalidPercentage) {
         var savedGradingScale = gradingScaleRepository.save(gradingScale);
@@ -120,7 +119,7 @@ class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
     }
 
     @ParameterizedTest(name = "{displayName} [{index}] {argumentsWithNames}")
-    @ValueSource(doubles = { 125, 160 })
+    @ValueSource(doubles = {125, 160})
     @WithMockUser(username = "instructor1", roles = "INSTRUCTOR")
     void testMatchPercentageToGradeStepWithBonusPoints(double bonusPercentage) {
         GradeStep expectedGradeStep = createCustomGradeStep("🐧", 100, 150);
@@ -248,7 +247,7 @@ class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
      */
     @Test
     void testGradeStepMatchingForRoundingErrors1() {
-        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(3, new double[] { 0, 40.005, 80, 100 }, true, 1, Optional.empty());
+        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(3, new double[]{0, 40.005, 80, 100}, true, 1, Optional.empty());
         Long id = gradingScaleRepository.save(gradingScale).getId();
 
         GradeStep gradeStep = gradingScaleRepository.matchPercentageToGradeStep(40, id);
@@ -269,7 +268,7 @@ class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
      */
     @Test
     void testGradeStepMatchingForRoundingErrors2() {
-        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(3, new double[] { 0, 40, 63.9901, 100 }, false, 1, Optional.empty());
+        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(3, new double[]{0, 40, 63.9901, 100}, false, 1, Optional.empty());
         Long id = gradingScaleRepository.save(gradingScale).getId();
 
         GradeStep gradeStep = gradingScaleRepository.matchPercentageToGradeStep(64, id);
@@ -286,7 +285,7 @@ class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
      */
     @Test
     void testGradeStepMatchingForRoundingErrors3() {
-        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[] { 0, 50.010101, 100 }, true, 1, Optional.empty());
+        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[]{0, 50.010101, 100}, true, 1, Optional.empty());
         Long id = gradingScaleRepository.save(gradingScale).getId();
 
         GradeStep gradeStep = gradingScaleRepository.matchPercentageToGradeStep(50, id);
@@ -304,7 +303,7 @@ class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
     @Test
     void testGradeStepMatchingForRoundingErrors4() {
         double boundary = 60 + 1d / 7d;
-        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[] { 0, boundary, 100 }, true, 1, Optional.empty());
+        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[]{0, boundary, 100}, true, 1, Optional.empty());
         Long id = gradingScaleRepository.save(gradingScale).getId();
 
         GradeStep gradeStep = gradingScaleRepository.matchPercentageToGradeStep(60.142857, id);
@@ -322,7 +321,7 @@ class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
     @Test
     void testGradeStepMatchingForRoundingErrors5() {
         double boundary = 33 + 1d / 3d;
-        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[] { 0, boundary, 100 }, true, 1, Optional.empty());
+        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[]{0, boundary, 100}, true, 1, Optional.empty());
         Long id = gradingScaleRepository.save(gradingScale).getId();
 
         GradeStep gradeStep = gradingScaleRepository.matchPercentageToGradeStep(33.33, id);
@@ -340,7 +339,7 @@ class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
     @Test
     void testGradeStepMatchingForRoundingErrors6() {
         double boundary = 55 + 2d / 3d;
-        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[] { 0, boundary, 100 }, false, 1, Optional.empty());
+        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[]{0, boundary, 100}, false, 1, Optional.empty());
         Long id = gradingScaleRepository.save(gradingScale).getId();
 
         GradeStep gradeStep = gradingScaleRepository.matchPercentageToGradeStep(55.67, id);
@@ -358,7 +357,7 @@ class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
     @Test
     void testGradeStepMatchingForRoundingErrors7() {
         double boundary = 70 + 1d / 6d;
-        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[] { 0, boundary, 100 }, true, 1, Optional.empty());
+        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[]{0, boundary, 100}, true, 1, Optional.empty());
         Long id = gradingScaleRepository.save(gradingScale).getId();
 
         GradeStep gradeStep = gradingScaleRepository.matchPercentageToGradeStep(70.16, id);
@@ -376,7 +375,7 @@ class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
     @Test
     void testGradeStepMatchingForRoundingErrors8() {
         double boundary = 45 + 5d / 6d;
-        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[] { 0, boundary, 100 }, true, 1, Optional.empty());
+        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[]{0, boundary, 100}, true, 1, Optional.empty());
         Long id = gradingScaleRepository.save(gradingScale).getId();
 
         GradeStep gradeStep = gradingScaleRepository.matchPercentageToGradeStep(45.83, id);
@@ -394,7 +393,7 @@ class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
     @Test
     void testGradeStepMatchingForRoundingErrors9() {
         double boundary = 50 + 1d / 9d;
-        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[] { 0, boundary, 100 }, true, 1, Optional.empty());
+        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[]{0, boundary, 100}, true, 1, Optional.empty());
         Long id = gradingScaleRepository.save(gradingScale).getId();
 
         GradeStep gradeStep = gradingScaleRepository.matchPercentageToGradeStep(50.11, id);
@@ -412,7 +411,7 @@ class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
     @Test
     void testGradeStepMatchingForRoundingErrors10() {
         double boundary = 35 + 1d / 11d;
-        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[] { 0, boundary, 100 }, true, 1, Optional.empty());
+        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[]{0, boundary, 100}, true, 1, Optional.empty());
         Long id = gradingScaleRepository.save(gradingScale).getId();
 
         GradeStep gradeStep = gradingScaleRepository.matchPercentageToGradeStep(35.09, id);
@@ -430,7 +429,7 @@ class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
     @Test
     void testGradeStepMatchingForRoundingErrors11() {
         double boundary = 25 + 1d / 12d;
-        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[] { 0, boundary, 100 }, true, 1, Optional.empty());
+        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[]{0, boundary, 100}, true, 1, Optional.empty());
         Long id = gradingScaleRepository.save(gradingScale).getId();
 
         GradeStep gradeStep = gradingScaleRepository.matchPercentageToGradeStep(25.08, id);
@@ -448,7 +447,7 @@ class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
     @Test
     void testGradeStepMatchingForRoundingErrors12() {
         double boundary = 42 + 1d / 13d;
-        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[] { 0, boundary, 100 }, true, 1, Optional.empty());
+        GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(2, new double[]{0, boundary, 100}, true, 1, Optional.empty());
         Long id = gradingScaleRepository.save(gradingScale).getId();
 
         GradeStep gradeStep = gradingScaleRepository.matchPercentageToGradeStep(42.07, id);
@@ -465,8 +464,8 @@ class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
      */
     @Test
     void testGradeMappingWithRealExamResults() throws Exception {
-        double[] gradeBoundaries = { 0, 28.3, 34.2, 40, 45.8, 51.7, 57.5, 63.3, 69.2, 75, 80.8, 86.7, 92.5, 100 };
-        String[] gradeNames = { "5.0", "4.7", "4.3", "4.0", "3.7", "3.3", "3.0", "2.7", "2.3", "2.0", "1.7", "1.3", "1.0" };
+        double[] gradeBoundaries = {0, 28.3, 34.2, 40, 45.8, 51.7, 57.5, 63.3, 69.2, 75, 80.8, 86.7, 92.5, 100};
+        String[] gradeNames = {"5.0", "4.7", "4.3", "4.0", "3.7", "3.3", "3.0", "2.7", "2.3", "2.0", "1.7", "1.3", "1.0"};
         GradingScale gradingScale = gradingScaleUtilService.generateGradingScale(13, gradeBoundaries, true, 3, Optional.of(gradeNames));
         Long id = gradingScaleRepository.save(gradingScale).getId();
 
@@ -478,8 +477,7 @@ class GradingScaleServiceTest extends AbstractSpringIntegrationIndependentTest {
                 double percentage = Double.parseDouble(result[0].substring(0, result[0].length() - 1));
                 GradeStep gradeStep = gradingScaleRepository.matchPercentageToGradeStep(percentage, id);
                 assertThat(gradeStep.getGradeName()).isEqualTo(result[2]);
-            }
-            else {
+            } else {
                 if (!result[2].isBlank()) {
                     assertThat(result[2]).isEqualTo("X");
                 }

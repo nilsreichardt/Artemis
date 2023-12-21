@@ -34,7 +34,8 @@
                             </a>
                         }
                         <button type="button" class="btn btn-outline-secondary members" (click)="openConversationDetailDialog($event, MEMBERS)">
-                            <fa-icon [icon]="faUserGroup"></fa-icon> {{ activeConversation.numberOfMembers || 0 }}
+                            <fa-icon [icon]="faUserGroup"></fa-icon>
+                            {{ activeConversation.numberOfMembers || 0 }}
                         </button>
                         @if (canAddUsers(activeConversation)) {
                             <button type="button" class="btn btn-outline-secondary addUsers" (click)="openAddUsersDialog($event)">

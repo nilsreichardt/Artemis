@@ -402,7 +402,13 @@ describe('MetisConversationService', () => {
     }));
 
     it('should mark messages as read', () => {
-        metisConversationService['conversationsOfUser'] = [{ id: 1, unreadMessageCount: 1 } as ChannelDTO, { id: 2, unreadMessageCount: 1 } as ChannelDTO];
+        metisConversationService['conversationsOfUser'] = [
+            { id: 1, unreadMessageCount: 1 } as ChannelDTO,
+            {
+                id: 2,
+                unreadMessageCount: 1,
+            } as ChannelDTO,
+        ];
         metisConversationService.markAsRead(2);
         expect(metisConversationService['conversationsOfUser'][1].unreadMessagesCount).toBe(0);
     });

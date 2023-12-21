@@ -89,15 +89,19 @@ export class MetisConversationService implements OnDestroy {
     get conversationsOfUser$(): Observable<ConversationDto[]> {
         return this._conversationsOfUser$.asObservable();
     }
+
     get activeConversation$(): Observable<ConversationDto | undefined> {
         return this._activeConversation$.asObservable();
     }
+
     get isCodeOfConductAccepted$(): Observable<boolean> {
         return this._isCodeOfConductAccepted$.asObservable();
     }
+
     get isCodeOfConductPresented$(): Observable<boolean> {
         return this._isCodeOfConductPresented$.asObservable();
     }
+
     get hasUnreadMessages$(): Observable<boolean> {
         return this._hasUnreadMessages$.asObservable();
     }
@@ -360,6 +364,7 @@ export class MetisConversationService implements OnDestroy {
             }
         });
     }
+
     private subscribeToConversationMembershipTopic(courseId: number, userId: number) {
         // already subscribed to the topic -> nothing to do
         if (this.subscribedConversationMembershipTopic) {

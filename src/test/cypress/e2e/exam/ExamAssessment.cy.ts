@@ -182,7 +182,10 @@ function prepareExam(course: Course, end: dayjs.Dayjs, exerciseType: ExerciseTyp
         let additionalData = {};
         switch (exerciseType) {
             case ExerciseType.PROGRAMMING:
-                additionalData = { submission: javaPartiallySuccessful, progExerciseAssessmentType: ProgrammingExerciseAssessmentType.SEMI_AUTOMATIC };
+                additionalData = {
+                    submission: javaPartiallySuccessful,
+                    progExerciseAssessmentType: ProgrammingExerciseAssessmentType.SEMI_AUTOMATIC,
+                };
                 break;
             case ExerciseType.TEXT:
                 additionalData = { textFixture: 'loremIpsum-short.txt' };

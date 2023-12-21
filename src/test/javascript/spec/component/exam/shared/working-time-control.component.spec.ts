@@ -5,7 +5,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Exam } from 'app/entities/exam.model';
 import { WorkingTimeControlComponent } from 'app/exam/shared/working-time-control/working-time-control.component';
 
-const createTestExam = (duration: number) => ({ workingTime: duration, startDate: dayjs.unix(0), endDate: dayjs.unix(duration) }) as Exam;
+const createTestExam = (duration: number) =>
+    ({
+        workingTime: duration,
+        startDate: dayjs.unix(0),
+        endDate: dayjs.unix(duration),
+    }) as Exam;
 
 describe('WorkingTimeControlComponent', () => {
     let component: WorkingTimeControlComponent;

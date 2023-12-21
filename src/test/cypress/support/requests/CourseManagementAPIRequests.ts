@@ -103,7 +103,11 @@ export class CourseManagementAPIRequests {
             cy.login(admin);
             // Sometimes the server fails with a ConstraintViolationError if we delete the course immediately after a login
             cy.wait(500);
-            return cy.request({ method: DELETE, url: `${COURSE_ADMIN_BASE}/${course.id}`, retryOnStatusCodeFailure: true });
+            return cy.request({
+                method: DELETE,
+                url: `${COURSE_ADMIN_BASE}/${course.id}`,
+                retryOnStatusCodeFailure: true,
+            });
         }
     }
 

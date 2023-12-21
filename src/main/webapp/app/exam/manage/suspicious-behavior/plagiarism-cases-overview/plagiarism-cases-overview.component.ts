@@ -13,6 +13,7 @@ export class PlagiarismCasesOverviewComponent {
     @Input() anyPlagiarismCases = false;
     @Input() courseId: number;
     @Input() examId: number;
+
     constructor(private router: Router) {}
 
     goToPlagiarismDetection(exercise: Exercise) {
@@ -30,6 +31,7 @@ export class PlagiarismCasesOverviewComponent {
             'plagiarism',
         ]);
     }
+
     goToPlagiarismCases() {
         this.router.navigate(['/course-management', this.courseId, 'exams', this.examId, 'plagiarism-cases']);
     }

@@ -90,7 +90,12 @@ describe('EditCompetencyComponent', () => {
             status: 200,
         });
         const competencyCourseProgressResponse: HttpResponse<CourseCompetencyProgress> = new HttpResponse({
-            body: { competencyId: 1, numberOfStudents: 8, numberOfMasteredStudents: 5, averageStudentScore: 90 } as CourseCompetencyProgress,
+            body: {
+                competencyId: 1,
+                numberOfStudents: 8,
+                numberOfMasteredStudents: 5,
+                averageStudentScore: 90,
+            } as CourseCompetencyProgress,
             status: 200,
         });
 

@@ -55,7 +55,11 @@ describe('GuidedTourService', () => {
         settingsKey: 'tour',
         resetParticipation: ResetParticipation.EXERCISE_PARTICIPATION,
         steps: [
-            new TextTourStep({ highlightSelector: '.random-selector', headlineTranslateKey: '', contentTranslateKey: '' }),
+            new TextTourStep({
+                highlightSelector: '.random-selector',
+                headlineTranslateKey: '',
+                contentTranslateKey: '',
+            }),
             new TextTourStep({ headlineTranslateKey: '', contentTranslateKey: '', orientation: Orientation.TOPLEFT }),
         ],
     };
@@ -70,7 +74,12 @@ describe('GuidedTourService', () => {
                 contentTranslateKey: '',
                 userInteractionEvent: UserInteractionEvent.CLICK,
             }),
-            new TextTourStep({ headlineTranslateKey: '', contentTranslateKey: '', orientation: Orientation.TOPLEFT, pageUrl: 'courses' }),
+            new TextTourStep({
+                headlineTranslateKey: '',
+                contentTranslateKey: '',
+                orientation: Orientation.TOPLEFT,
+                pageUrl: 'courses',
+            }),
         ],
     };
 
@@ -275,7 +284,10 @@ describe('GuidedTourService', () => {
         });
 
         describe('Tour for a certain course and exercise', () => {
-            const guidedTourMapping = { courseShortName: 'tutorial', tours: { tour_with_course_and_exercise: 'git' } } as GuidedTourMapping;
+            const guidedTourMapping = {
+                courseShortName: 'tutorial',
+                tours: { tour_with_course_and_exercise: 'git' },
+            } as GuidedTourMapping;
             const exercise1 = { id: 1, shortName: 'git', type: ExerciseType.PROGRAMMING } as Exercise;
             const exercise2 = { id: 2, shortName: 'test', type: ExerciseType.PROGRAMMING } as Exercise;
             const exercise3 = { id: 3, shortName: 'git', type: ExerciseType.MODELING } as Exercise;
@@ -312,7 +324,10 @@ describe('GuidedTourService', () => {
                 expect(guidedTourService['currentExercise']).toEqual(exercise1);
                 resetCurrentTour();
 
-                guidedTourService.guidedTourMapping = { courseShortName: 'tutorial', tours: { tour_with_course_and_exercise: '' } } as GuidedTourMapping;
+                guidedTourService.guidedTourMapping = {
+                    courseShortName: 'tutorial',
+                    tours: { tour_with_course_and_exercise: '' },
+                } as GuidedTourMapping;
 
                 // enable tour for matching course title
                 guidedTourService.enableTourForCourseOverview(courses, tourWithCourseAndExercise, true);
@@ -385,8 +400,18 @@ describe('GuidedTourService', () => {
             });
 
             describe('Tour with student participation', () => {
-                const studentParticipation1 = { id: 1, student: { id: 1 }, exercise: exercise1, initializationState: InitializationState.INITIALIZED } as StudentParticipation;
-                const studentParticipation2 = { id: 2, student: { id: 1 }, exercise: exercise3, initializationState: InitializationState.INITIALIZED } as StudentParticipation;
+                const studentParticipation1 = {
+                    id: 1,
+                    student: { id: 1 },
+                    exercise: exercise1,
+                    initializationState: InitializationState.INITIALIZED,
+                } as StudentParticipation;
+                const studentParticipation2 = {
+                    id: 2,
+                    student: { id: 1 },
+                    exercise: exercise3,
+                    initializationState: InitializationState.INITIALIZED,
+                } as StudentParticipation;
                 const httpResponse1 = { body: studentParticipation1 } as HttpResponse<StudentParticipation>;
                 const httpResponse2 = { body: studentParticipation2 } as HttpResponse<StudentParticipation>;
                 const exercise4 = { id: 4, title: 'git', type: ExerciseType.MODELING } as Exercise;
@@ -416,7 +441,10 @@ describe('GuidedTourService', () => {
                     expect(findParticipationStub).toHaveBeenCalledOnce();
                     expect(findParticipationStub).toHaveBeenCalledWith(1);
                     expect(deleteParticipationStub).toHaveBeenCalledOnce();
-                    expect(deleteParticipationStub).toHaveBeenCalledWith(1, { deleteBuildPlan: true, deleteRepository: true });
+                    expect(deleteParticipationStub).toHaveBeenCalledWith(1, {
+                        deleteBuildPlan: true,
+                        deleteRepository: true,
+                    });
                     expect(deleteGuidedTourSettingStub).toHaveBeenCalledOnce();
                     expect(deleteGuidedTourSettingStub).toHaveBeenCalledWith('tour_with_course_and_exercise');
                     expect(navigateByUrlSpy).toHaveBeenCalledOnce();
@@ -428,7 +456,10 @@ describe('GuidedTourService', () => {
                     expect(findParticipationStub).toHaveBeenCalledOnce();
                     expect(findParticipationStub).toHaveBeenCalledWith(4);
                     expect(deleteParticipationStub).toHaveBeenCalledOnce();
-                    expect(deleteParticipationStub).toHaveBeenCalledWith(2, { deleteBuildPlan: false, deleteRepository: false });
+                    expect(deleteParticipationStub).toHaveBeenCalledWith(2, {
+                        deleteBuildPlan: false,
+                        deleteRepository: false,
+                    });
                     expect(deleteGuidedTourSettingStub).toHaveBeenCalledOnce();
                     expect(deleteGuidedTourSettingStub).toHaveBeenCalledWith('tour_with_course_and_exercise');
                     expect(navigateByUrlSpy).toHaveBeenCalledOnce();
@@ -458,8 +489,16 @@ describe('GuidedTourService', () => {
         describe('componentPageLoaded', () => {});
 
         describe('isCurrentStep', () => {
-            const step1 = new TextTourStep({ highlightSelector: '.random-selector', headlineTranslateKey: '', contentTranslateKey: '' });
-            const step2 = new TextTourStep({ headlineTranslateKey: '', contentTranslateKey: '', orientation: Orientation.TOPLEFT });
+            const step1 = new TextTourStep({
+                highlightSelector: '.random-selector',
+                headlineTranslateKey: '',
+                contentTranslateKey: '',
+            });
+            const step2 = new TextTourStep({
+                headlineTranslateKey: '',
+                contentTranslateKey: '',
+                orientation: Orientation.TOPLEFT,
+            });
             const guidedTour: GuidedTour = {
                 settingsKey: 'tour2',
                 resetParticipation: ResetParticipation.EXERCISE_PARTICIPATION,
@@ -593,13 +632,23 @@ describe('GuidedTourService', () => {
             }));
             it('should enableUserInteraction with UserInteractionEvent.ACE_EDITOR', fakeAsync(() => {
                 const userInteractionEvent = UserInteractionEvent.ACE_EDITOR;
-                observeMutationsStub.mockReturnValue(of({ addedNodes: { length: 0 } as NodeList, removedNodes: { length: 0 } as NodeList } as MutationRecord));
+                observeMutationsStub.mockReturnValue(
+                    of({
+                        addedNodes: { length: 0 } as NodeList,
+                        removedNodes: { length: 0 } as NodeList,
+                    } as MutationRecord),
+                );
                 guidedTourService.enableUserInteraction(htmlTarget, userInteractionEvent);
                 expect(querySelectorSpy).toHaveBeenCalledOnce();
             }));
             it('should enableUserInteraction with UserInteractionEvent.MODELING', fakeAsync(() => {
                 const userInteractionEvent = UserInteractionEvent.MODELING;
-                observeMutationsStub.mockReturnValue(of({ addedNodes: { length: 0 } as NodeList, removedNodes: { length: 0 } as NodeList } as MutationRecord));
+                observeMutationsStub.mockReturnValue(
+                    of({
+                        addedNodes: { length: 0 } as NodeList,
+                        removedNodes: { length: 0 } as NodeList,
+                    } as MutationRecord),
+                );
                 guidedTourService.enableUserInteraction(htmlTarget, userInteractionEvent);
                 expect(querySelectorSpy).toHaveBeenCalledOnce();
             }));
@@ -621,8 +670,15 @@ describe('GuidedTourService', () => {
 
         describe('enableTourForExercise', () => {
             const exerciseText = { id: 456, course: { id: 123 } as Course, type: ExerciseType.TEXT } as Exercise;
-            const exerciseProgramming = { id: 456, course: { id: 123 } as Course, type: ExerciseType.PROGRAMMING } as Exercise;
-            const guidedTourMapping = { courseShortName: 'tutorial', tours: { tour_with_course_and_exercise: 'git' } } as GuidedTourMapping;
+            const exerciseProgramming = {
+                id: 456,
+                course: { id: 123 } as Course,
+                type: ExerciseType.PROGRAMMING,
+            } as Exercise;
+            const guidedTourMapping = {
+                courseShortName: 'tutorial',
+                tours: { tour_with_course_and_exercise: 'git' },
+            } as GuidedTourMapping;
             let enableTourSpy: any;
             let startTourSpy: any;
 
@@ -681,8 +737,16 @@ describe('GuidedTourService', () => {
                     resetParticipation: ResetParticipation.EXERCISE_PARTICIPATION,
                     steps: [
                         { assessmentTask } as AssessmentTaskTourStep,
-                        new TextTourStep({ highlightSelector: '.random-selector', headlineTranslateKey: '', contentTranslateKey: '' }),
-                        new TextTourStep({ headlineTranslateKey: '', contentTranslateKey: '', orientation: Orientation.TOPLEFT }),
+                        new TextTourStep({
+                            highlightSelector: '.random-selector',
+                            headlineTranslateKey: '',
+                            contentTranslateKey: '',
+                        }),
+                        new TextTourStep({
+                            headlineTranslateKey: '',
+                            contentTranslateKey: '',
+                            orientation: Orientation.TOPLEFT,
+                        }),
                     ],
                 };
                 tourWithAssessmentTourStep = {
@@ -760,9 +824,26 @@ describe('GuidedTourService', () => {
             const profileInfoMock = jest.spyOn(profileService, 'getProfileInfo').mockReturnValue(of({ guidedTourMapping: tourMapping } as ProfileInfo));
 
             // Fake mapping and settings to enable the tour. Should be overwritten by the return value of the profile service
-            guidedTourService.guidedTourMapping = { courseShortName: 'test', tours: { tour_user_interaction: '' } } as GuidedTourMapping;
-            guidedTourService.guidedTourSettings = [{ guidedTourKey: 'test-2', guidedTourStep: 0 } as GuidedTourSetting];
-            guidedTourService.enableTourForCourseOverview([{ id: 1, shortName: 'test' } as Course], tourWithUserInteraction, true);
+            guidedTourService.guidedTourMapping = {
+                courseShortName: 'test',
+                tours: { tour_user_interaction: '' },
+            } as GuidedTourMapping;
+            guidedTourService.guidedTourSettings = [
+                {
+                    guidedTourKey: 'test-2',
+                    guidedTourStep: 0,
+                } as GuidedTourSetting,
+            ];
+            guidedTourService.enableTourForCourseOverview(
+                [
+                    {
+                        id: 1,
+                        shortName: 'test',
+                    } as Course,
+                ],
+                tourWithUserInteraction,
+                true,
+            );
             guidedTourService.currentTour = tourWithUserInteraction;
             tick(500);
             guidedTourService.currentTourStepIndex = 0;

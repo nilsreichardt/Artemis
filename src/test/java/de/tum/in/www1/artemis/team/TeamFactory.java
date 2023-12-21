@@ -1,12 +1,15 @@
 package de.tum.in.www1.artemis.team;
 
+import de.tum.in.www1.artemis.domain.Authority;
+import de.tum.in.www1.artemis.domain.Exercise;
+import de.tum.in.www1.artemis.domain.Team;
+import de.tum.in.www1.artemis.domain.User;
+import de.tum.in.www1.artemis.security.Role;
+import de.tum.in.www1.artemis.user.UserFactory;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import de.tum.in.www1.artemis.domain.*;
-import de.tum.in.www1.artemis.security.Role;
-import de.tum.in.www1.artemis.user.UserFactory;
 
 /**
  * Factory for creating Teams and related objects.
@@ -28,8 +31,8 @@ public class TeamFactory {
      * @return The generated Team
      */
     public static Team generateTeamForExercise(Exercise exercise, String name, String shortName, String loginPrefix, int numberOfStudents, User owner, String creatorLogin,
-            String registrationPrefix) {
-        List<User> students = UserFactory.generateActivatedUsersWithRegistrationNumber(shortName + loginPrefix, new String[] { "tumuser", "testgroup" },
+                                               String registrationPrefix) {
+        List<User> students = UserFactory.generateActivatedUsersWithRegistrationNumber(shortName + loginPrefix, new String[]{"tumuser", "testgroup"},
                 Set.of(new Authority(Role.STUDENT.getAuthority())), numberOfStudents, shortName + registrationPrefix);
 
         Team team = new Team();

@@ -54,12 +54,30 @@ describe('SubmissionResultStatusComponent', () => {
 
         it.each([
             [{ type: ExerciseType.QUIZ, quizBatches: [] as QuizBatch[] } as QuizExercise, true],
-            [{ type: ExerciseType.QUIZ, quizBatches: [{ started: true }], studentParticipations: [] as StudentParticipation[] } as QuizExercise, false],
             [
-                { type: ExerciseType.QUIZ, quizBatches: [{ started: true }], studentParticipations: [{ initializationState: InitializationState.UNINITIALIZED }] } as QuizExercise,
+                {
+                    type: ExerciseType.QUIZ,
+                    quizBatches: [{ started: true }],
+                    studentParticipations: [] as StudentParticipation[],
+                } as QuizExercise,
                 false,
             ],
-            [{ type: ExerciseType.QUIZ, quizBatches: [{ started: true }], studentParticipations: [{ initializationState: InitializationState.FINISHED }] } as QuizExercise, false],
+            [
+                {
+                    type: ExerciseType.QUIZ,
+                    quizBatches: [{ started: true }],
+                    studentParticipations: [{ initializationState: InitializationState.UNINITIALIZED }],
+                } as QuizExercise,
+                false,
+            ],
+            [
+                {
+                    type: ExerciseType.QUIZ,
+                    quizBatches: [{ started: true }],
+                    studentParticipations: [{ initializationState: InitializationState.FINISHED }],
+                } as QuizExercise,
+                false,
+            ],
         ])('should determine if quiz is not started', (exercise: Exercise, expected: boolean) => {
             comp.exercise = exercise;
             comp.ngOnChanges();
@@ -82,7 +100,13 @@ describe('SubmissionResultStatusComponent', () => {
         it.each([
             [{ dueDate: dayjs().subtract(1, 'hour') } as Exercise, false],
             [{ dueDate: dayjs().subtract(1, 'hour'), studentParticipations: [{}] } as Exercise, true],
-            [{ dueDate: dayjs().subtract(1, 'hour'), studentParticipations: [{ submissions: [{}] }] } as Exercise, false],
+            [
+                {
+                    dueDate: dayjs().subtract(1, 'hour'),
+                    studentParticipations: [{ submissions: [{}] }],
+                } as Exercise,
+                false,
+            ],
             [{ dueDate: dayjs().add(1, 'hour') } as Exercise, false],
             [{ dueDate: dayjs().add(1, 'hour'), studentParticipations: [{}] } as Exercise, false],
         ])('should determine if it is notSubmitted', (exercise: Exercise, expected: boolean) => {
@@ -102,8 +126,22 @@ describe('SubmissionResultStatusComponent', () => {
             [{ type: ExerciseType.PROGRAMMING }, { initializationState: InitializationState.INITIALIZED }, true],
             [{ type: ExerciseType.PROGRAMMING }, { initializationState: InitializationState.INACTIVE }, true],
             [{ type: ExerciseType.PROGRAMMING }, { initializationState: InitializationState.FINISHED }, true],
-            [{ type: ExerciseType.PROGRAMMING, dueDate: dayjs().subtract(1, 'hour') }, { initializationState: InitializationState.INITIALIZED }, false],
-            [{ type: ExerciseType.PROGRAMMING, dueDate: dayjs().subtract(1, 'hour') }, { initializationState: InitializationState.INITIALIZED, results: [{}] }, true],
+            [
+                {
+                    type: ExerciseType.PROGRAMMING,
+                    dueDate: dayjs().subtract(1, 'hour'),
+                },
+                { initializationState: InitializationState.INITIALIZED },
+                false,
+            ],
+            [
+                {
+                    type: ExerciseType.PROGRAMMING,
+                    dueDate: dayjs().subtract(1, 'hour'),
+                },
+                { initializationState: InitializationState.INITIALIZED, results: [{}] },
+                true,
+            ],
         ])(
             'should determine if results should be shown',
             fakeAsync((exercise: Exercise, participation: StudentParticipation, expected: boolean) => {

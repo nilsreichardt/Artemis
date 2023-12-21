@@ -13,7 +13,14 @@
     <div class="text-start w-100">
         @if (numOfTasks > advisedMaxNumOfTasks) {
             <div class="text-start">
-                <span>{{ 'artemisApp.programmingExercise.tasksAnalysis.numOfTasks' | artemisTranslate: { number: numOfTasks, limit: advisedMaxNumOfTasks } }}</span>
+                <span>{{
+                    'artemisApp.programmingExercise.tasksAnalysis.numOfTasks'
+                        | artemisTranslate
+                            : {
+                                  number: numOfTasks,
+                                  limit: advisedMaxNumOfTasks
+                              }
+                }}</span>
             </div>
         }
     </div>

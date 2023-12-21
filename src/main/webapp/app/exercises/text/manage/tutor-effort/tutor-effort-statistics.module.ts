@@ -7,6 +7,7 @@ import { BarChartModule } from '@swimlane/ngx-charts';
 import { ArtemisSharedComponentModule } from 'app/shared/components/shared-component.module';
 
 const ENTITY_STATES = [...tutorEffortStatisticsRoute];
+
 @NgModule({
     imports: [ArtemisSharedModule, RouterModule.forChild(ENTITY_STATES), BarChartModule, ArtemisSharedComponentModule],
     declarations: [TutorEffortStatisticsComponent],

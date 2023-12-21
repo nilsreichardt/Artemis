@@ -92,7 +92,7 @@ public class JenkinsBuildPlanCreator implements JenkinsXmlConfigBuilder {
 
     @Override
     public Document buildBasicConfig(final ProgrammingLanguage programmingLanguage, final Optional<ProjectType> projectType,
-            final InternalVcsRepositoryURLs internalVcsRepositoryURLs, final boolean checkoutSolution, final String buildPlanUrl) {
+                                     final InternalVcsRepositoryURLs internalVcsRepositoryURLs, final boolean checkoutSolution, final String buildPlanUrl) {
         final String jenkinsfile = getJenkinsfile(internalVcsRepositoryURLs, checkoutSolution, buildPlanUrl);
 
         final Path configFilePath = Path.of("templates", "jenkins", "config.xml");
@@ -113,8 +113,7 @@ public class JenkinsBuildPlanCreator implements JenkinsXmlConfigBuilder {
 
         try (InputStream inputStream = resource.getInputStream()) {
             return IOUtils.toString(inputStream, Charset.defaultCharset());
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new ContinuousIntegrationBuildPlanException("Could not load Jenkinsfile.", e);
         }
     }

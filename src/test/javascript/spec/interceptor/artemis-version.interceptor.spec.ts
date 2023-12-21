@@ -73,7 +73,12 @@ describe(`ArtemisVersionInterceptor`, () => {
         tick();
         expect(addAlertSpy).toHaveBeenCalledOnce();
         expect(funMock).toHaveBeenCalledOnce();
-        expect(funMock).toHaveBeenCalledWith(expect.objectContaining({ type: AlertType.INFO, message: 'artemisApp.outdatedAlert' }));
+        expect(funMock).toHaveBeenCalledWith(
+            expect.objectContaining({
+                type: AlertType.INFO,
+                message: 'artemisApp.outdatedAlert',
+            }),
+        );
 
         expect(activateUpdateSpy).not.toHaveBeenCalled();
         funMock.mock.calls[0][0].action.callback();
@@ -89,14 +94,30 @@ describe(`ArtemisVersionInterceptor`, () => {
         expect(checkForUpdateSpy).toHaveBeenCalledOnce();
 
         let mockHandler = {
-            handle: jest.fn(() => of(new HttpResponse({ status: 200, body: {}, headers: new HttpHeaders({ [ARTEMIS_VERSION_HEADER]: VERSION }) }))),
+            handle: jest.fn(() =>
+                of(
+                    new HttpResponse({
+                        status: 200,
+                        body: {},
+                        headers: new HttpHeaders({ [ARTEMIS_VERSION_HEADER]: VERSION }),
+                    }),
+                ),
+            ),
         };
         intercept.intercept(requestMock, mockHandler).subscribe();
         tick();
         expect(checkForUpdateSpy).toHaveBeenCalledOnce();
 
         mockHandler = {
-            handle: jest.fn(() => of(new HttpResponse({ status: 200, body: {}, headers: new HttpHeaders({ [ARTEMIS_VERSION_HEADER]: 'x.y.z' }) }))),
+            handle: jest.fn(() =>
+                of(
+                    new HttpResponse({
+                        status: 200,
+                        body: {},
+                        headers: new HttpHeaders({ [ARTEMIS_VERSION_HEADER]: 'x.y.z' }),
+                    }),
+                ),
+            ),
         };
         intercept.intercept(requestMock, mockHandler).subscribe();
         expect(checkForUpdateSpy).toHaveBeenCalledTimes(2);

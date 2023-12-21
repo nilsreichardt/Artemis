@@ -598,7 +598,12 @@ describe('CodeEditorFileBrowserComponent', () => {
                 value: 'folder2',
             } as any),
         ];
-        const repositoryFiles = { 'folder/file1': FileType.FILE, 'folder/file2': FileType.FILE, folder: FileType.FOLDER, folder2: FileType.FOLDER };
+        const repositoryFiles = {
+            'folder/file1': FileType.FILE,
+            'folder/file2': FileType.FILE,
+            folder: FileType.FOLDER,
+            folder2: FileType.FOLDER,
+        };
         const onFileChangeSpy = jest.spyOn(comp.onFileChange, 'emit');
         comp.repositoryFiles = repositoryFiles;
         comp.renamingFile = [folderName, folderName, FileType.FILE];

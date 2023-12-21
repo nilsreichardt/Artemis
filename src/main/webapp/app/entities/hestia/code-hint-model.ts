@@ -7,6 +7,7 @@ export enum CodeHintGenerationStep {
     SOLUTION_ENTRIES,
     CODE_HINTS,
 }
+
 export class CodeHint extends ExerciseHint {
     public solutionEntries?: ProgrammingExerciseSolutionEntry[];
 }

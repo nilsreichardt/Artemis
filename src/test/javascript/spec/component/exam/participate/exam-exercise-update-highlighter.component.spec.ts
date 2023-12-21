@@ -10,7 +10,10 @@ describe('ExamExerciseUpdateHighlighterComponent', () => {
     let fixture: ComponentFixture<ExamExerciseUpdateHighlighterComponent>;
     let component: ExamExerciseUpdateHighlighterComponent;
 
-    const examExerciseIdAndProblemStatementSourceMock = new BehaviorSubject<ExamExerciseUpdate>({ exerciseId: -1, problemStatement: 'initialProblemStatementValue' });
+    const examExerciseIdAndProblemStatementSourceMock = new BehaviorSubject<ExamExerciseUpdate>({
+        exerciseId: -1,
+        problemStatement: 'initialProblemStatementValue',
+    });
     const mockExamExerciseUpdateService = {
         currentExerciseIdAndProblemStatement: examExerciseIdAndProblemStatementSourceMock.asObservable(),
     };
@@ -64,7 +67,11 @@ describe('ExamExerciseUpdateHighlighterComponent', () => {
     describe('ExamExerciseUpdateHighlighterComponent for programming exercises', () => {
         const oldProblemStatementWithPlantUml =
             'problem statement with errors @startuml class BubbleSort {<color:testsColor(testBubbleSort())>+performSort(List<Date>)</color>' + '@enduml';
-        const programmingExerciseDummy = { id: 42, problemStatement: oldProblemStatementWithPlantUml, type: ExerciseType.PROGRAMMING } as Exercise;
+        const programmingExerciseDummy = {
+            id: 42,
+            problemStatement: oldProblemStatementWithPlantUml,
+            type: ExerciseType.PROGRAMMING,
+        } as Exercise;
         const updatedProblemStatementWithPlantUml =
             'new updated ProblemStatement @startuml class BubbleSort {<color:testsColor(testBubbleSort())>+performSortUpdate(List<Date>)</color>' + '@enduml';
         beforeAll(() => {

@@ -43,7 +43,7 @@ public class ProgrammingExerciseImportFromFileService {
     private static final List<String> SHORT_NAME_REPLACEMENT_EXCLUSIONS = List.of("gradle-wrapper.jar");
 
     public ProgrammingExerciseImportFromFileService(ProgrammingExerciseService programmingExerciseService, ZipFileService zipFileService,
-            StaticCodeAnalysisService staticCodeAnalysisService, RepositoryService repositoryService, GitService gitService, FileService fileService) {
+                                                    StaticCodeAnalysisService staticCodeAnalysisService, RepositoryService repositoryService, GitService gitService, FileService fileService) {
         this.programmingExerciseService = programmingExerciseService;
         this.zipFileService = zipFileService;
         this.staticCodeAnalysisService = staticCodeAnalysisService;
@@ -87,8 +87,7 @@ public class ProgrammingExerciseImportFromFileService {
             copyEmbeddedFiles(exerciseFilePath.toAbsolutePath().getParent().resolve(FileNameUtils.getBaseName(exerciseFilePath.toString())));
             importRepositoriesFromFile(importedProgrammingExercise, importExerciseDir, oldShortName, user);
             importedProgrammingExercise.setCourse(course);
-        }
-        finally {
+        } finally {
             // want to make sure the directories are deleted, even if an exception is thrown
             fileService.scheduleDirectoryPathForRecursiveDeletion(importExerciseDir, 5);
         }
@@ -173,8 +172,7 @@ public class ProgrammingExerciseImportFromFileService {
 
         try {
             return objectMapper.readValue(exerciseJsonPath.toFile(), ProgrammingExercise.class);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new BadRequestAlertException("The JSON file for the programming exercise is not valid or was not found.", "programmingExercise", "exerciseJsonNotValidOrFound");
         }
     }
@@ -198,8 +196,7 @@ public class ProgrammingExerciseImportFromFileService {
         List<Path> result;
         try (Stream<Path> walk = Files.walk(dirPath)) {
             result = walk.filter(Files::isDirectory).filter(file -> file.getFileName().toString().endsWith("-" + repoType)).toList();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new BadRequestAlertException("Could not read the directory", "programmingExercise", "couldnotreaddirectory");
         }
         if (result.size() != 1) {

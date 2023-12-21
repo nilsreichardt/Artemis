@@ -20,7 +20,15 @@ describe('SystemNotificationManagementUpdateComponent', () => {
 
     const route = {
         parent: {
-            data: of({ notification: { id: 1, title: 'test', type: 'INFO', notificationDate: dayjs(), expireDate: dayjs().add(1, 'hour') } as SystemNotification }),
+            data: of({
+                notification: {
+                    id: 1,
+                    title: 'test',
+                    type: 'INFO',
+                    notificationDate: dayjs(),
+                    expireDate: dayjs().add(1, 'hour'),
+                } as SystemNotification,
+            }),
         },
     } as any as ActivatedRoute;
 

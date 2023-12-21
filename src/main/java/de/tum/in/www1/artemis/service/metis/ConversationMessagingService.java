@@ -71,11 +71,11 @@ public class ConversationMessagingService extends PostingService {
     private final PostSimilarityComparisonStrategy postContentCompareStrategy;
 
     protected ConversationMessagingService(CourseRepository courseRepository, ExerciseRepository exerciseRepository, LectureRepository lectureRepository,
-            ConversationMessageRepository conversationMessageRepository, AuthorizationCheckService authorizationCheckService, WebsocketMessagingService websocketMessagingService,
-            UserRepository userRepository, ConversationService conversationService, ConversationParticipantRepository conversationParticipantRepository,
-            ConversationNotificationService conversationNotificationService, ChannelAuthorizationService channelAuthorizationService, ConversationRepository conversationRepository,
-            GroupNotificationService groupNotificationService, SingleUserNotificationRepository singleUserNotificationRepository,
-            PostSimilarityComparisonStrategy postContentCompareStrategy) {
+                                           ConversationMessageRepository conversationMessageRepository, AuthorizationCheckService authorizationCheckService, WebsocketMessagingService websocketMessagingService,
+                                           UserRepository userRepository, ConversationService conversationService, ConversationParticipantRepository conversationParticipantRepository,
+                                           ConversationNotificationService conversationNotificationService, ChannelAuthorizationService channelAuthorizationService, ConversationRepository conversationRepository,
+                                           GroupNotificationService groupNotificationService, SingleUserNotificationRepository singleUserNotificationRepository,
+                                           PostSimilarityComparisonStrategy postContentCompareStrategy) {
         super(courseRepository, userRepository, exerciseRepository, lectureRepository, authorizationCheckService, websocketMessagingService, conversationParticipantRepository);
         this.conversationService = conversationService;
         this.conversationMessageRepository = conversationMessageRepository;
@@ -164,8 +164,7 @@ public class ConversationMessagingService extends PostingService {
 
             recipientSummaries = getNotificationRecipients(conversation).collect(Collectors.toSet());
             log.debug("      getNotificationRecipients DONE");
-        }
-        else {
+        } else {
             // In all other cases we need the list of participants to send the WS messages to the correct topics. Hence, the db query has to be made before sending WS messages
             recipientSummaries = getNotificationRecipients(conversation).collect(Collectors.toSet());
             log.debug("      getNotificationRecipients DONE");
@@ -194,7 +193,7 @@ public class ConversationMessagingService extends PostingService {
      * @param recipientSummaries         set of setting summaries for the recipients
      */
     private void sendAndSaveNotifications(ConversationNotification notification, CreatedConversationMessage createdConversationMessage,
-            Set<ConversationNotificationRecipientSummary> recipientSummaries) {
+                                          Set<ConversationNotificationRecipientSummary> recipientSummaries) {
         Post createdMessage = createdConversationMessage.messageWithHiddenDetails();
         User author = createdMessage.getAuthor();
         Conversation conversation = createdConversationMessage.completeConversation();
@@ -246,7 +245,7 @@ public class ConversationMessagingService extends PostingService {
      * @return filtered list of users that are supposed to receive a notification
      */
     private Set<User> filterNotificationRecipients(User author, Conversation conversation, Set<ConversationNotificationRecipientSummary> webSocketRecipients,
-            Set<User> mentionedUsers) {
+                                                   Set<User> mentionedUsers) {
         // Initialize filter with check for author
         Predicate<ConversationNotificationRecipientSummary> filter = recipientSummary -> !Objects.equals(recipientSummary.userId(), author.getId());
 
@@ -261,8 +260,7 @@ public class ConversationMessagingService extends PostingService {
             if (!conversationService.isChannelVisibleToStudents(channel)) {
                 filter = filter.and(ConversationNotificationRecipientSummary::isAtLeastTutorInCourse);
             }
-        }
-        else {
+        } else {
             filter = filter.and(recipientSummary -> !recipientSummary.isConversationHidden());
         }
 
@@ -416,8 +414,7 @@ public class ConversationMessagingService extends PostingService {
                 throw new BadRequestAlertException("A message cannot be created in an archived channel", METIS_POST_ENTITY_NAME, "channelarchived");
             }
             return conversation;
-        }
-        else {
+        } else {
             throw new AccessForbiddenException("You are not allowed to edit or delete this message");
         }
     }
@@ -484,18 +481,16 @@ public class ConversationMessagingService extends PostingService {
             Node document = parser.parse(message.getContent());
             HtmlRenderer renderer = HtmlRenderer.builder().build();
             htmlPostContent = renderer.render(document);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             htmlPostContent = "";
         }
         postForNotification.setContent(htmlPostContent);
 
         if (channel.getIsCourseWide()) {
             groupNotificationService.notifyAllGroupsAboutNewAnnouncement(postForNotification, course);
-        }
-        else {
-            String[] placeholders = new String[] { course.getTitle(), message.getContent(), message.getCreationDate().toString(), channel.getName(), message.getAuthor().getName(),
-                    "channel" };
+        } else {
+            String[] placeholders = new String[]{course.getTitle(), message.getContent(), message.getCreationDate().toString(), channel.getName(), message.getAuthor().getName(),
+                    "channel"};
             Set<SingleUserNotification> announcementNotifications = recipients.stream().map(recipient -> SingleUserNotificationFactory.createNotification(postForNotification,
                     NotificationType.NEW_ANNOUNCEMENT_POST, NotificationConstants.NEW_ANNOUNCEMENT_POST_TEXT, placeholders, recipient)).collect(Collectors.toSet());
             announcementNotifications.add(SingleUserNotificationFactory.createNotification(postForNotification, NotificationType.NEW_ANNOUNCEMENT_POST,

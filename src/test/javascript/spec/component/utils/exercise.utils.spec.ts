@@ -101,8 +101,16 @@ describe('ExerciseUtils', () => {
             { dueDate: dayjs().subtract(1, 'day'), participation: undefined, startPracticeAvailable: true },
             { dueDate: dayjs().add(1, 'day'), participation: undefined, startPracticeAvailable: false },
             { dueDate: undefined, participation: undefined, startPracticeAvailable: false },
-            { dueDate: dayjs().subtract(1, 'day'), participation: { initializationState: InitializationState.INITIALIZED }, startPracticeAvailable: false },
-            { dueDate: dayjs().subtract(1, 'day'), participation: { initializationState: InitializationState.REPO_COPIED }, startPracticeAvailable: true },
+            {
+                dueDate: dayjs().subtract(1, 'day'),
+                participation: { initializationState: InitializationState.INITIALIZED },
+                startPracticeAvailable: false,
+            },
+            {
+                dueDate: dayjs().subtract(1, 'day'),
+                participation: { initializationState: InitializationState.REPO_COPIED },
+                startPracticeAvailable: true,
+            },
         ])('should determine correctly if the student can practice a programming exercise', ({ dueDate, participation, startPracticeAvailable }) => {
             const exercise: ProgrammingExercise = {
                 numberOfAssessmentsOfCorrectionRounds: [],
@@ -133,9 +141,30 @@ describe('ExerciseUtils', () => {
             [{ dueDate: undefined, type: ExerciseType.PROGRAMMING } as Exercise, undefined, true],
             [{ dueDate: dayjs().add(1, 'hour'), type: ExerciseType.PROGRAMMING } as Exercise, undefined, true],
             [{ dueDate: dayjs().subtract(1, 'hour'), type: ExerciseType.PROGRAMMING } as Exercise, undefined, false],
-            [{ dueDate: dayjs().add(1, 'hour'), type: ExerciseType.PROGRAMMING } as Exercise, { initializationState: InitializationState.INITIALIZED }, false],
-            [{ dueDate: dayjs().add(1, 'hour'), type: ExerciseType.PROGRAMMING } as Exercise, { initializationState: InitializationState.REPO_COPIED }, true],
-            [{ dueDate: dayjs().subtract(1, 'hour'), type: ExerciseType.PROGRAMMING } as Exercise, { initializationState: InitializationState.REPO_COPIED }, false],
+            [
+                {
+                    dueDate: dayjs().add(1, 'hour'),
+                    type: ExerciseType.PROGRAMMING,
+                } as Exercise,
+                { initializationState: InitializationState.INITIALIZED },
+                false,
+            ],
+            [
+                {
+                    dueDate: dayjs().add(1, 'hour'),
+                    type: ExerciseType.PROGRAMMING,
+                } as Exercise,
+                { initializationState: InitializationState.REPO_COPIED },
+                true,
+            ],
+            [
+                {
+                    dueDate: dayjs().subtract(1, 'hour'),
+                    type: ExerciseType.PROGRAMMING,
+                } as Exercise,
+                { initializationState: InitializationState.REPO_COPIED },
+                false,
+            ],
         ])('should correctly determine if starting an exercise is available', (exercise: Exercise, participation: StudentParticipation | undefined, expected: boolean) => {
             expect(isStartExerciseAvailable(exercise, participation)).toBe(expected);
         });
@@ -161,7 +190,14 @@ describe('ExerciseUtils', () => {
             [{ type: ExerciseType.MODELING, dueDate: dayjs().add(1, 'hour') } as Exercise, false],
             [{ type: ExerciseType.PROGRAMMING } as Exercise, true],
             [{ type: ExerciseType.PROGRAMMING, dueDate: dayjs().subtract(1, 'hour') } as Exercise, true],
-            [{ type: ExerciseType.PROGRAMMING, dueDate: dayjs().subtract(1, 'hour'), assessmentType: AssessmentType.AUTOMATIC } as Exercise, false],
+            [
+                {
+                    type: ExerciseType.PROGRAMMING,
+                    dueDate: dayjs().subtract(1, 'hour'),
+                    assessmentType: AssessmentType.AUTOMATIC,
+                } as Exercise,
+                false,
+            ],
             [{ type: ExerciseType.PROGRAMMING, dueDate: dayjs().add(1, 'hour') } as Exercise, false],
             [
                 {

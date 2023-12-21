@@ -157,7 +157,14 @@ async function generateDragAndDropItemForElement(
  *
  * @return {Promise<DragAndDropMapping>} A Promise resolving to a Drag and Drop mapping
  */
-async function generateDragAndDropItemForText(element: UMLModelElement, model: UMLModel, svgSize: { width: number; height: number }): Promise<DragAndDropMapping> {
+async function generateDragAndDropItemForText(
+    element: UMLModelElement,
+    model: UMLModel,
+    svgSize: {
+        width: number;
+        height: number;
+    },
+): Promise<DragAndDropMapping> {
     const dragItem = new DragItem();
     dragItem.text = element.name;
     const dropLocation = computeDropLocation(element.bounds, svgSize);
@@ -216,7 +223,13 @@ async function generateDragAndDropItemForRelationship(
  *
  * @return {DropLocation} A Drag and Drop Quiz Exercise `DropLocation`.
  */
-function computeDropLocation(elementLocation: { x: number; y: number; width: number; height: number }, totalSize: { width: number; height: number }): DropLocation {
+function computeDropLocation(
+    elementLocation: { x: number; y: number; width: number; height: number },
+    totalSize: {
+        width: number;
+        height: number;
+    },
+): DropLocation {
     const dropLocation = new DropLocation();
     // on quiz exercise generation, svg exports adds 15px padding
     elementLocation.x += 15;

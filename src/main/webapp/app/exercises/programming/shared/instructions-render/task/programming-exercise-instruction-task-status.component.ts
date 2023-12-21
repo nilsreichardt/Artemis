@@ -25,6 +25,7 @@ export class ProgrammingExerciseInstructionTaskStatusComponent {
     get testIds() {
         return this.testIdsValue;
     }
+
     @Input() exercise: Exercise;
     @Input() latestResult?: Result;
 

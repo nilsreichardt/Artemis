@@ -23,7 +23,11 @@ export enum ProgrammingSubmissionState {
     HAS_FAILED_SUBMISSION = 'HAS_FAILED_SUBMISSION',
 }
 
-export type ProgrammingSubmissionStateObj = { participationId: number; submissionState: ProgrammingSubmissionState; submission?: ProgrammingSubmission };
+export type ProgrammingSubmissionStateObj = {
+    participationId: number;
+    submissionState: ProgrammingSubmissionState;
+    submission?: ProgrammingSubmission;
+};
 
 export type ExerciseSubmissionState = { [participationId: number]: ProgrammingSubmissionStateObj };
 
@@ -64,7 +68,9 @@ export class ProgrammingSubmissionService implements IProgrammingSubmissionServi
     private participationIdToExerciseId = new Map<number, number>();
 
     // undefined describes the case when there is not a pending submission, undefined is used for the setup process and will not be emitted to subscribers.
-    private submissionSubjects: { [participationId: number]: BehaviorSubject<ProgrammingSubmissionStateObj | undefined> } = {};
+    private submissionSubjects: {
+        [participationId: number]: BehaviorSubject<ProgrammingSubmissionStateObj | undefined>;
+    } = {};
     // exerciseId -> ExerciseSubmissionState
     private exerciseBuildStateSubjects = new Map<number, BehaviorSubject<ExerciseSubmissionState | undefined>>();
     // participationId -> Subject
@@ -140,9 +146,13 @@ export class ProgrammingSubmissionService implements IProgrammingSubmissionServi
      *
      * @param exerciseId of programming exercise.
      */
-    private fetchLatestPendingSubmissionsByExerciseId(exerciseId: number): Observable<{ [participationId: number]: ProgrammingSubmission }> {
+    private fetchLatestPendingSubmissionsByExerciseId(exerciseId: number): Observable<{
+        [participationId: number]: ProgrammingSubmission;
+    }> {
         return this.http
-            .get<{ [participationId: number]: ProgrammingSubmission }>(`api/programming-exercises/${exerciseId}/latest-pending-submissions`)
+            .get<{
+                [participationId: number]: ProgrammingSubmission;
+            }>(`api/programming-exercises/${exerciseId}/latest-pending-submissions`)
             .pipe(catchError(() => of([])));
     }
 
@@ -247,7 +257,10 @@ export class ProgrammingSubmissionService implements IProgrammingSubmissionServi
                 if (this.isResultOfLatestSubmission(result, exerciseId, participationId)) {
                     // Notify all result subscribers with the latest result if it belongs to the latest submission
                     // This will also trigger the resultObservable above, which emits that the submission is no longer pending
-                    this.participationWebsocketService.notifyAllResultSubscribers({ ...result, participation: { id: participationId } });
+                    this.participationWebsocketService.notifyAllResultSubscribers({
+                        ...result,
+                        participation: { id: participationId },
+                    });
                 } else {
                     // Otherwise, notify that submission subscribers that the result could not be retrieved
                     this.emitFailedSubmission(participationId, exerciseId);
@@ -279,12 +292,20 @@ export class ProgrammingSubmissionService implements IProgrammingSubmissionServi
     }
 
     private emitNoPendingSubmission(participationId: number, exerciseId: number) {
-        const newSubmissionState = { participationId, submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION, submission: undefined };
+        const newSubmissionState = {
+            participationId,
+            submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+            submission: undefined,
+        };
         this.notifySubscribers(participationId, exerciseId, newSubmissionState);
     }
 
     private emitBuildingSubmission(participationId: number, exerciseId: number, submission: ProgrammingSubmission) {
-        const newSubmissionState = { participationId, submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION, submission };
+        const newSubmissionState = {
+            participationId,
+            submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+            submission,
+        };
         this.notifySubscribers(participationId, exerciseId, newSubmissionState);
     }
 
@@ -312,7 +333,10 @@ export class ProgrammingSubmissionService implements IProgrammingSubmissionServi
             submissionSubject.next(newSubmissionState);
         }
         // Inform exercise subscribers.
-        this.exerciseBuildState = { ...this.exerciseBuildState, [exerciseId]: { ...(this.exerciseBuildState[exerciseId] || {}), [participationId]: newSubmissionState } };
+        this.exerciseBuildState = {
+            ...this.exerciseBuildState,
+            [exerciseId]: { ...(this.exerciseBuildState[exerciseId] || {}), [participationId]: newSubmissionState },
+        };
         const exerciseBuildStateSubject = this.exerciseBuildStateSubjects.get(exerciseId);
         if (exerciseBuildStateSubject) {
             exerciseBuildStateSubject.next(this.exerciseBuildState[exerciseId]);
@@ -491,7 +515,14 @@ export class ProgrammingSubmissionService implements IProgrammingSubmissionServi
 
     public triggerFailedBuild(participationId: number, lastGraded: boolean) {
         const params = new HttpParams().set('lastGraded', lastGraded.toString());
-        return this.http.post(this.SUBMISSION_RESOURCE_URL + participationId + '/trigger-failed-build', {}, { params, observe: 'response' });
+        return this.http.post(
+            this.SUBMISSION_RESOURCE_URL + participationId + '/trigger-failed-build',
+            {},
+            {
+                params,
+                observe: 'response',
+            },
+        );
     }
 
     public triggerInstructorBuildForAllParticipationsOfExercise(exerciseId: number) {
@@ -545,18 +576,33 @@ export class ProgrammingSubmissionService implements IProgrammingSubmissionServi
                     if (remainingTime > 0) {
                         this.emitBuildingSubmission(participationId, exerciseId, submission);
                         this.startResultWaitingTimer(participationId, remainingTime);
-                        return { participationId, submission: submissionToBeProcessed, submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION };
+                        return {
+                            participationId,
+                            submission: submissionToBeProcessed,
+                            submissionState: ProgrammingSubmissionState.IS_BUILDING_PENDING_SUBMISSION,
+                        };
                     }
                     // The server sends the latest submission without a result - so it could be that the result is too old. In this case the error is shown directly.
                     this.emitFailedSubmission(participationId, exerciseId);
-                    return { participationId, submission: submissionToBeProcessed, submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION };
+                    return {
+                        participationId,
+                        submission: submissionToBeProcessed,
+                        submissionState: ProgrammingSubmissionState.HAS_FAILED_SUBMISSION,
+                    };
                 }
                 this.emitNoPendingSubmission(participationId, exerciseId);
-                return { participationId, submission: undefined, submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION };
+                return {
+                    participationId,
+                    submission: undefined,
+                    submissionState: ProgrammingSubmissionState.HAS_NO_PENDING_SUBMISSION,
+                };
             }),
             // Now update the exercise build state object and start the result subscription regardless of the submission state.
             tap((submissionStateObj: ProgrammingSubmissionStateObj) => {
-                const exerciseSubmissionState: ExerciseSubmissionState = { ...(this.exerciseBuildState[exerciseId] || {}), [participationId]: submissionStateObj };
+                const exerciseSubmissionState: ExerciseSubmissionState = {
+                    ...(this.exerciseBuildState[exerciseId] || {}),
+                    [participationId]: submissionStateObj,
+                };
                 this.exerciseBuildState = { ...this.exerciseBuildState, [exerciseId]: exerciseSubmissionState };
                 this.subscribeForNewResult(participationId, exerciseId, personal);
             }),
@@ -581,7 +627,14 @@ export class ProgrammingSubmissionService implements IProgrammingSubmissionServi
      * @param req request parameters
      * @param correctionRound for which to get the Submissions
      */
-    getSubmissions(exerciseId: number, req: { submittedOnly?: boolean; assessedByTutor?: boolean }, correctionRound = 0): Observable<HttpResponse<ProgrammingSubmission[]>> {
+    getSubmissions(
+        exerciseId: number,
+        req: {
+            submittedOnly?: boolean;
+            assessedByTutor?: boolean;
+        },
+        correctionRound = 0,
+    ): Observable<HttpResponse<ProgrammingSubmission[]>> {
         const url = `api/exercises/${exerciseId}/programming-submissions`;
         let params = createRequestOption(req);
         if (correctionRound !== 0) {

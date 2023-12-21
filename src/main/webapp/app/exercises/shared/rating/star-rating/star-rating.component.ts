@@ -77,7 +77,11 @@ export class StarRatingComponent {
         });
     }
 
-    @Output() rate: EventEmitter<{ oldValue: number; newValue: number; starRating: StarRatingComponent }> = new EventEmitter();
+    @Output() rate: EventEmitter<{
+        oldValue: number;
+        newValue: number;
+        starRating: StarRatingComponent;
+    }> = new EventEmitter();
 
     @Input() set checkedColor(value: string) {
         this._checkedColor = value;

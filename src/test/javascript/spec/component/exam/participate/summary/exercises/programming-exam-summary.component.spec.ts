@@ -107,7 +107,14 @@ describe('ProgrammingExamSummaryComponent', () => {
                 MockComponent(ComplaintsStudentViewComponent),
                 MockPipe(ArtemisTranslatePipe),
             ],
-            providers: [MockProvider(ExerciseService), MockProvider(ExerciseCacheService), { provide: ProfileService, useValue: new MockProfileService() }],
+            providers: [
+                MockProvider(ExerciseService),
+                MockProvider(ExerciseCacheService),
+                {
+                    provide: ProfileService,
+                    useValue: new MockProfileService(),
+                },
+            ],
         })
             .compileComponents()
             .then(() => {

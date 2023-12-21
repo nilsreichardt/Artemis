@@ -78,12 +78,18 @@ export class ParticipationService {
 
     delete(participationId: number, req?: any): Observable<HttpResponse<any>> {
         const options = createRequestOption(req);
-        return this.http.delete<void>(`${this.resourceUrl}/${participationId}`, { params: options, observe: 'response' });
+        return this.http.delete<void>(`${this.resourceUrl}/${participationId}`, {
+            params: options,
+            observe: 'response',
+        });
     }
 
     deleteForGuidedTour(participationId: number, req?: any): Observable<HttpResponse<any>> {
         const options = createRequestOption(req);
-        return this.http.delete<void>(`api/guided-tour/participations/${participationId}`, { params: options, observe: 'response' });
+        return this.http.delete<void>(`api/guided-tour/participations/${participationId}`, {
+            params: options,
+            observe: 'response',
+        });
     }
 
     cleanupBuildPlan(participation: StudentParticipation): Observable<EntityResponseType> {
@@ -94,13 +100,18 @@ export class ParticipationService {
     }
 
     downloadArtifact(participationId: number): Observable<BuildArtifact> {
-        return this.http.get(`${this.resourceUrl}/${participationId}/buildArtifact`, { observe: 'response', responseType: 'blob' }).pipe(
-            map((res: EntityBlobResponseType) => {
-                const fileNameCandidate = (res.headers.get('content-disposition') || '').split('filename=')[1];
-                const fileName = fileNameCandidate ? fileNameCandidate.replace(/"/g, '') : 'artifact';
-                return { fileName, fileContent: res.body } as BuildArtifact;
-            }),
-        );
+        return this.http
+            .get(`${this.resourceUrl}/${participationId}/buildArtifact`, {
+                observe: 'response',
+                responseType: 'blob',
+            })
+            .pipe(
+                map((res: EntityBlobResponseType) => {
+                    const fileNameCandidate = (res.headers.get('content-disposition') || '').split('filename=')[1];
+                    const fileName = fileNameCandidate ? fileNameCandidate.replace(/"/g, '') : 'artifact';
+                    return { fileName, fileContent: res.body } as BuildArtifact;
+                }),
+            );
     }
 
     shouldPreferPractice(exercise?: Exercise): boolean {

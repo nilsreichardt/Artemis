@@ -35,7 +35,7 @@ public class ProgrammingExerciseTestCaseService {
     private final ProgrammingExerciseTaskService programmingExerciseTaskService;
 
     public ProgrammingExerciseTestCaseService(ProgrammingExerciseTestCaseRepository testCaseRepository, ProgrammingExerciseRepository programmingExerciseRepository,
-            ProgrammingTriggerService programmingTriggerService, AuditEventRepository auditEventRepository, ProgrammingExerciseTaskService programmingExerciseTaskService) {
+                                              ProgrammingTriggerService programmingTriggerService, AuditEventRepository auditEventRepository, ProgrammingExerciseTaskService programmingExerciseTaskService) {
         this.testCaseRepository = testCaseRepository;
         this.programmingExerciseRepository = programmingExerciseRepository;
         this.programmingTriggerService = programmingTriggerService;

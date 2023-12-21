@@ -1,29 +1,32 @@
 package de.tum.in.www1.artemis.web.rest.dto;
 
-import java.time.ZonedDateTime;
-import java.util.List;
-
-import org.hibernate.Hibernate;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import de.tum.in.www1.artemis.domain.Feedback;
 import de.tum.in.www1.artemis.domain.ProgrammingExerciseTestCase;
 import de.tum.in.www1.artemis.domain.Result;
-import de.tum.in.www1.artemis.domain.enumeration.*;
+import de.tum.in.www1.artemis.domain.enumeration.AssessmentType;
+import de.tum.in.www1.artemis.domain.enumeration.FeedbackType;
+import de.tum.in.www1.artemis.domain.enumeration.Visibility;
+import org.hibernate.Hibernate;
+
+import java.time.ZonedDateTime;
+import java.util.List;
 
 /**
  * DTO containing {@link Result} information.
  * This does not include large reference attributes in order to send minimal data to the client.
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public record ResultDTO(Long id, ZonedDateTime completionDate, Boolean successful, Double score, Boolean rated, SubmissionDTO submission, ParticipationDTO participation,
-        List<FeedbackDTO> feedbacks, AssessmentType assessmentType, Boolean hasComplaint, Boolean exampleResult, Integer testCaseCount, Integer passedTestCaseCount,
-        Integer codeIssueCount) {
+public record ResultDTO(Long id, ZonedDateTime completionDate, Boolean successful, Double score, Boolean rated,
+                        SubmissionDTO submission, ParticipationDTO participation,
+                        List<FeedbackDTO> feedbacks, AssessmentType assessmentType, Boolean hasComplaint,
+                        Boolean exampleResult, Integer testCaseCount, Integer passedTestCaseCount,
+                        Integer codeIssueCount) {
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    public record FeedbackDTO(Long id, String text, String detailText, boolean hasLongFeedbackText, String reference, Double credits, Boolean positive, FeedbackType type,
-            Visibility visibility, TestCaseDTO testCase) {
+    public record FeedbackDTO(Long id, String text, String detailText, boolean hasLongFeedbackText, String reference,
+                              Double credits, Boolean positive, FeedbackType type,
+                              Visibility visibility, TestCaseDTO testCase) {
 
         public static FeedbackDTO of(Feedback feedback) {
             return new FeedbackDTO(feedback.getId(), feedback.getText(), feedback.getDetailText(), feedback.getHasLongFeedbackText(), feedback.getReference(),

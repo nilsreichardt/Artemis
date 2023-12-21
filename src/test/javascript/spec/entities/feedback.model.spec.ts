@@ -156,7 +156,11 @@ describe('Feedback', () => {
         });
 
         it('should correctly detect test case feedback', () => {
-            const feedback: Feedback = { type: FeedbackType.AUTOMATIC, detailText: 'content', testCase: { testName: 'test1' } };
+            const feedback: Feedback = {
+                type: FeedbackType.AUTOMATIC,
+                detailText: 'content',
+                testCase: { testName: 'test1' },
+            };
             expect(Feedback.isTestCaseFeedback(feedback)).toBeTrue();
         });
     });

@@ -16,7 +16,12 @@ describe('Lti13DynamicRegistrationComponentTest', () => {
     beforeEach(() => {
         route = {
             params: of({ courseId: 1 }) as Params,
-            snapshot: { queryParamMap: convertToParamMap({ openid_configuration: 'config', registration_token: 'token' }) },
+            snapshot: {
+                queryParamMap: convertToParamMap({
+                    openid_configuration: 'config',
+                    registration_token: 'token',
+                }),
+            },
         } as ActivatedRoute;
 
         TestBed.configureTestingModule({

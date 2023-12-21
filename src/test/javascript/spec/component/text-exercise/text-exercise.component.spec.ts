@@ -25,7 +25,10 @@ describe('TextExercise Management Component', () => {
 
     const course = { id: 123 } as Course;
     const textExercise: TextExercise = { id: 456, title: 'Text Exercise', type: 'text' } as TextExercise;
-    const route = { snapshot: { paramMap: convertToParamMap({ courseId: course.id }) }, queryParams: of({}) } as any as ActivatedRoute;
+    const route = {
+        snapshot: { paramMap: convertToParamMap({ courseId: course.id }) },
+        queryParams: of({}),
+    } as any as ActivatedRoute;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -82,7 +85,10 @@ describe('TextExercise Management Component', () => {
         jest.spyOn(modalService, 'open').mockReturnValue(mockReturnValue);
 
         comp.openImportModal();
-        expect(modalService.open).toHaveBeenCalledWith(ExerciseImportWrapperComponent, { size: 'lg', backdrop: 'static' });
+        expect(modalService.open).toHaveBeenCalledWith(ExerciseImportWrapperComponent, {
+            size: 'lg',
+            backdrop: 'static',
+        });
         expect(modalService.open).toHaveBeenCalledOnce();
         expect(mockReturnValue.componentInstance.exerciseType).toEqual(ExerciseType.TEXT);
     });

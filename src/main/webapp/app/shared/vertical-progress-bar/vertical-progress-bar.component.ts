@@ -29,6 +29,7 @@ export class VerticalProgressBarComponent implements OnInit {
     fillDurationCSS = '1s';
     @HostBinding('style.--border-radius')
     borderRadiusCSS = '16px';
+
     // CSS VARIABLES END
     constructor(private cdr: ChangeDetectorRef) {}
 
@@ -53,6 +54,7 @@ export class VerticalProgressBarComponent implements OnInit {
         this.setFillColor();
         this.cdr.markForCheck;
     }
+
     @Input()
     lowerColor = 'var(--success)';
     @Input()

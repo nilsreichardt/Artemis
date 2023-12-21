@@ -35,7 +35,7 @@
                                 {{ team.lastModifiedDate!.fromNow() }}
                             </span>
                             @if (isAdmin) {
-                                <a [routerLink]="['/admin', 'user-management', team.lastModifiedBy]">({{ team.lastModifiedBy }})</a>
+                                <a [routerLink]="['/admin', 'user-management', team.lastModifiedBy]">({{ team.lastModifiedBy }} )</a>
                             }
                         </span>
                     }

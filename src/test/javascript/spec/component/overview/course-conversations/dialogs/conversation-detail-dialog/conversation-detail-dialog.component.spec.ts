@@ -92,7 +92,11 @@ examples.forEach((activeConversation) => {
             fixture = TestBed.createComponent(ConversationDetailDialogComponent);
             component = fixture.componentInstance;
             fixture.detectChanges();
-            initializeDialog(component, fixture, { course, activeConversation, selectedTab: ConversationDetailTabs.INFO });
+            initializeDialog(component, fixture, {
+                course,
+                activeConversation,
+                selectedTab: ConversationDetailTabs.INFO,
+            });
         });
 
         afterEach(() => {

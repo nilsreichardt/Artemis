@@ -31,6 +31,7 @@ export class CompetencyNodeDetailsComponent implements OnInit {
             this.loadData();
         }
     }
+
     private loadData() {
         this.isLoading = true;
         this.competencyService.findById(this.competencyId!, this.courseId!).subscribe({

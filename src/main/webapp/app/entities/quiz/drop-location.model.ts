@@ -9,6 +9,7 @@ export interface CanBecomeInvalid {
 export class BaseEntityWithTempId implements BaseEntity {
     public id?: number;
     public tempID?: number;
+
     constructor() {
         this.tempID = generate();
     }

@@ -13,7 +13,9 @@ describe('GuidedTourUtils', () => {
     describe('clickOnElement', () => {
         it('should clickOnElement', () => {
             const querySelectorStub = jest.spyOn(document, 'querySelector');
-            const mockElement = { click: () => {} } as HTMLElement;
+            const mockElement = {
+                click: () => {},
+            } as HTMLElement;
             querySelectorStub.mockReturnValue(mockElement);
             clickOnElement('ab');
             expect(querySelectorStub).toHaveBeenCalledOnce();

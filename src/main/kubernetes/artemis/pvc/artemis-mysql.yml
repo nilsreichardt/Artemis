@@ -4,7 +4,7 @@ metadata:
   name: artemis-data
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 3Gi

@@ -90,7 +90,10 @@ export class ProgrammingFeedbackItemService implements FeedbackItemService {
         return {
             type: 'Static Code Analysis',
             name: this.translateService.instant('artemisApp.result.detail.codeIssue.name'),
-            title: this.translateService.instant('artemisApp.result.detail.codeIssue.title', { scaCategory, location: this.getIssueLocation(scaIssue) }),
+            title: this.translateService.instant('artemisApp.result.detail.codeIssue.title', {
+                scaCategory,
+                location: this.getIssueLocation(scaIssue),
+            }),
             text,
             positive: false,
             credits: scaIssue.penalty ? -scaIssue.penalty : feedback.credits,
@@ -196,12 +199,18 @@ export class ProgrammingFeedbackItemService implements FeedbackItemService {
         const lineText =
             !issue.endLine || issue.startLine === issue.endLine
                 ? this.translateService.instant('artemisApp.result.detail.codeIssue.line', { line: issue.startLine })
-                : this.translateService.instant('artemisApp.result.detail.codeIssue.lines', { from: issue.startLine, to: issue.endLine });
+                : this.translateService.instant('artemisApp.result.detail.codeIssue.lines', {
+                      from: issue.startLine,
+                      to: issue.endLine,
+                  });
         if (issue.startColumn) {
             const columnText =
                 !issue.endColumn || issue.startColumn === issue.endColumn
                     ? this.translateService.instant('artemisApp.result.detail.codeIssue.column', { column: issue.startColumn })
-                    : this.translateService.instant('artemisApp.result.detail.codeIssue.columns', { from: issue.startColumn, to: issue.endColumn });
+                    : this.translateService.instant('artemisApp.result.detail.codeIssue.columns', {
+                          from: issue.startColumn,
+                          to: issue.endColumn,
+                      });
             return `${issue.filePath} ${lineText} ${columnText}`;
         }
         return `${issue.filePath} ${lineText}`;

@@ -47,7 +47,7 @@ public class LectureUnitProcessingService {
     private final Splitter pdfSinglePageSplitter = new Splitter();
 
     public LectureUnitProcessingService(SlideSplitterService slideSplitterService, FileService fileService, LectureRepository lectureRepository,
-            AttachmentUnitService attachmentUnitService) {
+                                        AttachmentUnitService attachmentUnitService) {
         this.fileService = fileService;
         this.slideSplitterService = slideSplitterService;
         this.lectureRepository = lectureRepository;
@@ -132,8 +132,7 @@ public class LectureUnitProcessingService {
                     }
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             log.error("Error while retrieving slides to remove from document", e);
             throw new InternalServerErrorException("Error while retrieving slides to remove from document");
         }
@@ -162,8 +161,7 @@ public class LectureUnitProcessingService {
                     }
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             log.error("Error while removing break slides from document", e);
             throw new InternalServerErrorException("Error while removing break slides from document");
         }
@@ -193,8 +191,7 @@ public class LectureUnitProcessingService {
                     .toList();
             // return units information, maximum number of pages and by default remove break slides and remove solution slides are false
             return new LectureUnitInformationDTO(units, numberOfPages, null);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             log.error("Error while preparing the map with information", e);
             throw new InternalServerErrorException("Could not prepare split information");
         }

@@ -1,6 +1,12 @@
 package de.tum.in.www1.artemis.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
+import de.tum.in.www1.artemis.domain.BuildLogEntry;
+import de.tum.in.www1.artemis.domain.enumeration.ProgrammingLanguage;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -9,14 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
-import de.tum.in.www1.artemis.domain.BuildLogEntry;
-import de.tum.in.www1.artemis.domain.enumeration.ProgrammingLanguage;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BuildLogEntryServiceTest extends AbstractSpringIntegrationIndependentTest {
 
@@ -318,7 +317,7 @@ class BuildLogEntryServiceTest extends AbstractSpringIntegrationIndependentTest 
     @Autowired
     private BuildLogEntryService buildLogEntryService;
 
-    @ValueSource(strings = { GRADLE_SCENARIO, MAVEN_SCENARIO })
+    @ValueSource(strings = {GRADLE_SCENARIO, MAVEN_SCENARIO})
     @ParameterizedTest
     void testScenario(String scenario) {
         var logs = convertToBuildLogs(scenario);

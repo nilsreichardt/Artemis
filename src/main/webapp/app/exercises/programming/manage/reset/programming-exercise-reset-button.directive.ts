@@ -28,7 +28,10 @@ export class ProgrammingExerciseResetButtonDirective implements OnInit {
     @HostListener('click', ['$event'])
     onClick(event: MouseEvent) {
         event.stopPropagation();
-        const modalRef = this.modalService.open(ProgrammingExerciseResetDialogComponent, { keyboard: true, size: 'lg' });
+        const modalRef = this.modalService.open(ProgrammingExerciseResetDialogComponent, {
+            keyboard: true,
+            size: 'lg',
+        });
         modalRef.componentInstance.programmingExercise = this.programmingExercise;
     }
 }

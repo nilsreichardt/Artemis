@@ -31,10 +31,23 @@ describe('AssessmentLocksComponent', () => {
     let programmingAssessmentService: ProgrammingAssessmentManualResultService;
     let fileUploadAssessmentService: FileUploadAssessmentService;
 
-    const modelingSubmission = { id: 21, submissionExerciseType: SubmissionExerciseType.MODELING } as ModelingSubmission;
-    const fileUploadSubmission = { id: 22, submissionExerciseType: SubmissionExerciseType.FILE_UPLOAD } as FileUploadSubmission;
-    const textSubmission = { id: 23, participation: { exercise: { id: 1 }, id: 2 }, submissionExerciseType: SubmissionExerciseType.TEXT } as TextSubmission;
-    const programmingSubmission = { id: 24, submissionExerciseType: SubmissionExerciseType.PROGRAMMING } as ProgrammingSubmission;
+    const modelingSubmission = {
+        id: 21,
+        submissionExerciseType: SubmissionExerciseType.MODELING,
+    } as ModelingSubmission;
+    const fileUploadSubmission = {
+        id: 22,
+        submissionExerciseType: SubmissionExerciseType.FILE_UPLOAD,
+    } as FileUploadSubmission;
+    const textSubmission = {
+        id: 23,
+        participation: { exercise: { id: 1 }, id: 2 },
+        submissionExerciseType: SubmissionExerciseType.TEXT,
+    } as TextSubmission;
+    const programmingSubmission = {
+        id: 24,
+        submissionExerciseType: SubmissionExerciseType.PROGRAMMING,
+    } as ProgrammingSubmission;
     let windowConfirmStub: jest.SpyInstance<boolean, [message?: string | undefined]>;
 
     beforeEach(() => {

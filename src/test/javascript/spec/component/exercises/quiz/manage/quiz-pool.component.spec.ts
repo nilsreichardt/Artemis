@@ -35,7 +35,10 @@ describe('QuizPoolComponent', () => {
 
     const courseId = 1;
     const examId = 2;
-    const route = { snapshot: { paramMap: convertToParamMap({ courseId, examId }) }, queryParams: of({}) } as any as ActivatedRoute;
+    const route = {
+        snapshot: { paramMap: convertToParamMap({ courseId, examId }) },
+        queryParams: of({}),
+    } as any as ActivatedRoute;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -48,7 +51,14 @@ describe('QuizPoolComponent', () => {
                 MockPipe(ArtemisDatePipe),
                 MockDirective(TranslateDirective),
             ],
-            providers: [{ provide: ActivatedRoute, useValue: route }, MockProvider(ChangeDetectorRef), MockProvider(AlertService)],
+            providers: [
+                {
+                    provide: ActivatedRoute,
+                    useValue: route,
+                },
+                MockProvider(ChangeDetectorRef),
+                MockProvider(AlertService),
+            ],
         })
             .compileComponents()
             .then(() => {

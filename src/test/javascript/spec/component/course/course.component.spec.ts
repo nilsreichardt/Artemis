@@ -118,7 +118,15 @@ describe('CoursesComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ArtemisTestModule, RouterTestingModule.withRoutes([{ path: 'courses/:courseId/exams/:examId', component: DummyComponent }])],
+            imports: [
+                ArtemisTestModule,
+                RouterTestingModule.withRoutes([
+                    {
+                        path: 'courses/:courseId/exams/:examId',
+                        component: DummyComponent,
+                    },
+                ]),
+            ],
             declarations: [
                 CoursesComponent,
                 MockDirective(MockHasAnyAuthorityDirective),

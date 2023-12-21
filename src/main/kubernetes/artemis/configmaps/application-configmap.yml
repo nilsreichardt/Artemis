@@ -6,7 +6,7 @@ metadata:
 data:
   application.yml: |-
     configserver:
-      name:  JHipster Registry
+      name: JHipster Registry
       status: Connected to the JHipster Registry running in Kubernetes
     eureka:
       client:

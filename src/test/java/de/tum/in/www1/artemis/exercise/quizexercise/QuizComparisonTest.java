@@ -1,24 +1,41 @@
 package de.tum.in.www1.artemis.exercise.quizexercise;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
-import java.time.ZonedDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import de.tum.in.www1.artemis.course.CourseFactory;
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.enumeration.QuizMode;
 import de.tum.in.www1.artemis.domain.exam.Exam;
-import de.tum.in.www1.artemis.domain.quiz.*;
+import de.tum.in.www1.artemis.domain.quiz.AnswerOption;
+import de.tum.in.www1.artemis.domain.quiz.DragAndDropMapping;
+import de.tum.in.www1.artemis.domain.quiz.DragAndDropQuestion;
+import de.tum.in.www1.artemis.domain.quiz.DragAndDropSubmittedAnswer;
+import de.tum.in.www1.artemis.domain.quiz.DragItem;
+import de.tum.in.www1.artemis.domain.quiz.DropLocation;
+import de.tum.in.www1.artemis.domain.quiz.MultipleChoiceQuestion;
+import de.tum.in.www1.artemis.domain.quiz.MultipleChoiceSubmittedAnswer;
+import de.tum.in.www1.artemis.domain.quiz.QuizExercise;
+import de.tum.in.www1.artemis.domain.quiz.QuizQuestion;
+import de.tum.in.www1.artemis.domain.quiz.QuizSubmission;
+import de.tum.in.www1.artemis.domain.quiz.ShortAnswerQuestion;
+import de.tum.in.www1.artemis.domain.quiz.ShortAnswerSpot;
+import de.tum.in.www1.artemis.domain.quiz.ShortAnswerSubmittedAnswer;
+import de.tum.in.www1.artemis.domain.quiz.ShortAnswerSubmittedText;
+import de.tum.in.www1.artemis.domain.quiz.SubmittedAnswer;
 import de.tum.in.www1.artemis.domain.quiz.compare.DnDMapping;
 import de.tum.in.www1.artemis.domain.quiz.compare.SAMapping;
 import de.tum.in.www1.artemis.exam.ExamFactory;
 import de.tum.in.www1.artemis.participation.ParticipationFactory;
 import de.tum.in.www1.artemis.service.exam.StudentExamService;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class QuizComparisonTest {
 
@@ -170,8 +187,7 @@ class QuizComparisonTest {
                 changedSubmittedAnswer.setSelectedOptions(answerOptions);
                 assertThat(compare(submittedAnswer1, changedSubmittedAnswer)).isTrue();
 
-            }
-            else if (submittedAnswer2 instanceof DragAndDropSubmittedAnswer changedSubmittedAnswer) {
+            } else if (submittedAnswer2 instanceof DragAndDropSubmittedAnswer changedSubmittedAnswer) {
                 List<DragAndDropMapping> dragAndDropMappings = changedSubmittedAnswer.getMappings().stream().toList();
                 assertThat(dragAndDropMappings.size()).isEqualTo(4);
 
@@ -220,8 +236,7 @@ class QuizComparisonTest {
                 mapping1.setDropLocation(dropLocation1);
                 assertThat(compare(submittedAnswer1, changedSubmittedAnswer)).isTrue();
 
-            }
-            else if (submittedAnswer2 instanceof ShortAnswerSubmittedAnswer changedSubmittedAnswer) {
+            } else if (submittedAnswer2 instanceof ShortAnswerSubmittedAnswer changedSubmittedAnswer) {
                 List<ShortAnswerSubmittedText> shortAnswerSubmittedTexts = changedSubmittedAnswer.getSubmittedTexts().stream().toList();
                 assertThat(shortAnswerSubmittedTexts.size()).isEqualTo(2);
 
@@ -293,8 +308,7 @@ class QuizComparisonTest {
                 changedSubmittedAnswer.setSelectedOptions(answerOptions);
                 assertThat(compare(submittedAnswer1, changedSubmittedAnswer)).isTrue();
 
-            }
-            else if (submittedAnswer2 instanceof DragAndDropSubmittedAnswer changedSubmittedAnswer && submittedAnswer1 instanceof DragAndDropSubmittedAnswer originalAnswer) {
+            } else if (submittedAnswer2 instanceof DragAndDropSubmittedAnswer changedSubmittedAnswer && submittedAnswer1 instanceof DragAndDropSubmittedAnswer originalAnswer) {
                 List<DragAndDropMapping> dragAndDropMappings = changedSubmittedAnswer.getMappings().stream().toList();
                 assertThat(dragAndDropMappings.size()).isEqualTo(4);
 
@@ -328,8 +342,7 @@ class QuizComparisonTest {
                 temporaryRemoved.forEach(originalAnswer::addMappings);
                 assertThat(compare(originalAnswer, changedSubmittedAnswer)).isTrue();
 
-            }
-            else if (submittedAnswer2 instanceof ShortAnswerSubmittedAnswer changedSubmittedAnswer && submittedAnswer1 instanceof ShortAnswerSubmittedAnswer originalAnswer) {
+            } else if (submittedAnswer2 instanceof ShortAnswerSubmittedAnswer changedSubmittedAnswer && submittedAnswer1 instanceof ShortAnswerSubmittedAnswer originalAnswer) {
                 var shortAnswerMappings = changedSubmittedAnswer.getSubmittedTexts().stream().toList();
                 assertThat(shortAnswerMappings.size()).isEqualTo(2);
 
@@ -394,8 +407,7 @@ class QuizComparisonTest {
                 submittedAnswer.setSelectedOptions(answerOptions);
                 assertThat(compare(submittedAnswer1, submittedAnswer)).isTrue();
 
-            }
-            else if (submittedAnswer2 instanceof DragAndDropSubmittedAnswer changedSubmittedAnswer) {
+            } else if (submittedAnswer2 instanceof DragAndDropSubmittedAnswer changedSubmittedAnswer) {
                 List<DragAndDropMapping> dragAndDropMappings = changedSubmittedAnswer.getMappings().stream().toList();
                 assertThat(dragAndDropMappings.size()).isEqualTo(4);
                 DragAndDropMapping mapping1 = dragAndDropMappings.get(0);
@@ -416,8 +428,7 @@ class QuizComparisonTest {
                 dragAndDropMappings.forEach(changedSubmittedAnswer::addMappings);
                 assertThat(compare(submittedAnswer1, changedSubmittedAnswer)).isTrue();
 
-            }
-            else if (submittedAnswer2 instanceof ShortAnswerSubmittedAnswer changedSubmittedAnswer) {
+            } else if (submittedAnswer2 instanceof ShortAnswerSubmittedAnswer changedSubmittedAnswer) {
                 var shortAnswerMappings = changedSubmittedAnswer.getSubmittedTexts().stream().toList();
                 assertThat(shortAnswerMappings.size()).isEqualTo(2);
                 ShortAnswerSubmittedText mapping1 = shortAnswerMappings.get(0);
@@ -441,11 +452,9 @@ class QuizComparisonTest {
     private boolean compare(SubmittedAnswer answer1, SubmittedAnswer answer2) {
         if (answer1 instanceof DragAndDropSubmittedAnswer submittedAnswer1 && answer2 instanceof DragAndDropSubmittedAnswer submittedAnswer2) {
             return StudentExamService.isContentEqualTo(submittedAnswer1, submittedAnswer2);
-        }
-        else if (answer1 instanceof MultipleChoiceSubmittedAnswer submittedAnswer1 && answer2 instanceof MultipleChoiceSubmittedAnswer submittedAnswer2) {
+        } else if (answer1 instanceof MultipleChoiceSubmittedAnswer submittedAnswer1 && answer2 instanceof MultipleChoiceSubmittedAnswer submittedAnswer2) {
             return StudentExamService.isContentEqualTo(submittedAnswer1, submittedAnswer2);
-        }
-        else if (answer1 instanceof ShortAnswerSubmittedAnswer submittedAnswer1 && answer2 instanceof ShortAnswerSubmittedAnswer submittedAnswer2) {
+        } else if (answer1 instanceof ShortAnswerSubmittedAnswer submittedAnswer1 && answer2 instanceof ShortAnswerSubmittedAnswer submittedAnswer2) {
             return StudentExamService.isContentEqualTo(submittedAnswer1, submittedAnswer2);
         }
         throw new RuntimeException("Not supported");
@@ -592,15 +601,13 @@ class QuizComparisonTest {
                 id++;
             }
 
-        }
-        else if (question instanceof ShortAnswerQuestion shortAnswerQuestion) {
+        } else if (question instanceof ShortAnswerQuestion shortAnswerQuestion) {
             for (var spot : shortAnswerQuestion.getSpots()) {
                 spot.setId(id);
                 id++;
             }
 
-        }
-        else if (question instanceof MultipleChoiceQuestion multipleChoiceQuestion) {
+        } else if (question instanceof MultipleChoiceQuestion multipleChoiceQuestion) {
             for (var answerOption : multipleChoiceQuestion.getAnswerOptions()) {
                 answerOption.setId(id);
                 id++;

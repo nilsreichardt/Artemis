@@ -63,7 +63,10 @@ export class ApollonDiagramService {
     getDiagramsByCourse(courseId: number): Observable<HttpResponse<ApollonDiagram[]>> {
         const options = createRequestOption(courseId);
         return this.http
-            .get<ApollonDiagram[]>(`${this.resourceUrl}/course/${courseId}/apollon-diagrams`, { params: options, observe: 'response' })
+            .get<ApollonDiagram[]>(`${this.resourceUrl}/course/${courseId}/apollon-diagrams`, {
+                params: options,
+                observe: 'response',
+            })
             .pipe(tap((res) => res?.body?.forEach(this.sendTitlesToEntityTitleService.bind(this))));
     }
 

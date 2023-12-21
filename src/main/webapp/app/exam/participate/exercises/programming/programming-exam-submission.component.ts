@@ -155,6 +155,7 @@ export class ProgrammingExamSubmissionComponent extends ExamSubmissionComponent 
     updateViewFromSubmission(): void {
         // do nothing - the code editor itself is taking care of updating the view from submission
     }
+
     setSubmissionVersion(submissionVersion: SubmissionVersion): void {
         // if we do not assign the parameter, eslint will complain because either the parameter is unused or if we suppress this with ts-ignore that ts-ignore shadows compilation errors.
         this.submissionVersion = submissionVersion;

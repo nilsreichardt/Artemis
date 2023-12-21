@@ -127,7 +127,6 @@
                     "table": {
                         "title": "Titel",
                         "course": "Kurs",
-
                         "doSelect": "Auswählen"
                     },
                     "searchCompetency": "Nach Kompetenz suchen:",

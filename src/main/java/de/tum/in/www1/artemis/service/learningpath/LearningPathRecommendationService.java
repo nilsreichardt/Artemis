@@ -70,11 +70,11 @@ public class LearningPathRecommendationService {
      * cdf(0.40), medium: cdf(0.85) - cdf(0.40), hard: 1 - cdf(0.85)}.
      * Each array corresponds to the mean=idx/#distributions.
      */
-    private static final double[][] EXERCISE_DIFFICULTY_DISTRIBUTION_LUT = new double[][] { { 0.87, 0.12, 0.01 }, { 0.80, 0.18, 0.02 }, { 0.72, 0.25, 0.03 }, { 0.61, 0.33, 0.06 },
-            { 0.50, 0.40, 0.10 }, { 0.39, 0.45, 0.16 }, { 0.28, 0.48, 0.24 }, { 0.20, 0.47, 0.33 }, { 0.13, 0.43, 0.44 }, { 0.08, 0.37, 0.55 }, { 0.04, 0.29, 0.67 }, };
+    private static final double[][] EXERCISE_DIFFICULTY_DISTRIBUTION_LUT = new double[][]{{0.87, 0.12, 0.01}, {0.80, 0.18, 0.02}, {0.72, 0.25, 0.03}, {0.61, 0.33, 0.06},
+            {0.50, 0.40, 0.10}, {0.39, 0.45, 0.16}, {0.28, 0.48, 0.24}, {0.20, 0.47, 0.33}, {0.13, 0.43, 0.44}, {0.08, 0.37, 0.55}, {0.04, 0.29, 0.67},};
 
     protected LearningPathRecommendationService(CompetencyRelationRepository competencyRelationRepository, LearningObjectService learningObjectService,
-            ExerciseService exerciseService, ParticipantScoreService participantScoreService) {
+                                                ExerciseService exerciseService, ParticipantScoreService participantScoreService) {
         this.competencyRelationRepository = competencyRelationRepository;
         this.learningObjectService = learningObjectService;
         this.exerciseService = exerciseService;
@@ -115,12 +115,10 @@ public class LearningPathRecommendationService {
             final var progress = competency.getUserProgress().stream().findFirst();
             if (progress.isEmpty()) {
                 competencyMastery.put(competency.getId(), 0d);
-            }
-            else if (CompetencyProgressService.isMastered(progress.get())) {
+            } else if (CompetencyProgressService.isMastered(progress.get())) {
                 // add competency to mastered set if mastered
                 masteredCompetencies.add(competency.getId());
-            }
-            else {
+            } else {
                 // calculate mastery progress if not completed yet
                 competencyMastery.put(competency.getId(), CompetencyProgressService.getMasteryProgress(progress.get()));
             }
@@ -200,7 +198,7 @@ public class LearningPathRecommendationService {
      * @return map to retrieve the number of competencies a competency extends
      */
     private Map<Long, Long> getRelationsOfTypeCompetencyMapping(Set<Competency> competencies, Map<Long, Set<Long>> matchingClusters, Map<Long, Set<Long>> priorCompetencies,
-            CompetencyRelation.RelationType type) {
+                                                                CompetencyRelation.RelationType type) {
         Map<Long, Long> map = new HashMap<>();
         for (var competency : competencies) {
             if (!map.containsKey(competency.getId())) {
@@ -301,12 +299,10 @@ public class LearningPathRecommendationService {
         if (timeDelta < 0) {
             // deadline has passed
             return (-timeDelta) * DUE_DATE_UTILITY;
-        }
-        else if (timeDelta > 0) {
+        } else if (timeDelta > 0) {
             // deadline not passed yet
             return (1 / timeDelta) * DUE_DATE_UTILITY;
-        }
-        else {
+        } else {
             return DUE_DATE_UTILITY;
         }
     }
@@ -476,7 +472,7 @@ public class LearningPathRecommendationService {
      * @return number of exercises that could not be selected
      */
     private static int selectExercisesWithDifficulty(Map<DifficultyLevel, Set<Exercise>> difficultyMap, DifficultyLevel difficulty, int numberOfExercises,
-            Set<Exercise> exercises) {
+                                                     Set<Exercise> exercises) {
         var selectedExercises = difficultyMap.get(difficulty).stream().limit(numberOfExercises).collect(Collectors.toSet());
         exercises.addAll(selectedExercises);
         difficultyMap.get(difficulty).removeAll(selectedExercises);
@@ -589,8 +585,10 @@ public class LearningPathRecommendationService {
         return EXERCISE_DIFFICULTY_DISTRIBUTION_LUT[distributionIndex];
     }
 
-    public record RecommendationState(Map<Long, Competency> competencyIdMap, List<Long> recommendedOrderOfCompetencies, Set<Long> masteredCompetencies,
-            Map<Long, Double> competencyMastery, Map<Long, Set<Long>> matchingClusters, Map<Long, Set<Long>> priorCompetencies, Map<Long, Long> extendsCompetencies,
-            Map<Long, Long> assumesCompetencies) {
+    public record RecommendationState(Map<Long, Competency> competencyIdMap, List<Long> recommendedOrderOfCompetencies,
+                                      Set<Long> masteredCompetencies,
+                                      Map<Long, Double> competencyMastery, Map<Long, Set<Long>> matchingClusters,
+                                      Map<Long, Set<Long>> priorCompetencies, Map<Long, Long> extendsCompetencies,
+                                      Map<Long, Long> assumesCompetencies) {
     }
 }

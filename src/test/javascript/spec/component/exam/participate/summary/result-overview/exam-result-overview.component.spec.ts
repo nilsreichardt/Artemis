@@ -54,7 +54,11 @@ const programmingResult = { id: 4 } as Result;
 const user = { id: 1, name: 'Test User' } as User;
 
 const textParticipation = { id: 1, student: user, results: [textResult] } as StudentParticipation;
-const notIncludedTextParticipation = { id: 99, student: user, results: [notIncludedTextResult] } as StudentParticipation;
+const notIncludedTextParticipation = {
+    id: 99,
+    student: user,
+    results: [notIncludedTextResult],
+} as StudentParticipation;
 const bonusTextParticipation = { id: 100, student: user, results: [bonusTextResult] } as StudentParticipation;
 const quizParticipation = { id: 2, student: user, results: [quizResult] } as StudentParticipation;
 const modelingParticipation = { id: 3, student: user, results: [modelingResult] } as StudentParticipation;
@@ -117,7 +121,12 @@ const programmingExerciseTwo = {
 } as ProgrammingExercise;
 const exercises = [textExercise, quizExercise, modelingExercise, programmingExercise, programmingExerciseTwo, notIncludedTextExercise, bonusTextExercise];
 
-const textExerciseResult = { exerciseId: textExercise.id, achievedScore: 60, achievedPoints: 6, maxScore: textExercise.maxPoints } as ExerciseResult;
+const textExerciseResult = {
+    exerciseId: textExercise.id,
+    achievedScore: 60,
+    achievedPoints: 6,
+    maxScore: textExercise.maxPoints,
+} as ExerciseResult;
 
 describe('ExamResultOverviewComponent', () => {
     beforeEach(() => {

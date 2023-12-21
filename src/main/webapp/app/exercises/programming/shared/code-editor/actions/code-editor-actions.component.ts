@@ -28,9 +28,11 @@ export class CodeEditorActionsComponent implements OnInit, OnDestroy, OnChanges 
     @Input() unsavedFiles: { [fileName: string]: string };
     @Input() disableActions = false;
     @Input() disableAutoSave = false;
+
     @Input() get editorState() {
         return this.editorStateValue;
     }
+
     @Input() get commitState() {
         return this.commitStateValue;
     }
@@ -135,7 +137,10 @@ export class CodeEditorActionsComponent implements OnInit, OnDestroy, OnChanges 
 
     onRefresh() {
         if (this.editorState !== EditorState.CLEAN) {
-            const modal = this.modalService.open(CodeEditorConfirmRefreshModalComponent, { keyboard: true, size: 'lg' });
+            const modal = this.modalService.open(CodeEditorConfirmRefreshModalComponent, {
+                keyboard: true,
+                size: 'lg',
+            });
             modal.componentInstance.shouldRefresh.subscribe(() => {
                 this.executeRefresh();
             });
@@ -175,7 +180,10 @@ export class CodeEditorActionsComponent implements OnInit, OnDestroy, OnChanges 
     saveChangedFiles(andCommit = false): Observable<any> {
         if (!_isEmpty(this.unsavedFiles)) {
             this.editorState = EditorState.SAVING;
-            const unsavedFiles = Object.entries(this.unsavedFiles).map(([fileName, fileContent]) => ({ fileName, fileContent }));
+            const unsavedFiles = Object.entries(this.unsavedFiles).map(([fileName, fileContent]) => ({
+                fileName,
+                fileContent,
+            }));
             return this.repositoryFileService.updateFiles(unsavedFiles, andCommit).pipe(
                 tap((fileSubmission: FileSubmission) => {
                     this.onSavedFiles.emit(fileSubmission);

@@ -200,6 +200,7 @@ export class CourseUsersSelectorComponent implements ControlValueAccessor, OnIni
         }
         this.cdr.detectChanges();
     }
+
     // === END CONTROL VALUE ACCESSOR ===
 
     private onUserSelected(selectedUser: UserPublicInfoDTO) {

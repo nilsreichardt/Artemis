@@ -123,7 +123,15 @@ describe('QuizExercise Management Component', () => {
                 }),
             ),
         );
-        jest.spyOn(quizExerciseService, 'openForPractice').mockReturnValue(throwError(() => new HttpErrorResponse({ error: 'Forbidden', status: 403 })));
+        jest.spyOn(quizExerciseService, 'openForPractice').mockReturnValue(
+            throwError(
+                () =>
+                    new HttpErrorResponse({
+                        error: 'Forbidden',
+                        status: 403,
+                    }),
+            ),
+        );
         jest.spyOn(alertService, 'error');
 
         comp.ngOnInit();
@@ -162,7 +170,15 @@ describe('QuizExercise Management Component', () => {
                 }),
             ),
         );
-        jest.spyOn(quizExerciseService, 'start').mockReturnValue(throwError(() => new HttpErrorResponse({ error: 'Forbidden', status: 403 })));
+        jest.spyOn(quizExerciseService, 'start').mockReturnValue(
+            throwError(
+                () =>
+                    new HttpErrorResponse({
+                        error: 'Forbidden',
+                        status: 403,
+                    }),
+            ),
+        );
         jest.spyOn(alertService, 'error');
 
         comp.ngOnInit();
@@ -252,7 +268,15 @@ describe('QuizExercise Management Component', () => {
                 }),
             ),
         );
-        jest.spyOn(quizExerciseService, 'setVisible').mockReturnValue(throwError(() => new HttpErrorResponse({ error: 'Forbidden', status: 403 })));
+        jest.spyOn(quizExerciseService, 'setVisible').mockReturnValue(
+            throwError(
+                () =>
+                    new HttpErrorResponse({
+                        error: 'Forbidden',
+                        status: 403,
+                    }),
+            ),
+        );
         jest.spyOn(alertService, 'error');
 
         comp.ngOnInit();

@@ -282,7 +282,16 @@ describe('FileUploadExamSubmissionComponent', () => {
 
         it('should save if submissionFile is defined', () => {
             const newFilePath = 'new/path/image.png';
-            const updateStub = jest.spyOn(fileUploadSubmissionService, 'update').mockReturnValue(of(new HttpResponse({ body: { id: 1, filePath: newFilePath } })));
+            const updateStub = jest.spyOn(fileUploadSubmissionService, 'update').mockReturnValue(
+                of(
+                    new HttpResponse({
+                        body: {
+                            id: 1,
+                            filePath: newFilePath,
+                        },
+                    }),
+                ),
+            );
             comp.submissionFile = new File([], 'name.png');
             expect(comp.studentSubmission.filePath).not.toEqual(newFilePath);
             comp.saveUploadedFile();

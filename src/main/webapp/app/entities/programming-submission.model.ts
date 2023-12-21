@@ -22,6 +22,7 @@ export class ProgrammingSubmission extends Submission {
         return submission;
     }
 }
+
 export class CommitInfo {
     hash?: string;
     message?: string;

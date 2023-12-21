@@ -56,6 +56,7 @@ export class ParticipationSubmissionComponent implements OnInit {
 
     // Icons
     faTrash = faTrash;
+
     constructor(
         private route: ActivatedRoute,
         private submissionService: SubmissionService,

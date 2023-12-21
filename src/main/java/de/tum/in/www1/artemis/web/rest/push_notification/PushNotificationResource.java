@@ -1,21 +1,5 @@
 package de.tum.in.www1.artemis.web.rest.push_notification;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.Base64;
-import java.util.Date;
-
-import javax.crypto.KeyGenerator;
-import javax.validation.Valid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
-
 import de.tum.in.www1.artemis.config.Constants;
 import de.tum.in.www1.artemis.domain.User;
 import de.tum.in.www1.artemis.domain.push_notification.PushNotificationDeviceConfiguration;
@@ -24,7 +8,25 @@ import de.tum.in.www1.artemis.repository.PushNotificationDeviceConfigurationRepo
 import de.tum.in.www1.artemis.repository.UserRepository;
 import de.tum.in.www1.artemis.security.annotations.EnforceAtLeastStudent;
 import de.tum.in.www1.artemis.security.jwt.TokenProvider;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.ExpiredJwtException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.crypto.KeyGenerator;
+import javax.validation.Valid;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Base64;
+import java.util.Date;
 
 /**
  * Rest Controller for managing push notification device tokens for native clients.
@@ -43,8 +45,7 @@ public class PushNotificationResource {
         try {
             aesKeyGenerator = KeyGenerator.getInstance("AES");
             aesKeyGenerator.init(256, new SecureRandom());
-        }
-        catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
     }
@@ -54,7 +55,7 @@ public class PushNotificationResource {
     private final UserRepository userRepository;
 
     public PushNotificationResource(TokenProvider tokenProvider, PushNotificationDeviceConfigurationRepository pushNotificationDeviceConfigurationRepository,
-            UserRepository userRepository) {
+                                    UserRepository userRepository) {
         this.tokenProvider = tokenProvider;
         this.pushNotificationDeviceConfigurationRepository = pushNotificationDeviceConfigurationRepository;
         this.userRepository = userRepository;
@@ -78,12 +79,10 @@ public class PushNotificationResource {
         // This cannot throw an error as it must have been valid to even call this method
         try {
             expirationDate = tokenProvider.getExpirationDate(token);
-        }
-        catch (ExpiredJwtException e) {
+        } catch (ExpiredJwtException e) {
             log.error("Expired token {}", token, e);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             log.error("Cannot parse token {}", token, ex);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

@@ -8,6 +8,7 @@ export interface GenericConfirmationTranslationKeys {
     descriptionKey: string;
     confirmButtonKey: string;
 }
+
 @Component({
     selector: 'jhi-generic-confirmation-dialog',
     templateUrl: './generic-confirmation-dialog.component.html',
