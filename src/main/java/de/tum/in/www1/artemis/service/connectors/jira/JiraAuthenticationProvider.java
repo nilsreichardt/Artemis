@@ -73,8 +73,8 @@ public class JiraAuthenticationProvider extends ArtemisAuthenticationProviderImp
     private final AuthorityService authorityService;
 
     public JiraAuthenticationProvider(UserRepository userRepository, @Qualifier("jiraRestTemplate") RestTemplate restTemplate,
-                                      @Qualifier("shortTimeoutJiraRestTemplate") RestTemplate shortTimeoutRestTemplate, Optional<LdapUserService> ldapUserService, PasswordService passwordService,
-                                      AuthorityService authorityService, UserCreationService userCreationService) {
+            @Qualifier("shortTimeoutJiraRestTemplate") RestTemplate shortTimeoutRestTemplate, Optional<LdapUserService> ldapUserService, PasswordService passwordService,
+            AuthorityService authorityService, UserCreationService userCreationService) {
         super(userRepository, passwordService, userCreationService);
         this.shortTimeoutRestTemplate = shortTimeoutRestTemplate;
         this.restTemplate = restTemplate;
@@ -90,7 +90,8 @@ public class JiraAuthenticationProvider extends ArtemisAuthenticationProviderImp
         try {
             final var status = shortTimeoutRestTemplate.getForObject(jiraUrl + "/status", JsonNode.class);
             health = status.get("state").asText().equals("RUNNING") ? new ConnectorHealth(true) : new ConnectorHealth(false);
-        } catch (Exception emAll) {
+        }
+        catch (Exception emAll) {
             health = new ConnectorHealth(emAll);
         }
 
@@ -126,7 +127,8 @@ public class JiraAuthenticationProvider extends ArtemisAuthenticationProviderImp
             // We use the username and password provided by the user so that JIRA checks for us if this is valid
             final var entity = new HttpEntity<>(HeaderUtil.createAuthorization(username, password));
             authenticationResponse = restTemplate.exchange(path, HttpMethod.GET, entity, JiraUserDTO.class);
-        } catch (HttpStatusCodeException e) {
+        }
+        catch (HttpStatusCodeException e) {
             if (e.getStatusCode().value() == 401 || e.getStatusCode().value() == 403) {
                 // If JIRA requires a CAPTCHA. Communicate this to the client
                 if (e.getResponseHeaders() != null && e.getResponseHeaders().containsKey("X-Authentication-Denied-Reason")) {
@@ -138,7 +140,8 @@ public class JiraAuthenticationProvider extends ArtemisAuthenticationProviderImp
 
                 // Otherwise, the user used the wrong credentials
                 throw new BadCredentialsException("Wrong credentials");
-            } else if (e.getStatusCode().is5xxServerError()) {
+            }
+            else if (e.getStatusCode().is5xxServerError()) {
                 throw new ProviderNotFoundException("Could not authenticate via JIRA");
             }
         }
@@ -161,7 +164,8 @@ public class JiraAuthenticationProvider extends ArtemisAuthenticationProviderImp
                 user.setActivationKey(null);
             }
             return userCreationService.saveUser(user);
-        } else {
+        }
+        else {
             throw new InternalAuthenticationServiceException("JIRA Authentication failed for user " + username);
         }
     }
@@ -190,7 +194,8 @@ public class JiraAuthenticationProvider extends ArtemisAuthenticationProviderImp
         HttpEntity<?> entity = new HttpEntity<>(body);
         try {
             restTemplate.exchange(jiraUrl + "/rest/api/2/group/user?groupname=" + group, HttpMethod.POST, entity, Void.class);
-        } catch (HttpClientErrorException e) {
+        }
+        catch (HttpClientErrorException e) {
             if (e.getStatusCode().equals(HttpStatus.BAD_REQUEST) && e.getResponseBodyAsString().contains("user is already a member of")) {
                 // ignore the error if the user is already in the group
                 return;
@@ -208,11 +213,13 @@ public class JiraAuthenticationProvider extends ArtemisAuthenticationProviderImp
         try {
             restTemplate.exchange(jiraUrl + "/rest/api/2/user", HttpMethod.POST, entity, Void.class);
             log.info("Creating user {} was successful", user.getLogin());
-        } catch (HttpClientErrorException e) {
+        }
+        catch (HttpClientErrorException e) {
             // ignore the error if the user cannot be created, this can e.g. happen if the user already exists in the external user management system
             if (e.getStatusCode().equals(HttpStatus.BAD_REQUEST) && e.getResponseBodyAsString().contains("user with that username already exists")) {
                 log.info("User {} already exists in JIRA", user.getLogin());
-            } else {
+            }
+            else {
                 log.warn("Could not create user {} in JIRA. Error: {}", user.getLogin(), e.getMessage());
             }
         }
@@ -230,7 +237,8 @@ public class JiraAuthenticationProvider extends ArtemisAuthenticationProviderImp
         HttpEntity<?> entity = new HttpEntity<>(body);
         try {
             restTemplate.exchange(jiraUrl + "/rest/api/2/group", HttpMethod.POST, entity, Void.class);
-        } catch (HttpClientErrorException e) {
+        }
+        catch (HttpClientErrorException e) {
             // forward this error to the client because we might not want to create the course, if the group already exists
             // this prevents problems when multiple Artemis instances use the same JIRA server
             throw new GroupAlreadyExistsException("Error while creating group " + groupName + " in JIRA", e);
@@ -247,10 +255,12 @@ public class JiraAuthenticationProvider extends ArtemisAuthenticationProviderImp
         log.info("Delete group {} in JIRA", groupName);
         try {
             restTemplate.exchange(jiraUrl + "/rest/api/2/group?groupname=" + groupName, HttpMethod.DELETE, null, Void.class);
-        } catch (HttpClientErrorException e) {
+        }
+        catch (HttpClientErrorException e) {
             if (e.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
                 // ignore the error if the group does not exist
-            } else {
+            }
+            else {
                 log.error("Could not delete group {} in JIRA. Error: {}", groupName, e.getMessage());
             }
         }
@@ -264,7 +274,8 @@ public class JiraAuthenticationProvider extends ArtemisAuthenticationProviderImp
             final var path = UriComponentsBuilder.fromUri(jiraUrl.toURI()).path("/rest/api/2/group/user").queryParam("groupname", group).queryParam("username", user.getLogin())
                     .build().toUri();
             restTemplate.delete(path);
-        } catch (HttpClientErrorException e) {
+        }
+        catch (HttpClientErrorException e) {
             if (HttpStatus.NOT_FOUND.equals(e.getStatusCode())) {
                 log.warn("Could not delete user {} from group {} as the user doesn't exist.", user.getLogin(), group);
                 return;
@@ -275,7 +286,8 @@ public class JiraAuthenticationProvider extends ArtemisAuthenticationProviderImp
             }
             log.error("Could not delete user {} from group {}; Error: {}", user.getLogin(), group, e.getMessage());
             throw new ArtemisAuthenticationException(String.format("Error while deleting user %s from Jira group %s", user.getLogin(), group), e);
-        } catch (URISyntaxException e) {
+        }
+        catch (URISyntaxException e) {
             log.error("Could not delete user {} from group {}; Error: {}", user.getLogin(), group, e.getMessage());
             throw new ArtemisAuthenticationException(String.format("Error while deleting user %s from Jira group %s", user.getLogin(), group), e);
         }
@@ -288,7 +300,8 @@ public class JiraAuthenticationProvider extends ArtemisAuthenticationProviderImp
             if (response.getStatusCode().equals(HttpStatus.OK)) {
                 return true;
             }
-        } catch (HttpClientErrorException e) {
+        }
+        catch (HttpClientErrorException e) {
             log.warn("JIRA group {} does not exit", group);
             if (e.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
                 return false;
@@ -325,7 +338,8 @@ public class JiraAuthenticationProvider extends ArtemisAuthenticationProviderImp
             }
             // no exact match for email address
             return Optional.empty();
-        } catch (HttpClientErrorException e) {
+        }
+        catch (HttpClientErrorException e) {
             log.error("Could not get JIRA username for email address {}", email, e);
             throw new ArtemisAuthenticationException("Error while checking eMail address", e);
         }

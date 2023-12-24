@@ -1,13 +1,14 @@
 package de.tum.in.www1.artemis.util;
 
-import de.tum.in.www1.artemis.domain.Course;
-import de.tum.in.www1.artemis.domain.exam.Exam;
-import de.tum.in.www1.artemis.service.util.ExamExerciseStartPreparationStatus;
+import static org.assertj.core.api.Assertions.fail;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
-import static org.assertj.core.api.Assertions.fail;
+import de.tum.in.www1.artemis.domain.Course;
+import de.tum.in.www1.artemis.domain.exam.Exam;
+import de.tum.in.www1.artemis.service.util.ExamExerciseStartPreparationStatus;
 
 public class ExamPrepareExercisesTestUtil {
 
@@ -33,13 +34,15 @@ public class ExamPrepareExercisesTestUtil {
                     ExamExerciseStartPreparationStatus.class);
             if (status != null && status.finished() + status.failed() == status.overall()) {
                 return status.participationCount();
-            } else {
+            }
+            else {
                 log.warn("Exam exercise preparation not finished: Done = {}, Failed = {}, Overall = {}, Participations = {}", status.finished(), status.failed(), status.overall(),
                         status.participationCount());
             }
             try {
                 Thread.sleep(250);
-            } catch (InterruptedException ignored) {
+            }
+            catch (InterruptedException ignored) {
                 break;
             }
         }

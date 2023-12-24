@@ -82,8 +82,8 @@ public class ParticipantScoreScheduleService {
     private final AtomicBoolean isRunning = new AtomicBoolean(false);
 
     public ParticipantScoreScheduleService(@Qualifier("taskScheduler") TaskScheduler scheduler, CompetencyProgressService competencyProgressService,
-                                           ParticipantScoreRepository participantScoreRepository, StudentScoreRepository studentScoreRepository, TeamScoreRepository teamScoreRepository,
-                                           ExerciseRepository exerciseRepository, ResultRepository resultRepository, UserRepository userRepository, TeamRepository teamRepository) {
+            ParticipantScoreRepository participantScoreRepository, StudentScoreRepository studentScoreRepository, TeamScoreRepository teamScoreRepository,
+            ExerciseRepository exerciseRepository, ResultRepository resultRepository, UserRepository userRepository, TeamRepository teamRepository) {
         this.scheduler = scheduler;
         this.competencyProgressService = competencyProgressService;
         this.participantScoreRepository = participantScoreRepository;
@@ -116,7 +116,8 @@ public class ParticipantScoreScheduleService {
         try {
             // this should never prevent the application start of Artemis
             scheduleTasks();
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             logger.error("Cannot schedule participant score service", ex);
         }
     }
@@ -253,7 +254,8 @@ public class ParticipantScoreScheduleService {
                     return;
                 }
                 participantScore = teamScoreRepository.findByExercise_IdAndTeam_Id(exerciseId, participantId).map(score -> score);
-            } else {
+            }
+            else {
                 // Fetch the student and its score for the given exercise
                 participant = userRepository.findById(participantId).orElse(null);
                 if (participant == null) {
@@ -273,7 +275,8 @@ public class ParticipantScoreScheduleService {
                     logger.debug("Participant score {} is already up-to-date, skipping.", participantScore.get().getId());
                     return;
                 }
-            } else {
+            }
+            else {
                 if (resultIdToBeDeleted != null) {
                     // A participant score for this exercise/participant combination does not exist and this task was triggered because a result will be deleted
                     // It is very likely that the whole participation or exercise is about to be deleted and their participant scores were already removed
@@ -290,12 +293,14 @@ public class ParticipantScoreScheduleService {
                     teamScore.setTeam(team);
                     teamScore.setExercise(exercise);
                     return teamScore;
-                } else if (participant instanceof User user) {
+                }
+                else if (participant instanceof User user) {
                     var studentScore = new StudentScore();
                     studentScore.setUser(user);
                     studentScore.setExercise(exercise);
                     return studentScore;
-                } else {
+                }
+                else {
                     return null;
                 }
             });
@@ -304,15 +309,18 @@ public class ParticipantScoreScheduleService {
             // The result that is about to be deleted is excluded from the calculation
             if (resultIdToBeDeleted != null) {
                 updateParticipantScore(score, resultIdToBeDeleted);
-            } else {
+            }
+            else {
                 updateParticipantScore(score);
             }
 
             // Update the progress for competencies linked to this exercise
             competencyProgressService.updateProgressByLearningObject(score.getExercise(), score.getParticipant().getParticipants());
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             logger.error("Exception while processing participant score for exercise {} and participant {} for participant scores:", exerciseId, participantId, e);
-        } finally {
+        }
+        finally {
             scheduledTasks.remove(new ParticipantScoreId(exerciseId, participantId).hashCode());
         }
         long end = System.currentTimeMillis();
@@ -340,7 +348,8 @@ public class ParticipantScoreScheduleService {
                 participantScoreRepository.delete(participantScore);
                 logger.debug("Deleted participant score {}.", participantScore.getId());
             }
-        } else {
+        }
+        else {
             participantScoreRepository.save(participantScore);
             logger.debug("Updated participant score {}.", participantScore.getId());
         }
@@ -361,11 +370,13 @@ public class ParticipantScoreScheduleService {
             resultOrdered = resultRepository
                     .getResultsOrderedByParticipationIdLegalSubmissionIdResultIdDescForStudent(participantScore.getExercise().getId(), studentScore.getUser().getId()).stream()
                     .filter(result -> Arrays.stream(resultIdsToIgnore).noneMatch(id -> id.equals(result.getId()))).findFirst();
-        } else if (participantScore instanceof TeamScore teamScore) {
+        }
+        else if (participantScore instanceof TeamScore teamScore) {
             resultOrdered = resultRepository
                     .getResultsOrderedByParticipationIdLegalSubmissionIdResultIdDescForTeam(participantScore.getExercise().getId(), teamScore.getTeam().getId()).stream()
                     .filter(result -> Arrays.stream(resultIdsToIgnore).noneMatch(id -> id.equals(result.getId()))).findFirst();
-        } else {
+        }
+        else {
             return Optional.empty();
         }
         return resultOrdered;
@@ -386,11 +397,13 @@ public class ParticipantScoreScheduleService {
             ratedResultsOrdered = resultRepository
                     .getRatedResultsOrderedByParticipationIdLegalSubmissionIdResultIdDescForStudent(participantScore.getExercise().getId(), studentScore.getUser().getId()).stream()
                     .filter(result -> Arrays.stream(resultIdsToIgnore).noneMatch(id -> id.equals(result.getId()))).findFirst();
-        } else if (participantScore instanceof TeamScore teamScore) {
+        }
+        else if (participantScore instanceof TeamScore teamScore) {
             ratedResultsOrdered = resultRepository
                     .getRatedResultsOrderedByParticipationIdLegalSubmissionIdResultIdDescForTeam(participantScore.getExercise().getId(), teamScore.getTeam().getId()).stream()
                     .filter(result -> Arrays.stream(resultIdsToIgnore).noneMatch(id -> id.equals(result.getId()))).findFirst();
-        } else {
+        }
+        else {
             return Optional.empty();
         }
         return ratedResultsOrdered;
@@ -404,7 +417,8 @@ public class ParticipantScoreScheduleService {
         if (newLastResult == null) {
             associatedParticipantScore.setLastScore(null);
             associatedParticipantScore.setLastPoints(null);
-        } else {
+        }
+        else {
             associatedParticipantScore.setLastScore(newLastResult.getScore());
             associatedParticipantScore.setLastPoints(RoundingUtil.roundScoreSpecifiedByCourseSettings(newLastResult.getScore() * 0.01 * exercise.getMaxPoints(),
                     exercise.getCourseViaExerciseGroupOrCourseMember()));
@@ -419,7 +433,8 @@ public class ParticipantScoreScheduleService {
         if (newLastRatedResult == null) {
             associatedParticipantScore.setLastRatedScore(null);
             associatedParticipantScore.setLastRatedPoints(null);
-        } else {
+        }
+        else {
             associatedParticipantScore.setLastRatedScore(newLastRatedResult.getScore());
             associatedParticipantScore.setLastRatedPoints(RoundingUtil.roundScoreSpecifiedByCourseSettings(newLastRatedResult.getScore() * 0.01 * exercise.getMaxPoints(),
                     exercise.getCourseViaExerciseGroupOrCourseMember()));

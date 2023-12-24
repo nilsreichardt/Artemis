@@ -128,7 +128,8 @@ final class QuizExerciseDistributedCache extends QuizExerciseCache implements Ha
         Objects.requireNonNull(quizStart);
         if (SUPPORTED_LIST_CLASSES.contains(quizStart.getClass())) {
             this.quizStart = quizStart;
-        } else {
+        }
+        else {
             this.quizStart = new ArrayList<>(quizStart);
         }
     }

@@ -1,6 +1,7 @@
 package de.tum.in.www1.artemis.util.junit_extensions;
 
-import de.tum.in.www1.artemis.util.junit_parallel_logging.ParallelConsoleAppender;
+import static org.awaitility.Awaitility.await;
+
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -8,7 +9,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.awaitility.Awaitility.await;
+import de.tum.in.www1.artemis.util.junit_parallel_logging.ParallelConsoleAppender;
 
 /**
  * A JUnit 5 extension that uses {@link ParallelConsoleAppender} to collect logs from parallel test execution.

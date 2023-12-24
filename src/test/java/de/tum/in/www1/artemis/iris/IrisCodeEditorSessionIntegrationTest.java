@@ -1,19 +1,20 @@
 package de.tum.in.www1.artemis.iris;
 
-import de.tum.in.www1.artemis.domain.Course;
-import de.tum.in.www1.artemis.domain.ProgrammingExercise;
-import de.tum.in.www1.artemis.domain.iris.session.IrisCodeEditorSession;
-import de.tum.in.www1.artemis.domain.iris.session.IrisSession;
-import de.tum.in.www1.artemis.repository.iris.IrisCodeEditorSessionRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.test.context.support.WithMockUser;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import de.tum.in.www1.artemis.domain.Course;
+import de.tum.in.www1.artemis.domain.ProgrammingExercise;
+import de.tum.in.www1.artemis.domain.iris.session.IrisCodeEditorSession;
+import de.tum.in.www1.artemis.domain.iris.session.IrisSession;
+import de.tum.in.www1.artemis.repository.iris.IrisCodeEditorSessionRepository;
 
 class IrisCodeEditorSessionIntegrationTest extends AbstractIrisIntegrationTest {
 

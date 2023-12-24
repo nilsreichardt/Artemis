@@ -1,14 +1,14 @@
 package de.tum.in.www1.artemis.web.rest.open;
 
-import com.nimbusds.jwt.SignedJWT;
-import de.tum.in.www1.artemis.domain.Course;
-import de.tum.in.www1.artemis.domain.Exercise;
-import de.tum.in.www1.artemis.domain.OnlineCourseConfiguration;
-import de.tum.in.www1.artemis.repository.CourseRepository;
-import de.tum.in.www1.artemis.repository.ExerciseRepository;
-import de.tum.in.www1.artemis.security.annotations.EnforceNothing;
-import de.tum.in.www1.artemis.service.connectors.lti.Lti10Service;
-import de.tum.in.www1.artemis.web.rest.dto.LtiLaunchRequestDTO;
+import java.io.IOException;
+import java.text.ParseException;
+import java.time.Instant;
+import java.util.Date;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.glassfish.jersey.uri.UriComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +22,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.text.ParseException;
-import java.time.Instant;
-import java.util.Date;
-import java.util.Optional;
+import com.nimbusds.jwt.SignedJWT;
+
+import de.tum.in.www1.artemis.domain.Course;
+import de.tum.in.www1.artemis.domain.Exercise;
+import de.tum.in.www1.artemis.domain.OnlineCourseConfiguration;
+import de.tum.in.www1.artemis.repository.CourseRepository;
+import de.tum.in.www1.artemis.repository.ExerciseRepository;
+import de.tum.in.www1.artemis.security.annotations.EnforceNothing;
+import de.tum.in.www1.artemis.service.connectors.lti.Lti10Service;
+import de.tum.in.www1.artemis.web.rest.dto.LtiLaunchRequestDTO;
 
 /**
  * REST controller for receiving LTI requests.
@@ -109,11 +112,13 @@ public class PublicLtiResource {
 
         try {
             lti10Service.performLaunch(launchRequest, exercise, onlineCourseConfiguration);
-        } catch (InternalAuthenticationServiceException ex) {
+        }
+        catch (InternalAuthenticationServiceException ex) {
             log.error("Error during LTI launch request of exercise {} for launch request: {}", exercise.getTitle(), launchRequest, ex);
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Cannot launch exercise " + exerciseId + ". " + "Please contact an admin or try again.");
             return;
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             log.error("Error during LTI launch request of exercise {} for launch request: {}", exercise.getTitle(), launchRequest, ex);
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot launch exercise " + exerciseId + ". " + "Please contact an admin or try again.");
             return;
@@ -173,7 +178,8 @@ public class PublicLtiResource {
                 return false;
             }
             return true;
-        } catch (ParseException e) {
+        }
+        catch (ParseException e) {
             log.info("LTI request: JWT token is invalid: {}", token, e);
             return false;
         }

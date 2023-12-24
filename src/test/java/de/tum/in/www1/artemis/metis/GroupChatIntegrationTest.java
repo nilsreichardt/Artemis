@@ -1,10 +1,14 @@
 package de.tum.in.www1.artemis.metis;
 
-import de.tum.in.www1.artemis.domain.enumeration.CourseInformationSharingConfiguration;
-import de.tum.in.www1.artemis.user.UserFactory;
-import de.tum.in.www1.artemis.web.rest.metis.conversation.dtos.GroupChatDTO;
-import de.tum.in.www1.artemis.web.websocket.dto.metis.MetisCrudAction;
-import de.tum.in.www1.artemis.web.websocket.dto.metis.PostDTO;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.verify;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,14 +16,11 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.test.context.support.WithMockUser;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.timeout;
-import static org.mockito.Mockito.verify;
+import de.tum.in.www1.artemis.domain.enumeration.CourseInformationSharingConfiguration;
+import de.tum.in.www1.artemis.user.UserFactory;
+import de.tum.in.www1.artemis.web.rest.metis.conversation.dtos.GroupChatDTO;
+import de.tum.in.www1.artemis.web.websocket.dto.metis.MetisCrudAction;
+import de.tum.in.www1.artemis.web.websocket.dto.metis.PostDTO;
 
 class GroupChatIntegrationTest extends AbstractConversationTest {
 
@@ -85,7 +86,7 @@ class GroupChatIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value = CourseInformationSharingConfiguration.class, names = {"COMMUNICATION_ONLY", "DISABLED"})
+    @EnumSource(value = CourseInformationSharingConfiguration.class, names = { "COMMUNICATION_ONLY", "DISABLED" })
     @WithMockUser(username = TEST_PREFIX + "student1", roles = "USER")
     void startGroupChat_messagingFeatureDeactivated_shouldReturnForbidden(CourseInformationSharingConfiguration courseInformationSharingConfiguration) throws Exception {
         startGroupChat_messagingDeactivated(courseInformationSharingConfiguration);
@@ -141,7 +142,7 @@ class GroupChatIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value = CourseInformationSharingConfiguration.class, names = {"COMMUNICATION_ONLY", "DISABLED"})
+    @EnumSource(value = CourseInformationSharingConfiguration.class, names = { "COMMUNICATION_ONLY", "DISABLED" })
     @WithMockUser(username = TEST_PREFIX + "student1", roles = "USER")
     void updateGroupChat_messagingFeatureDeactivated_shouldReturnForbidden(CourseInformationSharingConfiguration courseInformationSharingConfiguration) throws Exception {
         updateGroupChat_messagingDeactivated(courseInformationSharingConfiguration);
@@ -205,7 +206,7 @@ class GroupChatIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value = CourseInformationSharingConfiguration.class, names = {"COMMUNICATION_ONLY", "DISABLED"})
+    @EnumSource(value = CourseInformationSharingConfiguration.class, names = { "COMMUNICATION_ONLY", "DISABLED" })
     @WithMockUser(username = TEST_PREFIX + "student1", roles = "USER")
     void registerDeregisterUsersToGroupChat_messagingFeatureDeactivated_shouldReturnForbidden(CourseInformationSharingConfiguration courseInformationSharingConfiguration)
             throws Exception {

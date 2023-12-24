@@ -1,13 +1,15 @@
 package de.tum.in.www1.artemis.service.notifications.push_notifications;
 
-import de.tum.in.www1.artemis.domain.User;
-import de.tum.in.www1.artemis.domain.enumeration.GroupNotificationType;
-import de.tum.in.www1.artemis.domain.notification.GroupNotification;
-import de.tum.in.www1.artemis.domain.notification.Notification;
-import de.tum.in.www1.artemis.domain.notification.NotificationConstants;
-import de.tum.in.www1.artemis.domain.push_notification.PushNotificationDeviceConfiguration;
-import de.tum.in.www1.artemis.domain.push_notification.PushNotificationDeviceType;
-import de.tum.in.www1.artemis.repository.PushNotificationDeviceConfigurationRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anySet;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.HexFormat;
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -17,15 +19,14 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.HexFormat;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.anySet;
-import static org.mockito.Mockito.*;
+import de.tum.in.www1.artemis.domain.User;
+import de.tum.in.www1.artemis.domain.enumeration.GroupNotificationType;
+import de.tum.in.www1.artemis.domain.notification.GroupNotification;
+import de.tum.in.www1.artemis.domain.notification.Notification;
+import de.tum.in.www1.artemis.domain.notification.NotificationConstants;
+import de.tum.in.www1.artemis.domain.push_notification.PushNotificationDeviceConfiguration;
+import de.tum.in.www1.artemis.domain.push_notification.PushNotificationDeviceType;
+import de.tum.in.www1.artemis.repository.PushNotificationDeviceConfigurationRepository;
 
 class AppleFirebasePushNotificationServiceTest {
 

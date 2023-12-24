@@ -34,7 +34,7 @@ public class EmailSummaryService {
     private final Duration weekly = Duration.ofDays(7);
 
     public EmailSummaryService(MailService mailService, NotificationSettingRepository notificationSettingRepository, CourseService courseService,
-                               ExerciseRepository exerciseRepository) {
+            ExerciseRepository exerciseRepository) {
         this.mailService = mailService;
         this.notificationSettingRepository = notificationSettingRepository;
         this.courseService = courseService;
@@ -106,7 +106,8 @@ public class EmailSummaryService {
         if (scheduleInterval.equals(weekly)) {
             return notificationSettingRepository
                     .findAllUsersWhoEnabledSpecifiedEmailNotificationSettingWithEagerGroupsAndAuthorities(NOTIFICATION__WEEKLY_SUMMARY__BASIC_WEEKLY_SUMMARY);
-        } else {
+        }
+        else {
             throw new UnsupportedOperationException("Unsupported scheduleInterval: " + scheduleInterval);
         }
     }

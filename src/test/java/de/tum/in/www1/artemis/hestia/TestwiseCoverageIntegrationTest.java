@@ -1,5 +1,16 @@
 package de.tum.in.www1.artemis.hestia;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.test.context.support.WithMockUser;
+
 import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.ProgrammingExercise;
@@ -19,16 +30,6 @@ import de.tum.in.www1.artemis.repository.hestia.CoverageReportRepository;
 import de.tum.in.www1.artemis.repository.hestia.TestwiseCoverageReportEntryRepository;
 import de.tum.in.www1.artemis.user.UserUtilService;
 import de.tum.in.www1.artemis.util.RequestUtilService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.test.context.support.WithMockUser;
-
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class TestwiseCoverageIntegrationTest extends AbstractSpringIntegrationIndependentTest {
 
@@ -128,7 +129,7 @@ class TestwiseCoverageIntegrationTest extends AbstractSpringIntegrationIndepende
     }
 
     private CoverageReport generateAndSaveSimpleReport(double coveredLineRatio, String filePath, Integer fileLineCount, Integer coveredLineCount, Integer startLine,
-                                                       Integer lineCount, ProgrammingExerciseTestCase testCase, ProgrammingSubmission submission) {
+            Integer lineCount, ProgrammingExerciseTestCase testCase, ProgrammingSubmission submission) {
         var unsavedLatestReport = new CoverageReport();
         unsavedLatestReport.setSubmission(latestSolutionSubmission);
         unsavedLatestReport.setCoveredLineRatio(coveredLineRatio);

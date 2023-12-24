@@ -1,6 +1,38 @@
 package de.tum.in.www1.artemis.web.rest.tutorialgroups;
 
+import static de.tum.in.www1.artemis.web.rest.tutorialgroups.TutorialGroupDateUtil.isIso8601DateString;
+import static de.tum.in.www1.artemis.web.rest.tutorialgroups.TutorialGroupDateUtil.isIso8601TimeString;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
+import javax.annotation.Nullable;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.ws.rs.BadRequestException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
+
 import de.tum.in.www1.artemis.config.Constants;
 import de.tum.in.www1.artemis.domain.User;
 import de.tum.in.www1.artemis.domain.enumeration.tutorialgroups.TutorialGroupRegistrationType;
@@ -27,35 +59,6 @@ import de.tum.in.www1.artemis.service.tutorialgroups.TutorialGroupScheduleServic
 import de.tum.in.www1.artemis.service.tutorialgroups.TutorialGroupService;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
 import de.tum.in.www1.artemis.web.rest.errors.EntityNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Nullable;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.ws.rs.BadRequestException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-
-import static de.tum.in.www1.artemis.web.rest.tutorialgroups.TutorialGroupDateUtil.isIso8601DateString;
-import static de.tum.in.www1.artemis.web.rest.tutorialgroups.TutorialGroupDateUtil.isIso8601TimeString;
 
 @RestController
 @RequestMapping("/api")
@@ -90,10 +93,10 @@ public class TutorialGroupResource {
     private final TutorialGroupChannelManagementService tutorialGroupChannelManagementService;
 
     public TutorialGroupResource(AuthorizationCheckService authorizationCheckService, UserRepository userRepository, CourseRepository courseRepository,
-                                 TutorialGroupService tutorialGroupService, TutorialGroupRepository tutorialGroupRepository, TutorialGroupNotificationService tutorialGroupNotificationService,
-                                 TutorialGroupNotificationRepository tutorialGroupNotificationRepository, SingleUserNotificationService singleUserNotificationService,
-                                 TutorialGroupsConfigurationRepository tutorialGroupsConfigurationRepository, TutorialGroupScheduleService tutorialGroupScheduleService,
-                                 TutorialGroupChannelManagementService tutorialGroupChannelManagementService) {
+            TutorialGroupService tutorialGroupService, TutorialGroupRepository tutorialGroupRepository, TutorialGroupNotificationService tutorialGroupNotificationService,
+            TutorialGroupNotificationRepository tutorialGroupNotificationRepository, SingleUserNotificationService singleUserNotificationService,
+            TutorialGroupsConfigurationRepository tutorialGroupsConfigurationRepository, TutorialGroupScheduleService tutorialGroupScheduleService,
+            TutorialGroupChannelManagementService tutorialGroupChannelManagementService) {
         this.tutorialGroupService = tutorialGroupService;
         this.courseRepository = courseRepository;
         this.userRepository = userRepository;
@@ -288,9 +291,8 @@ public class TutorialGroupResource {
      * @param notificationText               the optional notification text
      * @param updateTutorialGroupChannelName whether the tutorial group channel name should be updated with the new tutorial group title or not
      */
-    public record TutorialGroupUpdateDTO(@Valid @NotNull TutorialGroup tutorialGroup,
-                                         @Size(min = 1, max = 1000) @Nullable String notificationText,
-                                         @Nullable Boolean updateTutorialGroupChannelName) {
+    public record TutorialGroupUpdateDTO(@Valid @NotNull TutorialGroup tutorialGroup, @Size(min = 1, max = 1000) @Nullable String notificationText,
+            @Nullable Boolean updateTutorialGroupChannelName) {
     }
 
     /**
@@ -305,7 +307,7 @@ public class TutorialGroupResource {
     @EnforceAtLeastInstructor
     @FeatureToggle(Feature.TutorialGroups)
     public ResponseEntity<TutorialGroup> update(@PathVariable Long courseId, @PathVariable Long tutorialGroupId,
-                                                @RequestBody @Valid TutorialGroupUpdateDTO tutorialGroupUpdateDTO) {
+            @RequestBody @Valid TutorialGroupUpdateDTO tutorialGroupUpdateDTO) {
         TutorialGroup updatedTutorialGroup = tutorialGroupUpdateDTO.tutorialGroup();
         log.debug("REST request to update TutorialGroup : {}", updatedTutorialGroup);
         if (updatedTutorialGroup.getId() == null) {
@@ -442,7 +444,7 @@ public class TutorialGroupResource {
     @EnforceAtLeastInstructor
     @FeatureToggle(Feature.TutorialGroups)
     public ResponseEntity<Set<StudentDTO>> registerMultipleStudentsToTutorialGroup(@PathVariable Long courseId, @PathVariable Long tutorialGroupId,
-                                                                                   @RequestBody Set<StudentDTO> studentDtos) {
+            @RequestBody Set<StudentDTO> studentDtos) {
         log.debug("REST request to register {} to tutorial group {}", studentDtos, tutorialGroupId);
         var tutorialGroupFromDatabase = this.tutorialGroupRepository.findByIdElseThrow(tutorialGroupId);
         var responsibleUser = userRepository.getUserWithGroupsAndAuthorities();
@@ -464,7 +466,7 @@ public class TutorialGroupResource {
     @EnforceAtLeastInstructor
     @FeatureToggle(Feature.TutorialGroups)
     public ResponseEntity<List<TutorialGroupRegistrationImportDTO>> importRegistrations(@PathVariable Long courseId,
-                                                                                        @RequestBody @Valid Set<TutorialGroupRegistrationImportDTO> importDTOs) {
+            @RequestBody @Valid Set<TutorialGroupRegistrationImportDTO> importDTOs) {
         log.debug("REST request to import registrations {} to course {}", importDTOs, courseId);
         var courseFromDatabase = this.courseRepository.findByIdElseThrow(courseId);
         authorizationCheckService.checkHasAtLeastRoleInCourseElseThrow(Role.INSTRUCTOR, courseFromDatabase, null);
@@ -537,9 +539,8 @@ public class TutorialGroupResource {
      * DTO used for client-server communication in the import of tutorial groups and student registrations from csv files
      */
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    public record TutorialGroupRegistrationImportDTO(@Nullable String title, @Nullable StudentDTO student,
-                                                     @Nullable Boolean importSuccessful,
-                                                     @Nullable TutorialGroupImportErrors error) {
+    public record TutorialGroupRegistrationImportDTO(@Nullable String title, @Nullable StudentDTO student, @Nullable Boolean importSuccessful,
+            @Nullable TutorialGroupImportErrors error) {
 
         public TutorialGroupRegistrationImportDTO withImportResult(boolean importSuccessful, TutorialGroupImportErrors error) {
             return new TutorialGroupRegistrationImportDTO(title(), student(), importSuccessful, error);

@@ -1,12 +1,13 @@
 package de.tum.in.www1.artemis.service;
 
-import de.tum.in.www1.artemis.service.util.HttpRequestUtils;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.Test;
+
+import de.tum.in.www1.artemis.service.util.HttpRequestUtils;
 
 class HttpRequestUtilsTest {
 

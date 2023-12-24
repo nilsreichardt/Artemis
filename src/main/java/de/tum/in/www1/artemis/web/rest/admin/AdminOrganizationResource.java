@@ -1,15 +1,9 @@
 package de.tum.in.www1.artemis.web.rest.admin;
 
-import de.tum.in.www1.artemis.domain.Organization;
-import de.tum.in.www1.artemis.domain.User;
-import de.tum.in.www1.artemis.repository.CourseRepository;
-import de.tum.in.www1.artemis.repository.OrganizationRepository;
-import de.tum.in.www1.artemis.repository.UserRepository;
-import de.tum.in.www1.artemis.security.annotations.EnforceAdmin;
-import de.tum.in.www1.artemis.service.OrganizationService;
-import de.tum.in.www1.artemis.web.rest.dto.OrganizationCountDTO;
-import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
-import de.tum.in.www1.artemis.web.rest.util.HeaderUtil;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,9 +18,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import de.tum.in.www1.artemis.domain.Organization;
+import de.tum.in.www1.artemis.domain.User;
+import de.tum.in.www1.artemis.repository.CourseRepository;
+import de.tum.in.www1.artemis.repository.OrganizationRepository;
+import de.tum.in.www1.artemis.repository.UserRepository;
+import de.tum.in.www1.artemis.security.annotations.EnforceAdmin;
+import de.tum.in.www1.artemis.service.OrganizationService;
+import de.tum.in.www1.artemis.web.rest.dto.OrganizationCountDTO;
+import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
+import de.tum.in.www1.artemis.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for administrating the Organization entities
@@ -51,7 +52,7 @@ public class AdminOrganizationResource {
     private final CourseRepository courseRepository;
 
     public AdminOrganizationResource(OrganizationService organizationService, OrganizationRepository organizationRepository, UserRepository userRepository,
-                                     CourseRepository courseRepository) {
+            CourseRepository courseRepository) {
         this.organizationService = organizationService;
         this.userRepository = userRepository;
         this.organizationRepository = organizationRepository;

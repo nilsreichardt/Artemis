@@ -1,8 +1,5 @@
 package de.tum.in.www1.artemis.util.classpath;
 
-import io.github.classgraph.ClassInfo;
-import org.assertj.core.util.TriFunction;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,6 +10,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Stream;
+
+import org.assertj.core.util.TriFunction;
+
+import io.github.classgraph.ClassInfo;
 
 /**
  * Represents a Java Package with additional information, preserving the package tree structure.

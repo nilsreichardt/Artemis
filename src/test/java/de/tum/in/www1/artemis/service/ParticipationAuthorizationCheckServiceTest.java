@@ -1,5 +1,14 @@
 package de.tum.in.www1.artemis.service;
 
+import static org.assertj.core.api.Assertions.*;
+
+import java.time.ZonedDateTime;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.context.support.WithMockUser;
+
 import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
 import de.tum.in.www1.artemis.domain.ProgrammingExercise;
 import de.tum.in.www1.artemis.domain.TextExercise;
@@ -12,14 +21,6 @@ import de.tum.in.www1.artemis.repository.ProgrammingExerciseRepository;
 import de.tum.in.www1.artemis.repository.StudentParticipationRepository;
 import de.tum.in.www1.artemis.user.UserUtilService;
 import de.tum.in.www1.artemis.web.rest.errors.AccessForbiddenException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.test.context.support.WithMockUser;
-
-import java.time.ZonedDateTime;
-
-import static org.assertj.core.api.Assertions.*;
 
 class ParticipationAuthorizationCheckServiceTest extends AbstractSpringIntegrationIndependentTest {
 
@@ -188,7 +189,7 @@ class ParticipationAuthorizationCheckServiceTest extends AbstractSpringIntegrati
     }
 
     void checkCanAccessParticipation(final ProgrammingExercise programmingExercise, final ProgrammingExerciseStudentParticipation participation, final boolean shouldBeAllowed,
-                                     final boolean shouldBeAllowedTemplateSolution) {
+            final boolean shouldBeAllowedTemplateSolution) {
         checkParticipationAccess(participation, shouldBeAllowed);
         checkParticipationAccess(programmingExercise.getSolutionParticipation(), shouldBeAllowedTemplateSolution);
         checkParticipationAccess(programmingExercise.getTemplateParticipation(), shouldBeAllowedTemplateSolution);
@@ -201,7 +202,8 @@ class ParticipationAuthorizationCheckServiceTest extends AbstractSpringIntegrati
 
         if (shouldBeAllowed) {
             assertThatCode(() -> participationAuthCheckService.checkCanAccessParticipationElseThrow(participation)).doesNotThrowAnyException();
-        } else {
+        }
+        else {
             assertThatThrownBy(() -> participationAuthCheckService.checkCanAccessParticipationElseThrow(participation)).isInstanceOf(AccessForbiddenException.class);
         }
     }

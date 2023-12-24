@@ -1,7 +1,8 @@
 package de.tum.in.www1.artemis.service;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
@@ -12,13 +13,20 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import de.tum.in.www1.artemis.domain.*;
+import de.tum.in.www1.artemis.domain.Course;
+import de.tum.in.www1.artemis.domain.Exercise;
+import de.tum.in.www1.artemis.domain.LearningObject;
+import de.tum.in.www1.artemis.domain.User;
 import de.tum.in.www1.artemis.domain.competency.Competency;
 import de.tum.in.www1.artemis.domain.competency.CompetencyProgress;
 import de.tum.in.www1.artemis.domain.lecture.ExerciseUnit;
 import de.tum.in.www1.artemis.domain.lecture.LectureUnit;
 import de.tum.in.www1.artemis.domain.participation.Participant;
-import de.tum.in.www1.artemis.repository.*;
+import de.tum.in.www1.artemis.repository.CompetencyProgressRepository;
+import de.tum.in.www1.artemis.repository.CompetencyRepository;
+import de.tum.in.www1.artemis.repository.ExerciseRepository;
+import de.tum.in.www1.artemis.repository.LectureUnitRepository;
+import de.tum.in.www1.artemis.repository.UserRepository;
 import de.tum.in.www1.artemis.security.SecurityUtils;
 import de.tum.in.www1.artemis.service.learningpath.LearningPathService;
 import de.tum.in.www1.artemis.service.util.RoundingUtil;
@@ -48,8 +56,8 @@ public class CompetencyProgressService {
     private final LearningObjectService learningObjectService;
 
     public CompetencyProgressService(CompetencyRepository competencyRepository, CompetencyProgressRepository competencyProgressRepository, ExerciseRepository exerciseRepository,
-                                     LectureUnitRepository lectureUnitRepository, UserRepository userRepository, LearningPathService learningPathService, ParticipantScoreService participantScoreService,
-                                     LearningObjectService learningObjectService) {
+            LectureUnitRepository lectureUnitRepository, UserRepository userRepository, LearningPathService learningPathService, ParticipantScoreService participantScoreService,
+            LearningObjectService learningObjectService) {
         this.competencyRepository = competencyRepository;
         this.competencyProgressRepository = competencyProgressRepository;
         this.exerciseRepository = exerciseRepository;
@@ -83,9 +91,11 @@ public class CompetencyProgressService {
         Course course;
         if (learningObject instanceof Exercise exercise) {
             course = exercise.getCourseViaExerciseGroupOrCourseMember();
-        } else if (learningObject instanceof LectureUnit lectureUnit) {
+        }
+        else if (learningObject instanceof LectureUnit lectureUnit) {
             course = lectureUnit.getLecture().getCourse();
-        } else {
+        }
+        else {
             throw new IllegalArgumentException("Learning object must be either LectureUnit or Exercise");
         }
         updateProgressByLearningObject(learningObject, userRepository.getStudents(course));
@@ -116,9 +126,11 @@ public class CompetencyProgressService {
             Set<Competency> competencies;
             if (learningObject instanceof Exercise exercise) {
                 competencies = exerciseRepository.findByIdWithCompetencies(exercise.getId()).map(Exercise::getCompetencies).orElse(null);
-            } else if (learningObject instanceof LectureUnit lectureUnit) {
+            }
+            else if (learningObject instanceof LectureUnit lectureUnit) {
                 competencies = lectureUnitRepository.findByIdWithCompetencies(lectureUnit.getId()).map(LectureUnit::getCompetencies).orElse(null);
-            } else {
+            }
+            else {
                 throw new IllegalArgumentException("Learning object must be either LectureUnit or Exercise");
             }
 
@@ -133,7 +145,8 @@ public class CompetencyProgressService {
                     updateCompetencyProgress(competency.getId(), user);
                 });
             });
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             logger.error("Exception while updating progress for competency", e);
         }
     }
@@ -189,7 +202,8 @@ public class CompetencyProgressService {
 
         try {
             competencyProgressRepository.save(studentProgress);
-        } catch (DataIntegrityViolationException e) {
+        }
+        catch (DataIntegrityViolationException e) {
             // In rare instances of initially creating a progress entity, async updates might run in parallel.
             // This fails the SQL unique constraint and throws an exception. We can safely ignore it.
         }

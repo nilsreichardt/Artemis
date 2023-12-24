@@ -58,7 +58,8 @@ public class BambooBuildPlanUpdateService implements ContinuousIntegrationUpdate
             updateBambooPlanRepository(bambooRepository, buildPlanKey, branchName, bambooInternalUrlService.toInternalVcsUrl(newRepoUri));
 
             log.info("Update plan repository for build plan {} was successful", buildPlanKey);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new BambooException(
                     "Something went wrong while updating the template repository of the build plan " + buildPlanKey + " to the student repository : " + e.getMessage(), e);
         }
@@ -96,7 +97,8 @@ public class BambooBuildPlanUpdateService implements ContinuousIntegrationUpdate
             UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(requestUrl).queryParams(parameters);
             var response = bambooRestTemplate.exchange(builder.build().toUri(), HttpMethod.POST, null, Void.class);
             log.info("Response from Bamboo updateRepository.action {}", response);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             // TODO: improve error handling
             String message = "Request failed on the server with response code 500. Make sure all required fields have been provided using the various field and value parameters. "
                     + "The server log may provide insight into missing fields: " + ex.getMessage();

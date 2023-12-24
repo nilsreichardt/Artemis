@@ -1,5 +1,24 @@
 package de.tum.in.www1.artemis.metis;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.util.LinkedMultiValueMap;
+
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.Lecture;
 import de.tum.in.www1.artemis.domain.TextExercise;
@@ -19,24 +38,6 @@ import de.tum.in.www1.artemis.user.UserFactory;
 import de.tum.in.www1.artemis.web.rest.metis.conversation.dtos.ChannelDTO;
 import de.tum.in.www1.artemis.web.rest.metis.conversation.dtos.ChannelIdAndNameDTO;
 import de.tum.in.www1.artemis.web.websocket.dto.metis.MetisCrudAction;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.util.LinkedMultiValueMap;
-
-import java.time.ZonedDateTime;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class ChannelIntegrationTest extends AbstractConversationTest {
 
@@ -90,14 +91,14 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void createChannel_asInstructor_shouldCreateChannel(boolean isPublicChannel) throws Exception {
         isAllowedToCreateChannelTest(isPublicChannel, "instructor1");
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "tutor1", roles = "TA")
     void createChannel_asTutor_shouldCreateChannel(boolean isPublicChannel) throws Exception {
         // given
@@ -105,7 +106,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "editor1", roles = "EDITOR")
     void createChannel_asEditor_shouldCreateChannel(boolean isPublicChannel) throws Exception {
         // given
@@ -138,7 +139,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value = CourseInformationSharingConfiguration.class, names = {"COMMUNICATION_ONLY", "DISABLED"})
+    @EnumSource(value = CourseInformationSharingConfiguration.class, names = { "COMMUNICATION_ONLY", "DISABLED" })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void createChannel_messagingFeatureDeactivated_shouldReturnForbidden(CourseInformationSharingConfiguration courseInformationSharingConfiguration) throws Exception {
         createTest_messagingDeactivated(courseInformationSharingConfiguration);
@@ -190,7 +191,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void createChannel_descriptionInvalid_shouldReturnBadRequest(boolean isPublicChannel) throws Exception {
         // given
@@ -207,7 +208,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "student1", roles = "USER")
     void createChannel_asNonCourseInstructorOrTutorOrEditor_shouldReturnForbidden(boolean isPublicChannel) throws Exception {
         // given
@@ -230,7 +231,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void deleteChannel_asInstructor_shouldDeleteChannel(boolean isPublicChannel) throws Exception {
         // given
@@ -243,7 +244,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void deleteTutorialGroupChannel_asInstructor_shouldReturnBadRequest(boolean isPublicChannel) throws Exception {
         // given
@@ -268,7 +269,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "tutor1", roles = "TA")
     void deleteChannel_asCreator_shouldDeleteChannel(boolean isPublicChannel) throws Exception {
         // given
@@ -280,7 +281,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void deleteChannel_asNonCourseInstructor_shouldReturnForbidden(boolean isPublicChannel) throws Exception {
         // given
@@ -306,7 +307,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void updateChannel_asUserWithChannelModerationRights_shouldUpdateChannel(boolean isPublicChannel) throws Exception {
         // given
@@ -348,7 +349,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void updateChannel_onArchivedChannel_shouldReturnOk(boolean isPublicChannel) throws Exception {
         // given
@@ -373,7 +374,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void updateChannel_asUserWithoutChannelModerationRights_shouldReturnForbidden(boolean isPublicChannel) throws Exception {
         // given
@@ -400,7 +401,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void archiveAndUnarchiveChannel_asUserWithoutChannelModerationRights_shouldReturnForbidden(boolean isPublicChannel) throws Exception {
         // given
@@ -441,7 +442,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void archiveAndUnarchiveChannel_asUserWithChannelModerationRights_shouldArchiveChannel(boolean isPublicChannel) throws Exception {
         // given
@@ -479,7 +480,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void grantRevokeChannelModeratorRole_asUserWithChannelModerationRights_shouldGrantRevokeChannelModeratorRole(boolean isPublicChannel) throws Exception {
         // given
@@ -534,7 +535,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void grantRevokeChannelModeratorRole_asUserWithoutChannelModerationRights_shouldReturnForbidden(boolean isPublicChannel) throws Exception {
         // given
@@ -560,7 +561,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value = CourseInformationSharingConfiguration.class, names = {"COMMUNICATION_ONLY", "DISABLED"})
+    @EnumSource(value = CourseInformationSharingConfiguration.class, names = { "COMMUNICATION_ONLY", "DISABLED" })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void registerDeregisterUsersToChannel_messagingFeatureDeactivated_shouldReturnForbidden(CourseInformationSharingConfiguration courseInformationSharingConfiguration)
             throws Exception {
@@ -580,7 +581,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void registerUsersToChannel_asUserWithChannelModerationRights_shouldRegisterUsersToChannel(boolean isPublicChannel) throws Exception {
         // given
@@ -627,7 +628,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void registerUsersToChannel_asUserWithoutChannelModerationRights_shouldReturnForbidden(boolean isPublicChannel) throws Exception {
         // given
@@ -653,7 +654,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void leaveChannel_asNormalUser_canLeaveChannel(boolean isPublicChannel) throws Exception {
         // given
@@ -673,7 +674,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = {true, false})
+    @ValueSource(booleans = { true, false })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void leaveChannel_asCreator_shouldReturnBadRequest(boolean isPublicChannel) throws Exception {
         // given
@@ -785,7 +786,7 @@ class ChannelIntegrationTest extends AbstractConversationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"student1", "tutor1", "instructor2"})
+    @ValueSource(strings = { "student1", "tutor1", "instructor2" })
     @WithMockUser(username = TEST_PREFIX + "instructor1", roles = "INSTRUCTOR")
     void getCoursePublicChannelsOverview_asNormalUser_canSeeAllPublicChannels(String userLogin) throws Exception {
         // given
@@ -905,7 +906,8 @@ class ChannelIntegrationTest extends AbstractConversationTest {
         // prepare channel in db
         if (shouldArchive) {
             this.unArchiveChannel(channel.getId());
-        } else {
+        }
+        else {
             this.archiveChannel(channel.getId());
         }
         var postfix = shouldArchive ? "/archive" : "/unarchive";
@@ -920,7 +922,8 @@ class ChannelIntegrationTest extends AbstractConversationTest {
         // prepare channel in db
         if (shouldRegister) {
             this.removeUsersFromConversation(channel.getId(), "student1", "student2");
-        } else {
+        }
+        else {
             this.addUsersToConversation(channel.getId(), "student1", "student2");
         }
         var postfix = shouldRegister ? "/register" : "/deregister";
@@ -929,14 +932,16 @@ class ChannelIntegrationTest extends AbstractConversationTest {
                 HttpStatus.OK);
         if (shouldRegister) {
             assertUsersAreConversationMembers(channel.getId(), "student1", "student2");
-        } else {
+        }
+        else {
             assertUserAreNotConversationMembers(channel.getId(), "student1", "student2");
         }
         verifyMultipleParticipantTopicWebsocketSent(MetisCrudAction.UPDATE, channel.getId(), "instructor1", "tutor1");
         if (shouldRegister) {
             verifyMultipleParticipantTopicWebsocketSent(MetisCrudAction.CREATE, channel.getId(), "student1", "student2");
             verifyNoParticipantTopicWebsocketSentExceptAction(MetisCrudAction.UPDATE, MetisCrudAction.CREATE);
-        } else {
+        }
+        else {
             verifyMultipleParticipantTopicWebsocketSent(MetisCrudAction.DELETE, channel.getId(), "student1", "student2");
             verifyNoParticipantTopicWebsocketSentExceptAction(MetisCrudAction.UPDATE, MetisCrudAction.DELETE);
         }
@@ -948,7 +953,8 @@ class ChannelIntegrationTest extends AbstractConversationTest {
         if (shouldGrant) {
             this.revokeChannelModeratorRole(channel.getId(), "student1");
             this.revokeChannelModeratorRole(channel.getId(), "student2");
-        } else {
+        }
+        else {
             this.grantChannelModeratorRole(channel.getId(), "student1");
             this.grantChannelModeratorRole(channel.getId(), "student2");
         }
@@ -958,7 +964,8 @@ class ChannelIntegrationTest extends AbstractConversationTest {
                 HttpStatus.OK);
         if (shouldGrant) {
             assertUsersAreChannelModerators(channel.getId(), "student1", "student2");
-        } else {
+        }
+        else {
             assertUserAreNotChannelModerators(channel.getId(), "student1", "student2");
         }
         verifyMultipleParticipantTopicWebsocketSent(MetisCrudAction.UPDATE, channel.getId(), "instructor1", "tutor1");
@@ -970,7 +977,8 @@ class ChannelIntegrationTest extends AbstractConversationTest {
         // prepare channel in db
         if (shouldArchive) {
             this.unArchiveChannel(channel.getId());
-        } else {
+        }
+        else {
             this.archiveChannel(channel.getId());
         }
         var postfix = shouldArchive ? "/archive" : "/unarchive";

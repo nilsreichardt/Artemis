@@ -1,13 +1,11 @@
 package de.tum.in.www1.artemis.lecture;
 
-import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
-import de.tum.in.www1.artemis.domain.Lecture;
-import de.tum.in.www1.artemis.domain.lecture.LectureUnit;
-import de.tum.in.www1.artemis.domain.lecture.OnlineUnit;
-import de.tum.in.www1.artemis.repository.LectureRepository;
-import de.tum.in.www1.artemis.repository.OnlineUnitRepository;
-import de.tum.in.www1.artemis.user.UserUtilService;
-import de.tum.in.www1.artemis.web.rest.dto.OnlineResourceDTO;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
+import java.net.URL;
+import java.util.List;
+
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -22,11 +20,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.util.LinkedMultiValueMap;
 
-import java.net.URL;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
+import de.tum.in.www1.artemis.domain.Lecture;
+import de.tum.in.www1.artemis.domain.lecture.LectureUnit;
+import de.tum.in.www1.artemis.domain.lecture.OnlineUnit;
+import de.tum.in.www1.artemis.repository.LectureRepository;
+import de.tum.in.www1.artemis.repository.OnlineUnitRepository;
+import de.tum.in.www1.artemis.user.UserUtilService;
+import de.tum.in.www1.artemis.web.rest.dto.OnlineResourceDTO;
 
 class OnlineUnitIntegrationTest extends AbstractSpringIntegrationIndependentTest {
 
@@ -208,7 +209,7 @@ class OnlineUnitIntegrationTest extends AbstractSpringIntegrationIndependentTest
     }
 
     @ParameterizedTest(name = "{displayName} [{index}] {argumentsWithNames}")
-    @ValueSource(strings = {"https://www.google.de", "HTTP://example.com:80?query=1"})
+    @ValueSource(strings = { "https://www.google.de", "HTTP://example.com:80?query=1" })
     @WithMockUser(username = TEST_PREFIX + "editor1", roles = "EDITOR")
     void getOnlineResource(String link) throws Exception {
         var url = new URL(link).toString();
@@ -227,7 +228,7 @@ class OnlineUnitIntegrationTest extends AbstractSpringIntegrationIndependentTest
     }
 
     @ParameterizedTest(name = "{displayName} [{index}] {argumentsWithNames}")
-    @ValueSource(strings = {"abc", "123", "file://", "ftp://", "http://127.0.0.1", "http://localhost:80"})
+    @ValueSource(strings = { "abc", "123", "file://", "ftp://", "http://127.0.0.1", "http://localhost:80" })
     @WithMockUser(username = TEST_PREFIX + "editor1", roles = "EDITOR")
     void getOnlineResource_malformedUrl(String link) throws Exception {
         LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();

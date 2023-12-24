@@ -126,9 +126,11 @@ public class LegalDocumentService {
         Language alternativeLanguage = language == Language.GERMAN ? Language.ENGLISH : Language.GERMAN;
         if (getLegalDocumentPathIfExists(language, type).isPresent()) {
             return readLegalDocument(language, type);
-        } else if (getLegalDocumentPathIfExists(alternativeLanguage, type).isPresent()) {
+        }
+        else if (getLegalDocumentPathIfExists(alternativeLanguage, type).isPresent()) {
             return readLegalDocument(alternativeLanguage, type);
-        } else {
+        }
+        else {
             throw new BadRequestAlertException("Could not find " + type + " file for any language", "legalDocument", "noLegalDocumentFile");
         }
     }
@@ -137,7 +139,8 @@ public class LegalDocumentService {
         String legalDocumentText;
         try {
             legalDocumentText = Files.readString(getLegalDocumentPath(language, type));
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             log.error("Could not read {} file for language {}:{}", type, language, e);
             throw new InternalServerErrorException("Could not read " + type + " file for language " + language);
         }
@@ -155,7 +158,8 @@ public class LegalDocumentService {
             }
             FileUtils.writeStringToFile(getLegalDocumentPath(legalDocument.getLanguage(), legalDocument.getType()).toFile(), legalDocument.getText(), StandardCharsets.UTF_8);
             return legalDocument;
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             log.error("Could not update {} file for language {}: {} ", legalDocument.getType(), legalDocument.getLanguage(), e);
             throw new InternalServerErrorException("Could not update " + legalDocument.getType() + " file for language " + legalDocument.getLanguage());
         }

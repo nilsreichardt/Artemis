@@ -176,14 +176,16 @@ public class FileService implements DisposableBean {
         Path filePath;
         if (keepFilename) {
             filePath = path.resolve(filename);
-        } else {
+        }
+        else {
             filePath = generateFilePath(filenamePrefix, fileExtension, path);
         }
         try {
             FileUtils.copyInputStreamToFile(file.getInputStream(), filePath.toFile());
 
             return generateResponsePath(filePath, markdown);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             log.error("Could not save file {}", filename, e);
             throw new InternalServerErrorException("Could not create file");
         }
@@ -242,7 +244,8 @@ public class FileService implements DisposableBean {
                 FileUtils.copyFile(oldFilePath.toFile(), target.toFile());
                 log.debug("Moved File from {} to {}", oldFilePath, target);
                 return target;
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 log.error("Error moving file: {}", oldFilePath, e);
             }
         }
@@ -352,7 +355,8 @@ public class FileService implements DisposableBean {
         final Path filePath;
         if (resource.isFile()) {
             filePath = resource.getFile().toPath();
-        } else {
+        }
+        else {
             final String url = URLDecoder.decode(resource.getURL().toString(), UTF_8);
             filePath = Path.of(url);
         }
@@ -477,7 +481,8 @@ public class FileService implements DisposableBean {
                         line = reader.readLine();
                         continue;
                     }
-                } else {
+                }
+                else {
                     // If there is a starting pattern matched, check if an ending pattern is encountered.
                     boolean endMatcherFound = false;
                     for (Map.Entry<Pattern, Boolean> entry : patternBooleanMap.entrySet()) {
@@ -500,14 +505,16 @@ public class FileService implements DisposableBean {
 
                 line = reader.readLine();
             }
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             throw new RuntimeException("Error encountered when reading File " + filePath + ".", ex);
         }
         // Accessing already opened files will cause an exception on Windows machines, therefore close the streams
         try {
             Files.delete(file.toPath());
             FileUtils.moveFile(tempFile, filePath.toFile());
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             throw new RuntimeException("Error encountered when reading File " + filePath + ".", ex);
         }
     }
@@ -566,7 +573,8 @@ public class FileService implements DisposableBean {
                     // We expect the strings to be clean already, so the filename shouldn't change. If it does, we are on the safe side with the sanitation.
                     String cleanFileName = sanitizeFilename(filePath.toString().replace(targetString, replacementString));
                     FileUtils.moveFile(filePath.toFile(), new File(cleanFileName));
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     throw new RuntimeException("File " + filePath + " should be replaced but does not exist.");
                 }
             });
@@ -646,7 +654,8 @@ public class FileService implements DisposableBean {
                 fileContent = fileContent.replace(replacement.getKey(), replacement.getValue());
             }
             FileUtils.writeStringToFile(filePath.toFile(), fileContent, UTF_8);
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             log.warn("Exception {} occurred when trying to replace {} in (binary) file {}", ex.getMessage(), replacements, filePath);
             // continue
         }
@@ -781,12 +790,14 @@ public class FileService implements DisposableBean {
                 if (Files.exists(path)) {
                     log.info("Delete file {}", path);
                     Files.delete(path);
-                } else {
+                }
+                else {
                     log.error("Deleting the file {} did not work because it does not exist", path);
                 }
 
                 futures.remove(path);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 log.error("Deleting the file {} did not work", path, e);
             }
         }, delayInMinutes, TimeUnit.MINUTES);
@@ -811,7 +822,8 @@ public class FileService implements DisposableBean {
                     FileUtils.deleteDirectory(path.toFile());
                 }
                 futures.remove(path);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 log.error("Deleting the directory {} did not work", path, e);
             }
         }, delayInMinutes, TimeUnit.MINUTES);
@@ -831,7 +843,8 @@ public class FileService implements DisposableBean {
         if (!Files.exists(uniquePath) && Files.isDirectory(path)) {
             try {
                 return Files.createDirectories(uniquePath);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 log.warn("could not create the directories for the path {}", uniquePath);
             }
         }
@@ -875,7 +888,8 @@ public class FileService implements DisposableBean {
     public void createDirectory(Path path) {
         try {
             Files.createDirectories(path);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             var error = "Failed to create temporary directory at path " + path + " : " + e.getMessage();
             log.info(error);
         }
@@ -923,7 +937,8 @@ public class FileService implements DisposableBean {
             pdfMerger.setDestinationStream(outputStream);
             pdfMerger.mergeDocuments(null);
 
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             log.warn("Could not merge files");
             return Optional.empty();
         }
@@ -940,7 +955,8 @@ public class FileService implements DisposableBean {
         for (Path filePath : filePaths) {
             try {
                 Files.delete(filePath);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 log.warn("Could not delete file {}. Error message: {}", filePath, ex.getMessage());
             }
         }
@@ -967,7 +983,8 @@ public class FileService implements DisposableBean {
                 IOUtils.copy(input, fileItemOutputStream);
             }
             return new CommonsMultipartFile(fileItem);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             log.error("Could not convert file {}.", filename, e);
             throw new InternalServerErrorException("Error while converting byte[] to MultipartFile by using CommonsMultipartFile");
         }

@@ -1,5 +1,18 @@
 package de.tum.in.www1.artemis.post;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.validation.constraints.NotNull;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import de.tum.in.www1.artemis.course.CourseFactory;
 import de.tum.in.www1.artemis.course.CourseUtilService;
 import de.tum.in.www1.artemis.domain.Course;
@@ -33,17 +46,6 @@ import de.tum.in.www1.artemis.repository.metis.conversation.ConversationReposito
 import de.tum.in.www1.artemis.repository.metis.conversation.OneToOneChatRepository;
 import de.tum.in.www1.artemis.repository.plagiarism.PlagiarismCaseRepository;
 import de.tum.in.www1.artemis.user.UserUtilService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.validation.constraints.NotNull;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Service responsible for initializing the database with specific testdata related to conversations for use in integration tests.
@@ -247,7 +249,7 @@ public class ConversationUtilService {
 
         // resolved post
         Post courseWidePost = posts.stream().filter(
-                        coursePost -> coursePost.getConversation() instanceof Channel channel && channel.getIsCourseWide() && channel.getExercise() == null && channel.getLecture() == null)
+                coursePost -> coursePost.getConversation() instanceof Channel channel && channel.getIsCourseWide() && channel.getExercise() == null && channel.getLecture() == null)
                 .findFirst().orElseThrow();
         courseWidePost.setAnswers(createBasicAnswersThatResolves(courseWidePost, userPrefix));
         postRepository.save(courseWidePost);

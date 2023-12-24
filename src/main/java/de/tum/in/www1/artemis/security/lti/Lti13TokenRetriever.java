@@ -3,12 +3,20 @@ package de.tum.in.www1.artemis.security.lti;
 import java.net.URI;
 import java.security.KeyPair;
 import java.time.Instant;
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
-import org.springframework.http.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -80,7 +88,8 @@ public class Lti13TokenRetriever {
                 return null;
             }
             return JsonParser.parseString(exchange.getBody()).getAsJsonObject().get("access_token").getAsString();
-        } catch (HttpClientErrorException e) {
+        }
+        catch (HttpClientErrorException e) {
             log.error("Could not retrieve access token for client {}: {}", clientRegistration.getClientId(), e.getMessage());
             return null;
         }
@@ -121,7 +130,8 @@ public class Lti13TokenRetriever {
 
             log.debug("Created signed token: {}", signedJWT.serialize());
             return signedJWT.serialize();
-        } catch (JOSEException e) {
+        }
+        catch (JOSEException e) {
             log.error("Could not create keypair for clientRegistrationId {}", clientRegistrationId);
             return null;
         }
@@ -148,7 +158,8 @@ public class Lti13TokenRetriever {
 
             log.debug("Created signed token: {}", signedJWT.serialize());
             return signedJWT;
-        } catch (JOSEException e) {
+        }
+        catch (JOSEException e) {
             log.error("Could not create keypair for clientRegistrationId {}", clientRegistration.getRegistrationId());
             return null;
         }

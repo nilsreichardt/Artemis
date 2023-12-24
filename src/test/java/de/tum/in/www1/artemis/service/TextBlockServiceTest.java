@@ -1,15 +1,16 @@
 package de.tum.in.www1.artemis.service;
 
-import de.tum.in.www1.artemis.domain.TextBlock;
-import de.tum.in.www1.artemis.domain.TextSubmission;
-import org.assertj.core.api.Condition;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 import java.util.Objects;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.assertj.core.api.Condition;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import de.tum.in.www1.artemis.domain.TextBlock;
+import de.tum.in.www1.artemis.domain.TextSubmission;
 
 class TextBlockServiceTest {
 
@@ -69,7 +70,7 @@ class TextBlockServiceTest {
         final TextSubmission submission = new TextSubmission(0L).text("Example:\nThis is the first example\n\nSection 2:\n- Here is a list\n- Of many bullet  points\n\n");
         final var textBlocks = textBlockService.splitSubmissionIntoBlocks(submission);
 
-        String[] sections = new String[]{"Example:", "This is the first example", "Section 2:", "- Here is a list", "- Of many bullet  points"};
+        String[] sections = new String[] { "Example:", "This is the first example", "Section 2:", "- Here is a list", "- Of many bullet  points" };
         assertThat(textBlocks).hasSize(sections.length);
         for (String section : sections) {
             assertThat(textBlocks).has(textBlock(section));

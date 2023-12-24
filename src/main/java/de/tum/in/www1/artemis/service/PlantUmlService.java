@@ -15,7 +15,9 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import net.sourceforge.plantuml.*;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.SourceStringReader;
 
 @Service
 public class PlantUmlService {
@@ -51,7 +53,8 @@ public class PlantUmlService {
                 try (var inputStream = themeResource.getInputStream()) {
                     FileUtils.copyToFile(inputStream, path.toFile());
                     log.info("UML theme stored successfully to {}", path);
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     log.error("Unable to store UML dark theme", e);
                     throw new RuntimeException("Unable to store UML dark theme", e); // NOPMD
                 }
@@ -107,7 +110,8 @@ public class PlantUmlService {
             ensureThemes();
             if (useDarkTheme) {
                 return plantUml.replace("@startuml", "@startuml\n!theme artemisdark from " + PATH_TMP_THEME.toAbsolutePath());
-            } else {
+            }
+            else {
                 return plantUml.replace("@startuml", "@startuml\n!theme artemislight from " + PATH_TMP_THEME.toAbsolutePath());
             }
         }

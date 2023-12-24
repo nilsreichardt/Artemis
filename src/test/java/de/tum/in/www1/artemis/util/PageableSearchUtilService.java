@@ -1,16 +1,18 @@
 package de.tum.in.www1.artemis.util;
 
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import de.tum.in.www1.artemis.domain.Exercise;
 import de.tum.in.www1.artemis.domain.Lecture;
 import de.tum.in.www1.artemis.domain.enumeration.SortingOrder;
 import de.tum.in.www1.artemis.domain.participation.StudentParticipation;
 import de.tum.in.www1.artemis.web.rest.dto.PageableSearchDTO;
-import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-
-import java.util.Map;
 
 /**
  * Service responsible for initializing the database with specific testdata related to searches for use in integration tests.
@@ -32,7 +34,8 @@ public class PageableSearchUtilService {
         search.setSortedColumn(Exercise.ExerciseSearchColumn.ID.name());
         if ("".equals(searchTerm)) {
             search.setSortingOrder(SortingOrder.ASCENDING);
-        } else {
+        }
+        else {
             search.setSortingOrder(SortingOrder.DESCENDING);
         }
         return search;
@@ -52,7 +55,8 @@ public class PageableSearchUtilService {
         search.setSortedColumn(StudentParticipation.StudentParticipationSearchColumn.ID.name());
         if ("".equals(searchTerm)) {
             search.setSortingOrder(SortingOrder.ASCENDING);
-        } else {
+        }
+        else {
             search.setSortingOrder(SortingOrder.DESCENDING);
         }
         return search;

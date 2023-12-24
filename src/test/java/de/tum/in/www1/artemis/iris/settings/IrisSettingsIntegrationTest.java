@@ -1,5 +1,16 @@
 package de.tum.in.www1.artemis.iris.settings;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.HashSet;
+import java.util.TreeSet;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.test.context.support.WithMockUser;
+
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.ProgrammingExercise;
 import de.tum.in.www1.artemis.domain.iris.settings.IrisChatSubSettings;
@@ -11,16 +22,6 @@ import de.tum.in.www1.artemis.iris.AbstractIrisIntegrationTest;
 import de.tum.in.www1.artemis.repository.iris.IrisSettingsRepository;
 import de.tum.in.www1.artemis.repository.iris.IrisSubSettingsRepository;
 import de.tum.in.www1.artemis.service.dto.iris.IrisCombinedSettingsDTO;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.test.context.support.WithMockUser;
-
-import java.util.HashSet;
-import java.util.TreeSet;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class IrisSettingsIntegrationTest extends AbstractIrisIntegrationTest {
 

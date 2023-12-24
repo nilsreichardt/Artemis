@@ -1,10 +1,15 @@
 package de.tum.in.www1.artemis.service;
 
-import static de.tum.in.www1.artemis.domain.enumeration.FeedbackType.*;
+import static de.tum.in.www1.artemis.domain.enumeration.FeedbackType.MANUAL_UNREFERENCED;
 import static de.tum.in.www1.artemis.domain.enumeration.TutorParticipationStatus.*;
-import static de.tum.in.www1.artemis.service.TutorParticipationService.FeedbackCorrectionErrorType.*;
+import static de.tum.in.www1.artemis.service.TutorParticipationService.FeedbackCorrectionErrorType.UNNECESSARY_FEEDBACK;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -15,7 +20,10 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.tum.in.www1.artemis.domain.*;
+import de.tum.in.www1.artemis.domain.ExampleSubmission;
+import de.tum.in.www1.artemis.domain.Exercise;
+import de.tum.in.www1.artemis.domain.Feedback;
+import de.tum.in.www1.artemis.domain.User;
 import de.tum.in.www1.artemis.domain.participation.TutorParticipation;
 import de.tum.in.www1.artemis.repository.ExampleSubmissionRepository;
 import de.tum.in.www1.artemis.repository.TutorParticipationRepository;
@@ -61,7 +69,7 @@ public class TutorParticipationService {
     }
 
     public TutorParticipationService(TutorParticipationRepository tutorParticipationRepository, ExampleSubmissionRepository exampleSubmissionRepository,
-                                     ExampleSubmissionService exampleSubmissionService) {
+            ExampleSubmissionService exampleSubmissionService) {
         this.tutorParticipationRepository = tutorParticipationRepository;
         this.exampleSubmissionRepository = exampleSubmissionRepository;
         this.exampleSubmissionService = exampleSubmissionService;
@@ -175,7 +183,8 @@ public class TutorParticipationService {
             // Return the highest priority error (the closest instructor feedback match)
             return matchingInstructorFeedback.stream().map(feedback -> tutorFeedbackMatchesInstructorFeedback(tutorFeedback, feedback).orElseThrow())
                     .max(Comparator.naturalOrder());
-        } else {
+        }
+        else {
             if (matchingInstructorFeedback.size() > 1) {
                 throw new IllegalStateException("Multiple instructor feedback exist with the same reference");
             }
@@ -215,7 +224,8 @@ public class TutorParticipationService {
                 // TODO: I think we should let Spring automatically convert it to Json
                 var feedbackCorrectionErrorJSON = objectWriter.writeValueAsString(new FeedbackCorrectionError(feedback.getReference(), validationError.get()));
                 return Stream.of(feedbackCorrectionErrorJSON);
-            } catch (JsonProcessingException e) {
+            }
+            catch (JsonProcessingException e) {
                 log.warn("JsonProcessingException in validateTutorialExampleSubmission: {}", e.getMessage());
                 return Stream.empty();
             }

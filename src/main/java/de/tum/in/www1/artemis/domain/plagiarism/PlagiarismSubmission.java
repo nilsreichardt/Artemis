@@ -6,7 +6,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +69,7 @@ public class PlagiarismSubmission<E extends PlagiarismSubmissionElement> extends
     /**
      * We maintain a bidirectional relationship manually with submissionA and submissionB
      */
-    @JsonIgnoreProperties({"submissionA", "submissionB"})
+    @JsonIgnoreProperties({ "submissionA", "submissionB" })
     @OneToOne(targetEntity = PlagiarismComparison.class)
     @JoinColumn(name = "plagiarism_comparison_id")
     private PlagiarismComparison<E> plagiarismComparison;
@@ -100,7 +108,8 @@ public class PlagiarismSubmission<E extends PlagiarismSubmissionElement> extends
         if (submissionIdAndStudentLogin.length >= 2) {
             try {
                 submissionId = Long.parseLong(submissionIdAndStudentLogin[0]);
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e) {
                 logger.error("Invalid submissionId: {}", e.getMessage());
             }
 

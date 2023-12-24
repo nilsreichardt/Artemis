@@ -1,5 +1,23 @@
 package de.tum.in.www1.artemis.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Objects;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import de.tum.in.www1.artemis.domain.Bonus;
 import de.tum.in.www1.artemis.domain.BonusStrategy;
 import de.tum.in.www1.artemis.domain.Course;
@@ -21,23 +39,6 @@ import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
 import de.tum.in.www1.artemis.web.rest.errors.ConflictException;
 import de.tum.in.www1.artemis.web.rest.errors.EntityNotFoundException;
 import de.tum.in.www1.artemis.web.rest.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Objects;
 
 /**
  * REST controller for managing bonus
@@ -68,7 +69,7 @@ public class BonusResource {
     private final CourseRepository courseRepository;
 
     public BonusResource(BonusService bonusService, BonusRepository bonusRepository, GradingScaleRepository gradingScaleRepository, AuthorizationCheckService authCheckService,
-                         ExamAccessService examAccessService, CourseScoreCalculationService courseScoreCalculationService, CourseRepository courseRepository) {
+            ExamAccessService examAccessService, CourseScoreCalculationService courseScoreCalculationService, CourseRepository courseRepository) {
         this.bonusService = bonusService;
         this.bonusRepository = bonusRepository;
         this.gradingScaleRepository = gradingScaleRepository;
@@ -106,7 +107,7 @@ public class BonusResource {
     }
 
     private BonusExampleDTO calculateGradeWithBonus(BonusStrategy bonusStrategy, Double calculationSign, Double bonusToAchievedPoints, Double sourceAchievedPoints,
-                                                    Double sourceReachablePoints, GradingScale bonusToGradingScale, GradingScale sourceGradingScale) {
+            Double sourceReachablePoints, GradingScale bonusToGradingScale, GradingScale sourceGradingScale) {
         checkIsAtLeastInstructorForGradingScaleCourse(sourceGradingScale);
 
         return bonusService.calculateGradeWithBonus(bonusStrategy, bonusToGradingScale, bonusToAchievedPoints, sourceGradingScale, sourceAchievedPoints, sourceReachablePoints,
@@ -131,7 +132,7 @@ public class BonusResource {
     // TODO: Remove the manual configuration once the endpoint gets it's final pre-authorization when the feature releases.
     @ManualConfig
     public ResponseEntity<BonusExampleDTO> calculateGradeWithBonus(@PathVariable Long courseId, @PathVariable Long examId, @RequestParam BonusStrategy bonusStrategy,
-                                                                   @RequestParam Double calculationSign, @RequestParam Double bonusToPoints, @RequestParam Long sourceGradingScaleId, @RequestParam Double sourcePoints) {
+            @RequestParam Double calculationSign, @RequestParam Double bonusToPoints, @RequestParam Long sourceGradingScaleId, @RequestParam Double sourcePoints) {
 
         // TODO: Add auth and validation and authorize to USER role. Currently enabled only to ADMINs for testing.
         examAccessService.checkCourseAndExamAccessForInstructorElseThrow(courseId, examId);

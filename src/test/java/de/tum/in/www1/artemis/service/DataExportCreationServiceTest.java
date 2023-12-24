@@ -1,5 +1,35 @@
 package de.tum.in.www1.artemis.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+import org.eclipse.jgit.lib.Repository;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.web.client.RestTemplate;
+
 import de.tum.in.www1.artemis.AbstractSpringIntegrationBambooBitbucketJiraTest;
 import de.tum.in.www1.artemis.connector.apollon.ApollonRequestMockProvider;
 import de.tum.in.www1.artemis.course.CourseUtilService;
@@ -35,35 +65,6 @@ import de.tum.in.www1.artemis.service.export.DataExportCreationService;
 import de.tum.in.www1.artemis.user.UserUtilService;
 import de.tum.in.www1.artemis.util.FileUtils;
 import de.tum.in.www1.artemis.util.ZipFileTestUtilService;
-import org.eclipse.jgit.lib.Repository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.web.client.RestTemplate;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
 
 class DataExportCreationServiceTest extends AbstractSpringIntegrationBambooBitbucketJiraTest {
 
@@ -215,7 +216,8 @@ class DataExportCreationServiceTest extends AbstractSpringIntegrationBambooBitbu
         Course course1;
         if (assessmentDueDateInTheFuture) {
             course1 = courseUtilService.addCourseWithExercisesAndSubmissionsWithAssessmentDueDatesInTheFuture(courseShortName, TEST_PREFIX, "", 4, 2, 1, 1, true, 1, validModel);
-        } else {
+        }
+        else {
             course1 = courseUtilService.addCourseWithExercisesAndSubmissions(TEST_PREFIX, "", 4, 2, 1, 1, true, 1, validModel);
         }
         var quizSubmission = quizExerciseUtilService.addQuizExerciseToCourseWithParticipationAndSubmissionForUser(course1, TEST_PREFIX + "student1", assessmentDueDateInTheFuture);
@@ -224,7 +226,8 @@ class DataExportCreationServiceTest extends AbstractSpringIntegrationBambooBitbu
         ProgrammingExercise programmingExercise;
         if (assessmentDueDateInTheFuture) {
             programmingExercise = programmingExerciseUtilService.addProgrammingExerciseToCourse(course1, false, ZonedDateTime.now().plusMinutes(1));
-        } else {
+        }
+        else {
             programmingExercise = programmingExerciseUtilService.addProgrammingExerciseToCourse(course1, false, ZonedDateTime.now().minusMinutes(1));
         }
         var participation = participationUtilService.addStudentParticipationForProgrammingExerciseForLocalRepo(programmingExercise, userLogin,
@@ -349,7 +352,8 @@ class DataExportCreationServiceTest extends AbstractSpringIntegrationBambooBitbu
             // this result should not be included, so the path should be null
             assertThat(getProgrammingResultsFilePath(exerciseDirPath, false)).isNull();
 
-        } else if (exerciseDirPath.toString().contains("Programming") && !assessmentDueDateInTheFuture && courseExercise) {
+        }
+        else if (exerciseDirPath.toString().contains("Programming") && !assessmentDueDateInTheFuture && courseExercise) {
             var fileContentResult1 = Files.readString(getProgrammingResultsFilePath(exerciseDirPath, true));
             var fileContentResult2 = Files.readString(getProgrammingResultsFilePath(exerciseDirPath, false));
             // automatic feedback
@@ -388,7 +392,8 @@ class DataExportCreationServiceTest extends AbstractSpringIntegrationBambooBitbu
             assertThat(fileContentSA).doesNotContain("Correct");
             assertThat(fileContentSA).doesNotContain("Incorrect");
 
-        } else if (exerciseDirPath.toString().contains("quiz") && !assessmentDueDateInTheFuture) {
+        }
+        else if (exerciseDirPath.toString().contains("quiz") && !assessmentDueDateInTheFuture) {
             var fileContentMC = Files.readString(getMCQuestionsAnswersFilePath(exerciseDirPath));
             var fileContentSA = Files.readString(getSAQuestionsAnswersFilePath(exerciseDirPath));
             assertThat(fileContentMC).contains("Correct");
@@ -406,7 +411,8 @@ class DataExportCreationServiceTest extends AbstractSpringIntegrationBambooBitbu
         try (var files = Files.list(exerciseDirPath)) {
             return files.filter(path -> path.getFileName().toString().endsWith(FILE_FORMAT_TXT) && path.getFileName().toString().contains("multiple_choice")).findFirst()
                     .orElseThrow();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             fail("Failed while getting multiple choice questions answers file");
         }
         return null;
@@ -416,7 +422,8 @@ class DataExportCreationServiceTest extends AbstractSpringIntegrationBambooBitbu
         try (var files = Files.list(exerciseDirPath)) {
             return files.filter(path -> path.getFileName().toString().endsWith(FILE_FORMAT_TXT) && path.getFileName().toString().contains("short_answer")).findFirst()
                     .orElseThrow();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             fail("Failed while getting short answer questions answers file");
         }
         return null;
@@ -427,7 +434,8 @@ class DataExportCreationServiceTest extends AbstractSpringIntegrationBambooBitbu
         try (var files = Files.list(exerciseDirPath)) {
             paths = files.filter(path -> path.getFileName().toString().endsWith(FILE_FORMAT_TXT) && path.getFileName().toString().contains("result"))
                     .collect(Collectors.toCollection(ArrayList::new));
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             fail("Failed while getting programming results file");
             return null;
         }

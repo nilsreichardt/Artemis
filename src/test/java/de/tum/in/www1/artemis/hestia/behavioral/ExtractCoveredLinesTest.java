@@ -1,18 +1,19 @@
 package de.tum.in.www1.artemis.hestia.behavioral;
 
-import de.tum.in.www1.artemis.domain.hestia.TestwiseCoverageReportEntry;
-import de.tum.in.www1.artemis.service.hestia.behavioral.BehavioralBlackboard;
-import de.tum.in.www1.artemis.service.hestia.behavioral.GroupedFile;
-import de.tum.in.www1.artemis.service.hestia.behavioral.knowledgesource.ExtractCoveredLines;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import de.tum.in.www1.artemis.domain.hestia.TestwiseCoverageReportEntry;
+import de.tum.in.www1.artemis.service.hestia.behavioral.BehavioralBlackboard;
+import de.tum.in.www1.artemis.service.hestia.behavioral.GroupedFile;
+import de.tum.in.www1.artemis.service.hestia.behavioral.knowledgesource.ExtractCoveredLines;
 
 class ExtractCoveredLinesTest {
 

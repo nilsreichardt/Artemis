@@ -1,8 +1,7 @@
 package de.tum.in.www1.artemis.service;
 
-import de.tum.in.www1.artemis.config.lti.CustomLti13Configurer;
-import de.tum.in.www1.artemis.domain.OnlineCourseConfiguration;
-import de.tum.in.www1.artemis.repository.OnlineCourseConfigurationRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -10,7 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import de.tum.in.www1.artemis.config.lti.CustomLti13Configurer;
+import de.tum.in.www1.artemis.domain.OnlineCourseConfiguration;
+import de.tum.in.www1.artemis.repository.OnlineCourseConfigurationRepository;
 
 class OnlineCourseConfigurationServiceTest {
 

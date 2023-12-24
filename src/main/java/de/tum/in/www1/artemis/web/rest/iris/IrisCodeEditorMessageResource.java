@@ -1,13 +1,9 @@
 package de.tum.in.www1.artemis.web.rest.iris;
 
-import de.tum.in.www1.artemis.domain.iris.message.IrisExercisePlanStep;
-import de.tum.in.www1.artemis.domain.iris.message.IrisMessage;
-import de.tum.in.www1.artemis.domain.iris.session.IrisCodeEditorSession;
-import de.tum.in.www1.artemis.repository.UserRepository;
-import de.tum.in.www1.artemis.repository.iris.IrisExercisePlanStepRepository;
-import de.tum.in.www1.artemis.security.annotations.EnforceAtLeastEditor;
-import de.tum.in.www1.artemis.service.iris.session.IrisCodeEditorSessionService;
-import de.tum.in.www1.artemis.web.rest.errors.ConflictException;
+import java.util.Objects;
+
+import javax.ws.rs.BadRequestException;
+
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.BadRequestException;
-import java.util.Objects;
+import de.tum.in.www1.artemis.domain.iris.message.IrisExercisePlanStep;
+import de.tum.in.www1.artemis.domain.iris.message.IrisMessage;
+import de.tum.in.www1.artemis.domain.iris.session.IrisCodeEditorSession;
+import de.tum.in.www1.artemis.repository.UserRepository;
+import de.tum.in.www1.artemis.repository.iris.IrisExercisePlanStepRepository;
+import de.tum.in.www1.artemis.security.annotations.EnforceAtLeastEditor;
+import de.tum.in.www1.artemis.service.iris.session.IrisCodeEditorSessionService;
+import de.tum.in.www1.artemis.web.rest.errors.ConflictException;
 
 /**
  * REST controller for managing {@link IrisMessage}.
@@ -35,7 +37,7 @@ public class IrisCodeEditorMessageResource {
     private final UserRepository userRepository;
 
     public IrisCodeEditorMessageResource(IrisCodeEditorSessionService irisCodeEditorSessionService, IrisExercisePlanStepRepository irisExercisePlanStepRepository,
-                                         UserRepository userRepository) {
+            UserRepository userRepository) {
         this.irisCodeEditorSessionService = irisCodeEditorSessionService;
         this.irisExercisePlanStepRepository = irisExercisePlanStepRepository;
         this.userRepository = userRepository;
@@ -81,7 +83,7 @@ public class IrisCodeEditorMessageResource {
     @PutMapping("code-editor-sessions/{sessionId}/messages/{messageId}/contents/{planId}/steps/{stepId}")
     @EnforceAtLeastEditor
     public ResponseEntity<IrisExercisePlanStep> updateExercisePlanStep(@PathVariable Long sessionId, @PathVariable Long messageId, @PathVariable Long planId,
-                                                                       @PathVariable Long stepId, @RequestBody IrisExercisePlanStep updatedStep) {
+            @PathVariable Long stepId, @RequestBody IrisExercisePlanStep updatedStep) {
         var step = irisExercisePlanStepRepository.findByIdElseThrow(stepId);
         var session = checkIdsAndGetSession(sessionId, messageId, planId, step);
         var user = userRepository.getUserWithGroupsAndAuthorities();

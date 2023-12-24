@@ -50,7 +50,7 @@ public class GitLabUserManagementService implements VcsUserManagementService {
     private Boolean versionControlAccessToken;
 
     public GitLabUserManagementService(ProgrammingExerciseRepository programmingExerciseRepository, GitLabApi gitlabApi, UserRepository userRepository,
-                                       @Qualifier("gitlabRestTemplate") RestTemplate restTemplate) {
+            @Qualifier("gitlabRestTemplate") RestTemplate restTemplate) {
         this.programmingExerciseRepository = programmingExerciseRepository;
         this.gitlabApi = gitlabApi;
         this.userRepository = userRepository;
@@ -79,7 +79,8 @@ public class GitLabUserManagementService implements VcsUserManagementService {
             // Remove the user from groups or update its permissions if the user belongs to multiple
             // groups of the same course.
             removeOrUpdateUserFromGroups(gitlabUser.getId(), user.getGroups(), removedGroups);
-        } catch (GitLabApiException e) {
+        }
+        catch (GitLabApiException e) {
             throw new GitLabException("Error while trying to update user in GitLab: " + user, e);
         }
     }
@@ -121,7 +122,8 @@ public class GitLabUserManagementService implements VcsUserManagementService {
     private void updateUserActivationState(User user, Long gitlabUserId) throws GitLabApiException {
         if (user.getActivated()) {
             gitlabApi.getUserApi().unblockUser(gitlabUserId);
-        } else {
+        }
+        else {
             gitlabApi.getUserApi().blockUser(gitlabUserId);
         }
     }
@@ -152,7 +154,8 @@ public class GitLabUserManagementService implements VcsUserManagementService {
             Set<String> userGroups = user.getGroups();
             if (userGroups.contains(oldTeachingAssistantGroup) || userGroups.contains(oldEditorGroup) || userGroups.contains(oldInstructorGroup)) {
                 oldUsers.add(user);
-            } else {
+            }
+            else {
                 newUsers.add(user);
             }
         }
@@ -183,10 +186,12 @@ public class GitLabUserManagementService implements VcsUserManagementService {
                 Optional<AccessLevel> accessLevel = getAccessLevelFromUserGroups(user.getGroups(), updatedCourse);
                 if (accessLevel.isPresent()) {
                     addUserToGroupsOfExercises(gitlabUser.getId(), programmingExercises, accessLevel.get());
-                } else {
+                }
+                else {
                     removeMemberFromExercises(programmingExercises, gitlabUser.getId());
                 }
-            } catch (GitLabApiException e) {
+            }
+            catch (GitLabApiException e) {
                 throw new GitLabException("Error while trying to set permission for user in GitLab: " + user, e);
             }
         }
@@ -220,10 +225,12 @@ public class GitLabUserManagementService implements VcsUserManagementService {
                 Optional<AccessLevel> accessLevel = getAccessLevelFromUserGroups(groups, updatedCourse);
                 if (accessLevel.isPresent()) {
                     updateMemberExercisePermissions(programmingExercises, gitlabUser.getId(), accessLevel.get());
-                } else {
+                }
+                else {
                     removeMemberFromExercises(programmingExercises, gitlabUser.getId());
                 }
-            } catch (GitLabApiException e) {
+            }
+            catch (GitLabApiException e) {
                 throw new GitLabException("Error while trying to update user in GitLab: " + user, e);
             }
         }
@@ -240,7 +247,8 @@ public class GitLabUserManagementService implements VcsUserManagementService {
         programmingExercises.forEach(exercise -> {
             try {
                 gitlabApi.getGroupApi().updateMember(exercise.getProjectKey(), gitlabUserId, accessLevel);
-            } catch (GitLabApiException e) {
+            }
+            catch (GitLabApiException e) {
                 throw new GitLabException("Error while updating GitLab group " + exercise.getProjectKey(), e);
             }
         });
@@ -257,7 +265,8 @@ public class GitLabUserManagementService implements VcsUserManagementService {
         programmingExercises.forEach(exercise -> {
             try {
                 gitlabApi.getGroupApi().removeMember(exercise.getProjectKey(), gitlabUserId);
-            } catch (GitLabApiException e) {
+            }
+            catch (GitLabApiException e) {
                 throw new GitLabException("Error while updating GitLab group " + exercise.getProjectKey(), e);
             }
         });
@@ -270,9 +279,11 @@ public class GitLabUserManagementService implements VcsUserManagementService {
             // Delete by login String doesn't work, so we need to get the actual userId first.
             final Long userId = getUserId(login);
             gitlabApi.getUserApi().deleteUser(userId, true);
-        } catch (GitLabUserDoesNotExistException e) {
+        }
+        catch (GitLabUserDoesNotExistException e) {
             log.warn("Cannot delete user ''{}'' in GitLab. User does not exist!", login);
-        } catch (GitLabApiException e) {
+        }
+        catch (GitLabApiException e) {
             throw new GitLabException(String.format("Cannot delete user %s from GitLab!", login), e);
         }
     }
@@ -284,7 +295,8 @@ public class GitLabUserManagementService implements VcsUserManagementService {
             // We block the user instead of deactivating because a deactivated account
             // is activated automatically when the user logs into Gitlab.
             gitlabApi.getUserApi().blockUser(userId);
-        } catch (GitLabApiException e) {
+        }
+        catch (GitLabApiException e) {
             throw new GitLabException(String.format("Cannot block user %s from GitLab!", login), e);
         }
     }
@@ -294,7 +306,8 @@ public class GitLabUserManagementService implements VcsUserManagementService {
         try {
             final Long userId = getUserId(login);
             gitlabApi.getUserApi().unblockUser(userId);
-        } catch (GitLabApiException e) {
+        }
+        catch (GitLabApiException e) {
             throw new GitLabException(String.format("Cannot unblock user %s from GitLab!", login), e);
         }
     }
@@ -315,7 +328,8 @@ public class GitLabUserManagementService implements VcsUserManagementService {
                 gitlabUser = createUser(user, password);
             }
             return gitlabUser.getId();
-        } catch (GitLabApiException e) {
+        }
+        catch (GitLabApiException e) {
             throw new GitLabException("Unable to get ID for user " + user.getLogin(), e);
         }
     }
@@ -368,11 +382,13 @@ public class GitLabUserManagementService implements VcsUserManagementService {
         try {
             log.info("Add member {} to Gitlab group {}", gitlabUserId, groupName);
             gitlabApi.getGroupApi().addMember(groupName, gitlabUserId, accessLevel);
-        } catch (GitLabApiException e) {
+        }
+        catch (GitLabApiException e) {
             if (e.getMessage().equals("Member already exists")) {
                 log.warn("Member already exists for group {}", groupName);
                 return;
-            } else if (e.getHttpStatus() == 404) {
+            }
+            else if (e.getHttpStatus() == 404) {
                 log.warn("Group not found {}", groupName);
                 return;
             }
@@ -403,7 +419,8 @@ public class GitLabUserManagementService implements VcsUserManagementService {
             var shouldUpdateGroupAccess = accessLevel.isPresent();
             if (shouldUpdateGroupAccess) {
                 gitlabApi.getGroupApi().updateMember(exercise.getProjectKey(), gitlabUserId, accessLevel.get());
-            } else {
+            }
+            else {
                 removeUserFromGroup(gitlabUserId, exercise.getProjectKey());
             }
         }
@@ -424,11 +441,14 @@ public class GitLabUserManagementService implements VcsUserManagementService {
 
         if (userGroups.contains(instructorGroup)) {
             return Optional.of(OWNER);
-        } else if (userGroups.contains(editorGroup)) {
+        }
+        else if (userGroups.contains(editorGroup)) {
             return Optional.of(MAINTAINER);
-        } else if (userGroups.contains(teachingAssistantGroup)) {
+        }
+        else if (userGroups.contains(teachingAssistantGroup)) {
             return Optional.of(REPORTER);
-        } else {
+        }
+        else {
             return Optional.empty();
         }
     }
@@ -443,7 +463,8 @@ public class GitLabUserManagementService implements VcsUserManagementService {
     private void removeUserFromGroup(Long gitlabUserId, String group) throws GitLabApiException {
         try {
             gitlabApi.getGroupApi().removeMember(group, gitlabUserId);
-        } catch (GitLabApiException ex) {
+        }
+        catch (GitLabApiException ex) {
             // If user membership to group is missing on Gitlab, ignore the exception.
             if (ex.getHttpStatus() != 404) {
                 log.error("Gitlab Exception when removing a user {} to a group {}", gitlabUserId, group, ex);
@@ -467,7 +488,8 @@ public class GitLabUserManagementService implements VcsUserManagementService {
             gitlabUser = gitlabApi.getUserApi().createUser(gitlabUser, password, false);
             generateVersionControlAccessTokenIfNecessary(gitlabUser, user);
             return gitlabUser;
-        } catch (GitLabApiException e) {
+        }
+        catch (GitLabApiException e) {
             throw new GitLabException("Unable to create new user in GitLab " + user.getLogin(), e);
         }
     }
@@ -494,7 +516,8 @@ public class GitLabUserManagementService implements VcsUserManagementService {
             }
 
             generateVersionControlAccessTokenIfNecessary(gitlabUser, user);
-        } catch (GitLabApiException e) {
+        }
+        catch (GitLabApiException e) {
             log.error("Could not generate a Gitlab access token for user {}", user.getLogin(), e);
         }
     }
@@ -528,7 +551,8 @@ public class GitLabUserManagementService implements VcsUserManagementService {
         String name;
         if (usePseudonyms) {
             name = String.format("User %s", user.getLogin());
-        } else {
+        }
+        else {
             name = user.getName();
         }
         return name;
@@ -547,7 +571,8 @@ public class GitLabUserManagementService implements VcsUserManagementService {
                 return gitlabUser.getId();
             }
             throw new GitLabUserDoesNotExistException(username);
-        } catch (GitLabApiException e) {
+        }
+        catch (GitLabApiException e) {
             throw new GitLabException("Unable to get ID for user " + username, e);
         }
     }
@@ -561,7 +586,7 @@ public class GitLabUserManagementService implements VcsUserManagementService {
      */
     private String createPersonalAccessToken(Long userId) {
         // TODO: Change this to Gitlab4J api once it's supported: https://github.com/gitlab4j/gitlab4j-api/issues/653
-        var body = new GitLabPersonalAccessTokenRequestDTO("Artemis-Automatic-Access-Token", userId, new String[]{"read_repository", "write_repository"});
+        var body = new GitLabPersonalAccessTokenRequestDTO("Artemis-Automatic-Access-Token", userId, new String[] { "read_repository", "write_repository" });
 
         var entity = new HttpEntity<>(body);
 
@@ -574,7 +599,8 @@ public class GitLabUserManagementService implements VcsUserManagementService {
                 throw new GitLabException("Error while creating personal access token");
             }
             return responseBody.getToken();
-        } catch (HttpClientErrorException e) {
+        }
+        catch (HttpClientErrorException e) {
             log.error("Could not create Gitlab personal access token for user with id {}, response is null", userId);
             throw new GitLabException("Error while creating personal access token");
         }

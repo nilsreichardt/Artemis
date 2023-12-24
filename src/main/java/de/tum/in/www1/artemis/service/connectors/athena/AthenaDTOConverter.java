@@ -62,7 +62,8 @@ public class AthenaDTOConverter {
     public SubmissionDTO ofSubmission(long exerciseId, Submission submission) {
         if (submission instanceof TextSubmission textSubmission) {
             return TextSubmissionDTO.of(exerciseId, textSubmission);
-        } else if (submission instanceof ProgrammingSubmission programmingSubmission) {
+        }
+        else if (submission instanceof ProgrammingSubmission programmingSubmission) {
             return ProgrammingSubmissionDTO.of(exerciseId, programmingSubmission, artemisServerUrl);
         }
         throw new IllegalArgumentException("Submission type not supported: " + submission.getType());

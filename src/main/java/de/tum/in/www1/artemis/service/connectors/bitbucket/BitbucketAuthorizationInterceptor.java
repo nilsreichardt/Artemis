@@ -43,7 +43,8 @@ public class BitbucketAuthorizationInterceptor implements ClientHttpRequestInter
         // prefer bitbucket token if it is available
         if (bitbucketToken.isPresent() && !needsBasicAuth(request)) {
             request.getHeaders().setBearerAuth(bitbucketToken.get());
-        } else {
+        }
+        else {
             // the create project request needs basic auth and does not work with personal tokens
             request.getHeaders().setBasicAuth(bitbucketUser, bitbucketPassword);
         }

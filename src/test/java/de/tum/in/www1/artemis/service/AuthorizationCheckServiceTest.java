@@ -1,5 +1,16 @@
 package de.tum.in.www1.artemis.service;
 
+import static org.assertj.core.api.Assertions.*;
+
+import java.time.ZonedDateTime;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.stereotype.Component;
+
 import de.tum.in.www1.artemis.AbstractSpringIntegrationJenkinsGitlabTest;
 import de.tum.in.www1.artemis.course.CourseUtilService;
 import de.tum.in.www1.artemis.domain.Course;
@@ -12,16 +23,6 @@ import de.tum.in.www1.artemis.repository.CourseRepository;
 import de.tum.in.www1.artemis.repository.UserRepository;
 import de.tum.in.www1.artemis.user.UserUtilService;
 import de.tum.in.www1.artemis.web.rest.errors.AccessForbiddenException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.stereotype.Component;
-
-import java.time.ZonedDateTime;
-
-import static org.assertj.core.api.Assertions.*;
 
 class AuthorizationCheckServiceTest extends AbstractSpringIntegrationJenkinsGitlabTest {
 
@@ -99,7 +100,7 @@ class AuthorizationCheckServiceTest extends AbstractSpringIntegrationJenkinsGitl
 
     @Nested
     @Component
-            // Only the login name of the student2 user is NOT allowed to enrol for courses.
+    // Only the login name of the student2 user is NOT allowed to enrol for courses.
     class IsUserAllowedToEnrollForCourseTest {
 
         // We need our own courseService here that overshadows the one from the CourseServiceTest, so that the new property is applied to it.

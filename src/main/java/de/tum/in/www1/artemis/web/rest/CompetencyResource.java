@@ -1,5 +1,29 @@
 package de.tum.in.www1.artemis.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.BadRequestException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.Exercise;
 import de.tum.in.www1.artemis.domain.User;
@@ -31,28 +55,6 @@ import de.tum.in.www1.artemis.web.rest.dto.PageableSearchDTO;
 import de.tum.in.www1.artemis.web.rest.dto.SearchResultPageDTO;
 import de.tum.in.www1.artemis.web.rest.errors.ConflictException;
 import de.tum.in.www1.artemis.web.rest.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.BadRequestException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -90,9 +92,9 @@ public class CompetencyResource {
     private final ExerciseService exerciseService;
 
     public CompetencyResource(CourseRepository courseRepository, AuthorizationCheckService authorizationCheckService, UserRepository userRepository,
-                              CompetencyRepository competencyRepository, CompetencyRelationRepository competencyRelationRepository, LectureUnitRepository lectureUnitRepository,
-                              CompetencyService competencyService, CompetencyProgressRepository competencyProgressRepository, ExerciseRepository exerciseRepository,
-                              CompetencyProgressService competencyProgressService, LearningPathService learningPathService, ExerciseService exerciseService) {
+            CompetencyRepository competencyRepository, CompetencyRelationRepository competencyRelationRepository, LectureUnitRepository lectureUnitRepository,
+            CompetencyService competencyService, CompetencyProgressRepository competencyProgressRepository, ExerciseRepository exerciseRepository,
+            CompetencyProgressService competencyProgressService, LearningPathService learningPathService, ExerciseService exerciseService) {
         this.courseRepository = courseRepository;
         this.competencyRelationRepository = competencyRelationRepository;
         this.lectureUnitRepository = lectureUnitRepository;
@@ -343,7 +345,7 @@ public class CompetencyResource {
     @GetMapping("/courses/{courseId}/competencies/{competencyId}/student-progress")
     @EnforceAtLeastStudent
     public ResponseEntity<CompetencyProgress> getCompetencyStudentProgress(@PathVariable Long courseId, @PathVariable Long competencyId,
-                                                                           @RequestParam(defaultValue = "false") Boolean refresh) {
+            @RequestParam(defaultValue = "false") Boolean refresh) {
         log.debug("REST request to get student progress for competency: {}", competencyId);
         var user = userRepository.getUserWithGroupsAndAuthorities();
         var course = courseRepository.findByIdElseThrow(courseId);
@@ -353,7 +355,8 @@ public class CompetencyResource {
         CompetencyProgress studentProgress;
         if (refresh) {
             studentProgress = competencyProgressService.updateCompetencyProgress(competencyId, user);
-        } else {
+        }
+        else {
             studentProgress = competencyProgressRepository.findEagerByCompetencyIdAndUserId(competencyId, user.getId()).orElse(null);
         }
 
@@ -415,7 +418,7 @@ public class CompetencyResource {
     @PostMapping("/courses/{courseId}/competencies/{tailCompetencyId}/relations/{headCompetencyId}")
     @EnforceAtLeastInstructor
     public ResponseEntity<CompetencyRelation> createCompetencyRelation(@PathVariable Long courseId, @PathVariable Long tailCompetencyId, @PathVariable Long headCompetencyId,
-                                                                       @RequestParam(defaultValue = "") String type) {
+            @RequestParam(defaultValue = "") String type) {
         log.info("REST request to create a relation between competencies {} and {}", tailCompetencyId, headCompetencyId);
         var course = courseRepository.findByIdElseThrow(courseId);
         var tailCompetency = competencyRepository.findByIdElseThrow(tailCompetencyId);
@@ -441,7 +444,8 @@ public class CompetencyResource {
             competencyRelationRepository.save(relation);
 
             return ResponseEntity.ok().body(relation);
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             throw new BadRequestException("Invalid value for relation type");
         }
     }

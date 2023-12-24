@@ -1,5 +1,11 @@
 package de.tum.in.www1.artemis.exercise.textexercise;
 
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.TextBlock;
 import de.tum.in.www1.artemis.domain.TextBlockType;
@@ -11,12 +17,6 @@ import de.tum.in.www1.artemis.domain.enumeration.TextAssessmentEventType;
 import de.tum.in.www1.artemis.domain.exam.ExerciseGroup;
 import de.tum.in.www1.artemis.domain.participation.StudentParticipation;
 import de.tum.in.www1.artemis.exercise.ExerciseFactory;
-
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Factory for creating TextExercises and related objects.
@@ -77,7 +77,7 @@ public class TextExerciseFactory {
      * @return The TextAssessment event with all the properties applied
      */
     public static TextAssessmentEvent generateTextAssessmentEvent(TextAssessmentEventType eventType, FeedbackType feedbackType, TextBlockType segmentType, Long courseId,
-                                                                  Long userId, Long exerciseId, Long participationId, Long submissionId) {
+            Long userId, Long exerciseId, Long participationId, Long submissionId) {
         TextAssessmentEvent event = new TextAssessmentEvent();
         event.setId(null);
         event.setEventType(eventType);

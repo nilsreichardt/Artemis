@@ -1,16 +1,17 @@
 package de.tum.in.www1.artemis.exercise.textexercise;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.ZonedDateTime;
+import java.util.HashSet;
+
+import org.junit.jupiter.api.Test;
+
 import de.tum.in.www1.artemis.course.CourseFactory;
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.TextExercise;
 import de.tum.in.www1.artemis.domain.TextSubmission;
 import de.tum.in.www1.artemis.service.exam.StudentExamService;
-import org.junit.jupiter.api.Test;
-
-import java.time.ZonedDateTime;
-import java.util.HashSet;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class TextComparisonTest {
 

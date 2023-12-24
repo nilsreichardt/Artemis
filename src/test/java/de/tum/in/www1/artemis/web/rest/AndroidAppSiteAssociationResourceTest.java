@@ -1,12 +1,13 @@
 package de.tum.in.www1.artemis.web.rest;
 
-import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
 
 class AndroidAppSiteAssociationResourceTest extends AbstractSpringIntegrationIndependentTest {
 

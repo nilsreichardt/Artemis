@@ -1,14 +1,15 @@
 package de.tum.in.www1.artemis.service;
 
-import de.tum.in.www1.artemis.AbstractSpringIntegrationBambooBitbucketJiraTest;
-import de.tum.in.www1.artemis.exercise.programmingexercise.ContinuousIntegrationTestService;
+import java.io.IOException;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithMockUser;
 
-import java.io.IOException;
+import de.tum.in.www1.artemis.AbstractSpringIntegrationBambooBitbucketJiraTest;
+import de.tum.in.www1.artemis.exercise.programmingexercise.ContinuousIntegrationTestService;
 
 class BambooServiceTest extends AbstractSpringIntegrationBambooBitbucketJiraTest {
 

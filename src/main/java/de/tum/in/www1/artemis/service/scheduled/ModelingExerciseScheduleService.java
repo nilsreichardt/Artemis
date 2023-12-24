@@ -46,7 +46,7 @@ public class ModelingExerciseScheduleService implements IExerciseScheduleService
     private final ExamDateService examDateService;
 
     public ModelingExerciseScheduleService(ScheduleService scheduleService, ModelingExerciseRepository modelingExerciseRepository, Environment env, CompassService compassService,
-                                           ExamDateService examDateService, @Qualifier("taskScheduler") TaskScheduler scheduler) {
+            ExamDateService examDateService, @Qualifier("taskScheduler") TaskScheduler scheduler) {
         this.scheduleService = scheduleService;
         this.env = env;
         this.modelingExerciseRepository = modelingExerciseRepository;
@@ -75,7 +75,8 @@ public class ModelingExerciseScheduleService implements IExerciseScheduleService
 
             log.info("Scheduled {} modeling exercises.", exercisesToBeScheduled.size());
             log.info("Scheduled {} exam modeling exercises.", modelingExercisesWithExam.size());
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error("Failed to start ModelingExerciseScheduleService", e);
         }
     }
@@ -110,10 +111,12 @@ public class ModelingExerciseScheduleService implements IExerciseScheduleService
         try {
             if (exercise.isExamExercise()) {
                 scheduleExamExercise(exercise);
-            } else {
+            }
+            else {
                 scheduleCourseExercise(exercise);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error("Failed to schedule exercise {}", exercise.getId(), e);
         }
     }
@@ -127,7 +130,8 @@ public class ModelingExerciseScheduleService implements IExerciseScheduleService
         if (exercise.getDueDate() != null && ZonedDateTime.now().isBefore(exercise.getDueDate())) {
             scheduleService.scheduleTask(exercise, ExerciseLifecycle.DUE, () -> buildModelingClusters(exercise).run());
             log.debug("Scheduled build modeling clusters after due date for Modeling Exercise '{}' (#{}) for {}.", exercise.getTitle(), exercise.getId(), exercise.getDueDate());
-        } else {
+        }
+        else {
             scheduleService.cancelScheduledTaskForLifecycle(exercise.getId(), ExerciseLifecycle.DUE);
         }
     }
@@ -177,7 +181,8 @@ public class ModelingExerciseScheduleService implements IExerciseScheduleService
 
                 compassService.build(modelingExercise.get());
 
-            } catch (EntityNotFoundException ex) {
+            }
+            catch (EntityNotFoundException ex) {
                 log.error("Modeling exercise with id {} is no longer available in database for use in scheduled task.", modelingExerciseId);
             }
         };

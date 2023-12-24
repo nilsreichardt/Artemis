@@ -1,9 +1,15 @@
 package de.tum.in.www1.artemis.service;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
@@ -47,7 +53,7 @@ public class LectureUnitProcessingService {
     private final Splitter pdfSinglePageSplitter = new Splitter();
 
     public LectureUnitProcessingService(SlideSplitterService slideSplitterService, FileService fileService, LectureRepository lectureRepository,
-                                        AttachmentUnitService attachmentUnitService) {
+            AttachmentUnitService attachmentUnitService) {
         this.fileService = fileService;
         this.slideSplitterService = slideSplitterService;
         this.lectureRepository = lectureRepository;
@@ -132,7 +138,8 @@ public class LectureUnitProcessingService {
                     }
                 }
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             log.error("Error while retrieving slides to remove from document", e);
             throw new InternalServerErrorException("Error while retrieving slides to remove from document");
         }
@@ -161,7 +168,8 @@ public class LectureUnitProcessingService {
                     }
                 }
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             log.error("Error while removing break slides from document", e);
             throw new InternalServerErrorException("Error while removing break slides from document");
         }
@@ -191,7 +199,8 @@ public class LectureUnitProcessingService {
                     .toList();
             // return units information, maximum number of pages and by default remove break slides and remove solution slides are false
             return new LectureUnitInformationDTO(units, numberOfPages, null);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             log.error("Error while preparing the map with information", e);
             throw new InternalServerErrorException("Could not prepare split information");
         }

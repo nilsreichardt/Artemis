@@ -1,15 +1,16 @@
 package de.tum.in.www1.artemis.text;
 
-import de.tum.in.www1.artemis.domain.TextEmbedding;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import de.tum.in.www1.artemis.domain.TextEmbedding;
 
 class TextEmbeddingIntegrationTest {
 
     @Test
     void testTextEmbedding() {
-        var vector = new float[]{1.5f, 2.5f};
+        var vector = new float[] { 1.5f, 2.5f };
 
         TextEmbedding textEmbedding = new TextEmbedding();
         textEmbedding.setId("id");

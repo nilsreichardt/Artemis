@@ -282,13 +282,10 @@ public class AuthorizationCheckService {
     public void checkUserAllowedToEnrollInCourseElseThrow(User user, Course course) throws AccessForbiddenException {
         EnrollmentAuthorization auth = getUserEnrollmentAuthorizationForCourse(user, course);
         switch (auth) {
-            case USERNAME_PATTERN ->
-                    throw new AccessForbiddenException("Enrollment with this username is not allowed.");
+            case USERNAME_PATTERN -> throw new AccessForbiddenException("Enrollment with this username is not allowed.");
             case ENROLLMENT_STATUS -> throw new AccessForbiddenException("The course does not allow enrollment.");
-            case ENROLLMENT_PERIOD ->
-                    throw new AccessForbiddenException("The course does currently not allow enrollment.");
-            case ORGANIZATIONS ->
-                    throw new AccessForbiddenException("User is not member of any organization of this course.");
+            case ENROLLMENT_PERIOD -> throw new AccessForbiddenException("The course does currently not allow enrollment.");
+            case ORGANIZATIONS -> throw new AccessForbiddenException("User is not member of any organization of this course.");
             case ONLINE -> throw new AccessForbiddenException("Online courses cannot be enrolled in.");
         }
     }
@@ -337,8 +334,7 @@ public class AuthorizationCheckService {
     public void checkUserAllowedToUnenrollFromCourseElseThrow(User user, Course course) throws AccessForbiddenException {
         UnenrollmentAuthorization auth = getUserUnenrollmentAuthorizationForCourse(user, course);
         switch (auth) {
-            case UNENROLLMENT_STATUS, UNENROLLMENT_PERIOD ->
-                    throw new AccessForbiddenException("The course does currently not allow unenrollment.");
+            case UNENROLLMENT_STATUS, UNENROLLMENT_PERIOD -> throw new AccessForbiddenException("The course does currently not allow unenrollment.");
             case ONLINE -> throw new AccessForbiddenException("Online courses cannot be unenrolled from.");
         }
     }
@@ -419,12 +415,10 @@ public class AuthorizationCheckService {
             case ADMIN -> this::checkIsAdminElseThrow;
             case INSTRUCTOR -> userOrNull -> checkIsAtLeastInstructorInCourseElseThrow(course, userOrNull);
             case EDITOR -> userOrNull -> checkIsAtLeastEditorInCourseElseThrow(course, userOrNull);
-            case TEACHING_ASSISTANT ->
-                    userOrNull -> checkIsAtLeastTeachingAssistantInCourseElseThrow(course, userOrNull);
+            case TEACHING_ASSISTANT -> userOrNull -> checkIsAtLeastTeachingAssistantInCourseElseThrow(course, userOrNull);
             case STUDENT -> userOrNull -> checkIsAtLeastStudentInCourseElseThrow(course, userOrNull);
             // anonymous users never have access to courses, so we have to throw an exception
-            case ANONYMOUS ->
-                    throw new IllegalArgumentException("The role anonymous does not make sense in this context");
+            case ANONYMOUS -> throw new IllegalArgumentException("The role anonymous does not make sense in this context");
         };
         consumer.accept(user);
     }
@@ -530,7 +524,8 @@ public class AuthorizationCheckService {
     public boolean isOwnerOfParticipation(@NotNull StudentParticipation participation) {
         if (participation.getParticipant() == null) {
             return false;
-        } else {
+        }
+        else {
             return participation.isOwnedBy(SecurityUtils.getCurrentUserLogin().orElseThrow());
         }
     }
@@ -559,7 +554,8 @@ public class AuthorizationCheckService {
         user = loadUserIfNeeded(user);
         if (participation.getParticipant() == null) {
             return false;
-        } else {
+        }
+        else {
             return participation.isOwnedBy(user);
         }
     }
@@ -759,7 +755,8 @@ public class AuthorizationCheckService {
     private User loadUserIfNeeded(@Nullable User user) {
         if (user == null) {
             user = userRepository.getUserWithGroupsAndAuthorities();
-        } else if (user.getGroups() == null || !Hibernate.isInitialized(user.getGroups())) {
+        }
+        else if (user.getGroups() == null || !Hibernate.isInitialized(user.getGroups())) {
             user = userRepository.getUserWithGroupsAndAuthorities(user.getLogin());
         }
 

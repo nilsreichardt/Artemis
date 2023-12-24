@@ -1,5 +1,20 @@
 package de.tum.in.www1.artemis.exercise.quizexercise;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.validation.constraints.NotNull;
+
+import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
+
 import de.tum.in.www1.artemis.course.CourseFactory;
 import de.tum.in.www1.artemis.course.CourseUtilService;
 import de.tum.in.www1.artemis.domain.Course;
@@ -39,19 +54,6 @@ import de.tum.in.www1.artemis.repository.TeamRepository;
 import de.tum.in.www1.artemis.service.FilePathService;
 import de.tum.in.www1.artemis.service.scheduled.cache.quiz.QuizScheduleService;
 import de.tum.in.www1.artemis.user.UserUtilService;
-import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
-
-import javax.validation.constraints.NotNull;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.time.ZonedDateTime;
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Service responsible for initializing the database with specific testdata related to quiz exercises for use in integration tests.
@@ -300,7 +302,8 @@ public class QuizExerciseUtilService {
         QuizExercise quizExercise;
         if (dueDateInTheFuture) {
             quizExercise = createAndSaveQuizWithAllQuestionTypes(course, pastTimestamp, futureTimestamp, futureTimestamp, QuizMode.SYNCHRONIZED);
-        } else {
+        }
+        else {
             quizExercise = createAndSaveQuizWithAllQuestionTypes(course, pastTimestamp, pastTimestamp, pastTimestamp, QuizMode.SYNCHRONIZED);
         }
         quizExercise.setTitle("quiz");

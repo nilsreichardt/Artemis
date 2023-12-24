@@ -1,18 +1,19 @@
 package de.tum.in.www1.artemis.hestia.behavioral;
 
-import de.tum.in.www1.artemis.service.hestia.behavioral.BehavioralBlackboard;
-import de.tum.in.www1.artemis.service.hestia.behavioral.BehavioralSolutionEntryGenerationException;
-import de.tum.in.www1.artemis.service.hestia.behavioral.GroupedFile;
-import de.tum.in.www1.artemis.service.hestia.behavioral.knowledgesource.InsertFileContents;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import de.tum.in.www1.artemis.service.hestia.behavioral.BehavioralBlackboard;
+import de.tum.in.www1.artemis.service.hestia.behavioral.BehavioralSolutionEntryGenerationException;
+import de.tum.in.www1.artemis.service.hestia.behavioral.GroupedFile;
+import de.tum.in.www1.artemis.service.hestia.behavioral.knowledgesource.InsertFileContents;
 
 class InsertFileContentsTest {
 

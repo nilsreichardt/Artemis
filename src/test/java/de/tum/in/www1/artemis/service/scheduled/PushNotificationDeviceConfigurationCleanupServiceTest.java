@@ -1,14 +1,6 @@
 package de.tum.in.www1.artemis.service.scheduled;
 
-import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
-import de.tum.in.www1.artemis.domain.User;
-import de.tum.in.www1.artemis.domain.push_notification.PushNotificationDeviceConfiguration;
-import de.tum.in.www1.artemis.domain.push_notification.PushNotificationDeviceType;
-import de.tum.in.www1.artemis.repository.PushNotificationDeviceConfigurationRepository;
-import de.tum.in.www1.artemis.user.UserUtilService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -17,7 +9,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import static org.springframework.test.util.AssertionErrors.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
+import de.tum.in.www1.artemis.domain.User;
+import de.tum.in.www1.artemis.domain.push_notification.PushNotificationDeviceConfiguration;
+import de.tum.in.www1.artemis.domain.push_notification.PushNotificationDeviceType;
+import de.tum.in.www1.artemis.repository.PushNotificationDeviceConfigurationRepository;
+import de.tum.in.www1.artemis.user.UserUtilService;
 
 class PushNotificationDeviceConfigurationCleanupServiceTest extends AbstractSpringIntegrationIndependentTest {
 

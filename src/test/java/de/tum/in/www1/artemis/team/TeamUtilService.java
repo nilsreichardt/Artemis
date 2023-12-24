@@ -1,5 +1,14 @@
 package de.tum.in.www1.artemis.team;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import de.tum.in.www1.artemis.domain.Authority;
 import de.tum.in.www1.artemis.domain.Exercise;
 import de.tum.in.www1.artemis.domain.Team;
@@ -8,14 +17,6 @@ import de.tum.in.www1.artemis.repository.TeamRepository;
 import de.tum.in.www1.artemis.repository.UserRepository;
 import de.tum.in.www1.artemis.security.Role;
 import de.tum.in.www1.artemis.user.UserUtilService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Service responsible for initializing the database with specific testdata related to teams for use in integration tests.
@@ -46,8 +47,8 @@ public class TeamUtilService {
      * @return The generated Team
      */
     public Team generateTeamForExercise(Exercise exercise, String name, String shortName, String loginPrefix, int numberOfStudents, User owner, String creatorLogin,
-                                        String registrationPrefix) {
-        List<User> students = userUtilService.generateActivatedUsersWithRegistrationNumber(shortName + loginPrefix, new String[]{"tumuser", "testgroup"},
+            String registrationPrefix) {
+        List<User> students = userUtilService.generateActivatedUsersWithRegistrationNumber(shortName + loginPrefix, new String[] { "tumuser", "testgroup" },
                 Set.of(new Authority(Role.STUDENT.getAuthority())), numberOfStudents, registrationPrefix);
 
         Team team = new Team();
@@ -107,7 +108,7 @@ public class TeamUtilService {
      * @return The List of generated Teams
      */
     public List<Team> generateTeamsForExercise(Exercise exercise, String shortNamePrefix, String loginPrefix, int numberOfTeams, User owner, String creatorLogin,
-                                               String registrationPrefix) {
+            String registrationPrefix) {
         List<Team> teams = new ArrayList<>();
         for (int i = 1; i <= numberOfTeams; i++) {
             int numberOfStudents = (i % 4) + 1; // range: 1-4 students
@@ -130,7 +131,7 @@ public class TeamUtilService {
      * @return The List of generated Teams
      */
     public List<Team> generateTeamsForExerciseFixedTeamSize(Exercise exercise, String shortNamePrefix, String loginPrefix, int numberOfTeams, User owner, String creatorLogin,
-                                                            String registrationPrefix, int teamSize) {
+            String registrationPrefix, int teamSize) {
         List<Team> teams = new ArrayList<>();
         for (int i = 1; i <= numberOfTeams; i++) {
             teams.add(generateTeamForExercise(exercise, "Team " + i, shortNamePrefix + i, loginPrefix, teamSize, owner, creatorLogin, registrationPrefix + i));

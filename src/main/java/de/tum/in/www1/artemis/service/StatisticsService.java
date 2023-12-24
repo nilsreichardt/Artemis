@@ -2,9 +2,19 @@ package de.tum.in.www1.artemis.service;
 
 import static de.tum.in.www1.artemis.service.util.RoundingUtil.roundScoreSpecifiedByCourseSettings;
 
-import java.time.*;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
@@ -21,7 +31,14 @@ import de.tum.in.www1.artemis.domain.enumeration.StatisticsView;
 import de.tum.in.www1.artemis.domain.statistics.CourseStatisticsAverageScore;
 import de.tum.in.www1.artemis.domain.statistics.ScoreDistribution;
 import de.tum.in.www1.artemis.domain.statistics.StatisticsEntry;
-import de.tum.in.www1.artemis.repository.*;
+import de.tum.in.www1.artemis.repository.CourseRepository;
+import de.tum.in.www1.artemis.repository.ExerciseRepository;
+import de.tum.in.www1.artemis.repository.GradingScaleRepository;
+import de.tum.in.www1.artemis.repository.ParticipantScoreRepository;
+import de.tum.in.www1.artemis.repository.StatisticsRepository;
+import de.tum.in.www1.artemis.repository.StudentParticipationRepository;
+import de.tum.in.www1.artemis.repository.TeamRepository;
+import de.tum.in.www1.artemis.repository.UserRepository;
 import de.tum.in.www1.artemis.web.rest.dto.CourseManagementStatisticsDTO;
 import de.tum.in.www1.artemis.web.rest.dto.ExerciseManagementStatisticsDTO;
 import de.tum.in.www1.artemis.web.rest.errors.EntityNotFoundException;
@@ -46,8 +63,8 @@ public class StatisticsService {
     private final GradingScaleRepository gradingScaleRepository;
 
     public StatisticsService(StatisticsRepository statisticsRepository, ParticipantScoreRepository participantScoreRepository, CourseRepository courseRepository,
-                             ExerciseRepository exerciseRepository, UserRepository userRepository, TeamRepository teamRepository, StudentParticipationRepository studentParticipationRepository,
-                             GradingScaleRepository gradingScaleRepository) {
+            ExerciseRepository exerciseRepository, UserRepository userRepository, TeamRepository teamRepository, StudentParticipationRepository studentParticipationRepository,
+            GradingScaleRepository gradingScaleRepository) {
         this.statisticsRepository = statisticsRepository;
         this.participantScoreRepository = participantScoreRepository;
         this.courseRepository = courseRepository;
@@ -187,7 +204,8 @@ public class StatisticsService {
             numberOfParticipationsOfStudentsOrTeams = teamParticipations == null ? 0L : teamParticipations;
 
             numberOfStudentsOrTeams = teamRepository.getNumberOfTeamsForExercise(exercise.getId());
-        } else {
+        }
+        else {
             Long studentParticipations = exerciseRepository.getStudentParticipationCountById(exercise.getId());
             numberOfParticipationsOfStudentsOrTeams = studentParticipations == null ? 0L : studentParticipations;
 
@@ -216,7 +234,8 @@ public class StatisticsService {
             var index = (int) (score.getScore() / 10.0);
             if (index >= 10) {
                 scoreDistribution[9] += 1;
-            } else {
+            }
+            else {
                 scoreDistribution[index] += 1;
             }
         });
@@ -238,7 +257,8 @@ public class StatisticsService {
             var releaseDateB = exerciseB.getReleaseDate();
             if (releaseDateA == null || releaseDateB == null || releaseDateA.isEqual(releaseDateB)) {
                 return 0;
-            } else {
+            }
+            else {
                 // Sort the one with the earlier release date first
                 return releaseDateA.isBefore(releaseDateB) ? -1 : 1;
             }

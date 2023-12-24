@@ -51,12 +51,12 @@ public class TestResultsDTO extends AbstractBuildResultNotificationDTO {
 
     @JsonCreator
     public TestResultsDTO(@JsonProperty("successful") int successful, @JsonProperty("skipped") int skipped, @JsonProperty("errors") int errors,
-                          @JsonProperty("failures") int failures, @JsonProperty("fullName") String fullName, @JsonProperty("commits") @JsonSetter(nulls = Nulls.AS_EMPTY) List<CommitDTO> commits,
-                          @JsonProperty("results") @JsonSetter(nulls = Nulls.AS_EMPTY) List<TestSuiteDTO> results,
-                          @JsonProperty("staticCodeAnalysisReports") @JsonSetter(nulls = Nulls.AS_EMPTY) List<StaticCodeAnalysisReportDTO> staticCodeAnalysisReports,
-                          @JsonProperty("testwiseCoverageReport") @JsonSetter(nulls = Nulls.AS_EMPTY) List<TestwiseCoverageReportDTO> testwiseCoverageReport,
-                          @JsonProperty("runDate") ZonedDateTime runDate, @JsonProperty("isBuildSuccessful") boolean isBuildSuccessful,
-                          @JsonProperty("logs") @JsonSetter(nulls = Nulls.AS_EMPTY) List<String> logs) {
+            @JsonProperty("failures") int failures, @JsonProperty("fullName") String fullName, @JsonProperty("commits") @JsonSetter(nulls = Nulls.AS_EMPTY) List<CommitDTO> commits,
+            @JsonProperty("results") @JsonSetter(nulls = Nulls.AS_EMPTY) List<TestSuiteDTO> results,
+            @JsonProperty("staticCodeAnalysisReports") @JsonSetter(nulls = Nulls.AS_EMPTY) List<StaticCodeAnalysisReportDTO> staticCodeAnalysisReports,
+            @JsonProperty("testwiseCoverageReport") @JsonSetter(nulls = Nulls.AS_EMPTY) List<TestwiseCoverageReportDTO> testwiseCoverageReport,
+            @JsonProperty("runDate") ZonedDateTime runDate, @JsonProperty("isBuildSuccessful") boolean isBuildSuccessful,
+            @JsonProperty("logs") @JsonSetter(nulls = Nulls.AS_EMPTY) List<String> logs) {
         this.successful = successful;
         this.skipped = skipped;
         this.errors = errors;

@@ -62,7 +62,7 @@ public class ProgrammingExerciseRepositoryService {
     private final Optional<VersionControlService> versionControlService;
 
     public ProgrammingExerciseRepositoryService(FileService fileService, GitService gitService, InstanceMessageSendService instanceMessageSendService,
-                                                ResourceLoaderService resourceLoaderService, Optional<VersionControlService> versionControlService) {
+            ResourceLoaderService resourceLoaderService, Optional<VersionControlService> versionControlService) {
         this.fileService = fileService;
         this.gitService = gitService;
         this.instanceMessageSendService = instanceMessageSendService;
@@ -102,8 +102,7 @@ public class ProgrammingExerciseRepositoryService {
         setupRepositories(programmingExercise, exerciseCreator, exerciseResources, solutionResources, testResources);
     }
 
-    private record RepositoryResources(Repository repository, Resource[] resources, Path prefix,
-                                       Resource[] projectTypeResources, Path projectTypePrefix) {
+    private record RepositoryResources(Repository repository, Resource[] resources, Path prefix, Resource[] projectTypeResources, Path projectTypePrefix) {
     }
 
     /**
@@ -147,7 +146,8 @@ public class ProgrammingExerciseRepositoryService {
                 // For Xcode, we don't share source code, so we only copy files once
                 prefix = projectTypeSpecificPrefix;
                 resources = projectTypeSpecificResources;
-            } else {
+            }
+            else {
                 projectTypePrefix = projectTypeSpecificPrefix;
                 projectTypeResources = projectTypeSpecificResources;
             }
@@ -159,7 +159,8 @@ public class ProgrammingExerciseRepositoryService {
     private Path getTemplateDirectoryForRepositoryType(final RepositoryType repositoryType) {
         if (RepositoryType.TESTS.equals(repositoryType)) {
             return Path.of(TEST_DIR);
-        } else {
+        }
+        else {
             return Path.of(repositoryType.getName());
         }
     }
@@ -175,7 +176,7 @@ public class ProgrammingExerciseRepositoryService {
      * @throws GitAPIException Thrown in case pushing a repository fails.
      */
     private void setupRepositories(final ProgrammingExercise programmingExercise, final User exerciseCreator, final RepositoryResources exerciseResources,
-                                   final RepositoryResources solutionResources, final RepositoryResources testResources) throws GitAPIException {
+            final RepositoryResources solutionResources, final RepositoryResources testResources) throws GitAPIException {
         try {
             setupTemplateAndPush(exerciseResources, "Exercise", programmingExercise, exerciseCreator);
             // The template repo can be re-written, so we can unprotect the default branch.
@@ -186,7 +187,8 @@ public class ProgrammingExerciseRepositoryService {
 
             setupTemplateAndPush(solutionResources, "Solution", programmingExercise, exerciseCreator);
             setupTestTemplateAndPush(testResources, programmingExercise, exerciseCreator);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             // if any exception occurs, try to at least push an empty commit, so that the
             // repositories can be used by the build plans
             log.warn("An exception occurred while setting up the repositories", ex);
@@ -272,7 +274,8 @@ public class ProgrammingExerciseRepositoryService {
         if (gitService.listFiles(resources.repository).isEmpty()
                 && (programmingExercise.getProgrammingLanguage() == ProgrammingLanguage.JAVA || programmingExercise.getProgrammingLanguage() == ProgrammingLanguage.KOTLIN)) {
             setupJVMTestTemplateAndPush(resources, programmingExercise, user);
-        } else {
+        }
+        else {
             // If there is no special test structure for a programming language, just copy all the test files.
             setupTemplateAndPush(resources, "Test", programmingExercise, user);
         }
@@ -319,7 +322,8 @@ public class ProgrammingExerciseRepositoryService {
 
         if (programmingExercise.hasSequentialTestRuns()) {
             setupTestTemplateSequentialTestRuns(resources, templatePath, projectTemplatePath, projectType, sectionsMap);
-        } else {
+        }
+        else {
             setupTestTemplateRegularTestRuns(resources, programmingExercise, templatePath, sectionsMap);
         }
 
@@ -332,9 +336,11 @@ public class ProgrammingExerciseRepositoryService {
 
         if (projectType != null && projectType.isGradle()) {
             projectTemplatePath = projectTemplatePath.resolve("gradle");
-        } else if (ProjectType.MAVEN_BLACKBOX.equals(projectType)) {
+        }
+        else if (ProjectType.MAVEN_BLACKBOX.equals(projectType)) {
             projectTemplatePath = projectTemplatePath.resolve("blackbox");
-        } else {
+        }
+        else {
             projectTemplatePath = projectTemplatePath.resolve("maven");
         }
 
@@ -359,7 +365,8 @@ public class ProgrammingExerciseRepositoryService {
         try {
             final Resource[] projectTypeProjectTemplate = resourceLoaderService.getResources(projectTypeProjectTemplatePath);
             fileService.copyResources(projectTypeProjectTemplate, resources.projectTypePrefix, repoLocalPath, false);
-        } catch (FileNotFoundException fileNotFoundException) {
+        }
+        catch (FileNotFoundException fileNotFoundException) {
             log.debug("Could not copy resource to template", fileNotFoundException);
         }
     }
@@ -374,7 +381,7 @@ public class ProgrammingExerciseRepositoryService {
      * @throws IOException Thrown in case copying some resource to the local repo fails.
      */
     private void setupTestTemplateRegularTestRuns(final RepositoryResources resources, final ProgrammingExercise programmingExercise, final Path templatePath,
-                                                  final Map<String, Boolean> sectionsMap) throws IOException {
+            final Map<String, Boolean> sectionsMap) throws IOException {
         final ProjectType projectType = programmingExercise.getProjectType();
         final Path repoLocalPath = getRepoAbsoluteLocalPath(resources.repository);
         final Path testFilePath = templatePath.resolve(TEST_FILES_PATH);
@@ -411,7 +418,8 @@ public class ProgrammingExerciseRepositoryService {
         final String projectFileFileName;
         if (projectType != null && projectType.isGradle()) {
             projectFileFileName = BUILD_GRADLE;
-        } else {
+        }
+        else {
             projectFileFileName = POM_XML;
         }
 
@@ -440,9 +448,10 @@ public class ProgrammingExerciseRepositoryService {
             }
 
             if (!existingProjectTypeTestFileResources.isEmpty()) {
-                fileService.copyResources(existingProjectTypeTestFileResources.toArray(new Resource[]{}), resources.projectTypePrefix, packagePath, false);
+                fileService.copyResources(existingProjectTypeTestFileResources.toArray(new Resource[] {}), resources.projectTypePrefix, packagePath, false);
             }
-        } catch (FileNotFoundException fileNotFoundException) {
+        }
+        catch (FileNotFoundException fileNotFoundException) {
             log.debug("Could not copy resource to template", fileNotFoundException);
         }
     }
@@ -458,7 +467,7 @@ public class ProgrammingExerciseRepositoryService {
      * @throws IOException Thrown in case copying some resource to the local repo fails.
      */
     private void setupTestTemplateSequentialTestRuns(final RepositoryResources resources, final Path templatePath, final Path projectTemplatePath, final ProjectType projectType,
-                                                     final Map<String, Boolean> sectionsMap) throws IOException {
+            final Map<String, Boolean> sectionsMap) throws IOException {
         sectionsMap.put("non-sequential", false);
         sectionsMap.put("sequential", true);
 
@@ -468,7 +477,8 @@ public class ProgrammingExerciseRepositoryService {
         final String projectFileName;
         if (isMaven) {
             projectFileName = POM_XML;
-        } else {
+        }
+        else {
             projectFileName = BUILD_GRADLE;
         }
 
@@ -523,7 +533,7 @@ public class ProgrammingExerciseRepositoryService {
      * @throws IOException Thrown in case reading template files, or writing them to the local repository fails.
      */
     private void setupBuildStage(final Path resourcePrefix, final Path templatePath, final Path projectTemplatePath, final ProjectType projectType, final Path repoLocalPath,
-                                 final Optional<Resource> stagePomXml, final BuildStage buildStage) throws IOException {
+            final Optional<Resource> stagePomXml, final BuildStage buildStage) throws IOException {
         final Path buildStageTemplateSubDirectory = buildStage.getTemplateDirectory();
         final Path buildStagePath = repoLocalPath.resolve(buildStageTemplateSubDirectory);
         Files.createDirectory(buildStagePath);
@@ -554,7 +564,8 @@ public class ProgrammingExerciseRepositoryService {
         try {
             final Resource[] buildStageResources = resourceLoaderService.getResources(buildStageResourcesPath);
             fileService.copyResources(buildStageResources, resourcePrefix, packagePath, false);
-        } catch (FileNotFoundException fileNotFoundException) {
+        }
+        catch (FileNotFoundException fileNotFoundException) {
             log.debug("Could not copy resource to template", fileNotFoundException);
         }
     }
@@ -608,7 +619,8 @@ public class ProgrammingExerciseRepositoryService {
             fileService.replaceVariablesInFilename(repositoryLocalPath, PACKAGE_NAME_FILE_PLACEHOLDER, cleanPackageName);
 
             replacements.put(PACKAGE_NAME_PLACEHOLDER, cleanPackageName);
-        } else if (ProjectType.XCODE.equals(programmingExercise.getProjectType())) {
+        }
+        else if (ProjectType.XCODE.equals(programmingExercise.getProjectType())) {
             fileService.replaceVariablesInDirectoryName(repositoryLocalPath, APP_NAME_PLACEHOLDER, cleanPackageName);
             fileService.replaceVariablesInFilename(repositoryLocalPath, APP_NAME_PLACEHOLDER, cleanPackageName);
 
@@ -660,7 +672,8 @@ public class ProgrammingExerciseRepositoryService {
                 // Repositories were already locked in the step before. Only lock the participations that are not allowed to submit under the updated configuration, i.e. with a due
                 // date in the past.
                 instanceMessageSendService.sendLockAllStudentParticipationsWithEarlierDueDate(programmingExerciseBeforeUpdate.getId());
-            } else {
+            }
+            else {
                 // Lock all repositories and participations that are not allowed to submit under the updated configuration.
                 instanceMessageSendService.sendLockAllStudentRepositoriesAndParticipationsWithEarlierDueDate(programmingExerciseBeforeUpdate.getId());
             }
@@ -683,17 +696,20 @@ public class ProgrammingExerciseRepositoryService {
             if (moreLenientStartDate || moreLenientDueDate) {
                 // In this case unlock all repositories and participations within the time frame.
                 instanceMessageSendService.sendUnlockAllStudentRepositoriesAndParticipationsWithEarlierStartDateAndLaterDueDate(programmingExerciseBeforeUpdate.getId());
-            } else {
+            }
+            else {
                 // If the start date or the due date were not changed, the participations are not affected, and we only unlock the repositories.
                 instanceMessageSendService.sendUnlockAllStudentRepositoriesWithEarlierStartDateAndLaterDueDate(programmingExerciseBeforeUpdate.getId());
             }
-        } else if (moreLenientStartDate || moreLenientDueDate) {
+        }
+        else if (moreLenientStartDate || moreLenientDueDate) {
             // The offline IDE usage was not changed, but the start date or the due date were changed.
             // Unlock the participations that are allowed to submit under the updated configuration, i.e. the current date is within the working time frame.
             // But only unlock the repositories in addition to the participations if offline IDE usage is allowed.
             if (updatedExerciseAllowsIdeUsage) {
                 instanceMessageSendService.sendUnlockAllStudentRepositoriesAndParticipationsWithEarlierStartDateAndLaterDueDate(programmingExerciseBeforeUpdate.getId());
-            } else {
+            }
+            else {
                 instanceMessageSendService.sendUnlockAllStudentParticipationsWithEarlierStartDateAndLaterDueDate(programmingExerciseBeforeUpdate.getId());
             }
         }

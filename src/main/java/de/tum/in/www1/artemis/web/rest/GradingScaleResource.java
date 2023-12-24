@@ -1,5 +1,25 @@
 package de.tum.in.www1.artemis.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Objects;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.GradingScale;
 import de.tum.in.www1.artemis.domain.exam.Exam;
@@ -15,24 +35,6 @@ import de.tum.in.www1.artemis.web.rest.dto.PageableSearchDTO;
 import de.tum.in.www1.artemis.web.rest.dto.SearchResultPageDTO;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
 import de.tum.in.www1.artemis.web.rest.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * REST controller for managing grading scale
@@ -61,7 +63,7 @@ public class GradingScaleResource {
     private final UserRepository userRepository;
 
     public GradingScaleResource(GradingScaleService gradingScaleService, GradingScaleRepository gradingScaleRepository, CourseRepository courseRepository,
-                                ExamRepository examRepository, AuthorizationCheckService authCheckService, UserRepository userRepository) {
+            ExamRepository examRepository, AuthorizationCheckService authCheckService, UserRepository userRepository) {
         this.gradingScaleService = gradingScaleService;
         this.gradingScaleRepository = gradingScaleRepository;
         this.courseRepository = courseRepository;
@@ -146,9 +148,11 @@ public class GradingScaleResource {
     private void validateGradingScale(Optional<GradingScale> existingGradingScale, GradingScale gradingScale) {
         if (existingGradingScale.isPresent()) {
             throw new BadRequestAlertException("A grading scale already exists", ENTITY_NAME, "gradingScaleAlreadyExists");
-        } else if (gradingScale.getGradeSteps() == null || gradingScale.getGradeSteps().isEmpty()) {
+        }
+        else if (gradingScale.getGradeSteps() == null || gradingScale.getGradeSteps().isEmpty()) {
             throw new BadRequestAlertException("A grading scale must contain grade steps", ENTITY_NAME, "emptyGradeSteps");
-        } else if (gradingScale.getId() != null) {
+        }
+        else if (gradingScale.getId() != null) {
             throw new BadRequestAlertException("A grading scale can't contain a predefined id", ENTITY_NAME, "gradingScaleHasId");
         }
     }

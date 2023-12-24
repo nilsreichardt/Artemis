@@ -1,17 +1,23 @@
 package de.tum.in.www1.artemis.service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import de.tum.in.www1.artemis.domain.*;
+import de.tum.in.www1.artemis.domain.Course;
+import de.tum.in.www1.artemis.domain.User;
 import de.tum.in.www1.artemis.domain.competency.Competency;
 import de.tum.in.www1.artemis.domain.competency.CompetencyRelation;
-import de.tum.in.www1.artemis.repository.*;
-import de.tum.in.www1.artemis.web.rest.dto.*;
+import de.tum.in.www1.artemis.repository.CompetencyRepository;
+import de.tum.in.www1.artemis.web.rest.dto.PageableSearchDTO;
+import de.tum.in.www1.artemis.web.rest.dto.SearchResultPageDTO;
 import de.tum.in.www1.artemis.web.rest.util.PageUtil;
 
 @Service
@@ -58,7 +64,8 @@ public class CompetencyService {
         final Page<Competency> competencyPage;
         if (authCheckService.isAdmin(user)) {
             competencyPage = competencyRepository.findByTitleIgnoreCaseContainingOrCourse_TitleIgnoreCaseContaining(searchTerm, searchTerm, pageable);
-        } else {
+        }
+        else {
             competencyPage = competencyRepository.findByTitleInLectureOrCourseAndUserHasAccessToCourse(searchTerm, searchTerm, user.getGroups(), pageable);
         }
         return new SearchResultPageDTO<>(competencyPage.getContent(), competencyPage.getTotalPages());
@@ -147,7 +154,8 @@ public class CompetencyService {
                     if (neighbor.isBeingVisited()) {
                         // backward edge exists
                         return true;
-                    } else if (!neighbor.isVisited() && vertexIsPartOfCycle(neighbor)) {
+                    }
+                    else if (!neighbor.isVisited() && vertexIsPartOfCycle(neighbor)) {
                         return true;
                     }
                 }

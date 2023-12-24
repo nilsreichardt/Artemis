@@ -1,8 +1,8 @@
 package de.tum.in.www1.artemis.web.rest.dto.competency;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Represents simplified learning path optimized for Ngx representation
@@ -10,8 +10,7 @@ import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public record NgxLearningPathDTO(Set<Node> nodes, Set<Edge> edges) {
 
-    public record Node(String id, NodeType type, Long linkedResource, Long linkedResourceParent, boolean completed,
-                       String label) {
+    public record Node(String id, NodeType type, Long linkedResource, Long linkedResourceParent, boolean completed, String label) {
 
         public Node(String id, NodeType type, Long linkedResource, boolean completed, String label) {
             this(id, type, linkedResource, null, completed, label);

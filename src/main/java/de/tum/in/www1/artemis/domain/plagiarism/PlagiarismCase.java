@@ -4,7 +4,16 @@ import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -91,7 +100,8 @@ public class PlagiarismCase extends AbstractAuditingEntity {
     public Set<User> getStudents() {
         if (student != null) {
             return Set.of(student);
-        } else if (team != null) {
+        }
+        else if (team != null) {
             return team.getStudents();
         }
         return Collections.emptySet();

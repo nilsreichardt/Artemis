@@ -44,9 +44,11 @@ public abstract class QuizService<T extends QuizConfiguration> {
 
             if (quizQuestion instanceof MultipleChoiceQuestion multipleChoiceQuestion) {
                 fixReferenceMultipleChoice(multipleChoiceQuestion);
-            } else if (quizQuestion instanceof DragAndDropQuestion dragAndDropQuestion) {
+            }
+            else if (quizQuestion instanceof DragAndDropQuestion dragAndDropQuestion) {
                 fixReferenceDragAndDrop(dragAndDropQuestion);
-            } else if (quizQuestion instanceof ShortAnswerQuestion shortAnswerQuestion) {
+            }
+            else if (quizQuestion instanceof ShortAnswerQuestion shortAnswerQuestion) {
                 fixReferenceShortAnswer(shortAnswerQuestion);
             }
         }
@@ -58,7 +60,8 @@ public abstract class QuizService<T extends QuizConfiguration> {
             if (quizQuestion instanceof DragAndDropQuestion dragAndDropQuestion) {
                 // restore references from index after save
                 restoreCorrectMappingsFromIndicesDragAndDrop(dragAndDropQuestion);
-            } else if (quizQuestion instanceof ShortAnswerQuestion shortAnswerQuestion) {
+            }
+            else if (quizQuestion instanceof ShortAnswerQuestion shortAnswerQuestion) {
                 // restore references from index after save
                 restoreCorrectMappingsFromIndicesShortAnswer(shortAnswerQuestion);
             }

@@ -1,18 +1,39 @@
 package de.tum.in.www1.artemis.domain.plagiarism;
 
-import static java.util.Comparator.*;
+import static java.util.Comparator.comparingInt;
+import static java.util.Comparator.reverseOrder;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import de.tum.in.www1.artemis.domain.*;
+import de.tum.in.www1.artemis.domain.AbstractAuditingEntity;
+import de.tum.in.www1.artemis.domain.Exercise;
 import de.tum.in.www1.artemis.domain.plagiarism.modeling.ModelingPlagiarismResult;
 import de.tum.in.www1.artemis.domain.plagiarism.text.TextPlagiarismResult;
 
@@ -26,7 +47,7 @@ import de.tum.in.www1.artemis.domain.plagiarism.text.TextPlagiarismResult;
 @Table(name = "plagiarism_result")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 // Annotation necessary to distinguish between concrete implementations of PlagiarismResults when deserializing from JSON
-@JsonSubTypes({@JsonSubTypes.Type(value = ModelingPlagiarismResult.class, name = "modeling"), @JsonSubTypes.Type(value = TextPlagiarismResult.class, name = "text")})
+@JsonSubTypes({ @JsonSubTypes.Type(value = ModelingPlagiarismResult.class, name = "modeling"), @JsonSubTypes.Type(value = TextPlagiarismResult.class, name = "text") })
 public abstract class PlagiarismResult<E extends PlagiarismSubmissionElement> extends AbstractAuditingEntity {
 
     /**

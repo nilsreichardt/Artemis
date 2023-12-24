@@ -1,5 +1,16 @@
 package de.tum.in.www1.artemis.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.ZonedDateTime;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.enumeration.DiagramType;
@@ -19,16 +30,6 @@ import de.tum.in.www1.artemis.repository.ParticipationRepository;
 import de.tum.in.www1.artemis.repository.StudentExamRepository;
 import de.tum.in.www1.artemis.security.SecurityUtils;
 import de.tum.in.www1.artemis.user.UserUtilService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.time.ZonedDateTime;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class ExerciseDateServiceTest extends AbstractSpringIntegrationIndependentTest {
 
@@ -222,7 +223,7 @@ class ExerciseDateServiceTest extends AbstractSpringIntegrationIndependentTest {
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {TEST_PREFIX + "student1", TEST_PREFIX + "student2"})
+        @ValueSource(strings = { TEST_PREFIX + "student1", TEST_PREFIX + "student2" })
         void testExamExerciseDueDate_individualTimeExtension(String ownerOfStudentExam) {
             updateExamDatesToPast();
 

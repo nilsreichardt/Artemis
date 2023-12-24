@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import de.tum.in.www1.artemis.domain.*;
+import de.tum.in.www1.artemis.domain.Submission;
+import de.tum.in.www1.artemis.domain.SubmissionVersion;
+import de.tum.in.www1.artemis.domain.TextSubmission;
+import de.tum.in.www1.artemis.domain.User;
 import de.tum.in.www1.artemis.domain.modeling.ModelingSubmission;
 import de.tum.in.www1.artemis.domain.quiz.QuizSubmission;
 import de.tum.in.www1.artemis.repository.SubmissionVersionRepository;
@@ -44,7 +47,8 @@ public class SubmissionVersionService {
         return submissionVersionRepository.findLatestVersion(submission.getId()).map(latestVersion -> {
             if (latestVersion.getAuthor().equals(user)) {
                 return updateExistingVersion(latestVersion, submission);
-            } else {
+            }
+            else {
                 return saveVersionForIndividual(submission, user);
             }
         }).orElseGet(() -> saveVersionForIndividual(submission, user));
@@ -73,18 +77,22 @@ public class SubmissionVersionService {
     private String getSubmissionContent(Submission submission) {
         if (submission instanceof ModelingSubmission modelingSubmission) {
             return ("Model: " + modelingSubmission.getModel() + "; Explanation: " + modelingSubmission.getExplanationText());
-        } else if (submission instanceof TextSubmission textSubmission) {
+        }
+        else if (submission instanceof TextSubmission textSubmission) {
             return textSubmission.getText();
-        } else if (submission instanceof QuizSubmission quizSubmission) {
+        }
+        else if (submission instanceof QuizSubmission quizSubmission) {
             try {
                 // TODO: it might be nice to remove some question parameters (i.e. SubmittedAnswer -> QuizQuestion) to reduce the json size as those are not really necessary,
                 // however directly manipulating the object is dangerous because it will be returned to the client.
                 return objectMapper.writeValueAsString(quizSubmission.getSubmittedAnswers());
-            } catch (JsonProcessingException e) {
+            }
+            catch (JsonProcessingException e) {
                 log.error("Error when writing quiz submission {} to json value. Will fall back to string representation", submission, e);
                 return submission.toString();
             }
-        } else {
+        }
+        else {
             throw new IllegalArgumentException("Versioning for this submission type not supported: " + submission.getType());
         }
     }

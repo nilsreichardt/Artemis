@@ -1,5 +1,37 @@
 package de.tum.in.www1.artemis.web.rest;
 
+import static de.tum.in.www1.artemis.config.Constants.SHORT_NAME_PATTERN;
+import static de.tum.in.www1.artemis.web.rest.util.StringUtil.stripIllegalCharacters;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.actuate.audit.AuditEvent;
+import org.springframework.boot.actuate.audit.AuditEventRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
 import de.tum.in.www1.artemis.config.Constants;
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.Exercise;
@@ -28,37 +60,6 @@ import de.tum.in.www1.artemis.web.rest.errors.AccessForbiddenException;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
 import de.tum.in.www1.artemis.web.rest.util.HeaderUtil;
 import de.tum.in.www1.artemis.web.websocket.team.TeamWebsocketService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.actuate.audit.AuditEvent;
-import org.springframework.boot.actuate.audit.AuditEventRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static de.tum.in.www1.artemis.config.Constants.SHORT_NAME_PATTERN;
-import static de.tum.in.www1.artemis.web.rest.util.StringUtil.stripIllegalCharacters;
 
 /**
  * REST controller for managing Teams.
@@ -99,9 +100,9 @@ public class TeamResource {
     private final TeamScoreRepository teamScoreRepository;
 
     public TeamResource(TeamRepository teamRepository, TeamService teamService, TeamWebsocketService teamWebsocketService, CourseRepository courseRepository,
-                        ExerciseRepository exerciseRepository, UserRepository userRepository, AuthorizationCheckService authCheckService, ParticipationService participationService,
-                        SubmissionService submissionService, AuditEventRepository auditEventRepository, StudentParticipationRepository studentParticipationRepository,
-                        TeamScoreRepository teamScoreRepository) {
+            ExerciseRepository exerciseRepository, UserRepository userRepository, AuthorizationCheckService authCheckService, ParticipationService participationService,
+            SubmissionService submissionService, AuditEventRepository auditEventRepository, StudentParticipationRepository studentParticipationRepository,
+            TeamScoreRepository teamScoreRepository) {
         this.teamRepository = teamRepository;
         this.teamService = teamService;
         this.teamWebsocketService = teamWebsocketService;
@@ -339,7 +340,7 @@ public class TeamResource {
     @GetMapping("/courses/{courseId}/exercises/{exerciseId}/team-search-users")
     @EnforceAtLeastTutor
     public ResponseEntity<List<TeamSearchUserDTO>> searchTeamInExercise(@PathVariable long courseId, @PathVariable long exerciseId,
-                                                                        @RequestParam("loginOrName") String loginOrName) {
+            @RequestParam("loginOrName") String loginOrName) {
         log.debug("REST request to search Users for {} in course with id : {}", loginOrName, courseId);
         // restrict result size by only allowing reasonable searches
         if (loginOrName.length() < 3) {
@@ -401,7 +402,7 @@ public class TeamResource {
     @PutMapping("/exercises/{destinationExerciseId}/teams/import-from-exercise/{sourceExerciseId}")
     @EnforceAtLeastEditor
     public ResponseEntity<List<Team>> importTeamsFromSourceExercise(@PathVariable long destinationExerciseId, @PathVariable long sourceExerciseId,
-                                                                    @RequestParam TeamImportStrategyType importStrategyType) {
+            @RequestParam TeamImportStrategyType importStrategyType) {
         log.debug("REST request import all teams from source exercise with id {} into destination exercise with id {}", sourceExerciseId, destinationExerciseId);
 
         User user = userRepository.getUserWithGroupsAndAuthorities();
@@ -475,7 +476,8 @@ public class TeamResource {
             // fetch including submissions and results for team tutor and instructors
             participations = studentParticipationRepository.findAllByCourseIdAndTeamShortNameWithEagerLegalSubmissionsResult(course.getId(), teamShortName);
             submissionService.reduceParticipationSubmissionsToLatest(participations, false);
-        } else {
+        }
+        else {
             // for other tutors and for students: submissions not needed, hide results
             participations = studentParticipationRepository.findAllByCourseIdAndTeamShortName(course.getId(), teamShortName);
             participations.forEach(participation -> participation.setResults(null));

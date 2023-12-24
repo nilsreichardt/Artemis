@@ -55,9 +55,9 @@ public class SingleUserNotificationService {
     private final AuthorizationCheckService authorizationCheckService;
 
     public SingleUserNotificationService(SingleUserNotificationRepository singleUserNotificationRepository, UserRepository userRepository,
-                                         WebsocketMessagingService websocketMessagingService, GeneralInstantNotificationService notificationService, NotificationSettingsService notificationSettingsService,
-                                         StudentParticipationRepository studentParticipationRepository, ConversationMessageRepository conversationMessageRepository, ConversationService conversationService,
-                                         AuthorizationCheckService authorizationCheckService) {
+            WebsocketMessagingService websocketMessagingService, GeneralInstantNotificationService notificationService, NotificationSettingsService notificationSettingsService,
+            StudentParticipationRepository studentParticipationRepository, ConversationMessageRepository conversationMessageRepository, ConversationService conversationService,
+            AuthorizationCheckService authorizationCheckService) {
         this.singleUserNotificationRepository = singleUserNotificationRepository;
         this.userRepository = userRepository;
         this.websocketMessagingService = websocketMessagingService;
@@ -84,30 +84,27 @@ public class SingleUserNotificationService {
     private SingleUserNotification createSingleUserNotification(Object notificationSubject, NotificationType notificationType, User typeSpecificInformation, User author) {
         return switch (notificationType) {
             // Exercise related
-            case EXERCISE_SUBMISSION_ASSESSED, FILE_SUBMISSION_SUCCESSFUL ->
-                    createNotification((Exercise) notificationSubject, notificationType, typeSpecificInformation);
+            case EXERCISE_SUBMISSION_ASSESSED, FILE_SUBMISSION_SUCCESSFUL -> createNotification((Exercise) notificationSubject, notificationType, typeSpecificInformation);
             // Plagiarism related
             case NEW_PLAGIARISM_CASE_STUDENT, NEW_CPC_PLAGIARISM_CASE_STUDENT, PLAGIARISM_CASE_VERDICT_STUDENT ->
-                    createNotification((PlagiarismCase) notificationSubject, notificationType, typeSpecificInformation, author);
+                createNotification((PlagiarismCase) notificationSubject, notificationType, typeSpecificInformation, author);
             // Tutorial Group related
             case TUTORIAL_GROUP_REGISTRATION_STUDENT, TUTORIAL_GROUP_DEREGISTRATION_STUDENT, TUTORIAL_GROUP_REGISTRATION_TUTOR, TUTORIAL_GROUP_DEREGISTRATION_TUTOR,
                     TUTORIAL_GROUP_MULTIPLE_REGISTRATION_TUTOR, TUTORIAL_GROUP_ASSIGNED, TUTORIAL_GROUP_UNASSIGNED ->
-                    createNotification(((TutorialGroupNotificationSubject) notificationSubject).tutorialGroup, notificationType,
-                            ((TutorialGroupNotificationSubject) notificationSubject).users, ((TutorialGroupNotificationSubject) notificationSubject).responsibleUser);
+                createNotification(((TutorialGroupNotificationSubject) notificationSubject).tutorialGroup, notificationType,
+                        ((TutorialGroupNotificationSubject) notificationSubject).users, ((TutorialGroupNotificationSubject) notificationSubject).responsibleUser);
             // Conversation creation related
             case CONVERSATION_CREATE_ONE_TO_ONE_CHAT, CONVERSATION_CREATE_GROUP_CHAT, CONVERSATION_ADD_USER_GROUP_CHAT, CONVERSATION_ADD_USER_CHANNEL,
                     CONVERSATION_REMOVE_USER_GROUP_CHAT, CONVERSATION_REMOVE_USER_CHANNEL, CONVERSATION_DELETE_CHANNEL ->
-                    createNotification(((ConversationNotificationSubject) notificationSubject).conversation, notificationType,
-                            ((ConversationNotificationSubject) notificationSubject).user, ((ConversationNotificationSubject) notificationSubject).responsibleUser);
+                createNotification(((ConversationNotificationSubject) notificationSubject).conversation, notificationType,
+                        ((ConversationNotificationSubject) notificationSubject).user, ((ConversationNotificationSubject) notificationSubject).responsibleUser);
             // Message reply related
             case NEW_REPLY_FOR_EXERCISE_POST, NEW_REPLY_FOR_LECTURE_POST, NEW_REPLY_FOR_COURSE_POST, NEW_REPLY_FOR_EXAM_POST, CONVERSATION_NEW_REPLY_MESSAGE,
                     CONVERSATION_USER_MENTIONED ->
-                    createNotification(((NewReplyNotificationSubject) notificationSubject).answerPost, notificationType, ((NewReplyNotificationSubject) notificationSubject).user,
-                            ((NewReplyNotificationSubject) notificationSubject).responsibleUser);
-            case DATA_EXPORT_CREATED, DATA_EXPORT_FAILED ->
-                    createNotification((DataExport) notificationSubject, notificationType, typeSpecificInformation);
-            default ->
-                    throw new UnsupportedOperationException("Can not create notification for type : " + notificationType);
+                createNotification(((NewReplyNotificationSubject) notificationSubject).answerPost, notificationType, ((NewReplyNotificationSubject) notificationSubject).user,
+                        ((NewReplyNotificationSubject) notificationSubject).responsibleUser);
+            case DATA_EXPORT_CREATED, DATA_EXPORT_FAILED -> createNotification((DataExport) notificationSubject, notificationType, typeSpecificInformation);
+            default -> throw new UnsupportedOperationException("Can not create notification for type : " + notificationType);
         };
     }
 
@@ -449,16 +446,21 @@ public class SingleUserNotificationService {
         if (conversation instanceof Channel channel) {
             if (channel.getExercise() != null) {
                 answerMessageNotificationType = NEW_REPLY_FOR_EXERCISE_POST;
-            } else if (channel.getLecture() != null) {
+            }
+            else if (channel.getLecture() != null) {
                 answerMessageNotificationType = NEW_REPLY_FOR_LECTURE_POST;
-            } else if (channel.getExam() != null) {
+            }
+            else if (channel.getExam() != null) {
                 answerMessageNotificationType = NEW_REPLY_FOR_EXAM_POST;
-            } else if (channel.getIsCourseWide()) {
+            }
+            else if (channel.getIsCourseWide()) {
                 answerMessageNotificationType = NEW_REPLY_FOR_COURSE_POST;
-            } else {
+            }
+            else {
                 answerMessageNotificationType = CONVERSATION_NEW_REPLY_MESSAGE;
             }
-        } else {
+        }
+        else {
             answerMessageNotificationType = CONVERSATION_NEW_REPLY_MESSAGE;
         }
         return answerMessageNotificationType;
@@ -467,7 +469,8 @@ public class SingleUserNotificationService {
     private boolean shouldNotificationBeSaved(SingleUserNotification notification) {
         if (Objects.equals(notification.getTitle(), CONVERSATION_CREATE_ONE_TO_ONE_CHAT_TITLE)) {
             return false;
-        } else if (Objects.equals(notification.getTitle(), CONVERSATION_CREATE_GROUP_CHAT_TITLE) || Objects.equals(notification.getTitle(), CONVERSATION_DELETE_CHANNEL_TITLE)
+        }
+        else if (Objects.equals(notification.getTitle(), CONVERSATION_CREATE_GROUP_CHAT_TITLE) || Objects.equals(notification.getTitle(), CONVERSATION_DELETE_CHANNEL_TITLE)
                 || Objects.equals(notification.getTitle(), CONVERSATION_ADD_USER_CHANNEL_TITLE) || Objects.equals(notification.getTitle(), CONVERSATION_ADD_USER_GROUP_CHAT_TITLE)
                 || Objects.equals(notification.getTitle(), CONVERSATION_REMOVE_USER_CHANNEL_TITLE)
                 || Objects.equals(notification.getTitle(), CONVERSATION_REMOVE_USER_GROUP_CHAT_TITLE)

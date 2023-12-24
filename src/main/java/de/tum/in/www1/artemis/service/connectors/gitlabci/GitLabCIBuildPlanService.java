@@ -30,7 +30,7 @@ public class GitLabCIBuildPlanService extends AbstractBuildPlanCreator {
     private final ResourceLoaderService resourceLoaderService;
 
     public GitLabCIBuildPlanService(BuildPlanRepository buildPlanRepository, ProgrammingExerciseRepository programmingExerciseRepository,
-                                    ResourceLoaderService resourceLoaderService) {
+            ResourceLoaderService resourceLoaderService) {
         super(buildPlanRepository, programmingExerciseRepository);
 
         this.resourceLoaderService = resourceLoaderService;
@@ -50,7 +50,8 @@ public class GitLabCIBuildPlanService extends AbstractBuildPlanCreator {
 
         try {
             return StreamUtils.copyToString(resource.getInputStream(), Charset.defaultCharset());
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             log.error("Error loading template GitLab CI build configuration", ex);
             throw new IllegalStateException("Error loading template GitLab CI build configuration", ex);
         }
@@ -59,7 +60,8 @@ public class GitLabCIBuildPlanService extends AbstractBuildPlanCreator {
     private static Optional<String> getProjectTypeName(final ProgrammingExercise programmingExercise) {
         if (ProgrammingLanguage.JAVA.equals(programmingExercise.getProgrammingLanguage())) {
             return Optional.of("maven");
-        } else {
+        }
+        else {
             return Optional.empty();
         }
     }

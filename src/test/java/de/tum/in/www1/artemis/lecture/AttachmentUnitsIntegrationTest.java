@@ -1,15 +1,15 @@
 package de.tum.in.www1.artemis.lecture;
 
-import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
-import de.tum.in.www1.artemis.domain.Lecture;
-import de.tum.in.www1.artemis.domain.lecture.AttachmentUnit;
-import de.tum.in.www1.artemis.repository.AttachmentUnitRepository;
-import de.tum.in.www1.artemis.repository.SlideRepository;
-import de.tum.in.www1.artemis.service.LectureUnitProcessingService;
-import de.tum.in.www1.artemis.user.UserUtilService;
-import de.tum.in.www1.artemis.util.RequestUtilService;
-import de.tum.in.www1.artemis.web.rest.dto.LectureUnitInformationDTO;
-import de.tum.in.www1.artemis.web.rest.dto.LectureUnitSplitDTO;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -27,15 +27,16 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
+import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
+import de.tum.in.www1.artemis.domain.Lecture;
+import de.tum.in.www1.artemis.domain.lecture.AttachmentUnit;
+import de.tum.in.www1.artemis.repository.AttachmentUnitRepository;
+import de.tum.in.www1.artemis.repository.SlideRepository;
+import de.tum.in.www1.artemis.service.LectureUnitProcessingService;
+import de.tum.in.www1.artemis.user.UserUtilService;
+import de.tum.in.www1.artemis.util.RequestUtilService;
+import de.tum.in.www1.artemis.web.rest.dto.LectureUnitInformationDTO;
+import de.tum.in.www1.artemis.web.rest.dto.LectureUnitSplitDTO;
 
 class AttachmentUnitsIntegrationTest extends AbstractSpringIntegrationIndependentTest {
 
@@ -253,7 +254,7 @@ class AttachmentUnitsIntegrationTest extends AbstractSpringIntegrationIndependen
         assertThat(lectureUnitSplitInfo.units()).hasSize(2);
         assertThat(lectureUnitSplitInfo.numberOfPages()).isEqualTo(20);
 
-        var commaSeparatedKeyPhrases = String.join(",", new String[]{"Break", "Example solution"});
+        var commaSeparatedKeyPhrases = String.join(",", new String[] { "Break", "Example solution" });
         lectureUnitSplitInfo = new LectureUnitInformationDTO(lectureUnitSplitInfo.units(), lectureUnitSplitInfo.numberOfPages(), commaSeparatedKeyPhrases);
 
         List<AttachmentUnit> attachmentUnits = request.postListWithResponseBody("/api/lectures/" + lecture1.getId() + "/attachment-units/split/" + filename, lectureUnitSplitInfo,

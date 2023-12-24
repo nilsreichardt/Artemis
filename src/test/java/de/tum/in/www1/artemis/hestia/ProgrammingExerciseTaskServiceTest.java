@@ -1,5 +1,17 @@
 package de.tum.in.www1.artemis.hestia;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.context.support.WithMockUser;
+
 import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.DomainObject;
@@ -15,17 +27,6 @@ import de.tum.in.www1.artemis.repository.hestia.CodeHintRepository;
 import de.tum.in.www1.artemis.repository.hestia.ProgrammingExerciseTaskRepository;
 import de.tum.in.www1.artemis.service.hestia.ProgrammingExerciseTaskService;
 import de.tum.in.www1.artemis.user.UserUtilService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.test.context.support.WithMockUser;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class ProgrammingExerciseTaskServiceTest extends AbstractSpringIntegrationIndependentTest {
 
@@ -194,7 +195,7 @@ class ProgrammingExerciseTaskServiceTest extends AbstractSpringIntegrationIndepe
                 .findByIdWithEagerTestCasesStaticCodeAnalysisCategoriesHintsAndTemplateAndSolutionParticipationsAndAuxRepos(programmingExercise.getId()).orElseThrow();
         programmingExerciseTestCaseRepository.deleteAll(programmingExercise.getTestCases());
 
-        String[] testCaseNames = {"testClass[BubbleSort]", "testParametrized(Parameter1, 2)[1]"};
+        String[] testCaseNames = { "testClass[BubbleSort]", "testParametrized(Parameter1, 2)[1]" };
         for (var name : testCaseNames) {
             var testCase = new ProgrammingExerciseTestCase();
             testCase.setExercise(programmingExercise);
@@ -230,7 +231,7 @@ class ProgrammingExerciseTaskServiceTest extends AbstractSpringIntegrationIndepe
                 .findByIdWithEagerTestCasesStaticCodeAnalysisCategoriesHintsAndTemplateAndSolutionParticipationsAndAuxRepos(programmingExercise.getId()).orElseThrow();
         programmingExerciseTestCaseRepository.deleteAll(programmingExercise.getTestCases());
 
-        String[] testCaseNames = new String[]{"testClass[BubbleSort]", "testWithBraces()", "testParametrized(Parameter1, 2)[1]"};
+        String[] testCaseNames = new String[] { "testClass[BubbleSort]", "testWithBraces()", "testParametrized(Parameter1, 2)[1]" };
         for (var name : testCaseNames) {
             var testCase = new ProgrammingExerciseTestCase();
             testCase.setExercise(programmingExercise);

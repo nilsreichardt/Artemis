@@ -1,5 +1,24 @@
 package de.tum.in.www1.artemis.lecture;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
+
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.util.LinkedMultiValueMap;
+
 import de.tum.in.www1.artemis.AbstractSpringIntegrationLocalCILocalVCTest;
 import de.tum.in.www1.artemis.competency.CompetencyProgressUtilService;
 import de.tum.in.www1.artemis.competency.CompetencyUtilService;
@@ -44,24 +63,6 @@ import de.tum.in.www1.artemis.team.TeamUtilService;
 import de.tum.in.www1.artemis.user.UserUtilService;
 import de.tum.in.www1.artemis.util.PageableSearchUtilService;
 import de.tum.in.www1.artemis.web.rest.dto.CourseCompetencyProgressDTO;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.util.LinkedMultiValueMap;
-
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.awaitility.Awaitility.await;
 
 class CompetencyIntegrationTest extends AbstractSpringIntegrationLocalCILocalVCTest {
 
@@ -218,7 +219,7 @@ class CompetencyIntegrationTest extends AbstractSpringIntegrationLocalCILocalVCT
     }
 
     private TextExercise createTextExercise(ZonedDateTime pastTimestamp, ZonedDateTime futureTimestamp, ZonedDateTime futureFutureTimestamp, Set<Competency> competencies,
-                                            boolean isTeamExercise) {
+            boolean isTeamExercise) {
         // creating text exercise with Result
         TextExercise textExercise = TextExerciseFactory.generateTextExercise(pastTimestamp, futureTimestamp, futureFutureTimestamp, course);
 
@@ -235,7 +236,7 @@ class CompetencyIntegrationTest extends AbstractSpringIntegrationLocalCILocalVCT
     }
 
     private void createTextExerciseParticipationSubmissionAndResult(Exercise exercise, Participant participant, Double pointsOfExercise, Double bonusPointsOfExercise,
-                                                                    long scoreAwarded, boolean rated) {
+            long scoreAwarded, boolean rated) {
         if (!exercise.getMaxPoints().equals(pointsOfExercise)) {
             exercise.setMaxPoints(pointsOfExercise);
         }

@@ -142,7 +142,8 @@ public class FilePathService {
             Long.parseLong(attachmentUnitId);
             Long.parseLong(slideId);
             return FilePathService.getAttachmentUnitFilePath().resolve(Path.of(attachmentUnitId, "slide", slideId, filename));
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             throw new FilePathParsingException("Public path does not contain correct attachmentUnitId or slideId: " + publicPath, e);
         }
     }
@@ -155,7 +156,8 @@ public class FilePathService {
             Long exerciseId = Long.parseLong(expectedExerciseId);
             Long submissionId = Long.parseLong(expectedSubmissionId);
             return FileUploadSubmission.buildFilePath(exerciseId, submissionId).resolve(filename);
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             throw new FilePathParsingException("Public path does not contain correct exerciseId or submissionId: " + publicPath, e);
         }
     }
@@ -233,7 +235,8 @@ public class FilePathService {
             final String expectedAttachmentUnitId = path.getName(path.getNameCount() - 4).toString();
             final long attachmentUnitId = Long.parseLong(expectedAttachmentUnitId);
             return URI.create("/api/files/attachments/attachment-unit/" + attachmentUnitId + "/slide/" + id + "/" + filename);
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             throw new FilePathParsingException("Unexpected String in upload file path. AttachmentUnit ID should be present here: " + path, e);
         }
     }
@@ -244,7 +247,8 @@ public class FilePathService {
             final var expectedExerciseId = path.getName(path.getNameCount() - 3).toString();
             final long exerciseId = Long.parseLong(expectedExerciseId);
             return URI.create("/api/files/file-upload-exercises/" + exerciseId + "/submissions/" + id + "/" + filename);
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             throw new FilePathParsingException("Unexpected String in upload file path. Exercise ID should be present here: " + path, e);
         }
     }

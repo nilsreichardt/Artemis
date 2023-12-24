@@ -1,5 +1,25 @@
 package de.tum.in.www1.artemis.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.OptionalLong;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import de.tum.in.www1.artemis.domain.Complaint;
 import de.tum.in.www1.artemis.domain.Course;
 import de.tum.in.www1.artemis.domain.Exercise;
@@ -33,25 +53,6 @@ import de.tum.in.www1.artemis.service.ComplaintService;
 import de.tum.in.www1.artemis.web.rest.errors.AccessForbiddenException;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
 import de.tum.in.www1.artemis.web.rest.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalLong;
 
 /**
  * REST controller for managing complaints.
@@ -86,7 +87,7 @@ public class ComplaintResource {
     private final CourseRepository courseRepository;
 
     public ComplaintResource(AuthorizationCheckService authCheckService, ExerciseRepository exerciseRepository, UserRepository userRepository, TeamRepository teamRepository,
-                             ResultRepository resultRepository, ComplaintService complaintService, ComplaintRepository complaintRepository, CourseRepository courseRepository) {
+            ResultRepository resultRepository, ComplaintService complaintService, ComplaintRepository complaintRepository, CourseRepository courseRepository) {
         this.authCheckService = authCheckService;
         this.exerciseRepository = exerciseRepository;
         this.userRepository = userRepository;
@@ -329,7 +330,7 @@ public class ComplaintResource {
     @GetMapping("courses/{courseId}/complaints")
     @EnforceAtLeastTutor
     public ResponseEntity<List<Complaint>> getComplaintsByCourseId(@PathVariable Long courseId, @RequestParam ComplaintType complaintType,
-                                                                   @RequestParam(required = false) Long tutorId, @RequestParam(required = false) boolean allComplaintsForTutor) {
+            @RequestParam(required = false) Long tutorId, @RequestParam(required = false) boolean allComplaintsForTutor) {
         // Filtering by courseId
         Course course = courseRepository.findByIdElseThrow(courseId);
 
@@ -345,12 +346,14 @@ public class ComplaintResource {
         if (tutorId == null) {
             complaints = complaintService.getAllComplaintsByCourseId(courseId);
             filterOutUselessDataFromComplaints(complaints, !isAtLeastInstructor);
-        } else if (allComplaintsForTutor) {
+        }
+        else if (allComplaintsForTutor) {
             complaints = complaintService.getAllComplaintsByCourseId(courseId);
             filterOutUselessDataFromComplaints(complaints, !isAtLeastInstructor);
             // For a tutor, all foreign reviewers are filtered out
             complaints.forEach(complaint -> complaint.filterForeignReviewer(user));
-        } else {
+        }
+        else {
             complaints = complaintService.getAllComplaintsByCourseIdAndTutorId(courseId, tutorId);
             filterOutUselessDataFromComplaints(complaints, !isAtLeastInstructor);
         }
@@ -371,7 +374,7 @@ public class ComplaintResource {
     @GetMapping("exercises/{exerciseId}/complaints")
     @EnforceAtLeastTutor
     public ResponseEntity<List<Complaint>> getComplaintsByExerciseId(@PathVariable Long exerciseId, @RequestParam ComplaintType complaintType,
-                                                                     @RequestParam(required = false) Long tutorId) {
+            @RequestParam(required = false) Long tutorId) {
         // Filtering by exerciseId
         Exercise exercise = exerciseRepository.findByIdElseThrow(exerciseId);
         User user = userRepository.getUserWithGroupsAndAuthorities();
@@ -389,7 +392,8 @@ public class ComplaintResource {
         if (tutorId == null) {
             complaints = complaintService.getAllComplaintsByExerciseId(exerciseId);
             filterOutUselessDataFromComplaints(complaints, !isAtLeastInstructor);
-        } else {
+        }
+        else {
             complaints = complaintService.getAllComplaintsByExerciseIdAndTutorId(exerciseId, tutorId);
             filterOutUselessDataFromComplaints(complaints, !isAtLeastInstructor);
         }
@@ -449,11 +453,14 @@ public class ComplaintResource {
             Exercise exerciseWithOnlyTitle = originalParticipation.getExercise();
             if (exerciseWithOnlyTitle instanceof TextExercise) {
                 exerciseWithOnlyTitle = new TextExercise();
-            } else if (exerciseWithOnlyTitle instanceof ModelingExercise) {
+            }
+            else if (exerciseWithOnlyTitle instanceof ModelingExercise) {
                 exerciseWithOnlyTitle = new ModelingExercise();
-            } else if (exerciseWithOnlyTitle instanceof FileUploadExercise) {
+            }
+            else if (exerciseWithOnlyTitle instanceof FileUploadExercise) {
                 exerciseWithOnlyTitle = new FileUploadExercise();
-            } else if (exerciseWithOnlyTitle instanceof ProgrammingExercise) {
+            }
+            else if (exerciseWithOnlyTitle instanceof ProgrammingExercise) {
                 exerciseWithOnlyTitle = new ProgrammingExercise();
             }
             exerciseWithOnlyTitle.setTitle(originalParticipation.getExercise().getTitle());
@@ -467,13 +474,17 @@ public class ComplaintResource {
             Submission submissionWithOnlyId;
             if (originalSubmission instanceof TextSubmission) {
                 submissionWithOnlyId = new TextSubmission();
-            } else if (originalSubmission instanceof ModelingSubmission) {
+            }
+            else if (originalSubmission instanceof ModelingSubmission) {
                 submissionWithOnlyId = new ModelingSubmission();
-            } else if (originalSubmission instanceof FileUploadSubmission) {
+            }
+            else if (originalSubmission instanceof FileUploadSubmission) {
                 submissionWithOnlyId = new FileUploadSubmission();
-            } else if (originalSubmission instanceof ProgrammingSubmission) {
+            }
+            else if (originalSubmission instanceof ProgrammingSubmission) {
                 submissionWithOnlyId = new ProgrammingSubmission();
-            } else {
+            }
+            else {
                 return;
             }
             submissionWithOnlyId.setId(originalSubmission.getId());
@@ -489,7 +500,7 @@ public class ComplaintResource {
     }
 
     private List<Complaint> buildComplaintsListForAssessor(List<Complaint> complaints, Principal principal, boolean assessorSameAsCaller, boolean isTestRun,
-                                                           boolean isAtLeastInstructor) {
+            boolean isAtLeastInstructor) {
         List<Complaint> responseComplaints = new ArrayList<>();
 
         if (complaints.isEmpty()) {

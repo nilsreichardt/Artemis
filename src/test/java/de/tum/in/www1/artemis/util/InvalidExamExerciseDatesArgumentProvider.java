@@ -1,13 +1,14 @@
 package de.tum.in.www1.artemis.util;
 
-import de.tum.in.www1.artemis.domain.Exercise;
+import java.time.ZonedDateTime;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 
-import java.time.ZonedDateTime;
-import java.util.stream.Stream;
+import de.tum.in.www1.artemis.domain.Exercise;
 
 /**
  * Provides arguments in form of a for parameterized JUnit 5 tests (see {@link ParameterizedTest}) that are not a valid date configuration for exam exercises.
@@ -33,9 +34,8 @@ public class InvalidExamExerciseDatesArgumentProvider implements ArgumentsProvid
      * An exercise date attribute configuration that is invalid for exam exercises. It consists of the {@link #releaseDate()}, the {@link #dueDate()} and the
      * {@link #assessmentDueDate()}.
      */
-    public record InvalidExamExerciseDateConfiguration(ZonedDateTime releaseDate, ZonedDateTime dueDate,
-                                                       ZonedDateTime assessmentDueDate,
-                                                       ZonedDateTime exampleSolutionPublicationDate) implements InvalidExerciseConfiguration<Exercise> {
+    public record InvalidExamExerciseDateConfiguration(ZonedDateTime releaseDate, ZonedDateTime dueDate, ZonedDateTime assessmentDueDate,
+            ZonedDateTime exampleSolutionPublicationDate) implements InvalidExerciseConfiguration<Exercise> {
 
         /**
          * {@inheritDoc}

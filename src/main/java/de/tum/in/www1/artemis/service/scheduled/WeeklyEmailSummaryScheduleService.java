@@ -64,7 +64,8 @@ public class WeeklyEmailSummaryScheduleService {
             // scheduler.scheduleAtFixedRate(scheduleEmailSummaries(), ZonedDateTime.now().toLocalDateTime().toInstant(zoneOffset), Duration.ofMinutes(3));
 
             log.info("Scheduled email summaries on start up.");
-        } catch (Exception exception) {
+        }
+        catch (Exception exception) {
             log.error("Failed to start WeeklyEmailSummaryScheduleService", exception);
         }
     }

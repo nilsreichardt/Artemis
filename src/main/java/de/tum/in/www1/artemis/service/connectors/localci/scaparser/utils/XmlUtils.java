@@ -48,7 +48,8 @@ public final class XmlUtils {
         Iterator<Element> iterator = getChildElements(parent, name).iterator();
         if (iterator.hasNext()) {
             return Optional.of(iterator.next());
-        } else {
+        }
+        else {
             return Optional.empty();
         }
     }

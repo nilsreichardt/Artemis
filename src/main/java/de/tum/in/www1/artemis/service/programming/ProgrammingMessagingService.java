@@ -31,7 +31,7 @@ public class ProgrammingMessagingService {
     private final Optional<LtiNewResultService> ltiNewResultService;
 
     public ProgrammingMessagingService(GroupNotificationService groupNotificationService, WebsocketMessagingService websocketMessagingService,
-                                       ResultWebsocketService resultWebsocketService, Optional<LtiNewResultService> ltiNewResultService) {
+            ResultWebsocketService resultWebsocketService, Optional<LtiNewResultService> ltiNewResultService) {
         this.groupNotificationService = groupNotificationService;
         this.websocketMessagingService = websocketMessagingService;
         this.resultWebsocketService = resultWebsocketService;
@@ -100,7 +100,8 @@ public class ProgrammingMessagingService {
         // Send a notification to the client to inform the instructor about the test case update.
         if (testCasesChanged) {
             groupNotificationService.notifyEditorAndInstructorGroupsAboutChangedTestCasesForProgrammingExercise(updatedProgrammingExercise);
-        } else {
+        }
+        else {
             groupNotificationService.notifyEditorAndInstructorGroupAboutExerciseUpdate(updatedProgrammingExercise, TEST_CASES_CHANGED_RUN_COMPLETED_NOTIFICATION);
         }
     }

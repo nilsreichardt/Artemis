@@ -1,5 +1,17 @@
 package de.tum.in.www1.artemis.web.rest.open;
 
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import de.tum.in.www1.artemis.domain.ProgrammingSubmission;
 import de.tum.in.www1.artemis.domain.Result;
 import de.tum.in.www1.artemis.domain.enumeration.SubmissionType;
@@ -16,17 +28,6 @@ import de.tum.in.www1.artemis.service.programming.ProgrammingTriggerService;
 import de.tum.in.www1.artemis.web.rest.errors.AccessForbiddenException;
 import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
 import de.tum.in.www1.artemis.web.rest.errors.EntityNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Optional;
 
 /**
  * REST controller for receiving build results.
@@ -53,8 +54,8 @@ public class PublicResultResource {
     private final ProgrammingMessagingService programmingMessagingService;
 
     public PublicResultResource(Optional<ContinuousIntegrationService> continuousIntegrationService, ProgrammingExerciseGradingService programmingExerciseGradingService,
-                                ResultService resultService, TestwiseCoverageService testwiseCoverageService, ProgrammingTriggerService programmingTriggerService,
-                                ProgrammingMessagingService programmingMessagingService) {
+            ResultService resultService, TestwiseCoverageService testwiseCoverageService, ProgrammingTriggerService programmingTriggerService,
+            ProgrammingMessagingService programmingMessagingService) {
         this.continuousIntegrationService = continuousIntegrationService;
         this.programmingExerciseGradingService = programmingExerciseGradingService;
         this.resultService = resultService;
@@ -92,7 +93,8 @@ public class PublicResultResource {
         String planKey;
         try {
             planKey = continuousIntegrationService.orElseThrow().getPlanKey(requestBody);
-        } catch (ContinuousIntegrationException cISException) {
+        }
+        catch (ContinuousIntegrationException cISException) {
             log.error("Exception encountered when trying to retrieve the plan key from a request a new programming exercise result: {}, {} :"
                     + "Your CIS encountered an Exception while trying to retrieve the build plan ", cISException, requestBody);
             throw new BadRequestAlertException(
@@ -154,7 +156,8 @@ public class PublicResultResource {
         }
         try {
             programmingTriggerService.triggerTemplateBuildAndNotifyUser(programmingExerciseId, submission.getCommitHash(), SubmissionType.TEST);
-        } catch (EntityNotFoundException ex) {
+        }
+        catch (EntityNotFoundException ex) {
             // If for some reason the programming exercise does not have a template participation, we can only log and abort.
             log.error(
                     "Could not trigger the build of the template repository for the programming exercise id {} because no template participation could be found for the given exercise",

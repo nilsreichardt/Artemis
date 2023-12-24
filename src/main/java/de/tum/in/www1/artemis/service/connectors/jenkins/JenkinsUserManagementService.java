@@ -62,7 +62,7 @@ public class JenkinsUserManagementService implements CIUserManagementService {
     private boolean usePseudonyms;
 
     public JenkinsUserManagementService(@Qualifier("jenkinsRestTemplate") RestTemplate restTemplate, JenkinsJobPermissionsService jenkinsJobPermissionsService,
-                                        PasswordService passwordService, ProgrammingExerciseRepository programmingExerciseRepository, UserRepository userRepository) {
+            PasswordService passwordService, ProgrammingExerciseRepository programmingExerciseRepository, UserRepository userRepository) {
         this.restTemplate = restTemplate;
         this.jenkinsJobPermissionsService = jenkinsJobPermissionsService;
         this.passwordService = passwordService;
@@ -101,7 +101,8 @@ public class JenkinsUserManagementService implements CIUserManagementService {
 
             // Adds the user to groups of existing programming exercises
             addUserToGroups(user.getLogin(), getUserWithGroups(user).getGroups());
-        } catch (RestClientException e) {
+        }
+        catch (RestClientException e) {
             throw new JenkinsException("Cannot create user: " + user.getLogin(), e);
         }
     }
@@ -121,7 +122,8 @@ public class JenkinsUserManagementService implements CIUserManagementService {
         formData.add("password2", password);
         if (usePseudonyms) {
             formData.add("fullname", String.format("User %s", user.getLogin()));
-        } else {
+        }
+        else {
             formData.add("fullname", user.getName());
         }
         formData.add("email", user.getEmail());
@@ -149,7 +151,8 @@ public class JenkinsUserManagementService implements CIUserManagementService {
             var uri = UriComponentsBuilder.fromHttpUrl(jenkinsServerUrl.toString()).pathSegment("user", userLogin, "doDelete").build().toUri();
             restTemplate.exchange(uri, HttpMethod.POST, null, Void.class);
             removeUserFromGroups(userLogin, getUserWithGroups(user).getGroups());
-        } catch (RestClientException e) {
+        }
+        catch (RestClientException e) {
             throw new JenkinsException("Cannot delete user: " + userLogin, e);
         }
     }
@@ -214,7 +217,8 @@ public class JenkinsUserManagementService implements CIUserManagementService {
             updateUser(user, password);
             removeUserFromGroups(user.getLogin(), groupsToRemove);
             addUserToGroups(user.getLogin(), groupsToAdd);
-        } else {
+        }
+        else {
             removeUserFromGroups(oldLogin, groupsToRemove);
             addUserToGroups(oldLogin, groupsToAdd);
         }
@@ -244,21 +248,26 @@ public class JenkinsUserManagementService implements CIUserManagementService {
                 try {
                     // We are assigning instructor permissions since the exercise's course instructor group is the same as the one that is specified.
                     jenkinsJobPermissionsService.addPermissionsForUserToFolder(userLogin, jobName, JenkinsJobPermission.getInstructorPermissions());
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     throw new JenkinsException("Cannot assign instructor permissions to user: " + userLogin, e);
                 }
-            } else if (groups.contains(course.getEditorGroupName())) {
+            }
+            else if (groups.contains(course.getEditorGroupName())) {
                 try {
                     // We are assigning editor permissions since the exercise's course editor group is the same as the one that is specified.
                     jenkinsJobPermissionsService.addPermissionsForUserToFolder(userLogin, jobName, JenkinsJobPermission.getEditorPermissions());
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     throw new JenkinsException("Cannot assign editor permissions to user: " + userLogin, e);
                 }
-            } else if (groups.contains(course.getTeachingAssistantGroupName())) {
+            }
+            else if (groups.contains(course.getTeachingAssistantGroupName())) {
                 try {
                     // We are assigning teaching assistant permissions since the exercise's course teaching assistant group is the same as the one that is specified.
                     jenkinsJobPermissionsService.addTeachingAssistantPermissionsToUserForFolder(userLogin, jobName);
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     throw new JenkinsException("Cannot assign teaching assistant permissions to user: " + userLogin, e);
                 }
             }
@@ -284,7 +293,8 @@ public class JenkinsUserManagementService implements CIUserManagementService {
                 // and template build plans together
                 var jobName = exercise.getProjectKey();
                 jenkinsJobPermissionsService.removePermissionsFromUserOfFolder(userLogin, jobName, Set.of(JenkinsJobPermission.values()));
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 throw new JenkinsException("Cannot revoke permissions from user: " + userLogin, e);
             }
         });
@@ -328,7 +338,8 @@ public class JenkinsUserManagementService implements CIUserManagementService {
             var job = exercise.getProjectKey();
             try {
                 jenkinsJobPermissionsService.addInstructorAndEditorAndTAPermissionsToUsersForFolder(teachingAssistants, editors, instructors, job);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 throw new JenkinsException("Cannot assign teaching assistant and editor and instructor permissions for job: " + job, e);
             }
         });
@@ -347,7 +358,7 @@ public class JenkinsUserManagementService implements CIUserManagementService {
      * @param programmingExercises   list of programmingExercises for which the permissions should be changed
      */
     private void removePermissionsFromInstructorsAndEditorsAndTAsForCourse(String instructorGroup, String editorGroup, String teachingAssistantGroup, Course course,
-                                                                           List<ProgrammingExercise> programmingExercises) {
+            List<ProgrammingExercise> programmingExercises) {
         // Fetch all instructors and editors and teaching assistants belonging to the group that was removed from the course.
         var oldInstructors = userRepository.findAllInGroupWithAuthorities(instructorGroup);
         var oldEditors = userRepository.findAllInGroupWithAuthorities(editorGroup);
@@ -359,7 +370,8 @@ public class JenkinsUserManagementService implements CIUserManagementService {
         programmingExercises.forEach(exercise -> {
             try {
                 jenkinsJobPermissionsService.removePermissionsFromUsersForFolder(usersFromOldGroup, exercise.getProjectKey(), Set.of(JenkinsJobPermission.values()));
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 throw new JenkinsException("Cannot remove permissions from all users for job: " + exercise.getProjectKey(), e);
             }
         });
@@ -377,7 +389,8 @@ public class JenkinsUserManagementService implements CIUserManagementService {
             var uri = UriComponentsBuilder.fromHttpUrl(jenkinsServerUrl.toString()).pathSegment("user", userLogin, "api", "json").build().toUri();
             return restTemplate.exchange(uri, HttpMethod.GET, null, JenkinsUserDTO.class).getBody();
 
-        } catch (HttpClientErrorException e) {
+        }
+        catch (HttpClientErrorException e) {
             if (e.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
                 return null;
             }

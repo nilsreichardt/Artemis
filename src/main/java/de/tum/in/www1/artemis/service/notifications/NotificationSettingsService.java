@@ -135,34 +135,34 @@ public class NotificationSettingsService {
      * Each SettingId can be based on multiple different NotificationTypes
      */
     private static final Map<String, NotificationType[]> NOTIFICATION_SETTING_ID_TO_NOTIFICATION_TYPES_MAP = Map.ofEntries(
-            Map.entry(NOTIFICATION__EXERCISE_NOTIFICATION__EXERCISE_SUBMISSION_ASSESSED, new NotificationType[]{EXERCISE_SUBMISSION_ASSESSED}),
-            Map.entry(NOTIFICATION__EXERCISE_NOTIFICATION__EXERCISE_RELEASED, new NotificationType[]{EXERCISE_RELEASED}),
-            Map.entry(NOTIFICATION__EXERCISE_NOTIFICATION__EXERCISE_OPEN_FOR_PRACTICE, new NotificationType[]{EXERCISE_PRACTICE}),
-            Map.entry(NOTIFICATION__EXERCISE_NOTIFICATION__NEW_EXERCISE_POST, new NotificationType[]{NEW_EXERCISE_POST}),
-            Map.entry(NOTIFICATION__EXERCISE_NOTIFICATION__NEW_REPLY_FOR_EXERCISE_POST, new NotificationType[]{NEW_REPLY_FOR_EXERCISE_POST}),
-            Map.entry(NOTIFICATION__EXERCISE_NOTIFICATION__FILE_SUBMISSION_SUCCESSFUL, new NotificationType[]{FILE_SUBMISSION_SUCCESSFUL}),
-            Map.entry(NOTIFICATION__EXERCISE_NOTIFICATION__QUIZ_START_REMINDER, new NotificationType[]{QUIZ_EXERCISE_STARTED}),
-            Map.entry(NOTIFICATION__LECTURE_NOTIFICATION__ATTACHMENT_CHANGES, new NotificationType[]{ATTACHMENT_CHANGE}),
-            Map.entry(NOTIFICATION__LECTURE_NOTIFICATION__NEW_LECTURE_POST, new NotificationType[]{NEW_LECTURE_POST}),
-            Map.entry(NOTIFICATION__LECTURE_NOTIFICATION__NEW_REPLY_FOR_LECTURE_POST, new NotificationType[]{NEW_REPLY_FOR_LECTURE_POST}),
-            Map.entry(NOTIFICATION__EXAM_NOTIFICATION__NEW_EXAM_POST, new NotificationType[]{NEW_EXAM_POST}),
-            Map.entry(NOTIFICATION__EXAM_NOTIFICATION__NEW_REPLY_FOR_EXAM_POST, new NotificationType[]{NEW_EXAM_POST}),
-            Map.entry(NOTIFICATION__COURSE_WIDE_DISCUSSION__NEW_COURSE_POST, new NotificationType[]{NEW_COURSE_POST}),
-            Map.entry(NOTIFICATION__COURSE_WIDE_DISCUSSION__NEW_REPLY_FOR_COURSE_POST, new NotificationType[]{NEW_REPLY_FOR_COURSE_POST}),
-            Map.entry(NOTIFICATION__COURSE_WIDE_DISCUSSION__NEW_ANNOUNCEMENT_POST, new NotificationType[]{NEW_ANNOUNCEMENT_POST}),
-            Map.entry(NOTIFICATION__EDITOR_NOTIFICATION__PROGRAMMING_TEST_CASES_CHANGED, new NotificationType[]{PROGRAMMING_TEST_CASES_CHANGED}),
-            Map.entry(NOTIFICATION__INSTRUCTOR_NOTIFICATION__COURSE_AND_EXAM_ARCHIVING_STARTED, new NotificationType[]{EXAM_ARCHIVE_STARTED, COURSE_ARCHIVE_STARTED}),
-            Map.entry(NOTIFICATION__TUTORIAL_GROUP_NOTIFICATION__TUTORIAL_GROUP_DELETE_UPDATE, new NotificationType[]{TUTORIAL_GROUP_DELETED, TUTORIAL_GROUP_UPDATED}),
+            Map.entry(NOTIFICATION__EXERCISE_NOTIFICATION__EXERCISE_SUBMISSION_ASSESSED, new NotificationType[] { EXERCISE_SUBMISSION_ASSESSED }),
+            Map.entry(NOTIFICATION__EXERCISE_NOTIFICATION__EXERCISE_RELEASED, new NotificationType[] { EXERCISE_RELEASED }),
+            Map.entry(NOTIFICATION__EXERCISE_NOTIFICATION__EXERCISE_OPEN_FOR_PRACTICE, new NotificationType[] { EXERCISE_PRACTICE }),
+            Map.entry(NOTIFICATION__EXERCISE_NOTIFICATION__NEW_EXERCISE_POST, new NotificationType[] { NEW_EXERCISE_POST }),
+            Map.entry(NOTIFICATION__EXERCISE_NOTIFICATION__NEW_REPLY_FOR_EXERCISE_POST, new NotificationType[] { NEW_REPLY_FOR_EXERCISE_POST }),
+            Map.entry(NOTIFICATION__EXERCISE_NOTIFICATION__FILE_SUBMISSION_SUCCESSFUL, new NotificationType[] { FILE_SUBMISSION_SUCCESSFUL }),
+            Map.entry(NOTIFICATION__EXERCISE_NOTIFICATION__QUIZ_START_REMINDER, new NotificationType[] { QUIZ_EXERCISE_STARTED }),
+            Map.entry(NOTIFICATION__LECTURE_NOTIFICATION__ATTACHMENT_CHANGES, new NotificationType[] { ATTACHMENT_CHANGE }),
+            Map.entry(NOTIFICATION__LECTURE_NOTIFICATION__NEW_LECTURE_POST, new NotificationType[] { NEW_LECTURE_POST }),
+            Map.entry(NOTIFICATION__LECTURE_NOTIFICATION__NEW_REPLY_FOR_LECTURE_POST, new NotificationType[] { NEW_REPLY_FOR_LECTURE_POST }),
+            Map.entry(NOTIFICATION__EXAM_NOTIFICATION__NEW_EXAM_POST, new NotificationType[] { NEW_EXAM_POST }),
+            Map.entry(NOTIFICATION__EXAM_NOTIFICATION__NEW_REPLY_FOR_EXAM_POST, new NotificationType[] { NEW_EXAM_POST }),
+            Map.entry(NOTIFICATION__COURSE_WIDE_DISCUSSION__NEW_COURSE_POST, new NotificationType[] { NEW_COURSE_POST }),
+            Map.entry(NOTIFICATION__COURSE_WIDE_DISCUSSION__NEW_REPLY_FOR_COURSE_POST, new NotificationType[] { NEW_REPLY_FOR_COURSE_POST }),
+            Map.entry(NOTIFICATION__COURSE_WIDE_DISCUSSION__NEW_ANNOUNCEMENT_POST, new NotificationType[] { NEW_ANNOUNCEMENT_POST }),
+            Map.entry(NOTIFICATION__EDITOR_NOTIFICATION__PROGRAMMING_TEST_CASES_CHANGED, new NotificationType[] { PROGRAMMING_TEST_CASES_CHANGED }),
+            Map.entry(NOTIFICATION__INSTRUCTOR_NOTIFICATION__COURSE_AND_EXAM_ARCHIVING_STARTED, new NotificationType[] { EXAM_ARCHIVE_STARTED, COURSE_ARCHIVE_STARTED }),
+            Map.entry(NOTIFICATION__TUTORIAL_GROUP_NOTIFICATION__TUTORIAL_GROUP_DELETE_UPDATE, new NotificationType[] { TUTORIAL_GROUP_DELETED, TUTORIAL_GROUP_UPDATED }),
             Map.entry(NOTIFICATION__TUTOR_NOTIFICATION__TUTORIAL_GROUP_REGISTRATION,
-                    new NotificationType[]{TUTORIAL_GROUP_REGISTRATION_TUTOR, TUTORIAL_GROUP_DEREGISTRATION_TUTOR, TUTORIAL_GROUP_MULTIPLE_REGISTRATION_TUTOR}),
+                    new NotificationType[] { TUTORIAL_GROUP_REGISTRATION_TUTOR, TUTORIAL_GROUP_DEREGISTRATION_TUTOR, TUTORIAL_GROUP_MULTIPLE_REGISTRATION_TUTOR }),
             Map.entry(NOTIFICATION__TUTORIAL_GROUP_NOTIFICATION__TUTORIAL_GROUP_REGISTRATION,
-                    new NotificationType[]{TUTORIAL_GROUP_REGISTRATION_STUDENT, TUTORIAL_GROUP_DEREGISTRATION_STUDENT}),
-            Map.entry(NOTIFICATION__TUTOR_NOTIFICATION__TUTORIAL_GROUP_ASSIGN_UNASSIGN, new NotificationType[]{TUTORIAL_GROUP_ASSIGNED, TUTORIAL_GROUP_UNASSIGNED}),
+                    new NotificationType[] { TUTORIAL_GROUP_REGISTRATION_STUDENT, TUTORIAL_GROUP_DEREGISTRATION_STUDENT }),
+            Map.entry(NOTIFICATION__TUTOR_NOTIFICATION__TUTORIAL_GROUP_ASSIGN_UNASSIGN, new NotificationType[] { TUTORIAL_GROUP_ASSIGNED, TUTORIAL_GROUP_UNASSIGNED }),
             Map.entry(NOTIFICATION__USER_NOTIFICATION__CONVERSATION_NEW_MESSAGE,
-                    new NotificationType[]{CONVERSATION_NEW_MESSAGE, CONVERSATION_CREATE_ONE_TO_ONE_CHAT, CONVERSATION_CREATE_GROUP_CHAT, CONVERSATION_ADD_USER_GROUP_CHAT,
-                            CONVERSATION_ADD_USER_CHANNEL, CONVERSATION_REMOVE_USER_GROUP_CHAT, CONVERSATION_REMOVE_USER_CHANNEL}),
-            Map.entry(NOTIFICATION__USER_NOTIFICATION__NEW_REPLY_IN_CONVERSATION_MESSAGE, new NotificationType[]{CONVERSATION_NEW_REPLY_MESSAGE}),
-            Map.entry(NOTIFICATION__USER_NOTIFICATION__USER_MENTION, new NotificationType[]{CONVERSATION_USER_MENTIONED}));
+                    new NotificationType[] { CONVERSATION_NEW_MESSAGE, CONVERSATION_CREATE_ONE_TO_ONE_CHAT, CONVERSATION_CREATE_GROUP_CHAT, CONVERSATION_ADD_USER_GROUP_CHAT,
+                            CONVERSATION_ADD_USER_CHANNEL, CONVERSATION_REMOVE_USER_GROUP_CHAT, CONVERSATION_REMOVE_USER_CHANNEL }),
+            Map.entry(NOTIFICATION__USER_NOTIFICATION__NEW_REPLY_IN_CONVERSATION_MESSAGE, new NotificationType[] { CONVERSATION_NEW_REPLY_MESSAGE }),
+            Map.entry(NOTIFICATION__USER_NOTIFICATION__USER_MENTION, new NotificationType[] { CONVERSATION_USER_MENTIONED }));
 
     // This set has to equal the UI configuration in the client notification settings structure file!
     // More information on supported notification types can be found here: https://docs.artemis.cit.tum.de/user/notifications/
@@ -192,7 +192,7 @@ public class NotificationSettingsService {
      * @return true if the type is allowed else false
      */
     public boolean checkIfNotificationIsAllowedInCommunicationChannelBySettingsForGivenUser(Notification notification, User user,
-                                                                                            NotificationSettingsCommunicationChannel communicationChannel) {
+            NotificationSettingsCommunicationChannel communicationChannel) {
         Set<User> users = filterUsersByNotificationIsAllowedInCommunicationChannelBySettings(notification, Set.of(user), communicationChannel);
         return !users.isEmpty();
     }
@@ -206,7 +206,7 @@ public class NotificationSettingsService {
      * @return filtered user list
      */
     public Set<User> filterUsersByNotificationIsAllowedInCommunicationChannelBySettings(Notification notification, Set<User> users,
-                                                                                        NotificationSettingsCommunicationChannel communicationChannel) {
+            NotificationSettingsCommunicationChannel communicationChannel) {
         NotificationType type = findCorrespondingNotificationType(notification.getTitle());
 
         Set<NotificationSetting> decidedNotificationSettings = notificationSettingRepository
@@ -288,17 +288,14 @@ public class NotificationSettingsService {
      * @return a map with key of NotificationType and value Boolean indicating which types are (de)activated by the user's notification settings
      */
     private Map<NotificationType, Boolean> convertNotificationSettingsToNotificationTypesWithActivationStatus(NotificationSettingsCommunicationChannel communicationChannel,
-                                                                                                              Set<NotificationSetting> notificationSettings) {
+            Set<NotificationSetting> notificationSettings) {
         Map<NotificationType, Boolean> resultingMap = new HashMap<>();
         for (NotificationSetting setting : notificationSettings) {
             NotificationType[] tmpNotificationTypes = NOTIFICATION_SETTING_ID_TO_NOTIFICATION_TYPES_MAP.getOrDefault(setting.getSettingId(), new NotificationType[0]);
             switch (communicationChannel) {
-                case WEBAPP ->
-                        Arrays.stream(tmpNotificationTypes).forEach(type -> resultingMap.put(type, setting.isWebapp()));
-                case EMAIL ->
-                        Arrays.stream(tmpNotificationTypes).forEach(type -> resultingMap.put(type, setting.isEmail()));
-                case PUSH ->
-                        Arrays.stream(tmpNotificationTypes).forEach(type -> resultingMap.put(type, setting.isPush()));
+                case WEBAPP -> Arrays.stream(tmpNotificationTypes).forEach(type -> resultingMap.put(type, setting.isWebapp()));
+                case EMAIL -> Arrays.stream(tmpNotificationTypes).forEach(type -> resultingMap.put(type, setting.isEmail()));
+                case PUSH -> Arrays.stream(tmpNotificationTypes).forEach(type -> resultingMap.put(type, setting.isPush()));
             }
         }
         return resultingMap;

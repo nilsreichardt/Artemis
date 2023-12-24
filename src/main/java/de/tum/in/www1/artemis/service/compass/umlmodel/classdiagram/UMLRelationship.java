@@ -57,7 +57,7 @@ public class UMLRelationship extends UMLElement implements Serializable {
     }
 
     public UMLRelationship(UMLClass source, UMLClass target, UMLRelationshipType relationshipType, String jsonElementID, String sourceRole, String targetRole,
-                           String sourceMultiplicity, String targetMultiplicity) {
+            String sourceMultiplicity, String targetMultiplicity) {
         super(jsonElementID);
 
         this.source = source;

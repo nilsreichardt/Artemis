@@ -1,9 +1,9 @@
 package de.tum.in.www1.artemis.util.classpath;
 
-import io.github.classgraph.ClassInfo;
-
 import java.util.Collection;
 import java.util.List;
+
+import io.github.classgraph.ClassInfo;
 
 /**
  * Represents the top level Java package, preserving the package tree structure.

@@ -81,7 +81,8 @@ public class LtiDynamicRegistrationService {
             ResponseEntity<Lti13PlatformConfiguration> responseEntity = restTemplate.getForEntity(openIdConfigurationUrl, Lti13PlatformConfiguration.class);
             log.info("Got LTI13 configuration from {}", openIdConfigurationUrl);
             platformConfiguration = responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
+        }
+        catch (HttpClientErrorException e) {
             log.error("Could not get configuration from {}", openIdConfigurationUrl);
         }
 
@@ -105,7 +106,8 @@ public class LtiDynamicRegistrationService {
                     Lti13ClientRegistration.class);
             log.info("Registered course {} as LTI1.3 tool at {}", course.getTitle(), registrationEndpoint);
             registrationResponse = response.getBody();
-        } catch (HttpClientErrorException e) {
+        }
+        catch (HttpClientErrorException e) {
             String message = "Could not register new client in external LMS at " + registrationEndpoint;
             log.error(message);
         }
@@ -117,7 +119,7 @@ public class LtiDynamicRegistrationService {
     }
 
     private OnlineCourseConfiguration updateOnlineCourseConfiguration(OnlineCourseConfiguration ocConfiguration, String registrationId,
-                                                                      Lti13PlatformConfiguration platformConfiguration, Lti13ClientRegistration clientRegistrationResponse) {
+            Lti13PlatformConfiguration platformConfiguration, Lti13ClientRegistration clientRegistrationResponse) {
         ocConfiguration.setRegistrationId(registrationId);
         ocConfiguration.setClientId(clientRegistrationResponse.getClientId());
         ocConfiguration.setAuthorizationUri(platformConfiguration.getAuthorizationEndpoint());

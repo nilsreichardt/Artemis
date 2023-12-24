@@ -47,8 +47,8 @@ public class AthenaRepositoryExportService {
     private final ProgrammingExerciseStudentParticipationRepository programmingExerciseStudentParticipationRepository;
 
     public AthenaRepositoryExportService(ProgrammingExerciseRepository programmingExerciseRepository, ProgrammingExerciseExportService programmingExerciseExportService,
-                                         FileService fileService, ProgrammingSubmissionRepository programmingSubmissionRepository,
-                                         ProgrammingExerciseStudentParticipationRepository programmingExerciseStudentParticipationRepository) {
+            FileService fileService, ProgrammingSubmissionRepository programmingSubmissionRepository,
+            ProgrammingExerciseStudentParticipationRepository programmingExerciseStudentParticipationRepository) {
         this.programmingExerciseRepository = programmingExerciseRepository;
         this.programmingExerciseExportService = programmingExerciseExportService;
         this.fileService = fileService;
@@ -106,7 +106,8 @@ public class AthenaRepositoryExportService {
             var participation = (ProgrammingExerciseStudentParticipation) programmingExerciseStudentParticipationRepository
                     .findWithSubmissionsById(submission.getParticipation().getId()).get(0);
             zipFile = programmingExerciseExportService.createZipForRepositoryWithParticipation(programmingExercise, participation, exportOptions, exportDir, exportDir);
-        } else {
+        }
+        else {
             List<String> exportErrors = List.of();
             var exportFile = programmingExerciseExportService.exportInstructorRepositoryForExercise(programmingExercise.getId(), repositoryType, exportDir, exportDir,
                     exportErrors);

@@ -1,7 +1,6 @@
 package de.tum.in.www1.artemis.util;
 
-import org.apache.commons.io.FileUtils;
-import org.springframework.stereotype.Service;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +9,8 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import static org.assertj.core.api.Assertions.fail;
+import org.apache.commons.io.FileUtils;
+import org.springframework.stereotype.Service;
 
 /**
  * Zip file service containing utility methods

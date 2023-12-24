@@ -48,7 +48,8 @@ public abstract class PushNotificationService implements InstantNotificationServ
     static {
         try {
             cipher = Cipher.getInstance(Constants.PUSH_NOTIFICATION_ENCRYPTION_ALGORITHM);
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+        }
+        catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -97,7 +98,8 @@ public abstract class PushNotificationService implements InstantNotificationServ
 
                 return null;
             });
-        } catch (RestClientException e) {
+        }
+        catch (RestClientException e) {
             log.error("Could not send {} notifications", getDeviceType().toString());
         }
     }
@@ -169,8 +171,7 @@ public abstract class PushNotificationService implements InstantNotificationServ
 
     abstract void sendSpecificNotificationRequestsToEndpoint(List<RelayNotificationRequest> requests, String relayServerBaseUrl);
 
-    record PushNotificationData(String[] notificationPlaceholders, String target, String type, String date,
-                                int version) {
+    record PushNotificationData(String[] notificationPlaceholders, String target, String type, String date, int version) {
     }
 
     /**
@@ -186,8 +187,8 @@ public abstract class PushNotificationService implements InstantNotificationServ
             cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(initializationVector));
 
             return Optional.of(Base64.getEncoder().encodeToString(cipher.doFinal(payload.getBytes(StandardCharsets.UTF_8))));
-        } catch (InvalidKeyException | InvalidAlgorithmParameterException | javax.crypto.IllegalBlockSizeException |
-                 javax.crypto.BadPaddingException e) {
+        }
+        catch (InvalidKeyException | InvalidAlgorithmParameterException | javax.crypto.IllegalBlockSizeException | javax.crypto.BadPaddingException e) {
             log.error("Error encrypting push notification payload!", e);
             return Optional.empty();
         }

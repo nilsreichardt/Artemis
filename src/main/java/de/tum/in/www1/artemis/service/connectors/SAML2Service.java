@@ -69,7 +69,7 @@ public class SAML2Service {
      * @param userCreationService The user creation service
      */
     public SAML2Service(final UserRepository userRepository, final SAML2Properties properties, final UserCreationService userCreationService, MailService mailService,
-                        UserService userService) {
+            UserService userService) {
         this.userRepository = userRepository;
         this.properties = properties;
         this.userCreationService = userCreationService;
@@ -108,7 +108,8 @@ public class SAML2Service {
                 log.debug("Sending SAML2 creation mail");
                 if (userService.prepareUserForPasswordReset(user.get())) {
                     mailService.sendSAML2SetPasswordMail(user.get());
-                } else {
+                }
+                else {
                     log.error("User {} was created but could not be found in the database!", user.get());
                 }
             }
@@ -177,7 +178,8 @@ public class SAML2Service {
         final Matcher matcher = extractionPattern.matcher(value);
         if (matcher.matches()) {
             return matcher.group(SAML2Properties.ATTRIBUTE_VALUE_EXTRACTION_GROUP_NAME);
-        } else {
+        }
+        else {
             return value;
         }
     }

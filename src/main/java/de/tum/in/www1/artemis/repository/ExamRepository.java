@@ -70,7 +70,7 @@ public interface ExamRepository extends JpaRepository<Exam, Long> {
                     OR e.testExam = true)
             """)
     Set<Exam> findByCourseIdsForUser(@Param("courseIds") Set<Long> courseIds, @Param("userId") Long userId, @Param("groupNames") Set<String> groupNames,
-                                     @Param("now") ZonedDateTime now);
+            @Param("now") ZonedDateTime now);
 
     @Query("""
             select
@@ -110,7 +110,7 @@ public interface ExamRepository extends JpaRepository<Exam, Long> {
                 AND e.visibleDate <= :toDate
             """)
     Page<Exam> findAllActiveExamsInCoursesWhereInstructor(@Param("groups") Set<String> groups, Pageable pageable, @Param("fromDate") ZonedDateTime fromDate,
-                                                          @Param("toDate") ZonedDateTime toDate);
+            @Param("toDate") ZonedDateTime toDate);
 
     /**
      * Count all active exams
@@ -193,23 +193,23 @@ public interface ExamRepository extends JpaRepository<Exam, Long> {
             """)
     Integer countExamUsersInExamsWithStartDateBetween(@Param("minDate") ZonedDateTime minDate, @Param("maxDate") ZonedDateTime maxDate);
 
-    @EntityGraph(type = LOAD, attributePaths = {"exerciseGroups"})
+    @EntityGraph(type = LOAD, attributePaths = { "exerciseGroups" })
     Optional<Exam> findWithExerciseGroupsById(long examId);
 
-    @EntityGraph(type = LOAD, attributePaths = {"exerciseGroups", "exerciseGroups.exercises"})
+    @EntityGraph(type = LOAD, attributePaths = { "exerciseGroups", "exerciseGroups.exercises" })
     Optional<Exam> findWithExerciseGroupsAndExercisesById(long examId);
 
-    @EntityGraph(type = LOAD, attributePaths = {"exerciseGroups", "exerciseGroups.exercises", "exerciseGroups.exercises.studentParticipations",
-            "exerciseGroups.exercises.studentParticipations.submissions"})
+    @EntityGraph(type = LOAD, attributePaths = { "exerciseGroups", "exerciseGroups.exercises", "exerciseGroups.exercises.studentParticipations",
+            "exerciseGroups.exercises.studentParticipations.submissions" })
     Optional<Exam> findWithExerciseGroupsExercisesParticipationsAndSubmissionsById(long examId);
 
-    @EntityGraph(type = LOAD, attributePaths = {"examUsers"})
+    @EntityGraph(type = LOAD, attributePaths = { "examUsers" })
     Optional<Exam> findWithExamUsersById(long examId);
 
-    @EntityGraph(type = LOAD, attributePaths = {"examUsers", "exerciseGroups", "exerciseGroups.exercises"})
+    @EntityGraph(type = LOAD, attributePaths = { "examUsers", "exerciseGroups", "exerciseGroups.exercises" })
     Optional<Exam> findWithExamUsersAndExerciseGroupsAndExercisesById(long examId);
 
-    @EntityGraph(type = LOAD, attributePaths = {"studentExams", "studentExams.exercises"})
+    @EntityGraph(type = LOAD, attributePaths = { "studentExams", "studentExams.exercises" })
     Optional<Exam> findWithStudentExamsExercisesById(long id);
 
     @Query("""

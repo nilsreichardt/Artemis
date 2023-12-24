@@ -1,5 +1,14 @@
 package de.tum.in.www1.artemis.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import java.util.function.Supplier;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+
 import de.tum.in.www1.artemis.AbstractSpringIntegrationIndependentTest;
 import de.tum.in.www1.artemis.course.CourseUtilService;
 import de.tum.in.www1.artemis.domain.ProgrammingExercise;
@@ -18,14 +27,6 @@ import de.tum.in.www1.artemis.repository.LectureRepository;
 import de.tum.in.www1.artemis.repository.OrganizationRepository;
 import de.tum.in.www1.artemis.repository.hestia.ExerciseHintRepository;
 import de.tum.in.www1.artemis.service.util.Tuple;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
-
-import java.util.List;
-import java.util.function.Supplier;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test for {@link TitleCacheEvictionService} that should evict entity titles from the title caches if the titles are
@@ -267,7 +268,8 @@ class TitleCacheEvictionServiceTest extends AbstractSpringIntegrationIndependent
             cacheValueWrapper = cache.get(objInCache.x());
             if (shouldEvict) {
                 assertThat(cacheValueWrapper).isNull();
-            } else {
+            }
+            else {
                 assertThat(cacheValueWrapper).isNotNull();
                 assertThat(cacheValueWrapper.get()).isEqualTo(objInCache.y());
             }

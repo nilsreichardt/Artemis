@@ -1,23 +1,12 @@
 package de.tum.in.www1.artemis.web.rest.admin;
 
-import de.tum.in.www1.artemis.config.Constants;
-import de.tum.in.www1.artemis.domain.User;
-import de.tum.in.www1.artemis.repository.AuthorityRepository;
-import de.tum.in.www1.artemis.repository.UserRepository;
-import de.tum.in.www1.artemis.security.ArtemisAuthenticationProvider;
-import de.tum.in.www1.artemis.security.annotations.EnforceAdmin;
-import de.tum.in.www1.artemis.service.dto.UserDTO;
-import de.tum.in.www1.artemis.service.ldap.LdapUserService;
-import de.tum.in.www1.artemis.service.user.UserCreationService;
-import de.tum.in.www1.artemis.service.user.UserService;
-import de.tum.in.www1.artemis.web.rest.dto.UserPageableSearchDTO;
-import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
-import de.tum.in.www1.artemis.web.rest.errors.EmailAlreadyUsedException;
-import de.tum.in.www1.artemis.web.rest.errors.EntityNotFoundException;
-import de.tum.in.www1.artemis.web.rest.errors.LoginAlreadyUsedException;
-import de.tum.in.www1.artemis.web.rest.util.HeaderUtil;
-import de.tum.in.www1.artemis.web.rest.vm.ManagedUserVM;
-import io.swagger.annotations.ApiParam;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,13 +25,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import tech.jhipster.web.util.PaginationUtil;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
+import de.tum.in.www1.artemis.config.Constants;
+import de.tum.in.www1.artemis.domain.User;
+import de.tum.in.www1.artemis.repository.AuthorityRepository;
+import de.tum.in.www1.artemis.repository.UserRepository;
+import de.tum.in.www1.artemis.security.ArtemisAuthenticationProvider;
+import de.tum.in.www1.artemis.security.annotations.EnforceAdmin;
+import de.tum.in.www1.artemis.service.dto.UserDTO;
+import de.tum.in.www1.artemis.service.ldap.LdapUserService;
+import de.tum.in.www1.artemis.service.user.UserCreationService;
+import de.tum.in.www1.artemis.service.user.UserService;
+import de.tum.in.www1.artemis.web.rest.dto.UserPageableSearchDTO;
+import de.tum.in.www1.artemis.web.rest.errors.BadRequestAlertException;
+import de.tum.in.www1.artemis.web.rest.errors.EmailAlreadyUsedException;
+import de.tum.in.www1.artemis.web.rest.errors.EntityNotFoundException;
+import de.tum.in.www1.artemis.web.rest.errors.LoginAlreadyUsedException;
+import de.tum.in.www1.artemis.web.rest.util.HeaderUtil;
+import de.tum.in.www1.artemis.web.rest.vm.ManagedUserVM;
+import io.swagger.annotations.ApiParam;
+import tech.jhipster.web.util.PaginationUtil;
 
 /**
  * REST controller for managing users.
@@ -86,7 +88,7 @@ public class AdminUserResource {
     private final Optional<LdapUserService> ldapUserService;
 
     public AdminUserResource(UserRepository userRepository, UserService userService, UserCreationService userCreationService,
-                             ArtemisAuthenticationProvider artemisAuthenticationProvider, AuthorityRepository authorityRepository, Optional<LdapUserService> ldapUserService) {
+            ArtemisAuthenticationProvider artemisAuthenticationProvider, AuthorityRepository authorityRepository, Optional<LdapUserService> ldapUserService) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.userCreationService = userCreationService;
@@ -116,13 +118,17 @@ public class AdminUserResource {
         if (managedUserVM.getId() != null) {
             throw new BadRequestAlertException("A new user cannot already have an ID", "userManagement", "idExists");
             // Lowercase the user login before comparing with database
-        } else if (userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase()).isPresent()) {
+        }
+        else if (userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase()).isPresent()) {
             throw new LoginAlreadyUsedException();
-        } else if (userRepository.findOneByEmailIgnoreCase(managedUserVM.getEmail()).isPresent()) {
+        }
+        else if (userRepository.findOneByEmailIgnoreCase(managedUserVM.getEmail()).isPresent()) {
             throw new EmailAlreadyUsedException();
-        } else if (managedUserVM.getGroups().stream().anyMatch(group -> !artemisAuthenticationProvider.isGroupAvailable(group))) {
+        }
+        else if (managedUserVM.getGroups().stream().anyMatch(group -> !artemisAuthenticationProvider.isGroupAvailable(group))) {
             throw new EntityNotFoundException("Not all groups are available: " + managedUserVM.getGroups());
-        } else {
+        }
+        else {
             User newUser = userCreationService.createUser(managedUserVM);
 
             // NOTE: Mail service is NOT active at the moment
@@ -257,7 +263,8 @@ public class AdminUserResource {
                     userService.softDeleteUser(login);
                     deletedUsers.add(login);
                 }
-            } catch (Exception exception) {
+            }
+            catch (Exception exception) {
                 // In order to handle all users even if some users produce exceptions, we catch them and ignore them and proceed with the remaining users
                 log.error("REST request to delete user {} failed", login);
                 log.error(exception.getMessage(), exception);
