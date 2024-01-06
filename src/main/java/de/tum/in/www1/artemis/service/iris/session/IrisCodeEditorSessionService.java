@@ -28,7 +28,6 @@ import de.tum.in.www1.artemis.domain.File;
 import de.tum.in.www1.artemis.domain.ProgrammingExercise;
 import de.tum.in.www1.artemis.domain.Repository;
 import de.tum.in.www1.artemis.domain.User;
-import de.tum.in.www1.artemis.domain.VcsRepositoryUrl;
 import de.tum.in.www1.artemis.domain.iris.message.ExerciseComponent;
 import de.tum.in.www1.artemis.domain.iris.message.IrisExercisePlan;
 import de.tum.in.www1.artemis.domain.iris.message.IrisExercisePlanStep;
